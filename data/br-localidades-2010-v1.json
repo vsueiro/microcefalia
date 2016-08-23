@@ -1,34 +1,34 @@
 [
 {
-"id-ibge" : 4302105,
+"id-ibge" : 4314548, 
 "nome" : "PINTO BANDEIRA",
 "longitude" : "-51.4522154442958",
 "latitude" : "-29.0969233733493",
 "altitude" : "623.72562"
 },
 {
-"id-ibge" : 4209409,
+"id-ibge" : 4212650,
 "nome" : "PESCARIA BRAVA",
 "longitude" : "-48.8660013476511",
 "latitude" : "-28.3867101431554",
 "altitude" : "19.512293"
 },
 {
-"id-ibge" : 4207007,
+"id-ibge" : 4220000,
 "nome" : "BALNEÁRIO RINCÃO",
 "longitude" : "-49.2406727036036",
 "latitude" : "-28.8042854842028",
 "altitude" : "15"
 },
 {
-"id-ibge" : 1506807,
+"id-ibge" : 1504752,
 "nome" : "MUJUÍ DOS CAMPOS",
 "longitude" : "-54.6510924503818",
 "latitude" : "-2.68168201294185",
 "altitude" : "91.478977"
 },
 {
-"id-ibge" : 5003256,
+"id-ibge" : 5006275,
 "nome" : "PARAÍSO DAS ÁGUAS",
 "longitude" : "-53.0130684924458",
 "latitude" : "-19.0173913811464",
@@ -38989,4 +38989,4 @@
 "latitude" : "-4.44980491741282",
 "altitude" : "22.659777"
 }
-];
+]
