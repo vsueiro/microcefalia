@@ -15,6 +15,73 @@
     <script src="js/app.js"></script>
 
     <!--
+
+    implementar:
+
+        busca e filtros
+            por município
+            por semana
+            por categoria
+            natural language form?
+
+        dicionário
+            SE -> semana normal (ex: SE 20 equivale do dia X a Y do mês Z, do ano A)
+    
+        comparação
+            município A x município B no mesmo período
+
+        processamento de dados no servidor (não via JS)
+
+        mapa
+            com evolução dos casos
+
+        incorporação
+            iframe com parâmetros?
+            JS?
+
+        git
+            disponibilizar repositório
+
+        download
+            vetorial (svg)
+            pdf (impressão)
+
+        impressão
+            css print
+    
+        legendas
+            casos de microcefalia ou zika? RE: microcefalia e/ou alteração do SNC
+            tamanho do círculo
+            cores
+            categorias
+
+        autoplay
+            default
+            opção de pausar
+            opção de retomar
+
+        slider (barra horizontal para selecionar as semanas)
+            seleção individual (SE X)
+            seleção grupo (SE X a Y)
+
+        flexibilidade
+            permitir múltiplos anos
+            permitir incorporar dados de outros países?
+            permitir incorporar novos atributos aos dados?
+
+        explicações animadas / passo a passo
+
+        versão desktop
+
+        versão celular
+
+        versão AR?
+
+        versão 3D?
+
+    -->
+
+    <!--
   
     data: lista-microcefalia-2016-08-21.json
     src:  http://sage.saude.gov.br/paineis/microcefalia/listaMicrocefalia.php?output=json&ufs=&ibges=&cg=&tc=&re_giao=&rm=&qs=&ufcidade=Brasil&qt=5570%20munic%C3%ADpios&pop=204482459&cor=005984&nonono=html&title=&codPainel=176

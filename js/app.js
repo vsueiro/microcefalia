@@ -10,7 +10,9 @@ function cleanCSV( data ) {
 
     var ano = casoMaisRecente.ano;
     var sem = casoMaisRecente.sem;
-    var ta  = casoMaisRecente.ta;    
+    var ta  = casoMaisRecente.ta;
+
+    // precisa adicionar todas as categorias em todas as semanas
 
     if ( ta > 0 ) {
 
@@ -122,10 +124,10 @@ function clean( json, format ) {
 
           if ( municipio[ 'id' ] == trimId ) {
 
-            municipio[ 'coordenadas' ] = {
+            municipio[ 'geo' ] = {
 
-              "lat" : municipiosCoordenada[ 'latitude'  ],
-              "lon" : municipiosCoordenada[ 'longitude' ]
+              "lat" : parseFloat( municipiosCoordenada[ 'latitude'  ] ),
+              "lng" : parseFloat( municipiosCoordenada[ 'longitude' ] )
 
             };
 
@@ -143,9 +145,11 @@ function clean( json, format ) {
 
       });
 
+      /* DESCOMENTAR 
+
       if ( format == 'json' ) {
       
-        $( 'body' ).html( JSON.stringify( municipios ) );
+        $( 'body' ).html( JSON.stringify( municipios ) ); // JSON completo para download (com dados zerados e quantidades acumuladas)
 
       }
 
@@ -155,8 +159,60 @@ function clean( json, format ) {
 
       }
 
+      */
+
+      // remover dados zerados
+      $.each( municipios, function( i, municipio ) {
+
+        $.each( municipio.casos, function( j, caso ) {
+
+          if (caso.ta == 0) {
+            console.log( 'deletado caso.ta (' + caso.ta + ')' );
+            delete caso.ta;
+          }
+          if (caso.ti == 0) {
+            console.log( 'deletado caso.ti (' + caso.ti + ')' );
+            delete caso.ti;
+          }
+          if (caso.tc == 0) {
+            console.log( 'deletado caso.tc (' + caso.tc + ')' );
+            delete caso.tc;
+          }
+          if (caso.td == 0) {
+            console.log( 'deletado caso.td (' + caso.td + ')' );
+            delete caso.td;
+          }
+          if (caso.ton == 0) {
+            console.log( 'deletado caso.ton (' + caso.ton + ')' );
+            delete caso.ton;
+          }
+          if (caso.toi == 0) {
+            console.log( 'deletado caso.toi (' + caso.toi + ')' );
+            delete caso.toi;
+          }
+          if (caso.toc == 0) {
+            console.log( 'deletado caso.toc (' + caso.toc + ')' );
+            delete caso.toc;
+          }
+          if (caso.tod == 0) {
+            console.log( 'deletado caso.tod (' + caso.tod + ')' );
+            delete caso.tod;
+          }
+
+        });
+
+      });
+
+      if ( format == 'json' ) {
+      
+        $( 'body' ).html( JSON.stringify( municipios ) ); // JSON completo para download (com dados zerados e quantidades acumuladas)
+
+      }
+
+      // transformar dados acumulados em dados para cada semana individualmente:
+
   });
 
 }
 
-clean( caminho + 'data/lista-microcefalia-2016-08-21.json', 'csv' );
+clean( caminho + 'data/lista-microcefalia-2016-08-21.json', 'json' );
