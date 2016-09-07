@@ -30,6 +30,13 @@
         comparação
             município A x município B no mesmo período
 
+        gráficos
+            evolução de cada município quando selecionado
+
+        ranking
+            municípios com maior quantidade dos casos selecionados
+            municípios com menor quantidade dos casos selecionados
+
         processamento de dados no servidor (não via JS)
 
         mapa

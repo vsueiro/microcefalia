@@ -11,13 +11,15 @@
 
       html,
       body {
-        margin: 0;
-        padding: 0;
         height: 100%;
+        font-family: 'Open Sans', sans-serif;
       }
       #mapa {
         width: 970px;
         height: 970px;
+      }
+      .ficha {
+        border: 2px solid #eee;
       }
 
     </style>
@@ -25,70 +27,79 @@
   </head>
   <body>
 
-    <select class="semanas">
-      <option disabled>Escolha a semana epidemiológica</option>
-    </select>
+    <h1>Microcefalia em recém nascidos no Brasil</h1>
 
-    <select class="categorias">
-      <option disabled>Escolha o tipo de caso</option>
-    </select>
+    <p>O mapa abaixo mostra a evolução dos casos de microcefalia e/ou alterações no sistema nervoso central, incluindo casos de óbito decorrentes desta condição. O tamanho dos círculos representa a quantidade de casos naquele município. É possível filtrar por cada semana da epidemia e também pelo tipo de caso (confirmado, investigado, descartado etc)</p>
+
+    <form>
+
+      <select class="semanas">
+        <option disabled>Escolha a semana epidemiológica</option>
+      </select>
+
+      <select class="categorias">
+        <option disabled>Escolha o tipo de caso</option>
+      </select>
+
+      <input type="search" name="municipio" placeholder="Buscar por município">
+
+    </form>
+    
+    <br>
 
     <div id="mapa"></div>
+
+    <ul class="ficha"></ul>
+
+    <br>
+
+    <nav>
+
+      <button>Baixar dados</button>
+      <button>Baixar svg (vetor)</button>
+      <button>Baixar pdf (impressão)</button>
+      <button>Incorporar ao meu site</button>
+      <button>Tela cheia</button>
+
+    </nav>
+
+    <br>
+
+    <footer>
+
+      <dl>
+
+        <dt>Método</dt>
+        <dd>
+          Praesent vitae massa vestibulum, fermentum purus ac, lacinia urna. Nam justo turpis, ultricies quis libero vel, laoreet porttitor elit. Sed hendrerit neque vel erat tincidunt tempor. Integer auctor auctor ligula. Donec sagittis lacinia tincidunt. Maecenas laoreet, risus quis blandit convallis, enim ante viverra mauris, sit amet volutpat nunc mi nec tortor. Donec nec elementum mi, id sodales urna. Aliquam laoreet sem in vestibulum mattis. Fusce auctor efficitur venenatis. Cras tortor lacus, eleifend vel est in, malesuada fringilla sapien. Quisque in diam nec leo mattis molestie ut ut lorem. In sit amet iaculis
+        </dd>
+
+        <dt>Fontes</dt>
+        <dd><a href="#">FonteA</a>, <a href="#">FonteB</a>, <a href="#">FonteC</a></dd>
+
+        <dt>Colabore</dt>
+        <dd>
+          Esta visualização de dados é de código aberto. Caso queira colaborar ou criar sua própria, utilize este <a href="#">repositório Git</a>
+        </dd>
+
+      </dl>
+
+    </footer>
 
     <script>
 
       var
         municipios,
-        mapa,
-        circulo,
-        ponto,
+        municipio,
         circulos = [],
-        pontos = [],
+        circulo,
         semanas = [],
-        categorias = [ 
-
-          {
-            "apelido" : "ta",
-            "nome" : "Total acumulado",
-            "atual" : true
-          },
-          {
-            "apelido" : "ti",
-            "nome" : "Total investigado",
-            "atual" : false
-          },
-          {
-            "apelido" : "tc",
-            "nome" : "Total confirmado",
-            "atual" : false
-          },
-          {
-            "apelido" : "td",
-            "nome" : "Total descartado",
-            "atual" : false
-          },
-          {
-            "apelido" : "ton",
-            "nome" : "Total de óbitos notificados",
-            "atual" : false
-          },
-          {
-            "apelido" : "toi",
-            "nome" : "Total de óbitos investigados",
-            "atual" : false
-          },
-          {
-            "apelido" : "toc",
-            "nome" : "Total de óbitos confirmados",
-            "atual" : false
-          },
-          {
-            "apelido" : "tod",
-            "nome" : "Total de óbitos descartados",
-            "atual" : false
-          }
-
-        ]
+        semana,
+        caso,
+        mapa,
+        ficha,
+        categorias,
+        categoria
       ;
 
       function initMap() {
@@ -114,77 +125,148 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script>
 
+      ficha = $( '.ficha' );
+
+      categorias = [ 
+        {
+          "apelido" : "ta",
+          "nome" : "Total acumulado",
+          "atual" : true
+        },
+        {
+          "apelido" : "ti",
+          "nome" : "Total investigado",
+          "atual" : false
+        },
+        {
+          "apelido" : "tc",
+          "nome" : "Total confirmado",
+          "atual" : false
+        },
+        {
+          "apelido" : "td",
+          "nome" : "Total descartado",
+          "atual" : false
+        },
+        {
+          "apelido" : "ton",
+          "nome" : "Total de óbitos notificados",
+          "atual" : false
+        },
+        {
+          "apelido" : "toi",
+          "nome" : "Total de óbitos investigados",
+          "atual" : false
+        },
+        {
+          "apelido" : "toc",
+          "nome" : "Total de óbitos confirmados",
+          "atual" : false
+        },
+        {
+          "apelido" : "tod",
+          "nome" : "Total de óbitos descartados",
+          "atual" : false
+        }
+      ];
+
       Array.prototype.removeDuplicados = function() {
-        var u = {}, a = [];
-        for(var i = 0, l = this.length; i < l; ++i){
-          if(u.hasOwnProperty(this[i])) {
+
+        var
+          u = {},
+          a = []
+        ;
+
+        for ( var i = 0, l = this.length; i < l; ++i ) {
+
+          if ( u.hasOwnProperty( this[ i ] ) ) {
              continue;
           }
-          a.push(this[i]);
-          u[this[i]] = 1;
+
+          a.push( this[ i ] );
+          u[ this[ i ] ] = 1; 
+
         }
+
         return a;
+
       }
 
-      function removeCirculos() {
-          for(i=0; i<circulos.length; i++){
-              circulos[i].setMap(null);
-          }
-      }
+      function desenharBolhas( sem, cat ) {
 
-      function desenharBolhas( municipios, semana, categoria ) {
+        for ( var i = 0, leni = circulos.length; i < leni; i++ ) {
 
-        removeCirculos();
-        circulos = [];
-        pontos = [];
+          circulo = circulos[ i ];
+          municipio = municipios[ i ];
 
-        $.each( municipios, function( i, municipio ) {
+          for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) {
 
-          $.each( municipio.casos, function( j, caso ) {
+            caso = municipio.casos[ j ];
 
-            if ( caso.sem == semana ) { // default
+            if ( caso.sem == sem ) {
 
-              circulo = new google.maps.Marker({
+              circulo.setIcon({
 
-                title: municipio.nome,
-                position: municipio.geo,
-                icon: {
-                  path: google.maps.SymbolPath.CIRCLE,
-                  scale: Math.sqrt( caso[ categoria ] ) / Math.PI * 5, // a ultima multiplicação é só para ampliar, 
-                  fillColor: '#f4874c',
-                  fillOpacity: 0.33,
-                  strokeColor: '#f4874c',
-                  strokeWeight: 1
-                },
-                map: mapa
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * 5, 
+                fillColor: '#f4874c',
+                fillOpacity: 0.5,
+                strokeColor: '#f4874c',
+                strokeWeight: 0
 
               });
 
-              ponto = new google.maps.Marker({
-
-                title: municipio.nome,
-                position: municipio.geo,
-                icon: {
-                  path: google.maps.SymbolPath.CIRCLE,
-                  scale: 1,
-                  fillColor: '#000',
-                  fillOpacity: 0.75,
-                  strokeColor: '#f4874c',
-                  strokeWeight: 0
-                },
-                map: mapa
-
-              });
-
-              circulos.push( circulo );
-              pontos.push( ponto );
+              break;
 
             }
+            
+          }
 
-          });
-
-        });
+        }
       
+      }
+
+      function semanaAtual() {
+        semana = parseInt( $( '.semanas' ).val() );
+        return semana;
+      }
+
+      function categoriaAtual() {
+        categoria = $( '.categorias' ).val();
+        return categoria;
+      }
+
+      function mostraFicha( i, sem, cat ) {
+
+        municipio = municipios[ i ];
+
+        ficha.empty();
+
+        ficha.append( '<li>Município: ' + municipio.nome + '</li>' );
+        ficha.append( '<li>Semana: ' + sem + '</li>' );
+
+        for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) {
+
+          caso = municipio.casos[ j ];
+
+          if ( caso.sem == sem ) {
+
+            for ( var k = 0, lenk = categorias.length; k < lenk; k++ ) {
+
+              categoria = categorias[ k ];
+              var quantidade = caso[ categoria.apelido ] || 0;
+
+
+              ficha.append( '<li>' + categoria.nome + ': ' + quantidade + '</li>' );  
+
+            }            
+            
+            break;
+
+          }
+          
+        }
+
       }
 
       $( document ).ready( function() {
@@ -193,84 +275,77 @@
 
           municipios = dados;
 
-          $.each( municipios, function( i, municipio ) {
+          for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+
+            municipio = municipios[ i ];
 
             circulo = new google.maps.Marker({
 
+              indice: i,
+              id: municipio[ 'id' ],
+              map: mapa,
               title: municipio.nome,
               position: municipio.geo,
               icon: {
+
                 path: google.maps.SymbolPath.CIRCLE,
-                scale: 1, 
+                scale: 0, 
                 fillColor: '#f4874c',
-                fillOpacity: 0.33,
+                fillOpacity: 0.5,
                 strokeColor: '#f4874c',
-                strokeWeight: 1
-              },
-              map: mapa
+                strokeWeight: 0
+
+              }
 
             });
 
-            ponto = new google.maps.Marker({
+            circulo.addListener( 'click', function() {
 
-              title: municipio.nome,
-              position: municipio.geo,
-              icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 1,
-                fillColor: '#000',
-                fillOpacity: 0.75,
-                strokeColor: '#f4874c',
-                strokeWeight: 0
-              },
-              map: mapa
-
+              mostraFicha( this.indice, semanaAtual(), categoriaAtual() );
+              
             });
 
             circulos.push( circulo );
-            pontos.push( ponto );
 
-            $.each( municipio.casos, function( j, caso ) {
+            for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) {
+
+              caso = municipio.casos[ j ];
 
               semanas.push( caso.sem );
+              
+            }
 
-            });
-
-          });
+          }
 
           semanas = semanas.removeDuplicados();
 
-          $.each( semanas, function( i, semana ) {
+          for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
 
-            var atual = i == semanas.length - 1 ? ' selected' : '';
+            semana = semanas[ i ];
+
+            var atual = i == leni - 1 ? ' selected' : '';
+
             $( 'select.semanas' ).append( '<option value="' + semana + '"'+ atual +'>' + semana + '</option>' );
 
-          });
+          }
 
-          $.each( categorias, function( i, categoria ) {
+          for ( var i = 0, leni = categorias.length; i < leni; i++ ) {
+
+            categoria = categorias[ i ];
 
             var atual = categoria.atual ? ' selected' : '';
+
             $( 'select.categorias' ).append( '<option value="' + categoria.apelido + '"'+ atual +'>' + categoria.nome + '</option>' );
 
-          });
+          }
 
-          var
-            sem = parseInt( $( '.semanas' ).val() ),
-            cat = $( '.categorias' ).val()
-          ;
-
-          desenharBolhas( municipios, sem, cat );
+          desenharBolhas( semanaAtual(), categoriaAtual() );
 
         });
 
         $( document ).on( 'change', '.semanas, .categorias', function() {
 
-            var
-              sem = parseInt( $( '.semanas' ).val() ),
-              cat = $( '.categorias' ).val()
-            ;
-
-            desenharBolhas( municipios, sem, cat );
+          desenharBolhas( semanaAtual(), categoriaAtual() );
 
         });
 

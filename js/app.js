@@ -205,11 +205,11 @@ function clean( json, format ) {
 
       if ( format == 'json' ) {
       
-        $( 'body' ).html( JSON.stringify( municipios ) ); // JSON completo para download (com dados zerados e quantidades acumuladas)
+        $( 'body' ).html( JSON.stringify( municipios ) ); // JSON para a visualização (com dados zerados e quantidades acumuladas)
 
       }
 
-      // transformar dados acumulados em dados para cada semana individualmente:
+      // transformar dados acumulados em dados para cada semana individualmente
 
   });
 
