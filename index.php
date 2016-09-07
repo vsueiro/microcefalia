@@ -1,120 +1,381 @@
 <!DOCTYPE html>
 <html>
   <head>
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Tratamento de dados – TCC</title>
+
+    <title>Mapa de microcefalia no Brasil</title>
+
+    <style>
+
+      html,
+      body {
+        height: 100%;
+        font-family: 'Open Sans', sans-serif;
+      }
+      #mapa {
+        width: 970px;
+        height: 970px;
+      }
+      .ficha {
+        border: 2px solid #eee;
+      }
+
+    </style>
+
   </head>
   <body>
+
+    <h1>Microcefalia em recém nascidos no Brasil</h1>
+
+    <p>O mapa abaixo mostra a evolução dos casos de microcefalia e/ou alterações no sistema nervoso central, incluindo casos de óbito decorrentes desta condição. O tamanho dos círculos representa a quantidade de casos naquele município. É possível filtrar por cada semana da epidemia e também pelo tipo de caso (confirmado, investigado, descartado etc)</p>
+
+    <form>
+
+      <select class="semanas">
+        <option disabled>Escolha a semana epidemiológica</option>
+      </select>
+
+      <select class="categorias">
+        <option disabled>Escolha o tipo de caso</option>
+      </select>
+
+      <input type="search" name="municipio" placeholder="Buscar por município">
+
+    </form>
     
-    <p>Carregando dados...</p>
+    <br>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <div id="mapa"></div>
 
-    <script src="js/variaveis.js"></script>
-    <script src="js/funcoes.js"></script>
-    <script src="js/app.js"></script>
+    <ul class="ficha"></ul>
 
-    <!--
+    <br>
 
-    implementar:
+    <nav>
 
-        busca e filtros
-            por município
-            por semana
-            por categoria
-            natural language form?
+      <button>Baixar dados</button>
+      <button>Baixar svg (vetor)</button>
+      <button>Baixar pdf (impressão)</button>
+      <button>Incorporar ao meu site</button>
+      <button>Tela cheia</button>
 
-        dicionário
-            SE -> semana normal (ex: SE 20 equivale do dia X a Y do mês Z, do ano A)
-    
-        comparação
-            município A x município B no mesmo período
+    </nav>
 
-        gráficos
-            evolução de cada município quando selecionado
+    <br>
 
-        ranking
-            municípios com maior quantidade dos casos selecionados
-            municípios com menor quantidade dos casos selecionados
+    <footer>
 
-        processamento de dados no servidor (não via JS)
+      <dl>
 
-        mapa
-            com evolução dos casos
+        <dt>Método</dt>
+        <dd>
+          Praesent vitae massa vestibulum, fermentum purus ac, lacinia urna. Nam justo turpis, ultricies quis libero vel, laoreet porttitor elit. Sed hendrerit neque vel erat tincidunt tempor. Integer auctor auctor ligula. Donec sagittis lacinia tincidunt. Maecenas laoreet, risus quis blandit convallis, enim ante viverra mauris, sit amet volutpat nunc mi nec tortor. Donec nec elementum mi, id sodales urna. Aliquam laoreet sem in vestibulum mattis. Fusce auctor efficitur venenatis. Cras tortor lacus, eleifend vel est in, malesuada fringilla sapien. Quisque in diam nec leo mattis molestie ut ut lorem. In sit amet iaculis
+        </dd>
 
-        incorporação
-            iframe com parâmetros?
-            JS?
+        <dt>Fontes</dt>
+        <dd><a href="#">FonteA</a>, <a href="#">FonteB</a>, <a href="#">FonteC</a></dd>
 
-        git
-            disponibilizar repositório
+        <dt>Colabore</dt>
+        <dd>
+          Esta visualização de dados é de código aberto. Caso queira colaborar ou criar sua própria, utilize este <a href="#">repositório Git</a>
+        </dd>
 
-        download
-            vetorial (svg)
-            pdf (impressão)
+      </dl>
 
-        impressão
-            css print
-    
-        legendas
-            casos de microcefalia ou zika? RE: microcefalia e/ou alteração do SNC
-            tamanho do círculo
-            cores
-            categorias
+    </footer>
 
-        autoplay
-            default
-            opção de pausar
-            opção de retomar
+    <script>
 
-        slider (barra horizontal para selecionar as semanas)
-            seleção individual (SE X)
-            seleção grupo (SE X a Y)
+      var
+        municipios,
+        municipio,
+        circulos = [],
+        circulo,
+        semanas = [],
+        semana,
+        caso,
+        mapa,
+        ficha,
+        categorias,
+        categoria
+      ;
 
-        flexibilidade
-            permitir múltiplos anos
-            permitir incorporar dados de outros países?
-            permitir incorporar novos atributos aos dados?
+      function initMap() {
+        mapa = new google.maps.Map(document.getElementById('mapa'), {
+          zoom: 5,
+          minZoom: 2,
+          center: new google.maps.LatLng(-15.474053, -53.290964),    
+          styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"gamma":"0.00"},{"weight":"0.01"},{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"administrative.province","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#ffffff"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"},{"lightness":"32"},{"visibility":"on"}]},{"featureType":"road","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":"63"}]},{"featureType":"road.highway","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit.station","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#eeeeee"}]}], // https://snazzymaps.com/style/42346/for-beautiful-maps-to-hang-on-your-wall
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          zoomControl: true,
+          scrollWheel: false,
+          mapTypeControl: false,
+          scaleControl: false,
+          streetViewControl: false,
+          rotateControl: false,
+          fullscreenControl: false
+        });
 
-        explicações animadas / passo a passo
+      }
 
-        versão desktop
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoqFIX7oEYftU-MW9H49ivEpYtU6BZJRs&callback=initMap"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script>
 
-        versão celular
+      ficha = $( '.ficha' );
 
-        versão AR?
+      categorias = [ 
+        {
+          "apelido" : "ta",
+          "nome" : "Total acumulado",
+          "atual" : true
+        },
+        {
+          "apelido" : "ti",
+          "nome" : "Total investigado",
+          "atual" : false
+        },
+        {
+          "apelido" : "tc",
+          "nome" : "Total confirmado",
+          "atual" : false
+        },
+        {
+          "apelido" : "td",
+          "nome" : "Total descartado",
+          "atual" : false
+        },
+        {
+          "apelido" : "ton",
+          "nome" : "Total de óbitos notificados",
+          "atual" : false
+        },
+        {
+          "apelido" : "toi",
+          "nome" : "Total de óbitos investigados",
+          "atual" : false
+        },
+        {
+          "apelido" : "toc",
+          "nome" : "Total de óbitos confirmados",
+          "atual" : false
+        },
+        {
+          "apelido" : "tod",
+          "nome" : "Total de óbitos descartados",
+          "atual" : false
+        }
+      ];
 
-        versão 3D?
 
-    -->
 
-    <!--
-  
-    data: lista-microcefalia-2016-08-21.json
-    src:  http://sage.saude.gov.br/paineis/microcefalia/listaMicrocefalia.php?output=json&ufs=&ibges=&cg=&tc=&re_giao=&rm=&qs=&ufcidade=Brasil&qt=5570%20munic%C3%ADpios&pop=204482459&cor=005984&nonono=html&title=&codPainel=176
-    obs:  Atualizado até 17/08/2016 às 00:00
-  
-    data: codigo-dos-municipios.json
-    src:  ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/divisao_territorial/2015/dtb_2015.zip
-    obs:  nome certo dos municípios
+      Array.prototype.removeDuplicados = function() {
 
-    data: codigo-dos-municipios-talvez-mais-completo.json
-    src:  ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/divisao_territorial/2015/dtb_2015.zip (arquivo: RELATORIO_DTB_BRASIL_MUNICIPIO.xls)
-    obs:  checar se bate com o outro json (2 fontes diferentes)
+        var
+          u = {},
+          a = []
+        ;
 
-    data: codigo-das-UF.js
-    src:  ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/divisao_territorial/2015/dtb_2015.zip
-    obs:  lista com código de UF (2 primeiros dígitos dos códigos de município)
+        for ( var i = 0, l = this.length; i < l; ++i ) {
 
-    data: br-localidades-2010-v1.kml
-    src:  ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/localidades/Google_KML/
-    obs:  haviam apenas 5565 cidades, adicionei 5 cidades novas (constavam como vilas). os códigos IBGE dessas 5 se REPETEM, preciso achar o código certo
+          if ( u.hasOwnProperty( this[ i ] ) ) {
+             continue;
+          }
 
-    data: códigos os 5 municípios novos
-    src:  http://www.ibge.gov.br/home/geociencias/areaterritorial/area.shtm
-    obs:  busquei pelo nome do município e ele retornou o código
+          a.push( this[ i ] );
+          u[ this[ i ] ] = 1; 
 
-    -->
+        }
+
+        return a;
+
+      }
+
+      function desenharBolhas( sem, cat ) {
+
+        for ( var i = 0, leni = circulos.length; i < leni; i++ ) {
+
+          circulo = circulos[ i ];
+          municipio = municipios[ i ];
+
+          for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) {
+
+            caso = municipio.casos[ j ];
+
+            if ( caso.sem == sem ) {
+
+              circulo.setIcon({
+
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * 5, 
+                fillColor: '#f4874c',
+                fillOpacity: 0.5,
+                strokeColor: '#f4874c',
+                strokeWeight: 0
+
+              });
+
+              break;
+
+            }
+            
+          }
+
+        }
+      
+      }
+
+      function UF( n, output ) {
+
+        var id = n.toString().substring(0, 2);
+
+        for ( var i = 0, leni = UFs.length; i < leni; i++ ) {
+
+          if ( UFs[ i ][ 'id' ] == id ) {
+
+            return UFs[ i ][ output ];
+
+          }
+
+        }
+
+      }
+
+      function semanaAtual() {
+        semana = parseInt( $( '.semanas' ).val() );
+        return semana;
+      }
+
+      function categoriaAtual() {
+        categoria = $( '.categorias' ).val();
+        return categoria;
+      }
+
+      function mostraFicha( i, sem, cat ) {
+
+        municipio = municipios[ i ];
+
+        ficha.empty();
+
+        ficha.append( '<li>Município: ' + municipio.nome + '</li>' );
+        ficha.append( '<li>UF: ' + UF( municipio[ 'id' ], 'nome' ) + '</li>' );
+        ficha.append( '<li>Semana: ' + sem + '</li>' );
+
+        for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) {
+
+          caso = municipio.casos[ j ];
+
+          if ( caso.sem == sem ) {
+
+            for ( var k = 0, lenk = categorias.length; k < lenk; k++ ) {
+
+              categoria = categorias[ k ];
+              var quantidade = caso[ categoria.apelido ] || 0;
+
+              ficha.append( '<li>' + categoria.nome + ': ' + quantidade + '</li>' );  
+
+            }            
+            
+            break;
+
+          }
+          
+        }
+
+      }
+
+      $( document ).ready( function() {
+
+        $.getJSON( 'data/codigo-das-UF.json', function( dados ) {
+
+          UFs = dados;
+
+        });
+
+        $.getJSON( 'data/lista-microcefalia-2016-08-21-clean-sem-itens-zerados.json', function( dados ) {
+
+          municipios = dados;
+
+          for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+
+            municipio = municipios[ i ];
+
+            circulo = new google.maps.Marker({
+
+              indice: i,
+              id: municipio[ 'id' ],
+              map: mapa,
+              title: municipio.nome,
+              position: municipio.geo,
+              icon: {
+
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 0, 
+                fillColor: '#f4874c',
+                fillOpacity: 0.5,
+                strokeColor: '#f4874c',
+                strokeWeight: 0
+
+              }
+
+            });
+
+            circulo.addListener( 'click', function() {
+
+              mostraFicha( this.indice, semanaAtual(), categoriaAtual() );
+              
+            });
+
+            circulos.push( circulo );
+
+            for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) {
+
+              caso = municipio.casos[ j ];
+
+              semanas.push( caso.sem );
+              
+            }
+
+          }
+
+          semanas = semanas.removeDuplicados();
+
+          for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
+
+            semana = semanas[ i ];
+
+            var atual = i == leni - 1 ? ' selected' : '';
+
+            $( 'select.semanas' ).append( '<option value="' + semana + '"'+ atual +'>' + semana + '</option>' );
+
+          }
+
+          for ( var i = 0, leni = categorias.length; i < leni; i++ ) {
+
+            categoria = categorias[ i ];
+
+            var atual = categoria.atual ? ' selected' : '';
+
+            $( 'select.categorias' ).append( '<option value="' + categoria.apelido + '"'+ atual +'>' + categoria.nome + '</option>' );
+
+          }
+
+          desenharBolhas( semanaAtual(), categoriaAtual() );
+
+        });
+
+        $( document ).on( 'change', '.semanas, .categorias', function() {
+
+          desenharBolhas( semanaAtual(), categoriaAtual() );
+
+        });
+
+      });
+
+    </script>
 
   </body>
 </html>
