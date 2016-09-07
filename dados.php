@@ -114,6 +114,10 @@
     src:  http://www.ibge.gov.br/home/geociencias/areaterritorial/area.shtm
     obs:  busquei pelo nome do município e ele retornou o código
 
+    data: semanas-epidemiologicas.json
+    src:  http://combateaedes.saude.gov.br/pt/situacao-epidemiologica#informes
+    obs:  as datas foram extraídas dos nomes dos links para os Informes Epidemiológicos. Nos informes constam detalhes sobre como são contadas as semanas epidemiológicas
+
     -->
 
   </body>
