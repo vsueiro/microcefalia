@@ -70,11 +70,9 @@ function atualizaCirculos( sem, cat ) {
 
   }
 
-  console.log( sem );
-
 }
 
-function UF( n, output ) {
+function UF( n, retorno ) {
 
   var id = n.toString().substring(0, 2);
 
@@ -82,7 +80,7 @@ function UF( n, output ) {
 
     if ( UFs[ i ][ 'id' ] == id ) {
 
-      return UFs[ i ][ output ];
+      return UFs[ i ][ retorno ];
 
     }
 
@@ -117,7 +115,7 @@ function dataDaSemana( sem, ano, data ) {
 
       var partes = dataDasSemanas[ i ][ data ].split( '-' ); // YYYY-MM-DD
 
-      return partes[ 2 ] + ' de ' + meses[ parseInt( partes[ 1 ] ) + 1 ] + ' de ' + partes[ 0 ]; // DD de mmmm de YYYY
+      return parseInt( partes[ 2 ] ) + ' de ' + meses[ parseInt( partes[ 1 ] ) - 1 ] + ' de ' + partes[ 0 ]; // DD de mmmm de YYYY
 
     }
 
@@ -165,7 +163,7 @@ function desenhaCirculos() {
 
   });
 
-  $.getJSON( 'data/lista-microcefalia-2016-08-21-clean-sem-itens-zerados.json', function( dados ) {
+  $.getJSON( 'data/lista-microcefalia-2016-09-08.json', function( dados ) {
 
     municipios = dados;
 
@@ -212,6 +210,8 @@ function desenhaCirculos() {
     }
 
     semanas = semanas.removeDuplicados();
+
+    console.log( semanas );
 
     for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
 

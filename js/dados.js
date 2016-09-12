@@ -217,4 +217,9 @@ function clean( json, format ) {
 
 }
 
-clean( caminho + 'data/lista-microcefalia-2016-08-21.json', 'json' );
+// clean( caminho + 'data/lista-microcefalia-2016-08-21.json', 'json' );
+
+clean( caminho + 'data/lista-microcefalia-2016-09-08-sage.json', 'json' );
+
+
+
