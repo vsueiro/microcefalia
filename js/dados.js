@@ -15,13 +15,13 @@ function cleanCSV( data ) {
 
     var ano = casoMaisRecente.ano;
     var sem = casoMaisRecente.sem;
-    var ta  = casoMaisRecente.ta;
+    var tn  = casoMaisRecente.tn;
 
     // precisa adicionar todas as categorias em todas as semanas
 
-    if ( ta > 0 ) {
+    if ( tn > 0 ) {
 
-      csv += m[ 'id' ] + ',' + m.nome + ',' + m.coordenadas.lat + ',' + m.coordenadas.lon + ',' + ano + ',' + sem + ',' + ta + '<br>';
+      csv += m[ 'id' ] + ',' + m.nome + ',' + m.coordenadas.lat + ',' + m.coordenadas.lon + ',' + ano + ',' + sem + ',' + tn + '<br>';
       quantidade++;
 
     }
@@ -64,7 +64,7 @@ function clean( json, format ) {
 
             "ano" : parseInt( dados[4]  ),
             "sem" : parseInt( dados[3]  ),
-            "ta"  : parseInt( dados[5]  ),
+            "tn"  : parseInt( dados[5]  ),
             "ti"  : parseInt( dados[6]  ),
             "tc"  : parseInt( dados[7]  ),
             "td"  : parseInt( dados[8]  ),
@@ -93,7 +93,7 @@ function clean( json, format ) {
 
             "ano" : parseInt( dados[4]  ),
             "sem" : parseInt( dados[3]  ),
-            "ta"  : parseInt( dados[5]  ),
+            "tn"  : parseInt( dados[5]  ),
             "ti"  : parseInt( dados[6]  ),
             "tc"  : parseInt( dados[7]  ),
             "td"  : parseInt( dados[8]  ),
@@ -168,9 +168,9 @@ function clean( json, format ) {
 
         $.each( municipio.casos, function( j, caso ) {
 
-          if (caso.ta == 0) {
+          if (caso.tn == 0) {
             // console.log( 'deletado caso.ta (' + caso.ta + ')' );
-            delete caso.ta;
+            delete caso.tn;
           }
           if (caso.ti == 0) {
             // console.log( 'deletado caso.ti (' + caso.ti + ')' );

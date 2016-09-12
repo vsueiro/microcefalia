@@ -17,7 +17,16 @@
 
       <p>O mapa abaixo mostra a evolução dos casos de microcefalia e/ou alterações no sistema nervoso central, incluindo casos de óbito decorrentes desta condição. O tamanho dos círculos representa a quantidade de casos naquele município. É possível filtrar por cada semana da epidemia e também pelo tipo de caso (confirmado, investigado, descartado etc)</p>
 
-      <!-- <p>Dados atualizados até 8 de setembro de 2016</p> -->
+      <section class="totais">
+        
+        <p></p>
+
+        <ul>
+          <li data-caso="tc"></li>
+          <li data-caso="toc"></li>
+        </ul>
+
+      </section>
 
       <form>
 
@@ -61,14 +70,20 @@
           <dd>
             No período entre a semana epidemiológica 45/2015 e a 05/2016 (8 de novembro de 2015 a 6 de fevereiro de 2016, respectivamente) os casos eram informados de forma agregada por UF; a desagregação por município e de acordo com a classificação (notificados, em investigação, confirmados e descartados) só teve início a partir da semana epidemiológica 06/2016 (7 de fevereiro de 2016)
           </dd>
+          <dd>
+            Total Acumulado = Total Notificado = Total Investigado + Total Confirmado + Total Descartado
+          </dd>
+          <dd>
+            Total Óbito Notificado = Total Óbito Investigado + Total Óbito Confirmado + Total Óbito Descartado
+          </dd>
 
           <dt>Método</dt>
           <dd>
-            Praesent vitae massa vestibulum, fermentum purus ac, lacinia urna. Nam justo turpis, ultricies quis libero vel, laoreet porttitor elit. Sed hendrerit neque vel erat tincidunt tempor. Integer auctor auctor ligula. Donec sagittis lacinia tincidunt. Maecenas laoreet, risus quis blandit convallis, enim ante viverra mauris, sit amet volutpat nunc mi nec tortor. Donec nec elementum mi, id sodales urna. Aliquam laoreet sem in vestibulum mattis. Fusce auctor efficitur venenatis. Cras tortor lacus, eleifend vel est in, malesuada fringilla sapien. Quisque in diam nec leo mattis molestie ut ut lorem. In sit amet iaculis
+            -
           </dd>
 
           <dt>Fontes</dt>
-          <dd><a href="#">FonteA</a>, <a href="#">FonteB</a>, <a href="#">FonteC</a></dd>
+          <dd>-</dd>
 
           <dt>Colabore</dt>
           <dd>

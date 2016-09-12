@@ -45,7 +45,10 @@ body {
 .grafico ol li .barra {
 	height: 20px;
     background: #ccc;
-    box-shadow: 0 0 0 1px #fff;
+}
+
+.grafico ol li + li .barra {
+    border-left: 1px solid #fff;
 }
 
 .grafico ol li span {

@@ -156,18 +156,25 @@ function mostraFicha( i, sem, cat ) {
 
     }
 
-    console.log( caso.sem );
-    console.log( '==' );
-    console.log( semanaAtual() );
     var semanaSelecionada = caso.sem == semanaAtual().numero ? 'selecionada' : '';
     var numeroCasos = caso[ cat ] === undefined ? 'sem dados' : caso[ cat ];
     var alturaBarra = caso[ cat ] > 1 ? caso[ cat ] / 2 : 1;
 
-    grafico += '<li><span>' + numeroCasos + '</span><div class="barra ' + semanaSelecionada + '" data-caso-' + cat + '="' + numeroCasos + '" data-caso-sem="' + caso.sem + '" style="height:' + alturaBarra + 'px"></div><span>' + caso.sem + '</span></li>' ;
+    grafico += '<li><span>' + numeroCasos + '</span><div class="barra ' + semanaSelecionada + '" data-caso-' + cat + '="' + numeroCasos + '" data-caso-sem="' + caso.sem + '" style="height:' + alturaBarra + 'px"></div><span>Semana ' + caso.sem + '</span></li>' ;
     
   }
 
   ficha.append( '<li class="grafico"><ol>' + grafico + '</ol></li>' );
+
+}
+
+function ultimo( data ) {
+
+  if ( data == 'semana' )
+    return dataDasSemanas[ 0 ].numero;
+
+  if ( data == 'ano' )
+    return dataDasSemanas[ 0 ].ano;
 
 }
 
@@ -220,14 +227,28 @@ function desenhaCirculos() {
         caso = municipio.casos[ j ];
 
         semanas.push( caso.sem + '/' + caso.ano );
+
+        if ( caso.sem == ultimo( 'semana' ) ) { // semana mais recente no geral
+
+          for ( var k = 0, lenk = categorias.length; k < lenk; k++ ) {
+
+            categoria = categorias[ k ];
+
+            if ( caso[ categoria.apelido ] ) { // se este municipio tem dados sobre esta categoria em sua semana mais recente
+
+              categoria.total += caso[ categoria.apelido ];
+
+            }
+
+          }
+
+        }
         
       }
 
     }
 
     semanas = semanas.removeDuplicados();
-
-    console.log( semanas );
 
     for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
 
@@ -244,6 +265,8 @@ function desenhaCirculos() {
 
     }
 
+    $( '.totais p' ).text( 'Até o dia ' + dataDaSemana( ultimo( 'semana' ), ultimo( 'ano' ), 'fim' ) + ':' );
+
     for ( var i = 0, leni = categorias.length; i < leni; i++ ) {
 
       categoria = categorias[ i ];
@@ -251,6 +274,8 @@ function desenhaCirculos() {
       var atual = categoria.atual ? ' selected' : '';
 
       $( 'select.categorias' ).append( '<option value="' + categoria.apelido + '"'+ atual +'>' + categoria.nome + '</option>' );
+
+      $( '.totais li[data-caso="' + categoria.apelido + '"]' ).text( categoria.nome + ': ' + categoria.total );
 
     }
 

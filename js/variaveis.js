@@ -39,43 +39,51 @@ semanas = [];
 categorias = [ 
 
     {
-      "apelido" : "ta",
-      "nome" : "Total acumulado",
+      "apelido" : "tn",
+      "nome" : "Total notificado",
+      "total" : 0,
       "atual" : false
     },
     {
       "apelido" : "ti",
       "nome" : "Total investigado",
+      "total" : 0,
       "atual" : false
     },
     {
       "apelido" : "tc",
       "nome" : "Total confirmado", // azul
+      "total" : 0,
       "atual" : true
     },
     {
       "apelido" : "td",
       "nome" : "Total descartado", 
+      "total" : 0,
       "atual" : false
     },
     {
       "apelido" : "ton",
       "nome" : "Total de óbitos notificados",
+      "total" : 0,
       "atual" : false
     },
     {
       "apelido" : "toi",
       "nome" : "Total de óbitos investigados",
+      "total" : 0,
       "atual" : false
     },
     {
       "apelido" : "toc",
       "nome" : "Total de óbitos confirmados", // cinza
+      "total" : 0,
       "atual" : false
     },
     {
       "apelido" : "tod",
       "nome" : "Total de óbitos descartados",
+      "total" : 0,
       "atual" : false
     }
 
