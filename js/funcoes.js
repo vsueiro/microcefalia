@@ -156,10 +156,14 @@ function mostraFicha( i, sem, cat ) {
 
     }
 
+    console.log( caso.sem );
+    console.log( '==' );
+    console.log( semanaAtual() );
+    var semanaSelecionada = caso.sem == semanaAtual().numero ? 'selecionada' : '';
     var numeroCasos = caso[ cat ] === undefined ? 'sem dados' : caso[ cat ];
     var alturaBarra = caso[ cat ] > 1 ? caso[ cat ] / 2 : 1;
 
-    grafico += '<li><span>' + numeroCasos + '</span><div class="barra" data-caso-ta="' + numeroCasos + '" style="height:' + alturaBarra + 'px"></div><span>' + caso.sem + '</span></li>' ;
+    grafico += '<li><span>' + numeroCasos + '</span><div class="barra ' + semanaSelecionada + '" data-caso-' + cat + '="' + numeroCasos + '" data-caso-sem="' + caso.sem + '" style="height:' + alturaBarra + 'px"></div><span>' + caso.sem + '</span></li>' ;
     
   }
 

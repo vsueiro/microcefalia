@@ -60,3 +60,7 @@ body {
 .grafico ol li:hover .barra {
 	background: #999;
 }
+
+.grafico ol li .barra.selecionada {
+    background: #0088cc;
+}
