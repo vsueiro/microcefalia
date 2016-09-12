@@ -22,16 +22,17 @@ Array.prototype.removeDuplicados = function() {
 
 function atualizaCirculos( sem, cat ) {
 
-  for ( var i = 0, leni = circulos.length; i < leni; i++ ) {
+  for ( var i = 0, leni = circulos.length; i < leni; i++ ) { // para cada círculo no mapa
 
     circulo = circulos[ i ];
     municipio = municipios[ i ];
+    consta = false;
 
-    for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) {
+    for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) { // para cada caso do respectivo município
 
       caso = municipio.casos[ j ];
 
-      if ( caso.sem == sem ) {
+      if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
 
         circulo.setIcon({
 
@@ -44,13 +45,32 @@ function atualizaCirculos( sem, cat ) {
 
         });
 
+        consta = true;
+
         break;
 
       }
-      
+
+    }
+
+    if ( !consta ) { // se não há informação, zera o círculo
+
+      circulo.setIcon({
+
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 0, 
+        fillColor: cor.circulo.normal,
+        fillOpacity: 0.5,
+        strokeColor: cor.circulo.normal,
+        strokeWeight: 0
+
+      });
+
     }
 
   }
+
+  console.log( sem );
 
 }
 
@@ -72,7 +92,12 @@ function UF( n, output ) {
 
 function semanaAtual() {
 
-  semana = parseInt( $( '.semanas' ).val() );
+  semana = $( '.semanas' ).val();
+  semana = semana.split( '/' );
+  semana = {
+    "numero" : parseInt( semana[ 0 ] ),
+    "ano" : parseInt( semana[ 1 ] )
+  };
   return semana;
 
 }
@@ -84,6 +109,22 @@ function categoriaAtual() {
 
 }
 
+function dataDaSemana( sem, ano, data ) {
+
+  for ( var i = 0, leni = dataDasSemanas.length; i < leni; i++ ) {
+
+    if ( sem == dataDasSemanas[ i ][ 'numero' ] && ano == dataDasSemanas[ i ][ 'ano' ] ) {
+
+      var partes = dataDasSemanas[ i ][ data ].split( '-' ); // YYYY-MM-DD
+
+      return partes[ 2 ] + ' de ' + meses[ parseInt( partes[ 1 ] ) + 1 ] + ' de ' + partes[ 0 ]; // DD de mmmm de YYYY
+
+    }
+
+  }
+        
+}
+
 function mostraFicha( i, sem, cat ) {
 
   municipio = municipios[ i ];
@@ -91,13 +132,13 @@ function mostraFicha( i, sem, cat ) {
   ficha.empty();
   ficha.append( '<li>Município: ' + municipio.nome + '</li>' );
   ficha.append( '<li>UF: ' + UF( municipio[ 'id' ], 'nome' ) + '</li>' );
-  ficha.append( '<li>Semana: ' + sem + '</li>' );
+  ficha.append( '<li>Semana: ' + sem.numero + '</li>' );
 
   for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) {
 
     caso = municipio.casos[ j ];
 
-    if ( caso.sem == sem ) {
+    if ( caso.sem == sem.numero ) {
 
       for ( var k = 0, lenk = categorias.length; k < lenk; k++ ) {
 
@@ -164,7 +205,7 @@ function desenhaCirculos() {
 
         caso = municipio.casos[ j ];
 
-        semanas.push( caso.sem );
+        semanas.push( caso.sem + '/' + caso.ano );
         
       }
 
@@ -175,10 +216,15 @@ function desenhaCirculos() {
     for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
 
       semana = semanas[ i ];
+      semana = semana.split( '/' );
+      semana = {
+        "numero" : parseInt( semana[ 0 ] ),
+        "ano" : parseInt( semana[ 1 ] )
+      };
 
       var atual = i == leni - 1 ? ' selected' : '';
 
-      $( 'select.semanas' ).append( '<option value="' + semana + '"'+ atual +'>' + semana + '</option>' );
+      $( 'select.semanas' ).append( '<option value="' + semana.numero + '/' + semana.ano + '"'+ atual +'>Semana ' + semana.numero + ' (' + dataDaSemana( semana.numero, semana.ano, 'inicio' ) + ' a ' + dataDaSemana( semana.numero, semana.ano, 'fim' ) + ')</option>' );
 
     }
 
