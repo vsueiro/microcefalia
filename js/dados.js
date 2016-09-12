@@ -40,7 +40,7 @@ function clean( json, format ) {
 
   var municipiosCoordenadas;
 
-  $.getJSON( caminho + 'data/br-localidades-2010-v1.json', function( dados ) {
+  $.getJSON( caminho + 'data/br-localidades-2010.json', function( dados ) {
 
     municipiosCoordenadas = dados;
 
