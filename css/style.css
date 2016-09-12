@@ -1,0 +1,62 @@
+/* geral */
+
+html,
+body {
+	height: 100%;
+	font-family: 'Open Sans', sans-serif;
+}
+
+#mapa {
+	width: 970px;
+	height: 970px;
+}
+
+.ficha {
+	border: 2px solid #eee;
+}
+
+.selecionada {
+	font-weight: bold;
+}
+
+
+/* grafico de barras */
+
+.grafico {
+    list-style-type: none;
+}
+
+.grafico ol {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.grafico ol li {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin: 8px 0;
+    width: 8px;
+    text-align: center;
+}
+
+.grafico ol li .barra {
+	height: 20px;
+    background: #ccc;
+    box-shadow: 0 0 0 1px #fff;
+}
+
+.grafico ol li span {
+    visibility: hidden;
+    z-index: 1;
+}
+
+.grafico ol li:hover span {
+    visibility: visible;
+}
+
+.grafico ol li:hover .barra {
+	background: #999;
+}

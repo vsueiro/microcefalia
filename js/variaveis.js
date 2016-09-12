@@ -13,10 +13,13 @@ var
     cor,
     consta,
     dataDasSemanas,
-    meses
+    meses,
+    visualizacao
 ;
 
 ficha = $( '.ficha' );
+
+visualizacao = $( '.visualizacao' );
 
 cor = {
 

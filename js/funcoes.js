@@ -125,6 +125,10 @@ function dataDaSemana( sem, ano, data ) {
 
 function mostraFicha( i, sem, cat ) {
 
+  visualizacao
+    .attr( 'data-ficha', 'true' )
+    .attr( 'data-municipio', i );
+
   municipio = municipios[ i ];
 
   ficha.empty();
@@ -132,26 +136,34 @@ function mostraFicha( i, sem, cat ) {
   ficha.append( '<li>UF: ' + UF( municipio[ 'id' ], 'nome' ) + '</li>' );
   ficha.append( '<li>Semana: ' + sem.numero + '</li>' );
 
-  for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) {
+  var grafico = '';
 
-    caso = municipio.casos[ j ];
+  for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) { // para cada semana epidemiológica do município
+
+    caso = municipio.casos[ i ];
 
     if ( caso.sem == sem.numero ) {
 
-      for ( var k = 0, lenk = categorias.length; k < lenk; k++ ) {
+      for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
 
-        categoria = categorias[ k ];
+        categoria = categorias[ j ];
         var quantidade = caso[ categoria.apelido ] || 0;
+        var selecionada = categoria.apelido == cat ? 'selecionada' : '';
 
-        ficha.append( '<li>' + categoria.nome + ': ' + quantidade + '</li>' );  
+        ficha.append( '<li class="' + selecionada + '">' + categoria.nome + ': ' + quantidade + '</li>' );  
 
       }
-      
-      break;
 
     }
+
+    var numeroCasos = caso[ cat ] === undefined ? 'sem dados' : caso[ cat ];
+    var alturaBarra = caso[ cat ] > 1 ? caso[ cat ] / 2 : 1;
+
+    grafico += '<li><span>' + numeroCasos + '</span><div class="barra" data-caso-ta="' + numeroCasos + '" style="height:' + alturaBarra + 'px"></div><span>' + caso.sem + '</span></li>' ;
     
   }
+
+  ficha.append( '<li class="grafico"><ol>' + grafico + '</ol></li>' );
 
 }
 
@@ -251,10 +263,9 @@ function criaMapa() {
     minZoom: 5,
     center: new google.maps.LatLng(-15.474053, -53.290964),    
     styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"gamma":"0.00"},{"weight":"0.01"},{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"administrative.province","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#ffffff"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"},{"lightness":"32"},{"visibility":"on"}]},{"featureType":"road","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":"63"}]},{"featureType":"road.highway","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit.station","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#eeeeee"}]}],
-    // https://snazzymaps.com/style/42346/for-beautiful-maps-to-hang-on-your-wall
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     zoomControl: true,
-    scrollWheel: false,
+    scrollwheel: false,
     mapTypeControl: false,
     scaleControl: false,
     streetViewControl: false,
