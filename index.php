@@ -2,11 +2,11 @@
 <html>
   <head>
 
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
-    <title>Mapa de microcefalia no Brasil</title>
+    <title>Mapa da microcefalia no Brasil</title>
 
   </head>
   <body>
