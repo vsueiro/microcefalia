@@ -1,32 +1,45 @@
 var
-    municipios,
-    municipio,
-    circulos,
-    circulo,
-    semanas,
-    semana,
-    caso,
-    mapa,
-    ficha,
-    categorias,
-    categoria,
-    cor,
-    consta,
-    dataDasSemanas,
-    meses,
-    visualizacao
+  municipios,
+  municipio,
+  circulos,
+  circulo,
+  semanas,
+  semana,
+  caso,
+  mapa,
+  ficha,
+  categorias,
+  categoria,
+  cor,
+  consta,
+  dataDasSemanas,
+  meses,
+  visualizacao,
+  selecionado,
+  tamanho,
+  amplitude
 ;
+
+amplitude = 7.5;
 
 ficha = $( '.ficha' );
 
 visualizacao = $( '.visualizacao' );
+
+tamanho = {
+
+  "selecionado" : 0,
+  "outros" : 0
+
+};
 
 cor = {
 
     "circulo" : {
         
         "normal" : "#0088cc",
-        "destaque" : "#2c66ce"
+        "destaque" : "#2c66ce",
+        "selecionado" : "#000000"
 
     }
 

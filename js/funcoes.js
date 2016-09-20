@@ -34,16 +34,33 @@ function atualizaCirculos( sem, cat ) {
 
       if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
 
-        circulo.setIcon({
+        if ( circulo == selecionado ) {
 
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * 5, 
-          fillColor: cor.circulo.normal,
-          fillOpacity: 0.5,
-          strokeColor: cor.circulo.normal,
-          strokeWeight: 0
+          circulo.setIcon({
 
-        });
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * amplitude, 
+            fillColor: cor.circulo.destaque,
+            fillOpacity: 0.75,
+            strokeColor: cor.circulo.selecionado,
+            strokeWeight: 1
+
+          });
+
+        } else {
+
+          circulo.setIcon({
+
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * amplitude, 
+            fillColor: cor.circulo.normal,
+            fillOpacity: 0.33,
+            strokeColor: cor.circulo.normal,
+            strokeWeight: 0
+
+          });
+
+        }
 
         consta = true;
 
@@ -60,7 +77,7 @@ function atualizaCirculos( sem, cat ) {
         path: google.maps.SymbolPath.CIRCLE,
         scale: 0, 
         fillColor: cor.circulo.normal,
-        fillOpacity: 0.5,
+        fillOpacity: 0.33,
         strokeColor: cor.circulo.normal,
         strokeWeight: 0
 
@@ -206,7 +223,7 @@ function desenhaCirculos() {
           path: google.maps.SymbolPath.CIRCLE,
           scale: 0, 
           fillColor: cor.circulo.normal,
-          fillOpacity: 0.5,
+          fillOpacity: 0.33,
           strokeColor: cor.circulo.normal,
           strokeWeight: 0
 
@@ -216,8 +233,77 @@ function desenhaCirculos() {
 
       circulo.addListener( 'click', function() {
 
+        if ( selecionado ) {
+          selecionado.setIcon({
+
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: tamanho.selecionado, 
+            fillColor: cor.circulo.normal,
+            fillOpacity: 0.33,
+            strokeColor: cor.circulo.normal,
+            strokeWeight: 0
+
+          });
+
+        } 
+
         mostraFicha( this.indice, semanaAtual(), categoriaAtual() );
+
+        selecionado = this;
+
+        tamanho.selecionado = this.icon.scale;
+
+        this.setIcon({
+
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: tamanho.selecionado, 
+          fillColor: cor.circulo.destaque,
+          fillOpacity: 0.75,
+          strokeColor: cor.circulo.selecionado,
+          strokeWeight: 1
+
+        });
         
+      });
+
+      circulo.addListener( 'mouseover', function() {
+
+        if ( this != selecionado ) {
+
+          tamanho.outros = this.icon.scale;
+
+          this.setIcon({
+
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: tamanho.outros, 
+            fillColor: cor.circulo.normal,
+            fillOpacity: 0.75,
+            strokeColor: cor.circulo.destaque,
+            strokeWeight: 1
+
+          });
+
+        }
+
+      });
+
+      circulo.addListener( 'mouseout', function() {
+
+        if ( this != selecionado ) {
+
+          this.setIcon({
+
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: tamanho.outros, 
+            fillColor: cor.circulo.normal,
+            fillOpacity: 0.33,
+            strokeColor: cor.circulo.normal,
+            strokeWeight: 0
+
+          });
+
+        }
+
       });
 
       circulos.push( circulo );
