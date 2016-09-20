@@ -40,7 +40,7 @@ function atualizaCirculos( sem, cat ) {
 
             path: google.maps.SymbolPath.CIRCLE,
             scale: Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * amplitude, 
-            fillColor: cor.circulo.destaque,
+            fillColor: cor.circulo.normal,
             fillOpacity: 0.75,
             strokeColor: cor.circulo.selecionado,
             strokeWeight: 1
@@ -257,7 +257,7 @@ function desenhaCirculos() {
 
           path: google.maps.SymbolPath.CIRCLE,
           scale: tamanho.selecionado, 
-          fillColor: cor.circulo.destaque,
+          fillColor: cor.circulo.normal,
           fillOpacity: 0.75,
           strokeColor: cor.circulo.selecionado,
           strokeWeight: 1
@@ -277,7 +277,7 @@ function desenhaCirculos() {
             path: google.maps.SymbolPath.CIRCLE,
             scale: tamanho.outros, 
             fillColor: cor.circulo.normal,
-            fillOpacity: 0.75,
+            fillOpacity: 0.66,
             strokeColor: cor.circulo.destaque,
             strokeWeight: 1
 
