@@ -164,46 +164,49 @@ function clean( json, format ) {
 
       */
       
-      $.each( municipios, function( i, municipio ) { // remover dados zerados
+      // remover casos e municípios zerados
+      {
+        var i = municipios.length;
 
-        $.each( municipio.casos, function( j, caso ) {
+        while ( i-- ) {
 
-          if (caso.tn == 0) {
-            // console.log( 'deletado caso.ta (' + caso.ta + ')' );
-            delete caso.tn;
-          }
-          if (caso.ti == 0) {
-            // console.log( 'deletado caso.ti (' + caso.ti + ')' );
-            delete caso.ti;
-          }
-          if (caso.tc == 0) {
-            // console.log( 'deletado caso.tc (' + caso.tc + ')' );
-            delete caso.tc;
-          }
-          if (caso.td == 0) {
-            // console.log( 'deletado caso.td (' + caso.td + ')' );
-            delete caso.td;
-          }
-          if (caso.ton == 0) {
-            // console.log( 'deletado caso.ton (' + caso.ton + ')' );
-            delete caso.ton;
-          }
-          if (caso.toi == 0) {
-            // console.log( 'deletado caso.toi (' + caso.toi + ')' );
-            delete caso.toi;
-          }
-          if (caso.toc == 0) {
-            // console.log( 'deletado caso.toc (' + caso.toc + ')' );
-            delete caso.toc;
-          }
-          if (caso.tod == 0) {
-            // console.log( 'deletado caso.tod (' + caso.tod + ')' );
-            delete caso.tod;
+          var j = municipios[ i ].casos.length;
+          var empty = true;
+
+          while ( j-- ) {
+
+            var caso = municipios[ i ].casos[ j ];
+
+            if ( caso.tn  == 0 ) delete caso.tn;
+            if ( caso.ti  == 0 ) delete caso.ti;
+            if ( caso.tc  == 0 ) delete caso.tc;
+            if ( caso.td  == 0 ) delete caso.td;
+            if ( caso.ton == 0 ) delete caso.ton;
+            if ( caso.toi == 0 ) delete caso.toi;
+            if ( caso.toc == 0 ) delete caso.toc;
+            if ( caso.tod == 0 ) delete caso.tod;
+
+            if ( Object.keys( caso ).length > 2 ) {
+              
+              empty = false;
+
+            } else {
+
+              municipios[ i ].casos.splice( j, 1 );
+
+            }
+
           }
 
-        });
+          if ( empty ) {
 
-      });
+            console.log( 'municípios foram removidos' );
+            municipios.splice( i, 1 );
+
+          }
+
+        }
+      }
 
       if ( format == 'json' ) {
       
@@ -217,9 +220,4 @@ function clean( json, format ) {
 
 }
 
-// clean( caminho + 'data/lista-microcefalia-2016-08-21.json', 'json' );
-
-clean( caminho + 'data/lista-microcefalia-2016-09-08-sage.json', 'json' );
-
-
-
+clean( caminho + 'data/lista-microcefalia-2016-09-22-sage.json', 'json' );

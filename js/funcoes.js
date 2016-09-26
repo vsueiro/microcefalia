@@ -203,7 +203,7 @@ function desenhaCirculos() {
 
   });
 
-  $.getJSON( 'data/lista-microcefalia-2016-09-08.json', function( dados ) {
+  $.getJSON( 'data/lista-microcefalia-2016-09-22.json', function( dados ) {
 
     municipios = dados;
 
