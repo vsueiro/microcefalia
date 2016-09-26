@@ -334,7 +334,11 @@ function desenhaCirculos() {
 
     }
 
-    semanas = semanas.removeDuplicados();
+    semanas = semanas.removeDuplicados().sort( function( a, b ) {
+
+      return a.split( '/' ).reverse().join( '' ) - b.split( '/' ).reverse().join( '' );
+
+    });
 
     for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
 
