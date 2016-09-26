@@ -433,9 +433,6 @@ function minimo( tipo ) {
 
 function criaGrafico() {
 
-  // console.log( maximo( 'tc' ) );
-  // console.log( minimo( 'sem' ) );
-
   var max = maximo( 'tc' );
   var min = minimo( 'sem' );
 
@@ -450,7 +447,7 @@ function criaGrafico() {
       svg.setAttribute( 'x', '0' );
       svg.setAttribute( 'y', '0' );
       svg.setAttribute( 'width', ( ( maximo( 'sem' ) - min ) * scale.x ) + ( scale.x * 2 ) );
-      svg.setAttribute( 'height', ( max * scale.y ) + scale.y );
+      svg.setAttribute( 'height', ( max * scale.y ) + ( scale.y * 2) );
       svg.setAttributeNS( 'http://www.w3.org/2000/xmlns/', 'xmlns:xlink', 'http://www.w3.org/1999/xlink' ); // http://www.w3.org/2000/xmlns/
 
   var linhas = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
@@ -484,8 +481,8 @@ function criaGrafico() {
               linha.setAttribute( 'opacity', opacidade );
               linha.setAttribute( 'x1', ( ( caso.sem - (min - 1) ) * scale.x ) );
               linha.setAttribute( 'x2', ( ( municipio.casos[ j + 1 ].sem - (min - 1) ) * scale.x ) );
-              linha.setAttribute( 'y1', ( caso.tc * scale.y ) );
-              linha.setAttribute( 'y2', ( municipio.casos[ j + 1 ].tc ? ( municipio.casos[ j + 1 ].tc * scale.y ) : ( caso.tc * scale.y ) ) );
+              linha.setAttribute( 'y1', ( ( ( max + 1 ) - caso.tc ) * scale.y )  );
+              linha.setAttribute( 'y2', ( municipio.casos[ j + 1 ].tc ? ( ( ( max + 1 ) - municipio.casos[ j + 1 ].tc ) * scale.y ) : ( ( ( max + 1 ) - caso.tc ) * scale.y ) ) );
               
             grupo.appendChild( linha );
             temCasos = true;
