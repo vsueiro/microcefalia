@@ -53,7 +53,7 @@
       <nav>
 
         <button>Baixar dados</button>
-        <button>Baixar svg (vetor)</button>
+        <button onclick="baixar( 'grafico-linhas', 'grafico' )">Baixar svg (vetor)</button>
         <button>Baixar pdf (impressão)</button>
         <button>Incorporar ao meu site</button>
         <button>Tela cheia</button>
@@ -94,22 +94,8 @@
 
       </footer>
 
-      <svg
-        version="1.1"
-        id="Line chart"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        x="0px"
-        y="0px"
-        width="800px"
-        height="600px"
-        viewBox="0 0 800 600"
-        enable-background="new 0 0 800 600"
-        xml:space="preserve">
-
-        <g id="lines"></g>
-
-      </svg>
+      <div id="grafico-linhas"></div>
+      
 
 
     </article>
@@ -118,180 +104,6 @@
     <script src="js/variaveis.js"></script>
     <script src="js/funcoes.js"></script>
     <script src="js/app.js"></script>
-
-    <script>
-
-      var municipios = [
-
-        {
-          "nome" : "Salvador",
-          "casos" :[
-            {
-              "sem" : 6,
-              "tc" : 60
-            },
-            {
-              "sem" : 7,
-              "tc" : 63
-            },
-            {
-              "sem" : 8,
-              "tc" : 65
-            },
-            {
-              "sem" : 9,
-              "tc" : 75
-            },
-            {
-              "sem" : 10,
-              "tc" : 90
-            },
-            {
-              "sem" : 11,
-              "tc" : 79
-            },
-            {
-              "sem" : 12,
-              "tc" : 85
-            },
-            {
-              "sem" : 13,
-              "tc" : 93
-            },
-            {
-              "sem" : 14,
-              "tc" : 100
-            },
-            {
-              "sem" : 15,
-              "tc" : 109
-            },
-            {
-              "sem" : 16,
-              "tc" : 110
-            },
-            {
-              "sem" : 17,
-              "tc" : 119
-            },
-            {
-              "sem" : 18,
-              "tc" : 121
-            },
-            {
-              "sem" : 19,
-              "tc" : 125
-            },
-            {
-              "sem" : 20,
-              "tc" : 126
-            },
-            {
-              "sem" : 21,
-              "tc" : 127
-            },
-            {
-              "sem" : 22,
-              "tc" : 128
-            },
-            {
-              "sem" : 23,
-              "tc" : 129
-            },
-            {
-              "sem" : 24,
-              "tc" : 137
-            },
-            {
-              "sem" : 25,
-              "tc" : 137
-            },
-            {
-              "sem" : 26,
-              "tc" : 137
-            },
-            {
-              "sem" : 27,
-              "tc" : 137
-            },
-            {
-              "sem" : 28,
-              "tc" : 145
-            },
-            {
-              "sem" : 29,
-              "tc" : 145
-            },
-            {
-              "sem" : 30,
-              "tc" : 145
-            },
-            {
-              "sem" : 31,
-              "tc" : 145
-            },
-            {
-              "sem" : 32,
-              "tc" : 145
-            },
-            {
-              "sem" : 33,
-              "tc" : 145
-            },
-            {
-              "sem" : 34,
-              "tc" : 145
-            },
-            {
-              "sem" : 35,
-              "tc" : 147
-            },
-            {
-              "sem" : 36,
-              "tc" : 147
-            },
-            {
-              "sem" : 37,
-              "tc" : 153
-            }
-          ]
-        }
-        
-      ];
-      
-      var lines = document.getElementById( 'lines' );
-
-      for ( var i = 0; i < municipios.length; i++ ) {
-
-        var municipio = municipios[ i ];
-
-        var group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-          group.setAttribute( 'id', municipio.nome );
-
-        for ( var j = 0; j < ( municipio.casos.length - 1 ); j++ ) {
-
-          var caso = municipio.casos[ j ];
-
-          var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-              line.setAttribute( 'fill', 'none' );
-              line.setAttribute( 'stroke', '#FF0000' );
-              line.setAttribute( 'stroke-width', '4' );
-              line.setAttribute( 'stroke-linecap', 'round' );
-              line.setAttribute( 'stroke-linejoin', 'round' );
-              line.setAttribute( 'opacity', '1' );
-              line.setAttribute( 'x1' , ( caso.sem * 10 ) );
-              line.setAttribute( 'x2' , ( municipio.casos[ j + 1 ].sem * 10 ) );
-              line.setAttribute( 'y1' , ( caso.tc ) );
-              line.setAttribute( 'y2' , ( municipio.casos[ j + 1 ] ? municipio.casos[ j + 1 ].tc : caso.tc ) );
-              
-            group.appendChild( line );
-
-        }
-
-        lines.appendChild( group );
-
-      }
-    </script>
 
   </body>
 </html>

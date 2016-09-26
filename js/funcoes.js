@@ -367,6 +367,8 @@ function desenhaCirculos() {
 
     atualizaCirculos( semanaAtual(), categoriaAtual() );
 
+    criaGrafico();
+
   });
 
 }
@@ -399,4 +401,121 @@ function carregaMapa() {
   script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBoqFIX7oEYftU-MW9H49ivEpYtU6BZJRs&callback=criaMapa';
   document.body.appendChild( script );
 
+}
+
+function maximo( tipo ) {
+
+  return Math.max.apply( Math, municipios.map( function( municipio ) {
+
+    return Math.max.apply( Math, municipio.casos.map( function( caso ) {
+
+      return caso[ tipo ] ? caso[ tipo ] : 0;
+
+    }));
+
+  }));
+
+}
+
+function minimo( tipo ) {
+
+  return Math.min.apply( Math, municipios.map( function( municipio ) {
+
+    return Math.min.apply( Math, municipio.casos.map( function( caso ) {
+
+      return caso[ tipo ] ? caso[ tipo ] : 0;
+
+    }));
+
+  }));
+
+}
+
+function criaGrafico() {
+
+  // console.log( maximo( 'tc' ) );
+  // console.log( minimo( 'sem' ) );
+
+  var max = maximo( 'tc' );
+  var min = minimo( 'sem' );
+
+  var scale = {
+    x : 20,
+    y : 4
+  }
+
+  var svg = document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' );
+      svg.setAttribute( 'version', '1.1' );
+      svg.setAttribute( 'id', 'grafico-linhas' );
+      svg.setAttribute( 'x', '0' );
+      svg.setAttribute( 'y', '0' );
+      svg.setAttribute( 'width', ( ( maximo( 'sem' ) - min ) * scale.x ) + ( scale.x * 2 ) );
+      svg.setAttribute( 'height', ( max * scale.y ) + scale.y );
+      svg.setAttributeNS( 'http://www.w3.org/2000/xmlns/', 'xmlns:xlink', 'http://www.w3.org/1999/xlink' ); // http://www.w3.org/2000/xmlns/
+
+  var linhas = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
+      linhas.setAttribute( 'id', 'linhas' );
+
+  for ( var i = 0; i < municipios.length; i++ ) {
+
+    var municipio = municipios[ i ];
+
+    var grupo = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        grupo.setAttribute( 'id', municipio.nome );
+
+    if ( municipio.casos.length > 3 ) {
+
+      for ( var j = 0; j < ( municipio.casos.length - 1 ); j++ ) {
+
+        var caso = municipio.casos[ j ];
+
+        var temCasos = false;
+
+        if ( caso.tc ) {
+
+          var opacidade = ( 1 / max * caso.tc );
+
+          var linha = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+              linha.setAttribute( 'fill', 'none' );
+              linha.setAttribute( 'stroke', '#000' );
+              linha.setAttribute( 'stroke-width', '4' );
+              linha.setAttribute( 'stroke-linecap', 'round' );
+              linha.setAttribute( 'stroke-linejoin', 'round' );
+              linha.setAttribute( 'opacity', opacidade );
+              linha.setAttribute( 'x1', ( ( caso.sem - (min - 1) ) * scale.x ) );
+              linha.setAttribute( 'x2', ( ( municipio.casos[ j + 1 ].sem - (min - 1) ) * scale.x ) );
+              linha.setAttribute( 'y1', ( caso.tc * scale.y ) );
+              linha.setAttribute( 'y2', ( municipio.casos[ j + 1 ].tc ? ( municipio.casos[ j + 1 ].tc * scale.y ) : ( caso.tc * scale.y ) ) );
+              
+            grupo.appendChild( linha );
+            temCasos = true;
+
+        }
+
+        if ( temCasos ) {
+
+          linhas.appendChild( grupo );
+
+        }
+
+      }
+
+    }
+
+  }
+
+  svg.appendChild( linhas );
+  document.getElementById( 'grafico-linhas' ).appendChild( svg );
+
+}
+
+function baixar( id, nome ) {
+  var arquivo = nome;
+  var svgString = document.getElementById( id ).innerHTML;
+  a = document.createElement('a');
+  a.download = arquivo + '.svg';
+  a.type = 'image/svg+xml';
+  blob = new Blob([svgString], {"type": "image/svg+xml"});
+  a.href = (window.URL || webkitURL).createObjectURL(blob);
+  a.click();
 }
