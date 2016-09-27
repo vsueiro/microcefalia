@@ -13,7 +13,7 @@
 
     <article class="visualizacao">
 
-      <h1>Microcefalia em recém nascidos no Brasil</h1>
+      <h1>Microcefalia em recém-nascidos no Brasil</h1>
 
       <p>O mapa abaixo mostra a evolução dos casos de microcefalia e/ou alterações no sistema nervoso central, incluindo casos de óbito decorrentes desta condição. O tamanho dos círculos representa a quantidade de casos naquele município. É possível filtrar por cada semana da epidemia e também pelo tipo de caso (confirmado, investigado, descartado etc)</p>
 

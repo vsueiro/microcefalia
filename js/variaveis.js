@@ -37,8 +37,8 @@ cor = {
 
     "circulo" : {
         
-        "normal" : "#0088cc",
-        "destaque" : "#2c66ce",
+        "normal" : "#333333",
+        "destaque" : "#181818",
         "selecionado" : "#000000"
 
     }
@@ -65,7 +65,7 @@ categorias = [
     },
     {
       "apelido" : "tc",
-      "nome" : "Total confirmado", // azul
+      "nome" : "Total confirmado",
       "total" : 0,
       "atual" : true
     },
@@ -89,7 +89,7 @@ categorias = [
     },
     {
       "apelido" : "toc",
-      "nome" : "Total de óbitos confirmados", // cinza
+      "nome" : "Total de óbitos confirmados",
       "total" : 0,
       "atual" : false
     },
@@ -103,6 +103,7 @@ categorias = [
 ];
 
 meses = [
+
   'janeiro',
   'fevereiro',
   'março',
@@ -115,9 +116,11 @@ meses = [
   'outubro',
   'novembro',
   'dezembro'
+
 ];
 
 dataDasSemanas = [
+
   {
     "numero" : 37,
     "ano" : 2016,
@@ -388,4 +391,5 @@ dataDasSemanas = [
     "inicio" : "2015-11-08",
     "fim" : "2015-11-14"
   }
+  
 ];

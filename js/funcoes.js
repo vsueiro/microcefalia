@@ -371,7 +371,7 @@ function desenhaCirculos() {
 
     atualizaCirculos( semanaAtual(), categoriaAtual() );
 
-    criaGrafico();
+    // criaGrafico( 'tc' );
 
   });
 
@@ -383,7 +383,7 @@ function criaMapa() {
     zoom: 5,
     minZoom: 5,
     center: new google.maps.LatLng(-15.474053, -53.290964),    
-    styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"gamma":"0.00"},{"weight":"0.01"},{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"administrative.province","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#ffffff"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"},{"lightness":"32"},{"visibility":"on"}]},{"featureType":"road","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":"63"}]},{"featureType":"road.highway","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit.station","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#eeeeee"}]}],
+    styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"gamma":"0.00"},{"weight":"0.01"},{"visibility":"off"}]},{"featureType":"administrative.country","elementType":"geometry","stylers":[{"lightness":"70"},{"gamma":"1.00"}]},{"featureType":"administrative.country","elementType":"geometry.stroke","stylers":[{"color":"#e6e6e6"}]},{"featureType":"administrative.province","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"geometry.stroke","stylers":[{"visibility":"on"},{"color":"#cccccc"}]},{"featureType":"administrative.province","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#ffffff"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"},{"lightness":"32"},{"visibility":"on"}]},{"featureType":"road","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"visibility":"off"},{"lightness":"63"}]},{"featureType":"road.highway","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit.station","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#f2f2f2"}]}],
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     zoomControl: true,
     scrollwheel: false,
@@ -435,9 +435,9 @@ function minimo( tipo ) {
 
 }
 
-function criaGrafico() {
+function criaGrafico( tipo ) {
 
-  var max = maximo( 'tc' );
+  var max = maximo( tipo );
   var min = minimo( 'sem' );
 
   var scale = {
@@ -472,21 +472,21 @@ function criaGrafico() {
 
         var temCasos = false;
 
-        if ( caso.tc ) {
+        if ( caso[ tipo ] ) {
 
-          var opacidade = ( 1 / max * caso.tc );
+          var opacidade = ( 1 / max * caso[ tipo ] );
 
           var linha = document.createElementNS('http://www.w3.org/2000/svg', 'line');
               linha.setAttribute( 'fill', 'none' );
               linha.setAttribute( 'stroke', '#000' );
-              linha.setAttribute( 'stroke-width', '4' );
+              linha.setAttribute( 'stroke-width', '3' );
               linha.setAttribute( 'stroke-linecap', 'round' );
               linha.setAttribute( 'stroke-linejoin', 'round' );
               linha.setAttribute( 'opacity', opacidade );
               linha.setAttribute( 'x1', ( ( caso.sem - (min - 1) ) * scale.x ) );
               linha.setAttribute( 'x2', ( ( municipio.casos[ j + 1 ].sem - (min - 1) ) * scale.x ) );
-              linha.setAttribute( 'y1', ( ( ( max + 1 ) - caso.tc ) * scale.y )  );
-              linha.setAttribute( 'y2', ( municipio.casos[ j + 1 ].tc ? ( ( ( max + 1 ) - municipio.casos[ j + 1 ].tc ) * scale.y ) : ( ( ( max + 1 ) - caso.tc ) * scale.y ) ) );
+              linha.setAttribute( 'y1', ( ( ( max + 1 ) - caso[ tipo ] ) * scale.y )  );
+              linha.setAttribute( 'y2', ( municipio.casos[ j + 1 ][ tipo ] ? ( ( ( max + 1 ) - municipio.casos[ j + 1 ][ tipo ] ) * scale.y ) : ( ( ( max + 1 ) - caso[ tipo ] ) * scale.y ) ) );
               
             grupo.appendChild( linha );
             temCasos = true;
@@ -511,12 +511,15 @@ function criaGrafico() {
 }
 
 function baixar( id, nome ) {
-  var arquivo = nome;
-  var svgString = document.getElementById( id ).innerHTML;
-  a = document.createElement('a');
-  a.download = arquivo + '.svg';
-  a.type = 'image/svg+xml';
-  blob = new Blob([svgString], {"type": "image/svg+xml"});
-  a.href = (window.URL || webkitURL).createObjectURL(blob);
-  a.click();
+
+  var
+    svg = document.getElementById( id ).innerHTML,
+    blob = new Blob( [ svg ], { 'type' : 'image/svg+xml' } ),
+    a = document.createElement( 'a' );
+
+    a.download = nome + '.svg';
+    a.type = 'image/svg+xml';
+    a.href = ( window.URL || webkitURL ).createObjectURL( blob );
+    a.click();
+    
 }
