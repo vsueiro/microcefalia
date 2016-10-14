@@ -220,4 +220,4 @@ function clean( json, format ) {
 
 }
 
-clean( caminho + 'data/lista-microcefalia-2016-09-22-sage.json', 'json' );
+clean( caminho + 'data/lista-microcefalia-2016-10-07-sage.json', 'json' );
