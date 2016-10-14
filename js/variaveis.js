@@ -55,49 +55,57 @@ categorias = [
       "apelido" : "tn",
       "nome" : "Total notificado",
       "total" : 0,
-      "atual" : false
+      "atual" : false,
+      "visivel" : false
     },
     {
       "apelido" : "ti",
       "nome" : "Total investigado",
       "total" : 0,
-      "atual" : false
+      "atual" : false,
+      "visivel" : false
     },
     {
       "apelido" : "tc",
       "nome" : "Total confirmado",
       "total" : 0,
-      "atual" : true
+      "atual" : true,
+      "visivel" : true
     },
     {
       "apelido" : "td",
       "nome" : "Total descartado", 
       "total" : 0,
-      "atual" : false
+      "atual" : false,
+      "visivel" : false
     },
     {
       "apelido" : "ton",
       "nome" : "Total de óbitos notificados",
       "total" : 0,
-      "atual" : false
+      "atual" : false,
+      "visivel" : false
     },
     {
       "apelido" : "toi",
       "nome" : "Total de óbitos investigados",
       "total" : 0,
-      "atual" : false
+      "atual" : false,
+      "visivel" : false
     },
     {
       "apelido" : "toc",
       "nome" : "Total de óbitos confirmados",
       "total" : 0,
-      "atual" : false
+      "atual" : false,
+      "visivel" : true
     },
     {
       "apelido" : "tod",
       "nome" : "Total de óbitos descartados",
       "total" : 0,
-      "atual" : false
+      "atual" : false,
+      "visivel" : false
     }
 
 ];

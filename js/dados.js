@@ -186,6 +186,17 @@ function clean( json, format ) {
             if ( caso.toc == 0 ) delete caso.toc;
             if ( caso.tod == 0 ) delete caso.tod;
 
+            { // deixar apenas casos e óbitos confirmados
+
+              if ( caso.tn ) delete caso.tn;
+              if ( caso.ti ) delete caso.ti;
+              if ( caso.td ) delete caso.td;
+              if ( caso.ton ) delete caso.ton;
+              if ( caso.toi ) delete caso.toi;
+              if ( caso.tod ) delete caso.tod;
+
+            }
+
             if ( Object.keys( caso ).length > 2 ) {
               
               empty = false;

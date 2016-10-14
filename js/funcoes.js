@@ -164,10 +164,15 @@ function mostraFicha( i, sem, cat ) {
       for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
 
         categoria = categorias[ j ];
-        var quantidade = caso[ categoria.apelido ] || 0;
-        var selecionada = categoria.apelido == cat ? 'selecionada' : '';
 
-        ficha.append( '<li class="' + selecionada + '">' + categoria.nome + ': ' + quantidade + '</li>' );  
+        if ( categoria.visivel ) {
+
+          var quantidade  = caso[ categoria.apelido ] || 0,
+              selecionada = categoria.apelido == cat ? 'selecionada' : '';
+
+          ficha.append( '<li class="' + selecionada + '">' + categoria.nome + ': ' + quantidade + '</li>' );  
+
+        }
 
       }
 
@@ -320,7 +325,7 @@ function desenhaCirculos() {
 
             categoria = categorias[ k ];
 
-            if ( caso[ categoria.apelido ] ) { // se este municipio tem dados sobre esta categoria em sua semana mais recente
+            if ( categoria.visivel && caso[ categoria.apelido ] ) { // se este municipio tem dados sobre esta categoria em sua semana mais recente
 
               categoria.total += caso[ categoria.apelido ];
 
@@ -361,12 +366,16 @@ function desenhaCirculos() {
 
       categoria = categorias[ i ];
 
-      var atual = categoria.atual ? ' selected' : '';
+      if ( categoria.visivel ) {
 
-      $( 'select.categorias' ).append( '<option value="' + categoria.apelido + '"'+ atual +'>' + categoria.nome + '</option>' );
+        var atual = categoria.atual ? ' selected' : '';
 
-      $( '.totais li[data-caso="' + categoria.apelido + '"]' ).text( categoria.nome + ': ' + categoria.total );
+        $( 'select.categorias' ).append( '<option value="' + categoria.apelido + '"'+ atual +'>' + categoria.nome + '</option>' );
 
+        $( '.totais li[data-caso="' + categoria.apelido + '"]' ).text( categoria.nome + ': ' + categoria.total );
+
+      }
+      
     }
 
     atualizaCirculos( semanaAtual(), categoriaAtual() );
