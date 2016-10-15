@@ -17,7 +17,8 @@ var
   visualizacao,
   selecionado,
   tamanho,
-  amplitude
+  amplitude,
+  deslizador
 ;
 
 amplitude = 7.5;

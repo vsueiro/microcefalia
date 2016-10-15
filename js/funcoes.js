@@ -372,7 +372,7 @@ function desenhaCirculos() {
 
     }
 
-    new Dragdealer( 'semana-slider', {
+    deslizador = new Dragdealer( 'semana-slider', {
 
       steps: semanas.length,
       slide: false,
@@ -399,6 +399,7 @@ function desenhaCirculos() {
         $( '#' + this.wrapper.id ).find( '.handle' ).text( $( 'select.semanas' ).val() );
 
       }
+      
     });
 
     $( '.totais p' ).text( 'Até o dia ' + dataDaSemana( ultimo( 'semana' ), ultimo( 'ano' ), 'fim' ) + ':' );
