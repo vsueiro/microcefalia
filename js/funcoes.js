@@ -345,6 +345,18 @@ function desenhaCirculos() {
 
     });
 
+    function atualizaTudo() {
+
+      atualizaCirculos( semanaAtual(), categoriaAtual() );
+
+      if ( visualizacao.data( 'ficha' ) ) {
+
+        mostraFicha( visualizacao.data( 'municipio' ), semanaAtual(), categoriaAtual() );
+
+      }
+
+    }
+
     for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
 
       semana = semanas[ i ];
@@ -359,6 +371,35 @@ function desenhaCirculos() {
       $( 'select.semanas' ).append( '<option value="' + semana.numero + '/' + semana.ano + '"'+ atual +'>Semana ' + semana.numero + ' (' + dataDaSemana( semana.numero, semana.ano, 'inicio' ) + ' a ' + dataDaSemana( semana.numero, semana.ano, 'fim' ) + ')</option>' );
 
     }
+
+    new Dragdealer( 'semana-slider', {
+
+      steps: semanas.length,
+      slide: false,
+      snap: true,
+      x: 1,
+      animationCallback: function( x, y ) {
+
+        var i = this.getStep()[ 0 ];
+
+        $( 'select.semanas' ).val( $( 'select.semanas option' ).eq( i ).val() );
+
+        console.log( 'animationCallback. val: ' + $( 'select.semanas' ).val() );
+
+        $( '#' + this.wrapper.id ).find( '.handle' ).text( $( 'select.semanas' ).val() );
+
+
+      },
+      callback: function( x, y ) {
+
+        console.log( 'callback' );
+
+        atualizaTudo();
+
+        $( '#' + this.wrapper.id ).find( '.handle' ).text( $( 'select.semanas' ).val() );
+
+      }
+    });
 
     $( '.totais p' ).text( 'Até o dia ' + dataDaSemana( ultimo( 'semana' ), ultimo( 'ano' ), 'fim' ) + ':' );
 
@@ -380,7 +421,7 @@ function desenhaCirculos() {
 
     atualizaCirculos( semanaAtual(), categoriaAtual() );
 
-    // criaGrafico( 'tc' );
+    criaGrafico( 'tc' );
 
   });
 

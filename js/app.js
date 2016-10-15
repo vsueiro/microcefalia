@@ -2,12 +2,12 @@ carregaMapa();
 
 $( document ).on( 'change', '.semanas, .categorias', function() {
 
-  atualizaCirculos( semanaAtual(), categoriaAtual() );
+	atualizaCirculos( semanaAtual(), categoriaAtual() );
 
-  if ( visualizacao.data( 'ficha' ) ) {
+	if ( visualizacao.data( 'ficha' ) ) {
 
-  	mostraFicha( visualizacao.data( 'municipio' ), semanaAtual(), categoriaAtual() );
+		mostraFicha( visualizacao.data( 'municipio' ), semanaAtual(), categoriaAtual() );
 
-  }
+	}
 
 });

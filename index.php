@@ -30,10 +30,6 @@
 
       </section>
 
-      <div id="demo-simple-slider" class="dragdealer">
-        <div class="handle red-bar">drag me</div>
-      </div>
-
       <form>
 
         <select class="semanas">
@@ -48,7 +44,9 @@
 
       </form>
       
-      <br>
+      <div id="semana-slider" class="dragdealer">
+        <div class="handle red-bar"></div>
+      </div>
 
       <div id="mapa"></div>
 
@@ -111,16 +109,6 @@
     <script src="js/variaveis.js"></script>
     <script src="js/funcoes.js"></script>
     <script src="js/app.js"></script>
-
-    <script>
-
-      $(function() {
-
-        new Dragdealer( 'demo-simple-slider' );
-        
-      });
-
-    </script>
 
   </body>
 </html>

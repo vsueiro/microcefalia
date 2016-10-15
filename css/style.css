@@ -67,3 +67,36 @@ body {
 .grafico ol li .barra.selecionada {
     background: #0088cc;
 }
+
+/* dragdealer */
+
+.dragdealer {
+  position: relative;
+  width: 970px;
+  height: 30px;
+  background: #eee;
+  border-radius: 999px;
+  margin: 18px 0;
+}
+
+.dragdealer .handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  border-radius: 999px;
+}
+
+.dragdealer .red-bar {
+  width: 80px;
+  height: 30px;
+  background: #333;
+  color: #fff;
+  font-size: 14px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.dragdealer .disabled {
+  background: #999;
+}
