@@ -18,7 +18,8 @@ var
   selecionado,
   tamanho,
   amplitude,
-  deslizador
+  deslizador,
+  totais
 ;
 
 amplitude = 7.5;
@@ -49,6 +50,8 @@ cor = {
 circulos = [];
 
 semanas = [];
+
+totais = [];
 
 categorias = [ 
 
