@@ -4,6 +4,8 @@
 
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="libs/dragdealer.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <title>Mapa da microcefalia no Brasil</title>
@@ -27,6 +29,10 @@
         </ul>
 
       </section>
+
+      <div id="demo-simple-slider" class="dragdealer">
+        <div class="handle red-bar">drag me</div>
+      </div>
 
       <form>
 
@@ -101,9 +107,20 @@
     </article>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="libs/dragdealer.js"></script>
     <script src="js/variaveis.js"></script>
     <script src="js/funcoes.js"></script>
     <script src="js/app.js"></script>
+
+    <script>
+
+      $(function() {
+
+        new Dragdealer( 'demo-simple-slider' );
+        
+      });
+
+    </script>
 
   </body>
 </html>
