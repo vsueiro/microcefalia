@@ -370,42 +370,6 @@ function desenhaCirculos() {
 
       $( 'select.semanas' ).append( '<option value="' + semana.numero + '/' + semana.ano + '"'+ atual +'>Semana ' + semana.numero + ' (' + dataDaSemana( semana.numero, semana.ano, 'inicio' ) + ' a ' + dataDaSemana( semana.numero, semana.ano, 'fim' ) + ')</option>' );
 
-      // totais[ i ] = semana;
-
-      // for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
-
-      //   categoria = categorias[ j ];
-
-      //   if ( categoria.visivel ) {
-
-      //     totais[ i ][ categoria.apelido ] = 0; 
-
-      //     for ( var k = 0, lenk = municipios.length; k < lenk; k++ ) {
-
-      //       municipio = municipios[ i ];
-
-      //       for ( var l = 0, lenl = municipio.casos.length; l < lenl; l++ ) {
-
-      //         caso = municipio.casos[ l ];
-
-      //         if ( caso.ano == semana.ano && caso.sem == semana.numero ) {
-
-      //           if ( categoria.apelido in caso ) {
-
-      //             totais[ i ][ categoria.apelido ] += caso[ categoria.apelido ];
-
-      //           }
-
-      //         }
-
-      //       }
-
-      //     }
-
-      //   }
-
-      // }
-
     }
 
     // calcula totais por semana
@@ -498,7 +462,13 @@ function desenhaCirculos() {
 
           total = totais[ i ];
 
-          grafico += '<li><span>' + total.casos.unicos.tc + '</span><div class="barra" data-caso-' + 'tc' + '="' + total.casos.unicos.tc + '" data-caso-sem="' + total.numero + '" style="height:' + total.casos.unicos.tc / 2 + 'px"></div><span>Semana ' + total.numero + '</span></li>' ;
+          var unicos = total.casos.unicos;
+
+          for ( caso in unicos ) {
+
+            grafico += '<li><span>' + unicos[ caso ] + '</span><div class="barra" data-caso-' + caso + '="' + unicos[ caso ] + '" data-caso-sem="' + total.numero + '" style="height:' + unicos[ caso ] + 'px"></div><span>Semana ' + total.numero + '</span></li>' ;
+
+          }
 
         }
 
@@ -508,8 +478,6 @@ function desenhaCirculos() {
     }
 
     total();
-
-    console.log( totais );
 
     deslizador = new Dragdealer( 'semana-slider', {
 

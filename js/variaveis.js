@@ -134,12 +134,6 @@ meses = [
 
 dataDasSemanas = [
   
-  // {
-  //   "numero" : 40,
-  //   "ano" : 2016,
-  //   "inicio" : "2016-10-02",
-  //   "fim" : "2016-10-08"
-  // },
   {
     "numero" : 39,
     "ano" : 2016,
