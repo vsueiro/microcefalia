@@ -374,6 +374,8 @@ function desenhaCirculos() {
 
     // calcula totais por semana
 
+    // teste
+
     function total() {
 
       for ( var i = 0, leni = semanas.length; i < leni; i++ ) { // soma números acumulados por semana
