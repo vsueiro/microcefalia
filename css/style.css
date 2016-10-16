@@ -82,7 +82,8 @@ body {
 .dragdealer .handle {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
+  left: auto;
   cursor: pointer;
   border-radius: 999px;
 }

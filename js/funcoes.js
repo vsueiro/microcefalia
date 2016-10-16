@@ -370,37 +370,6 @@ function desenhaCirculos() {
 
       $( 'select.semanas' ).append( '<option value="' + semana.numero + '/' + semana.ano + '"'+ atual +'>Semana ' + semana.numero + ' (' + dataDaSemana( semana.numero, semana.ano, 'inicio' ) + ' a ' + dataDaSemana( semana.numero, semana.ano, 'fim' ) + ')</option>' );
 
-
-      // calcula totais por semana
-
-      totais[ i ] = semana;
-
-      for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
-
-        categoria = categorias[ j ];
-
-        if ( categoria.visivel ) {
-
-          totais[ i ][ categoria.apelido ] = 0; 
-
-          for ( var k = 0, lenk = municipio.casos.length; k < lenk; k++ ) {
-
-            caso = municipio.casos[ k ];
-
-            if ( caso.sem == totais[ i ].numero ) { 
-
-              console.log( caso );
-
-              // totais[ i ][ categoria.apelido ] += caso[ categoria.apelido ];
-
-            }
-            
-          }
-
-        }
-        
-      }
-
     }
 
     console.log( totais );
@@ -418,7 +387,6 @@ function desenhaCirculos() {
         $( 'select.semanas' ).val( $( 'select.semanas option' ).eq( i ).val() );
 
         $( '#' + this.wrapper.id ).find( '.handle' ).text( $( 'select.semanas' ).val() );
-
 
       },
       callback: function( x, y ) {
