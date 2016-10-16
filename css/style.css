@@ -88,6 +88,11 @@ body {
   border-radius: 999px;
 }
 
+.dragdealer.loaded .handle {
+  right: auto;
+  left: 0;
+}
+
 .dragdealer .red-bar {
   width: 80px;
   height: 30px;
