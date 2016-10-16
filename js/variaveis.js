@@ -1,4 +1,6 @@
 var
+  totais,
+  total,
   municipios,
   municipio,
   circulos,
@@ -18,8 +20,7 @@ var
   selecionado,
   tamanho,
   amplitude,
-  deslizador,
-  totais
+  deslizador
 ;
 
 amplitude = 7.5;

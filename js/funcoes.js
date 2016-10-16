@@ -317,6 +317,8 @@ function desenhaCirculos() {
 
         semanas.push( caso.sem + '/' + caso.ano );
 
+        // console.log( semanas );
+
         if ( caso.sem == ultimo( 'semana' ) ) { // semana mais recente no geral
 
           for ( var k = 0, lenk = categorias.length; k < lenk; k++ ) {
@@ -368,7 +370,144 @@ function desenhaCirculos() {
 
       $( 'select.semanas' ).append( '<option value="' + semana.numero + '/' + semana.ano + '"'+ atual +'>Semana ' + semana.numero + ' (' + dataDaSemana( semana.numero, semana.ano, 'inicio' ) + ' a ' + dataDaSemana( semana.numero, semana.ano, 'fim' ) + ')</option>' );
 
+      // totais[ i ] = semana;
+
+      // for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
+
+      //   categoria = categorias[ j ];
+
+      //   if ( categoria.visivel ) {
+
+      //     totais[ i ][ categoria.apelido ] = 0; 
+
+      //     for ( var k = 0, lenk = municipios.length; k < lenk; k++ ) {
+
+      //       municipio = municipios[ i ];
+
+      //       for ( var l = 0, lenl = municipio.casos.length; l < lenl; l++ ) {
+
+      //         caso = municipio.casos[ l ];
+
+      //         if ( caso.ano == semana.ano && caso.sem == semana.numero ) {
+
+      //           if ( categoria.apelido in caso ) {
+
+      //             totais[ i ][ categoria.apelido ] += caso[ categoria.apelido ];
+
+      //           }
+
+      //         }
+
+      //       }
+
+      //     }
+
+      //   }
+
+      // }
+
     }
+
+    // calcula totais por semana
+
+    function total() {
+
+      for ( var i = 0, leni = semanas.length; i < leni; i++ ) { // soma números acumulados por semana
+
+        semana = semanas[ i ];
+        semana = semana.split( '/' );
+        semana = {
+          "numero" : parseInt( semana[ 0 ] ),
+          "ano" : parseInt( semana[ 1 ] )
+        };
+
+        totais[ i ] = semana;
+        totais[ i ].casos = {
+
+          'acumulados' : {},
+          'unicos' : {}
+
+        };
+
+        for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
+
+          categoria = categorias[ j ];
+
+          if ( categoria.visivel ) {
+
+            totais[ i ][ 'casos' ][ 'acumulados' ][ categoria.apelido ] = 0; 
+
+            var temp = 0;
+
+            for ( var k = 0, lenk = municipios.length; k < lenk; k++ ) {
+
+              municipio = municipios[ k ];
+
+              for ( var l = 0, lenl = municipio.casos.length; l < lenl; l++ ) {
+
+                caso = municipio.casos[ l ];
+
+                if ( caso.ano == semana.ano && caso.sem == semana.numero ) {
+
+                  if ( categoria.apelido in caso ) {
+
+                    totais[ i ][ 'casos' ][ 'acumulados' ][ categoria.apelido ] += caso[ categoria.apelido ];
+
+                  }
+
+                  break;
+
+                }
+                
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
+      for ( var i = 0, leni = totais.length; i < leni; i++ ) { // calcula números específicos de cada semana
+
+        total = totais[ i ];
+
+        var anterior = 0;
+
+        for ( caso in total.casos.acumulados ) {
+
+          if ( i > 0 ) {
+
+            anterior = totais[ i - 1 ].casos.acumulados[ caso ];
+
+          }
+
+          total.casos.unicos[ caso ] = total.casos.acumulados[ caso ] - anterior;
+
+        }
+
+      }
+
+      // desenha gráfico
+      {
+
+        var grafico = '';
+
+        for ( var i = 0, leni = totais.length; i < leni; i++ ) { // para cada semana epidemiológica do Brasil
+
+          total = totais[ i ];
+
+          grafico += '<li><span>' + total.casos.unicos.tc + '</span><div class="barra" data-caso-' + 'tc' + '="' + total.casos.unicos.tc + '" data-caso-sem="' + total.numero + '" style="height:' + total.casos.unicos.tc / 2 + 'px"></div><span>Semana ' + total.numero + '</span></li>' ;
+
+        }
+
+        $( '.totais ul' ).append( '<li class="grafico"><ol>' + grafico + '</ol></li>' );        
+
+      }
+    }
+
+    total();
 
     console.log( totais );
 
