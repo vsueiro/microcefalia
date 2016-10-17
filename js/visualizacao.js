@@ -230,6 +230,8 @@ var vis = {
           }
 
         }
+
+        vis.filtros.criar()
         
       }
 
@@ -287,14 +289,120 @@ var vis = {
 
   },
 
-  graficos : {
+  graficos : {},
 
+  filtros : {
+
+    elemento : $( '.filtros' ),
+
+    semana : {
+
+      meses : [
+
+        'janeiro',
+        'fevereiro',
+        'março',
+        'abril',
+        'maio',
+        'junho',
+        'julho',
+        'agosto',
+        'setembro',
+        'outubro',
+        'novembro',
+        'dezembro'
+
+      ],
+
+      quando : function( data ) {
+
+        data = data.split( '-' );
+
+        dia = parseInt( data[ 2 ] );
+        mes = this.meses[ parseInt( data[ 1 ] ) - 1 ];
+        ano = data[ 0 ];
+
+        return dia + ' de ' + mes;
+              
+      },
+
+      criar : function( el ) {
+
+        seletor = document.createElement( 'select' );
+
+        grupos = {};
+
+        vis.dados.semanas.forEach( function( semana ) {
+
+          ano = semana.ano;
+
+          texto = vis.filtros.semana.quando( semana.inicio ) + ' a ' + vis.filtros.semana.quando( semana.fim );
+
+          mes = texto.match( /de\s+\w+/gi );
+
+          if ( mes[ 0 ] == mes[ 1 ] ) {
+
+            texto = texto.replace( /de\s+\w+/i , '' )
+
+          }
+
+          opcao = document.createElement( 'option' );
+          opcao.value = semana.numero + '/' + ano;
+          opcao.text = texto;
+
+          if ( ano in grupos ) {
+
+          } else {
+
+            grupos[ ano ] = document.createElement( 'optgroup' );
+            grupos[ ano ].label = ano;
+
+          }
+
+          grupos[ ano ].appendChild( opcao );
+
+        });
+
+        ordem = [];
+
+        for ( ano in grupos ) {
+
+          ordem.push( ano );
+
+        }
+
+        ordem.sort().reverse().forEach( function( ano ) {
+
+          seletor.appendChild( grupos[ ano ] );
+
+        });
+
+        el.append( seletor )
+
+      }
+
+    },
+
+    categoria : {
+
+      criar : function( el ) {
+
+        el.append( '<div>categoria</div>' )
+
+      }
+
+    },
+
+    criar : function( ) {
+
+      el = this.elemento;
+
+      this.semana.criar( el );
+      this.categoria.criar( el );
+
+    }
 
   },
-
-  // temp 
-  // semanas : [],
-  // end temp
 
   iniciar : function() {
 
