@@ -351,9 +351,31 @@ var vis = {
 
   graficos : {
 
-    evolucao : function() {
+    evolucao : function( local ) {
 
-      return 'grafico'
+      if ( local == 'todos' ) {
+
+        linhas = '';
+
+        totais = vis.dados.totais;
+
+        for ( var i = 0, leni = totais.length; i < leni; i++ ) { // para cada semana epidemiológica do Brasil
+
+          total = totais[ i ];
+
+          unicos = total.casos.unicos;
+
+          linhas += '<li><span>' + unicos.tc + '</span><div class="barra" data-caso-' + caso + '="' + unicos.tc + '" data-caso-sem="' + total.sem + '" style="height:' + unicos.tc + 'px"></div><span>Semana ' + total.sem + '</span></li>' ;
+
+        }
+
+        return '<ol>' + linhas + '</ol>';
+
+      } else {
+
+        return 'grafico do municipio'
+
+      }
 
     }
 
@@ -460,9 +482,9 @@ var vis = {
 
       },
 
-      grafico : function() {
+      grafico : function( local ) {
 
-        return vis.graficos.evolucao()
+        return vis.graficos.evolucao( local )
 
       }
 
@@ -549,6 +571,8 @@ var vis = {
 
       }
 
+      totais = totais.reverse();
+
       for ( var i = 0, leni = totais.length; i < leni; i++ ) { // calcula números específicos de cada semana
 
         total = totais[ i ];
@@ -569,40 +593,15 @@ var vis = {
 
       }
 
-      // desenha gráfico
-      // {
-
-      //   var grafico = '';
-
-      //   for ( var i = 0, leni = totais.length; i < leni; i++ ) { // para cada semana epidemiológica do Brasil
-
-      //     total = totais[ i ];
-
-      //     var unicos = total.casos.unicos;
-
-      //     for ( caso in unicos ) {
-
-      //       grafico += '<li><span>' + unicos[ caso ] + '</span><div class="barra" data-caso-' + caso + '="' + unicos[ caso ] + '" data-caso-sem="' + total.numero + '" style="height:' + unicos[ caso ] + 'px"></div><span>Semana ' + total.numero + '</span></li>' ;
-
-      //     }
-
-      //   }
-
-      //   $( '.totais ul' ).append( '<li class="grafico"><ol>' + grafico + '</ol></li>' );        
-
-      // }
-
     },
 
     atualizar : function( local ) {
 
-      // local = local ? local : 0;
 
       if ( !local ) {
 
         local = 'todos';
-
-        this.totais()
+        this.totais();
 
       }
 

@@ -22,18 +22,18 @@ body {
 
 /* grafico de barras */
 
-.grafico {
+[data-item="grafico"] {
     list-style-type: none;
 }
 
-.grafico ol {
+[data-item="grafico"] ol {
     display: flex;
     margin: 0;
     padding: 0;
     list-style-type: none;
 }
 
-.grafico ol li {
+[data-item="grafico"] ol li {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -42,29 +42,29 @@ body {
     text-align: center;
 }
 
-.grafico ol li .barra {
+[data-item="grafico"] ol li .barra {
 	height: 20px;
     background: #ccc;
 }
 
-.grafico ol li + li .barra {
+[data-item="grafico"] ol li + li .barra {
     border-left: 1px solid #fff;
 }
 
-.grafico ol li span {
+[data-item="grafico"] ol li span {
     visibility: hidden;
     z-index: 1;
 }
 
-.grafico ol li:hover span {
+[data-item="grafico"] ol li:hover span {
     visibility: visible;
 }
 
-.grafico ol li:hover .barra {
+[data-item="grafico"] ol li:hover .barra {
 	background: #999;
 }
 
-.grafico ol li .barra.selecionada {
+[data-item="grafico"] ol li .barra.selecionada {
     background: #0088cc;
 }
 
