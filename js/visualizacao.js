@@ -22,10 +22,6 @@
 //   deslizador
 
 
-// var municipio,
-//     circulo;
-
-
 var vis = {
 
   dados : {},
@@ -73,6 +69,28 @@ var vis = {
   },
 
   elemento : $( '.visualizacao' ),
+
+  atual : {
+
+    semana : function() {
+
+      semana = $( vis.filtros.semana.elemento ).val().split( '/' );
+
+      return {
+        'numero' : parseInt( semana[ 0 ] ),
+        'ano'    : parseInt( semana[ 1 ] )
+      }
+
+    },
+
+    categoria : function() {
+
+      // temp
+      return 'tc'
+
+    }
+
+  },
 
   ultimo : function( data ) {
 
@@ -231,8 +249,82 @@ var vis = {
 
         }
 
-        vis.filtros.criar()
+        vis.filtros.criar();
+        vis.mapa.circulos.atualizar( vis.atual.semana(), vis.atual.categoria() );
         
+      },
+
+      atualizar : function( sem, cat ) {
+
+        circulos = vis.mapa.circulos.lista;
+
+        for ( var i = 0, leni = circulos.length; i < leni; i++ ) { // para cada círculo no mapa
+
+          circulo = circulos[ i ];
+          municipio = municipios[ i ];
+          consta = false;
+
+          for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) { // para cada caso do respectivo município
+
+            caso = municipio.casos[ j ];
+
+            if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
+
+              if ( circulo == vis.mapa.circulos.selecionado ) {
+
+                console.log( vis.mapa.circulos.amplitude );
+
+                circulo.setIcon({
+
+                  path: google.maps.SymbolPath.CIRCLE,
+                  scale: Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * vis.mapa.circulos.amplitude, 
+                  fillColor: vis.mapa.circulos.cor.normal,
+                  fillOpacity: 0.75,
+                  strokeColor: vis.mapa.circulos.cor.selecionado,
+                  strokeWeight: 1
+
+                });
+
+              } else {
+
+                circulo.setIcon({
+
+                  path: google.maps.SymbolPath.CIRCLE,
+                  scale: Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * vis.mapa.circulos.amplitude, 
+                  fillColor: vis.mapa.circulos.cor.normal,
+                  fillOpacity: 0.33,
+                  strokeColor: vis.mapa.circulos.cor.normal,
+                  strokeWeight: 0
+
+                });
+
+              }
+
+              consta = true;
+
+              break;
+
+            }
+
+          }
+
+          if ( !consta ) { // se não há informação, zera o círculo
+
+            circulo.setIcon({
+
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 0, 
+              fillColor: vis.mapa.circulos.cor.normal,
+              fillOpacity: 0.33,
+              strokeColor: vis.mapa.circulos.cor.normal,
+              strokeWeight: 0
+
+            });
+
+          }
+
+        }
+
       }
 
     },
@@ -293,9 +385,11 @@ var vis = {
 
   filtros : {
 
-    elemento : $( '.filtros' ),
+    elemento : '.filtros',
 
     semana : {
+
+      elemento : '.semanas',
 
       meses : [
 
@@ -329,6 +423,7 @@ var vis = {
       criar : function( el ) {
 
         seletor = document.createElement( 'select' );
+        seletor.className = 'semanas';
 
         grupos = {};
 
@@ -377,7 +472,9 @@ var vis = {
 
         });
 
-        el.append( seletor )
+        $( el ).append( seletor );
+
+        $( vis.filtros.semana.elemento ).val( $( vis.filtros.semana.elemento + ' option:first' ).val() );
 
       }
 
@@ -395,8 +492,7 @@ var vis = {
         seletor.type = 'checkbox';
         seletor.id = 'obitos';
         
-        el.append( rotulo );
-        el.append( seletor );
+        $( el ).append( rotulo ).append( seletor );
 
       }
 
