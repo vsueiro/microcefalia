@@ -899,6 +899,14 @@ var vis = {
 
     }
 
+    $( document ).on( 'change', '.semanas', function() {
+
+      vis.mapa.circulos.atualizar( vis.atual.semana(), vis.atual.categoria() );
+
+      // deslizador.setStep( $( 'select.semanas option:selected' ).index(), 0 );
+
+    })
+
   }
 
 };
