@@ -6,22 +6,22 @@ var vis = {
 
     script : function( url ) {
 
-      var script = document.createElement( 'script' );
-          script.type = 'text/javascript';
-          script.src = '//' + url;
-          document.body.appendChild( script );
+      script = document.createElement( 'script' );
+      script.type = 'text/javascript';
+      script.src = '//' + url;
+      document.body.appendChild( script );
 
     },
 
     dados : function( variavel, url, callback ) {
 
-        callback = callback || null;
+      callback = callback || null;
 
-        $.getJSON( url, function( dados ) {
+      $.getJSON( url, function( dados ) {
 
-          vis.dados[ variavel ] = dados;
+        vis.dados[ variavel ] = dados;
 
-        }).done( callback );
+      }).done( callback );
 
     }
 
@@ -387,6 +387,26 @@ var vis = {
 
         espessura : 2,
         cor : '#000'
+
+      },
+
+      baixar : function( arquivo ) {
+
+        elemento = this.elemento.replace( '#', '' );
+
+        svg = document.getElementById( elemento ).innerHTML,
+
+        blob = new Blob( [ svg ], { 'type' : 'image/svg+xml' } ),
+
+        a = document.createElement( 'a' );
+
+        a.download = arquivo + '.svg';
+
+        a.type = 'image/svg+xml';
+
+        a.href = ( window.URL || webkitURL ).createObjectURL( blob );
+        
+        a.click();
 
       },
 
@@ -768,41 +788,6 @@ var vis = {
         $( '[data-item="' + nome + '"]' ).html( conteudo )
 
       }
-
-      // var grafico = '';
-
-      // for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) { // para cada semana epidemiológica do município
-
-      //   caso = municipio.casos[ i ];
-
-      //   if ( caso.sem == sem.numero ) {
-
-      //     for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
-
-      //       categoria = categorias[ j ];
-
-      //       if ( categoria.visivel ) {
-
-      //         var quantidade  = caso[ categoria.apelido ] || 0,
-      //             selecionada = categoria.apelido == cat ? 'selecionada' : '';
-
-      //         ficha.append( '<li class="' + selecionada + '">' + categoria.nome + ': ' + quantidade + '</li>' );  
-
-      //       }
-
-      //     }
-
-      //   }
-
-      //   var semanaSelecionada = caso.sem == semanaAtual().numero ? 'selecionada' : '';
-      //   var numeroCasos = caso[ cat ] === undefined ? 'sem dados' : caso[ cat ];
-      //   var alturaBarra = caso[ cat ] > 1 ? caso[ cat ] / 2 : 1;
-
-      //   grafico += '<li><span>' + numeroCasos + '</span><div class="barra ' + semanaSelecionada + '" data-caso-' + cat + '="' + numeroCasos + '" data-caso-sem="' + caso.sem + '" style="height:' + alturaBarra + 'px"></div><span>Semana ' + caso.sem + '</span></li>' ;
-        
-      // }
-
-      // ficha.append( '<li class="grafico"><ol>' + grafico + '</ol></li>' );
 
     }
 
