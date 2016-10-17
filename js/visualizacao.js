@@ -356,7 +356,6 @@ var vis = {
       if ( local == 'todos' ) {
 
         linhas = '';
-
         totais = vis.dados.totais;
 
         for ( var i = 0, leni = totais.length; i < leni; i++ ) { // para cada semana epidemiológica do Brasil
@@ -372,6 +371,84 @@ var vis = {
         return '<ol>' + linhas + '</ol>';
 
       } else {
+
+        linhas    = '';
+        municipio = vis.dados.municipios[ local ];
+        casos     = municipio.casos;
+        
+        if ( !vis.iniciou ) {
+          
+          semanas = vis.dados.semanas.reverse();
+          vis.iniciou = true;
+
+        }
+
+        for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
+
+          semana = semanas[ i ]      
+
+          consta = false;
+
+          for ( var j = 0, lenj = casos.length; j < lenj; j++ ) { // para cada semana epidemiológica do Brasil
+
+            caso = casos[ j ];
+
+            if ( semana.numero == caso.sem && semana.ano == caso.ano ) {
+
+              linhas += '<li><span>' + caso.tc + '</span><div class="barra" data-caso-' + 'tc' + '="' + caso.tc + '" data-caso-sem="' + semana.numero + '" style="height:' + caso.tc + 'px"></div><span>Semana ' + semana.numero + '</span></li>' ;
+
+              consta = true;
+
+              break;
+
+            }
+
+          }
+
+          if ( !consta ) {
+
+            linhas += '<li><span>' + 'Sem dados' + '</span><div class="barra" data-caso-' + 'tc' + '="' + 'Sem dados' + '" data-caso-sem="' + semana.numero + '" style="height:' + 0 + 'px"></div><span>Semana ' + semana.numero + '</span></li>' ;
+
+          }
+
+        }
+
+        return '<ol>' + linhas + '</ol>';
+
+        // var grafico = '';
+
+        // for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) { // para cada semana epidemiológica do município
+
+        //   caso = municipio.casos[ i ];
+
+        //   if ( caso.sem == sem.numero ) {
+
+        //     for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
+
+        //       categoria = categorias[ j ];
+
+        //       if ( categoria.visivel ) {
+
+        //         var quantidade  = caso[ categoria.apelido ] || 0,
+        //             selecionada = categoria.apelido == cat ? 'selecionada' : '';
+
+        //         ficha.append( '<li class="' + selecionada + '">' + categoria.nome + ': ' + quantidade + '</li>' );  
+
+        //       }
+
+        //     }
+
+        //   }
+
+        //   var semanaSelecionada = caso.sem == semanaAtual().numero ? 'selecionada' : '';
+        //   var numeroCasos = caso[ cat ] === undefined ? 'sem dados' : caso[ cat ];
+        //   var alturaBarra = caso[ cat ] > 1 ? caso[ cat ] / 2 : 1;
+
+        //   grafico += '<li><span>' + numeroCasos + '</span><div class="barra ' + semanaSelecionada + '" data-caso-' + cat + '="' + numeroCasos + '" data-caso-sem="' + caso.sem + '" style="height:' + alturaBarra + 'px"></div><span>Semana ' + caso.sem + '</span></li>' ;
+          
+        // }
+
+        // ficha.append( '<li class="grafico"><ol>' + grafico + '</ol></li>' );
 
         return 'grafico do municipio'
 
@@ -597,7 +674,6 @@ var vis = {
 
     atualizar : function( local ) {
 
-
       if ( !local ) {
 
         local = 'todos';
@@ -810,6 +886,8 @@ var vis = {
     }
 
   },
+
+  iniciou : false,
 
   iniciar : function() {
 
