@@ -928,16 +928,18 @@ var vis = {
 
               i = this.getStep()[ 0 ];
 
-              $( 'select.semanas' ).val( $( 'select.semanas option' ).eq( i ).val() );
+              seletor = $( vis.filtros.semana.elemento );
 
-              $( '#' + this.wrapper.id ).addClass( 'loaded' ).find( '.handle' ).text( $( 'select.semanas' ).val() );
+              seletor.val( $( vis.filtros.semana.elemento + ' option' ).eq( vis.dados.semanas.length - i ).val() );
+
+              $( '#' + this.wrapper.id ).addClass( 'loaded' ).find( '.handle' ).text( seletor.val() );
 
             },
             callback: function( x, y ) {
 
-              // atualizaTudo();
+              vis.mapa.circulos.atualizar( vis.atual.semana(), vis.atual.categoria() );
 
-              $( '#' + this.wrapper.id ).find( '.handle' ).text( $( 'select.semanas' ).val() );
+              $( '#' + this.wrapper.id ).find( '.handle' ).text( seletor.val() );
 
             }
 
