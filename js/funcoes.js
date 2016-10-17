@@ -472,7 +472,7 @@ function desenhaCirculos() {
 
         }
 
-        $( '.totais ul' ).append( '<li class="grafico"><ol>' + grafico + '</ol></li>' );        
+        $( '.totais ul' ).append( '<li data-item="grafico"><ol>' + grafico + '</ol></li>' );        
 
       }
     }

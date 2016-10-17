@@ -217,8 +217,9 @@ var vis = {
         }
 
         vis.filtros.criar();
-        vis.fichas.criar();
         vis.mapa.circulos.atualizar( vis.atual.semana(), vis.atual.categoria() );
+        vis.fichas.criar();
+        vis.graficos.linhas.criar();
         
       },
 
@@ -351,6 +352,127 @@ var vis = {
 
   graficos : {
 
+    linhas :  {
+
+      elemento : '#linhas',
+
+      calcular : function( quanto, tipo ) {
+
+        municipios = vis.dados.municipios;
+
+        return Math[ quanto ].apply( Math, municipios.map( function( municipio ) {
+
+          return Math[ quanto ].apply( Math, municipio.casos.map( function( caso ) {
+
+            return caso[ tipo ] ? caso[ tipo ] : 0;
+
+          }));
+
+        }));
+
+      },
+
+      categoria : {},
+
+      semana : {},
+
+      escala : {
+
+        x : 20,
+        y : 4
+
+      },
+
+      linha : {
+
+        espessura : 1,
+        cor : '#000'
+
+      },
+
+      criar : function( cat ) {
+
+        cat = cat || 'tc';
+
+        this.categoria.max = this.calcular( 'max', cat   );
+        this.categoria.min = this.calcular( 'min', cat   );
+        this.semana.max    = this.calcular( 'max', 'sem' );
+        this.semana.min    = this.calcular( 'min', 'sem' );
+
+        svg = document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' );
+        svg.setAttribute( 'version', '1.1' );
+        svg.setAttribute( 'id', 'grafico-linhas' );
+        svg.setAttribute( 'x', '0' );
+        svg.setAttribute( 'y', '0' );
+        svg.setAttribute( 'width', ( ( this.semana.max - this.semana.min ) * this.escala.x ) + ( this.escala.x * 2 ) );
+        svg.setAttribute( 'height', ( this.categoria.max * this.escala.y ) + ( this.escala.y * 2) );
+        svg.setAttributeNS( 'http://www.w3.org/2000/xmlns/', 'xmlns:xlink', 'http://www.w3.org/1999/xlink' ); // http://www.w3.org/2000/xmlns/
+
+        linhas = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
+        linhas.setAttribute( 'id', 'linhas' );
+
+        municipios = vis.dados.municipios;
+
+        for ( var i = 0; i < municipios.length; i++ ) {
+
+          municipio = municipios[ i ];
+
+          grupo = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
+          grupo.setAttribute( 'id', municipio.nome );
+
+          // if ( municipio.casos.length > 3 ) { // wtf?
+
+            for ( var j = 0; j < ( municipio.casos.length - 1 ); j++ ) {
+
+              caso = municipio.casos[ j ];
+
+              temCasos = false;
+
+              if ( caso[ cat ] ) {
+
+                opacidade = ( 1 / this.categoria.max * caso[ cat ] );
+
+                linha = document.createElementNS( 'http://www.w3.org/2000/svg', 'line' );
+                linha.setAttribute( 'fill', 'none' );
+                linha.setAttribute( 'stroke', this.linha.cor );
+                linha.setAttribute( 'stroke-width', this.linha.espessura );
+                linha.setAttribute( 'stroke-linecap', 'round' );
+                linha.setAttribute( 'stroke-linejoin', 'round' );
+                linha.setAttribute( 'opacity', opacidade );
+                linha.setAttribute( 'x1', ( ( caso.sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
+                linha.setAttribute( 'x2', ( ( municipio.casos[ j + 1 ].sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
+                linha.setAttribute( 'y1', ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y )  );
+                linha.setAttribute( 'y2', ( municipio.casos[ j + 1 ][ cat ] ? ( ( ( this.categoria.max + 1 ) - municipio.casos[ j + 1 ][ cat ] ) * this.escala.y ) : ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y ) ) );
+                    
+                grupo.appendChild( linha );
+
+                temCasos = true;
+
+              }
+
+              if ( temCasos ) {
+
+                linhas.appendChild( grupo );
+
+              }
+
+            }
+
+          // } else {
+
+          //   console.log( municipio );
+
+          // }
+
+        }
+
+        svg.appendChild( linhas );
+        document.getElementById( 'linhas' ).appendChild( svg );
+
+      }
+
+    },
+
     evolucao : function( local ) {
 
       if ( local == 'todos' ) {
@@ -413,44 +535,7 @@ var vis = {
 
         }
 
-        return '<ol>' + linhas + '</ol>';
-
-        // var grafico = '';
-
-        // for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) { // para cada semana epidemiológica do município
-
-        //   caso = municipio.casos[ i ];
-
-        //   if ( caso.sem == sem.numero ) {
-
-        //     for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
-
-        //       categoria = categorias[ j ];
-
-        //       if ( categoria.visivel ) {
-
-        //         var quantidade  = caso[ categoria.apelido ] || 0,
-        //             selecionada = categoria.apelido == cat ? 'selecionada' : '';
-
-        //         ficha.append( '<li class="' + selecionada + '">' + categoria.nome + ': ' + quantidade + '</li>' );  
-
-        //       }
-
-        //     }
-
-        //   }
-
-        //   var semanaSelecionada = caso.sem == semanaAtual().numero ? 'selecionada' : '';
-        //   var numeroCasos = caso[ cat ] === undefined ? 'sem dados' : caso[ cat ];
-        //   var alturaBarra = caso[ cat ] > 1 ? caso[ cat ] / 2 : 1;
-
-        //   grafico += '<li><span>' + numeroCasos + '</span><div class="barra ' + semanaSelecionada + '" data-caso-' + cat + '="' + numeroCasos + '" data-caso-sem="' + caso.sem + '" style="height:' + alturaBarra + 'px"></div><span>Semana ' + caso.sem + '</span></li>' ;
-          
-        // }
-
-        // ficha.append( '<li class="grafico"><ol>' + grafico + '</ol></li>' );
-
-        return 'grafico do municipio'
+        return '<ol>' + linhas + '</ol>'
 
       }
 
