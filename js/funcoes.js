@@ -199,13 +199,13 @@ function ultimo( data ) {
 
 function desenhaCirculos() {
 
-  $.getJSON( 'data/codigo-das-UF.json', function( dados ) {
+  $.getJSON( 'data/UFs.json', function( dados ) {
 
     UFs = dados;
 
   });
 
-  $.getJSON( 'data/lista-microcefalia-2016-10-07.json', function( dados ) {
+  $.getJSON( 'data/microcefalia-2016-10-07.json', function( dados ) {
 
     municipios = dados;
 
@@ -552,6 +552,8 @@ function criaMapa() {
   desenhaCirculos();
 
 }
+
+
 
 function carregaMapa() {
 

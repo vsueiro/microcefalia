@@ -1,29 +1,34 @@
+//   totais,
+//   total,
+//   municipios,
+//   municipio,
+//   circulos,
+//   circulo,
+//   semanas,
+//   semana,
+//   caso,
+//   mapa,
+//   ficha,
+//   categorias,
+//   categoria,
+//   cor,
+//   consta,
+//   dataDasSemanas,
+//   meses,
+//   visualizacao,
+//   selecionado,
+//   tamanho,
+//   amplitude,
+//   deslizador
+
+
+var municipio,
+    circulo;
+
+
 var vis = {
-  
-  // var
-  //   totais,
-  //   total,
-  //   municipios,
-  //   municipio,
-  //   circulos,
-  //   circulo,
-  //   semanas,
-  //   semana,
-  //   caso,
-  //   mapa,
-  //   ficha,
-  //   categorias,
-  //   categoria,
-  //   cor,
-  //   consta,
-  //   dataDasSemanas,
-  //   meses,
-  //   visualizacao,
-  //   selecionado,
-  //   tamanho,
-  //   amplitude,
-  //   deslizador
-  // ;
+
+  dados : {},
 
   carrega : {
 
@@ -31,8 +36,20 @@ var vis = {
 
       var script = document.createElement( 'script' );
           script.type = 'text/javascript';
-          script.src = url;
+          script.src = '//' + url;
           document.body.appendChild( script );
+
+    },
+
+    dados : function( variavel, url, callback ) {
+
+        callback = callback || null;
+
+        $.getJSON( url, function( dados ) {
+
+          vis.dados[ variavel ] = dados;
+
+        }).done( callback );
 
     }
 
@@ -43,7 +60,7 @@ var vis = {
     {
       nome : 'Google Maps',
       tipo : 'script',      
-      url : '//maps.googleapis.com/maps/api/js?key=AIzaSyBoqFIX7oEYftU-MW9H49ivEpYtU6BZJRs&callback=vis.mapa.criar'
+      url : 'maps.googleapis.com/maps/api/js?key=AIzaSyBoqFIX7oEYftU-MW9H49ivEpYtU6BZJRs&callback=vis.mapa.criar'
     }
 
   ],
@@ -57,26 +74,170 @@ var vis = {
 
   elemento : $( '.visualizacao' ),
 
+  ultimo : function( data ) {
+
+    if ( data == 'semana' ) return vis.dados.semanas[ 0 ].numero;
+    if ( data == 'ano'    ) return vis.dados.semanas[ 0 ].ano;
+
+  },
+
   mapa : {
 
     elemento : $( '#mapa' ),
 
-    circulos : {
+    circulos : { 
+
+      lista : [],
 
       amplitude : 7.5,
+
       cor : {
  
         normal : '#333',
         destaque : '#222',
         selecionado : '#000'
 
+      },
+
+      criar : function() {
+
+        municipios = vis.dados.municipios;
+
+        for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+
+          municipio = municipios[ i ];
+
+          circulo = new google.maps.Marker({
+
+            indice: i,
+            id: municipio.id,
+            map: vis.mapa.objeto,
+            title: municipio.nome,
+            position: municipio.geo,
+            icon: {
+
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 1, // mudar para 0
+              fillColor: vis.mapa.circulos.cor.normal,
+              fillOpacity: 0.33,
+              strokeColor: vis.mapa.circulos.cor.normal,
+              strokeWeight: 0
+
+            }
+
+          });
+
+          circulo.addListener( 'click', function() {
+
+            if ( vis.mapa.circulos.selecionado ) {
+
+              vis.mapa.circulos.selecionado.setIcon({
+
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: tamanho.selecionado, 
+                fillColor: vis.mapa.circulos.cor.normal,
+                fillOpacity: 0.33,
+                strokeColor: vis.mapa.circulos.cor.normal,
+                strokeWeight: 0
+
+              });
+
+            } 
+
+            mostraFicha( this.indice, semanaAtual(), categoriaAtual() );
+
+            vis.mapa.circulos.selecionado = this;
+
+            vis.mapa.circulos.selecionado.tamanho = this.icon.scale;
+
+            this.setIcon({
+
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: vis.mapa.circulos.selecionado.tamanho, 
+              fillColor: vis.mapa.circulos.cor.normal,
+              fillOpacity: 0.75,
+              strokeColor: vis.mapa.circulos.cor.selecionado,
+              strokeWeight: 1
+
+            });
+            
+          });
+
+          circulo.addListener( 'mouseover', function() {
+
+            if ( this != vis.mapa.circulos.selecionado ) {
+
+              vis.mapa.circulos.tamanho = this.icon.scale;
+
+              this.setIcon({
+
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: vis.mapa.circulos.tamanho, 
+                fillColor: vis.mapa.circulos.cor.normal,
+                fillOpacity: 0.66,
+                strokeColor: vis.mapa.circulos.cor.destaque,
+                strokeWeight: 1
+
+              });
+
+            }
+
+          });
+
+          circulo.addListener( 'mouseout', function() {
+
+            if ( this != vis.mapa.circulos.selecionado ) {
+
+              this.setIcon({
+
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: vis.mapa.circulos.tamanho, 
+                fillColor: vis.mapa.circulos.cor.normal,
+                fillOpacity: 0.33,
+                strokeColor: vis.mapa.circulos.cor.normal,
+                strokeWeight: 0
+
+              });
+
+            }
+
+          });
+
+          vis.mapa.circulos.lista.push( circulo );
+
+          for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) {
+
+            caso = municipio.casos[ j ];
+
+            // vis.semanas.push( caso.sem + '/' + caso.ano );
+
+            if ( caso.sem == vis.ultimo( 'semana' ) ) { // semana mais recente no geral
+
+              for ( var k = 0, lenk = vis.dados.categorias.length; k < lenk; k++ ) {
+
+                categoria = vis.dados.categorias[ k ];
+
+                if ( categoria.visivel && caso[ categoria.apelido ] ) { // se este municipio tem dados sobre esta categoria em sua semana mais recente
+
+                  categoria.total += caso[ categoria.apelido ];
+
+                }
+
+              }
+
+            }
+            
+          }
+
+        }
+        
       }
 
     },
 
     criar : function() {
 
-      mapa = new google.maps.Map( document.getElementById( 'mapa' ), {
+      this.objeto = new google.maps.Map( this.elemento[ 0 ], {
 
         zoom: 5,
         minZoom: 5,
@@ -92,8 +253,35 @@ var vis = {
         fullscreenControl: false
 
       });
+      
+      vis.carrega.dados( 
 
-      // desenhaCirculos();
+        'semanas',
+        'data/semanas.json',
+
+        vis.carrega.dados(
+
+          'UFs',
+          'data/UFs.json', 
+
+          vis.carrega.dados(
+
+            'categorias',
+            'data/categorias.json',
+
+            vis.carrega.dados(
+
+              'municipios',
+              'data/microcefalia-2016-10-07.json',
+              vis.mapa.circulos.criar
+
+            )
+
+          )
+
+        )
+
+      )
 
     }
 
@@ -103,6 +291,10 @@ var vis = {
 
 
   },
+
+  // temp 
+  // semanas : [],
+  // end temp
 
   iniciar : function() {
 
@@ -116,20 +308,6 @@ var vis = {
 
   }
 
-  
-  // function changeHTML( content ) {
-  //   var element = document.getElementById( 'change' );
-  //   element.innerHTML = content;
-  // }
-
-  // return {
-  //   callChangeHTML: function( content ) {
-  //     changeHTML( content );
-  //   }
-  // };
-
 };
-
-// interativo.callChangeHTML( 'oi' ); 
 
 vis.iniciar();
