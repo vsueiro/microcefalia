@@ -850,11 +850,11 @@ var vis = {
             texto += vis.filtros.semana.quando( semana.fim );
             texto = texto.replace( /de\s+\d{4}/gi ,'' );
 
-            mes = texto.match( /de\s+\w+/gi );
+            mes = texto.match( /de\s+(\w|ç)+/gi );
 
             if ( mes[ 0 ] == mes[ 1 ] ) {
 
-              texto = texto.replace( /de\s+\w+/i , '' )
+              texto = texto.replace( /de\s+(\w|ç)+/i , '' )
 
             }
 
