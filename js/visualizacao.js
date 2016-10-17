@@ -383,11 +383,20 @@ var vis = {
 
     },
 
-    categoria : {
+    obitos : {
 
       criar : function( el ) {
 
-        el.append( '<div>categoria</div>' )
+        rotulo = document.createElement( 'label' );
+        rotulo.appendChild( document.createTextNode( 'Óbitos' ) );
+        rotulo.htmlFor = 'obitos';
+
+        seletor = document.createElement( 'input' );
+        seletor.type = 'checkbox';
+        seletor.id = 'obitos';
+        
+        el.append( rotulo );
+        el.append( seletor );
 
       }
 
@@ -398,7 +407,7 @@ var vis = {
       el = this.elemento;
 
       this.semana.criar( el );
-      this.categoria.criar( el );
+      this.obitos.criar( el );
 
     }
 
