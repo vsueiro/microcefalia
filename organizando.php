@@ -17,13 +17,14 @@
 
       <section class="fichas"></section>
 
-      <section class="grafico" id="linhas"></section>
-
-      <div class="grafico" id="mapa"></div>
-
       <form class="filtros"></form>
 
       <nav class="navegacao"></nav>
+
+      <div class="grafico" id="mapa"></div>
+
+      <section class="grafico" id="linhas"></section>
+
 
     </article>
 

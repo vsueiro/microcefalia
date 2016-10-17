@@ -1,27 +1,3 @@
-//   totais,
-//   total,
-//   municipios,
-//   municipio,
-//   circulos,
-//   circulo,
-//   semanas,
-//   semana,
-//   caso,
-//   mapa,
-//   ficha,
-//   categorias,
-//   categoria,
-//   cor,
-//   consta,
-//   dataDasSemanas,
-//   meses,
-//   visualizacao,
-//   selecionado,
-//   tamanho,
-//   amplitude,
-//   deslizador
-
-
 var vis = {
 
   dados : {},
@@ -68,7 +44,7 @@ var vis = {
 
   },
 
-  elemento : $( '.visualizacao' ),
+  elemento : '.visualizacao',
 
   atual : {
 
@@ -88,20 +64,13 @@ var vis = {
       // temp
       return 'tc'
 
-    }
-
-  },
-
-  ultimo : function( data ) {
-
-    if ( data == 'semana' ) return vis.dados.semanas[ 0 ].numero;
-    if ( data == 'ano'    ) return vis.dados.semanas[ 0 ].ano;
+    },
 
   },
 
   mapa : {
 
-    elemento : $( '#mapa' ),
+    elemento : '#mapa',
 
     circulos : { 
 
@@ -152,7 +121,7 @@ var vis = {
               vis.mapa.circulos.selecionado.setIcon({
 
                 path: google.maps.SymbolPath.CIRCLE,
-                scale: tamanho.selecionado, 
+                scale: vis.mapa.circulos.selecionado.tamanho, 
                 fillColor: vis.mapa.circulos.cor.normal,
                 fillOpacity: 0.33,
                 strokeColor: vis.mapa.circulos.cor.normal,
@@ -162,7 +131,7 @@ var vis = {
 
             } 
 
-            mostraFicha( this.indice, semanaAtual(), categoriaAtual() );
+            vis.fichas.atualizar( this.indice );
 
             vis.mapa.circulos.selecionado = this;
 
@@ -227,8 +196,6 @@ var vis = {
 
             caso = municipio.casos[ j ];
 
-            // vis.semanas.push( caso.sem + '/' + caso.ano );
-
             if ( caso.sem == vis.ultimo( 'semana' ) ) { // semana mais recente no geral
 
               for ( var k = 0, lenk = vis.dados.categorias.length; k < lenk; k++ ) {
@@ -250,6 +217,7 @@ var vis = {
         }
 
         vis.filtros.criar();
+        vis.fichas.criar();
         vis.mapa.circulos.atualizar( vis.atual.semana(), vis.atual.categoria() );
         
       },
@@ -331,7 +299,7 @@ var vis = {
 
     criar : function() {
 
-      this.objeto = new google.maps.Map( this.elemento[ 0 ], {
+      this.objeto = new google.maps.Map( $( this.elemento )[ 0 ], {
 
         zoom: 5,
         minZoom: 5,
@@ -381,7 +349,276 @@ var vis = {
 
   },
 
-  graficos : {},
+  graficos : {
+
+    evolucao : function() {
+
+      return 'grafico'
+
+    }
+
+  },
+
+  fichas : {
+
+    elemento : '.fichas',
+
+    ativo : false,
+
+    items : {
+
+      local : function( local ) {
+
+        municipio = vis.dados.municipios[ local ];
+        console.log( municipio );
+        return municipio.nome;
+
+      },
+
+      UF : function( local ) {
+
+        municipio = vis.dados.municipios[ local ];
+
+        return vis.UF( municipio.id, 'nome' )
+
+      },
+
+      data : function( local ) {
+
+        sem = vis.atual.semana();
+
+        for ( var i = 0, leni = vis.dados.semanas.length; i < leni; i++ ) {
+
+          semana = vis.dados.semanas[ i ];
+
+          if ( semana.numero == sem.numero && semana.ano == sem.ano ) {
+
+            return 'Até ' + vis.filtros.semana.quando( semana.fim );
+
+          }
+
+        }
+
+      },
+
+      casos : function( local ) {
+
+        sem = vis.atual.semana();
+
+        municipio = vis.dados.municipios[ local ];
+
+        for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) {
+
+          caso = municipio.casos[ i ];
+
+          console.log('searching' );
+
+          if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
+
+            console.log('found' );
+            return 'casos confirmados: ' + caso.tc
+
+          }
+
+        }
+
+      },
+
+      grafico : function() {
+
+        return vis.graficos.evolucao()
+
+      }
+
+    },
+
+    criar : function() {
+
+      lista = $( '<ul/>' ).appendTo( this.elemento );
+
+      for ( nome in this.items ) {
+
+        lista.append( '<li data-item="' + nome + '"></li>' );
+
+      }
+
+      this.atualizar()
+
+    },
+
+    totais : function() {
+
+      vis.dados.totais = [];
+  
+      totais = vis.dados.totais;
+
+      semanas = vis.dados.semanas;
+
+      for ( var i = 0, leni = semanas.length; i < leni; i++ ) { // soma números acumulados por semana
+
+        semana = semanas[ i ];
+
+        totais[ i ] = {
+
+          ano : semana.ano,
+          sem : semana.numero,
+          casos : {
+
+            acumulados : {},
+            unicos : {}
+
+          }
+
+        };
+
+        categorias = vis.dados.categorias;
+
+        for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
+
+          categoria = categorias[ j ];
+
+          if ( categoria.visivel ) {
+
+            totais[ i ].casos.acumulados[ categoria.apelido ] = 0; 
+
+            municipios = vis.dados.municipios;
+
+            for ( var k = 0, lenk = municipios.length; k < lenk; k++ ) {
+
+              municipio = municipios[ k ];
+
+              for ( var l = 0, lenl = municipio.casos.length; l < lenl; l++ ) {
+
+                caso = municipio.casos[ l ];
+
+                if ( caso.ano == semana.ano && caso.sem == semana.numero ) {
+
+                  if ( categoria.apelido in caso ) {
+
+                    totais[ i ][ 'casos' ][ 'acumulados' ][ categoria.apelido ] += caso[ categoria.apelido ];
+
+                  }
+
+                  break;
+
+                }
+                
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
+      for ( var i = 0, leni = totais.length; i < leni; i++ ) { // calcula números específicos de cada semana
+
+        total = totais[ i ];
+
+        anterior = 0;
+
+        for ( caso in total.casos.acumulados ) {
+
+          if ( i > 0 ) {
+
+            anterior = totais[ i - 1 ].casos.acumulados[ caso ];
+
+          }
+
+          total.casos.unicos[ caso ] = total.casos.acumulados[ caso ] - anterior;
+
+        }
+
+      }
+
+      // desenha gráfico
+      // {
+
+      //   var grafico = '';
+
+      //   for ( var i = 0, leni = totais.length; i < leni; i++ ) { // para cada semana epidemiológica do Brasil
+
+      //     total = totais[ i ];
+
+      //     var unicos = total.casos.unicos;
+
+      //     for ( caso in unicos ) {
+
+      //       grafico += '<li><span>' + unicos[ caso ] + '</span><div class="barra" data-caso-' + caso + '="' + unicos[ caso ] + '" data-caso-sem="' + total.numero + '" style="height:' + unicos[ caso ] + 'px"></div><span>Semana ' + total.numero + '</span></li>' ;
+
+      //     }
+
+      //   }
+
+      //   $( '.totais ul' ).append( '<li class="grafico"><ol>' + grafico + '</ol></li>' );        
+
+      // }
+
+    },
+
+    atualizar : function( local ) {
+
+      // local = local ? local : 0;
+
+      if ( !local ) {
+
+        local = 0;
+
+        this.totais()
+
+      }
+
+      vis.fichas.ativo = true;
+      vis.atual.municipio = local;
+
+      for ( nome in this.items ) {
+
+        conteudo = this.items[ nome ]( local );
+
+        $( '[data-item="' + nome + '"]' ).html( conteudo )
+
+      }
+
+      // var grafico = '';
+
+      // for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) { // para cada semana epidemiológica do município
+
+      //   caso = municipio.casos[ i ];
+
+      //   if ( caso.sem == sem.numero ) {
+
+      //     for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
+
+      //       categoria = categorias[ j ];
+
+      //       if ( categoria.visivel ) {
+
+      //         var quantidade  = caso[ categoria.apelido ] || 0,
+      //             selecionada = categoria.apelido == cat ? 'selecionada' : '';
+
+      //         ficha.append( '<li class="' + selecionada + '">' + categoria.nome + ': ' + quantidade + '</li>' );  
+
+      //       }
+
+      //     }
+
+      //   }
+
+      //   var semanaSelecionada = caso.sem == semanaAtual().numero ? 'selecionada' : '';
+      //   var numeroCasos = caso[ cat ] === undefined ? 'sem dados' : caso[ cat ];
+      //   var alturaBarra = caso[ cat ] > 1 ? caso[ cat ] / 2 : 1;
+
+      //   grafico += '<li><span>' + numeroCasos + '</span><div class="barra ' + semanaSelecionada + '" data-caso-' + cat + '="' + numeroCasos + '" data-caso-sem="' + caso.sem + '" style="height:' + alturaBarra + 'px"></div><span>Semana ' + caso.sem + '</span></li>' ;
+        
+      // }
+
+      // ficha.append( '<li class="grafico"><ol>' + grafico + '</ol></li>' );
+
+    }
+
+  },
 
   filtros : {
 
@@ -416,7 +653,7 @@ var vis = {
         mes = this.meses[ parseInt( data[ 1 ] ) - 1 ];
         ano = data[ 0 ];
 
-        return dia + ' de ' + mes;
+        return dia + ' de ' + mes + ' de ' + ano;
               
       },
 
@@ -431,7 +668,10 @@ var vis = {
 
           ano = semana.ano;
 
-          texto = vis.filtros.semana.quando( semana.inicio ) + ' a ' + vis.filtros.semana.quando( semana.fim );
+          texto = vis.filtros.semana.quando( semana.inicio );
+          texto += ' a ';
+          texto += vis.filtros.semana.quando( semana.fim );
+          texto = texto.replace( /de\s+\d{4}/gi ,'' );
 
           mes = texto.match( /de\s+\w+/gi );
 
@@ -504,6 +744,33 @@ var vis = {
 
       this.semana.criar( el );
       this.obitos.criar( el );
+
+    }
+
+  },
+
+  ultimo : function( data ) {
+
+    if ( data == 'semana' ) return vis.dados.semanas[ 0 ].numero;
+    if ( data == 'ano'    ) return vis.dados.semanas[ 0 ].ano;
+
+  },
+
+  UF : function( n, retorno ) {
+
+    id = n.toString().substring( 0, 2 );
+
+    UFs = vis.dados.UFs;
+
+    for ( var i = 0, leni = UFs.length; i < leni; i++ ) {
+
+      UF = UFs[ i ];
+
+      if ( UF.id == id ) {
+
+        return UF[ retorno ];
+
+      }
 
     }
 
