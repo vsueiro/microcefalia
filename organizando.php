@@ -38,5 +38,7 @@
     <script src="libs/dragdealer.js"></script>
     <script src="js/visualizacao.js"></script>
 
+    <!-- Teste -->
+
   </body>
 </html>
