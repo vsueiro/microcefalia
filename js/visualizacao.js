@@ -369,17 +369,33 @@ var vis = {
 
       local : function( local ) {
 
-        municipio = vis.dados.municipios[ local ];
-        console.log( municipio );
-        return municipio.nome;
+        if ( local == 'todos' ) {
+
+          return 'Brasil'
+
+        } else {
+
+          municipio = vis.dados.municipios[ local ];
+        
+          return municipio.nome;
+
+        }
 
       },
 
       UF : function( local ) {
 
-        municipio = vis.dados.municipios[ local ];
+        if ( local == 'todos' ) {
 
-        return vis.UF( municipio.id, 'nome' )
+          return '–'
+
+        } else {
+
+          municipio = vis.dados.municipios[ local ];
+
+          return vis.UF( municipio.id, 'nome' )
+
+        }
 
       },
 
@@ -405,18 +421,38 @@ var vis = {
 
         sem = vis.atual.semana();
 
-        municipio = vis.dados.municipios[ local ];
+        if ( local == 'todos' ) {
 
-        for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) {
+          totais = vis.dados.totais;
 
-          caso = municipio.casos[ i ];
+          for ( var i = 0, leni = totais.length; i < leni; i++ ) {
 
-          console.log('searching' );
+            total = totais[ i ];
 
-          if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
+            if ( total.ano == sem.ano && total.sem == sem.numero ) {
 
-            console.log('found' );
-            return 'casos confirmados: ' + caso.tc
+              tc   = total.casos.acumulados.tc || 0;
+              toc = total.casos.acumulados.toc || 0;
+
+              return 'Casos confirmados: ' + tc + '<br>Óbitos confirmados: ' + toc
+
+            }
+
+          }
+
+        } else {
+
+          municipio = vis.dados.municipios[ local ];
+
+          for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) {
+
+            caso = municipio.casos[ i ];
+
+            if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
+
+              return 'Casos confirmados: ' + ( caso.tc || 0 ) + '<br>Óbitos confirmados: ' + ( caso.toc || 0 )
+
+            }
 
           }
 
@@ -564,7 +600,7 @@ var vis = {
 
       if ( !local ) {
 
-        local = 0;
+        local = 'todos';
 
         this.totais()
 
