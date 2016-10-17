@@ -22,8 +22,8 @@
 //   deslizador
 
 
-var municipio,
-    circulo;
+// var municipio,
+//     circulo;
 
 
 var vis = {
