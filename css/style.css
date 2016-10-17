@@ -65,7 +65,7 @@ body {
 }
 
 [data-item="grafico"] ol li .barra.selecionada {
-    background: #0088cc;
+    background: #000;
 }
 
 /* dragdealer */
@@ -93,7 +93,7 @@ body {
   left: 0;
 }
 
-.dragdealer .red-bar {
+.dragdealer .handle {
   width: 80px;
   height: 30px;
   background: #333;

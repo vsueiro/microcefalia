@@ -220,7 +220,7 @@ var vis = {
         vis.mapa.circulos.atualizar( vis.atual.semana(), vis.atual.categoria() );
         vis.fichas.criar();
         vis.graficos.linhas.criar();
-        
+        vis.filtros.semana.deslizador.criar();
       },
 
       atualizar : function( sem, cat ) {
@@ -385,7 +385,7 @@ var vis = {
 
       linha : {
 
-        espessura : 1,
+        espessura : 2,
         cor : '#000'
 
       },
@@ -420,49 +420,41 @@ var vis = {
           grupo = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
           grupo.setAttribute( 'id', municipio.nome );
 
-          // if ( municipio.casos.length > 3 ) { // wtf?
+          for ( var j = 0; j < ( municipio.casos.length - 1 ); j++ ) {
 
-            for ( var j = 0; j < ( municipio.casos.length - 1 ); j++ ) {
+            caso = municipio.casos[ j ];
 
-              caso = municipio.casos[ j ];
+            temCasos = false;
 
-              temCasos = false;
+            if ( caso[ cat ] ) {
 
-              if ( caso[ cat ] ) {
+              opacidade = ( 1 / this.categoria.max * caso[ cat ] );
 
-                opacidade = ( 1 / this.categoria.max * caso[ cat ] );
+              linha = document.createElementNS( 'http://www.w3.org/2000/svg', 'line' );
+              linha.setAttribute( 'fill', 'none' );
+              linha.setAttribute( 'stroke', this.linha.cor );
+              linha.setAttribute( 'stroke-width', this.linha.espessura );
+              linha.setAttribute( 'stroke-linecap', 'round' );
+              linha.setAttribute( 'stroke-linejoin', 'round' );
+              linha.setAttribute( 'opacity', opacidade );
+              linha.setAttribute( 'x1', ( ( caso.sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
+              linha.setAttribute( 'x2', ( ( municipio.casos[ j + 1 ].sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
+              linha.setAttribute( 'y1', ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y )  );
+              linha.setAttribute( 'y2', ( municipio.casos[ j + 1 ][ cat ] ? ( ( ( this.categoria.max + 1 ) - municipio.casos[ j + 1 ][ cat ] ) * this.escala.y ) : ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y ) ) );
+                  
+              grupo.appendChild( linha );
 
-                linha = document.createElementNS( 'http://www.w3.org/2000/svg', 'line' );
-                linha.setAttribute( 'fill', 'none' );
-                linha.setAttribute( 'stroke', this.linha.cor );
-                linha.setAttribute( 'stroke-width', this.linha.espessura );
-                linha.setAttribute( 'stroke-linecap', 'round' );
-                linha.setAttribute( 'stroke-linejoin', 'round' );
-                linha.setAttribute( 'opacity', opacidade );
-                linha.setAttribute( 'x1', ( ( caso.sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
-                linha.setAttribute( 'x2', ( ( municipio.casos[ j + 1 ].sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
-                linha.setAttribute( 'y1', ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y )  );
-                linha.setAttribute( 'y2', ( municipio.casos[ j + 1 ][ cat ] ? ( ( ( this.categoria.max + 1 ) - municipio.casos[ j + 1 ][ cat ] ) * this.escala.y ) : ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y ) ) );
-                    
-                grupo.appendChild( linha );
-
-                temCasos = true;
-
-              }
-
-              if ( temCasos ) {
-
-                linhas.appendChild( grupo );
-
-              }
+              temCasos = true;
 
             }
 
-          // } else {
+            if ( temCasos ) {
 
-          //   console.log( municipio );
+              linhas.appendChild( grupo );
 
-          // }
+            }
+
+          }
 
         }
 
@@ -853,64 +845,111 @@ var vis = {
               
       },
 
-      criar : function( el ) {
+      seletor : {
 
-        seletor = document.createElement( 'select' );
-        seletor.className = 'semanas';
+        elemento : '.semanas',
 
-        grupos = {};
+        criar : function( el ) { 
 
-        vis.dados.semanas.forEach( function( semana ) {
+          seletor = document.createElement( 'select' );
+          seletor.className = 'semanas';
 
-          ano = semana.ano;
+          grupos = {};
 
-          texto = vis.filtros.semana.quando( semana.inicio );
-          texto += ' a ';
-          texto += vis.filtros.semana.quando( semana.fim );
-          texto = texto.replace( /de\s+\d{4}/gi ,'' );
+          vis.dados.semanas.forEach( function( semana ) {
 
-          mes = texto.match( /de\s+\w+/gi );
+            ano = semana.ano;
 
-          if ( mes[ 0 ] == mes[ 1 ] ) {
+            texto = vis.filtros.semana.quando( semana.inicio );
+            texto += ' a ';
+            texto += vis.filtros.semana.quando( semana.fim );
+            texto = texto.replace( /de\s+\d{4}/gi ,'' );
 
-            texto = texto.replace( /de\s+\w+/i , '' )
+            mes = texto.match( /de\s+\w+/gi );
+
+            if ( mes[ 0 ] == mes[ 1 ] ) {
+
+              texto = texto.replace( /de\s+\w+/i , '' )
+
+            }
+
+            opcao = document.createElement( 'option' );
+            opcao.value = semana.numero + '/' + ano;
+            opcao.text = texto;
+
+            if ( ano in grupos ) {
+
+            } else {
+
+              grupos[ ano ] = document.createElement( 'optgroup' );
+              grupos[ ano ].label = ano;
+
+            }
+
+            grupos[ ano ].appendChild( opcao );
+
+          });
+
+          ordem = [];
+
+          for ( ano in grupos ) {
+
+            ordem.push( ano );
 
           }
 
-          opcao = document.createElement( 'option' );
-          opcao.value = semana.numero + '/' + ano;
-          opcao.text = texto;
+          ordem.sort().reverse().forEach( function( ano ) {
 
-          if ( ano in grupos ) {
+            seletor.appendChild( grupos[ ano ] );
 
-          } else {
+          });
 
-            grupos[ ano ] = document.createElement( 'optgroup' );
-            grupos[ ano ].label = ano;
+          $( el ).append( seletor );
 
-          }
-
-          grupos[ ano ].appendChild( opcao );
-
-        });
-
-        ordem = [];
-
-        for ( ano in grupos ) {
-
-          ordem.push( ano );
+          $( vis.filtros.semana.elemento ).val( $( vis.filtros.semana.elemento + ' option:first' ).val() );
 
         }
 
-        ordem.sort().reverse().forEach( function( ano ) {
+      },
 
-          seletor.appendChild( grupos[ ano ] );
+      deslizador : {
 
-        });
+        elemento : 'deslizador',
 
-        $( el ).append( seletor );
+        criar: function() {
 
-        $( vis.filtros.semana.elemento ).val( $( vis.filtros.semana.elemento + ' option:first' ).val() );
+          this.objeto = new Dragdealer( this.elemento, {
+
+            steps: vis.dados.semanas.length,
+            slide: false,
+            snap: true,
+            x: 1,
+            animationCallback: function( x, y ) {
+
+              i = this.getStep()[ 0 ];
+
+              $( 'select.semanas' ).val( $( 'select.semanas option' ).eq( i ).val() );
+
+              $( '#' + this.wrapper.id ).addClass( 'loaded' ).find( '.handle' ).text( $( 'select.semanas' ).val() );
+
+            },
+            callback: function( x, y ) {
+
+              // atualizaTudo();
+
+              $( '#' + this.wrapper.id ).find( '.handle' ).text( $( 'select.semanas' ).val() );
+
+            }
+
+          });
+
+        } 
+
+      },
+
+      criar : function( el ) {
+
+        this.seletor.criar( el );
 
       }
 

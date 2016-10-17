@@ -17,7 +17,13 @@
 
       <section class="fichas"></section>
 
-      <form class="filtros"></form>
+      <form class="filtros">
+
+        <div id="deslizador" class="dragdealer">
+          <div class="handle"></div>
+        </div>
+
+      </form>
 
       <nav class="navegacao"></nav>
 
@@ -31,9 +37,6 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="libs/dragdealer.js"></script>
     <script src="js/visualizacao.js"></script>
-    <!--<script src="js/variaveis.js"></script>-->
-    <!--<script src="js/funcoes.js"></script>-->
-    <!--<script src="js/app.js"></script>-->
 
   </body>
 </html>
