@@ -405,7 +405,7 @@ var vis = {
         a.type = 'image/svg+xml';
 
         a.href = ( window.URL || webkitURL ).createObjectURL( blob );
-        
+
         a.click();
 
       },
@@ -1012,9 +1012,13 @@ var vis = {
 
     $( document ).on( 'change', '.semanas', function() {
 
+      index = $( vis.filtros.semana.seletor.elemento + ' option:selected' ).index();
+
+      step = vis.dados.semanas.length - index;
+
       vis.mapa.circulos.atualizar( vis.atual.semana(), vis.atual.categoria() );
 
-      // deslizador.setStep( $( 'select.semanas option:selected' ).index(), 0 );
+      vis.filtros.semana.deslizador.objeto.setStep( step, 0 );
 
     })
 
