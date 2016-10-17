@@ -1000,15 +1000,7 @@ var vis = {
 
   iniciou : false,
 
-  iniciar : function() {
-
-    for ( var i = 0; i < this.dependencias.length; i ++ ) {
-
-      var dependencia = this.dependencias[ i ];
-
-      this.carrega[ dependencia.tipo ]( dependencia.url );
-
-    }
+  eventos : function() {
 
     $( document ).on( 'change', '.semanas', function() {
 
@@ -1021,6 +1013,20 @@ var vis = {
       vis.filtros.semana.deslizador.objeto.setStep( step, 0 );
 
     })
+
+  },
+
+  iniciar : function() {
+
+    for ( var i = 0; i < this.dependencias.length; i ++ ) {
+
+      var dependencia = this.dependencias[ i ];
+
+      this.carrega[ dependencia.tipo ]( dependencia.url );
+
+    }
+
+    this.eventos();
 
   }
 
