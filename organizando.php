@@ -25,14 +25,11 @@
 
       <section class="grafico" id="linhas"></section>
 
-
     </article>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="libs/dragdealer.js"></script>
     <script src="js/visualizacao.js"></script>
-
-    <!-- Teste -->
 
   </body>
 </html>
