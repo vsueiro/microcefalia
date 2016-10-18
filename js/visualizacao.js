@@ -66,6 +66,12 @@ var vis = {
 
     },
 
+    estado : {
+
+      iniciado : false
+
+    }
+
   },
 
   mapa : {
@@ -491,18 +497,41 @@ var vis = {
 
         linhas = '';
         totais = vis.dados.totais;
+        caso = vis.atual.categoria();
+
+        ol = document.createElement( 'ol' );
 
         for ( var i = 0, leni = totais.length; i < leni; i++ ) { // para cada semana epidemiológica do Brasil
 
-          total = totais[ i ];
+          total           = totais[ i ];
+          unicos          = total.casos.unicos;
+          quantidade      = unicos[ caso ];
+          semana          = total.sem;
+          span            = {};
+          altura          = quantidade + 'px';
+          li              = document.createElement( 'li' );
+          div             = document.createElement( 'div' );
+          span.quantidade = document.createElement( 'span' );
+          span.semana     = document.createElement( 'span' );
 
-          unicos = total.casos.unicos;
+          span.quantidade.innerHTML = quantidade;
+          span.semana.innerHTML = ' Semana ' + semana;
 
-          linhas += '<li><span>' + unicos.tc + '</span><div class="barra" data-caso-' + caso + '="' + unicos.tc + '" data-caso-sem="' + total.sem + '" style="height:' + unicos.tc + 'px"></div><span>Semana ' + total.sem + '</span></li>' ;
+          div.dataset.tipo = caso;
+          div.dataset.casos = quantidade;
+          div.dataset.sem = quantidade;
+          div.className = 'barra';
+          div.setAttribute( 'style', 'height: ' + altura );
+
+          li.appendChild( span.quantidade );
+          li.appendChild( div );
+          li.appendChild( span.semana );
+
+          ol.appendChild( li );
 
         }
 
-        return '<ol>' + linhas + '</ol>';
+        return ol;
 
       } else {
 
@@ -510,10 +539,10 @@ var vis = {
         municipio = vis.dados.municipios[ local ];
         casos     = municipio.casos;
         
-        if ( !vis.iniciou ) {
+        if ( !vis.atual.estado.iniciado ) {
           
           semanas = vis.dados.semanas.reverse();
-          vis.iniciou = true;
+          vis.atual.estado.iniciado = true;
 
         }
 
@@ -627,7 +656,7 @@ var vis = {
 
             if ( total.ano == sem.ano && total.sem == sem.numero ) {
 
-              tc   = total.casos.acumulados.tc || 0;
+              tc  = total.casos.acumulados.tc  || 0;
               toc = total.casos.acumulados.toc || 0;
 
               return 'Casos confirmados: ' + tc + '<br>Óbitos confirmados: ' + toc
@@ -1028,8 +1057,6 @@ var vis = {
     }
 
   },
-
-  iniciou : false,
 
   eventos : function() {
 
