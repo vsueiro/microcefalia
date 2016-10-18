@@ -17,13 +17,7 @@
 
       <section class="fichas"></section>
 
-      <form class="filtros">
-
-        <div id="deslizador" class="dragdealer">
-          <div class="handle"></div>
-        </div>
-
-      </form>
+      <form class="filtros"></form>
 
       <nav class="navegacao"></nav>
 

@@ -220,7 +220,7 @@ var vis = {
         vis.mapa.circulos.atualizar( vis.atual.semana(), vis.atual.categoria() );
         vis.fichas.criar();
         vis.graficos.linhas.criar();
-        vis.filtros.semana.deslizador.criar();
+        // vis.filtros.semana.deslizador.criar();
       },
 
       atualizar : function( sem, cat ) {
@@ -893,6 +893,8 @@ var vis = {
 
           $( vis.filtros.semana.elemento ).val( $( vis.filtros.semana.elemento + ' option:first' ).val() );
 
+          vis.filtros.semana.deslizador.criar( el );
+
         }
 
       },
@@ -901,7 +903,18 @@ var vis = {
 
         elemento : 'deslizador',
 
-        criar: function() {
+        criar: function( el ) {
+
+          div = document.createElement( 'div' );
+          div.id = this.elemento;
+          div.className = 'dragdealer';
+
+          handle = document.createElement( 'div' );
+          handle.className = 'handle';
+
+          div.appendChild( handle );
+
+          $( el ).append( div );
 
           this.objeto = new Dragdealer( this.elemento, {
 
@@ -942,6 +955,23 @@ var vis = {
 
     },
 
+    municipio : {
+
+      elemento : 'municipio',
+
+      criar : function( el ) {
+
+        campo = document.createElement( 'input' );
+        campo.type = 'search';
+        campo.name = this.elemento;
+        campo.placeholder = 'Buscar município';
+
+        $( el ).append( campo );
+
+      }
+
+    },
+
     obitos : {
 
       criar : function( el ) {
@@ -965,6 +995,7 @@ var vis = {
       el = this.elemento;
 
       this.semana.criar( el );
+      this.municipio.criar( el );
       this.obitos.criar( el );
 
     }
