@@ -56,7 +56,7 @@
             css print
     
         legendas
-            casos de microcefalia ou zika? RE: microcefalia e/ou alteração do SNC
+            casos de microcefalia ou zika? RE: microcefalia e/ou alteração do SNC de causa congênita
             tamanho do círculo
             cores
             categorias
