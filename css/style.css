@@ -47,6 +47,10 @@ body {
   transform: translateY( 100% );
 }
 
+[data-item="grafico"] ol li.negativo span {
+  color: red;
+}
+
 [data-item="grafico"] ol li .barra {
 	height: 0px;
   background: #ccc;

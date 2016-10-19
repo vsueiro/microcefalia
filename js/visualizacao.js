@@ -552,8 +552,42 @@ var vis = {
 
         } else {
 
+          function unicos( semanas ) {
+
+            unicos = [];
+
+            for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
+
+              semana = semanas[ i ];
+
+              anterior = 0;
+
+              console.log( semana );
+
+              unicos[ i ] = {
+
+                ano: semana.ano,
+                sem: semana.sem
+
+              };
+
+              if ( i > 0 && semanas[ i - 1 ][ tipo ] ) {
+
+                anterior = semanas[ i - 1 ][ tipo ];
+
+              }
+
+              unicos[ i ][ tipo ] = semana[ tipo ] - anterior;
+
+            }
+
+            return unicos;
+
+          }
+
           municipio = vis.dados.municipios[ local ];
-          semanas = municipio.casos;
+
+          semanas = unicos( municipio.casos );
 
         }
 
@@ -704,8 +738,6 @@ var vis = {
           item = ' [data-item="' + this.elemento + '"]';
 
           for ( var i = 0, leni = vis.dados.semanas.length; i < leni; i++ ) {
-
-            console.log( 'oi' );
 
             semana = vis.dados.semanas[ i ];
 
