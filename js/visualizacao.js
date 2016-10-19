@@ -547,11 +547,48 @@ var vis = {
         if ( local == 'todos' ) {
 
           semanas = vis.dados.totais;
-          caso = vis.atual.categoria();
+          tipo = vis.atual.categoria();
+
+          console.log( semanas );
 
           $( '.' + this.elemento ).find( 'li' ).each( function() {
 
-            console.log( $( this ).data( 'sem' ) );
+            li  = $( this );
+            sem = li.data( 'sem' );
+            ano = li.data( 'ano' );
+
+            for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
+
+              semana = semanas[ i ];
+
+              if ( semana.sem == sem && semana.ano == ano ) {
+
+                casos = semana.casos.unicos[ tipo ];
+                altura = casos;
+
+                if ( casos < 0 ) {
+
+                  li.addClass( 'negativo' );
+
+                  altura = Math.abs( casos );
+
+                } else {
+
+                  li.removeClass( 'negativo' );
+
+                }
+
+                altura = altura + 'px';
+
+                li.find( '.casos' ).text( casos );
+
+                li.find( '.barra' ).css( 'height', altura );
+
+                break
+
+              }
+
+            }
 
           });
 

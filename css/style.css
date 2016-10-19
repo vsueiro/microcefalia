@@ -42,9 +42,14 @@ body {
     text-align: center;
 }
 
+[data-item="grafico"] ol li.negativo .barra {
+  background: red;
+  transform: translateY( 100% );
+}
+
 [data-item="grafico"] ol li .barra {
-	height: 20px;
-    background: #ccc;
+	height: 0px;
+  background: #ccc;
 }
 
 [data-item="grafico"] ol li + li .barra {
