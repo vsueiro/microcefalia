@@ -544,142 +544,68 @@ var vis = {
 
       atualizar : function( local ) {
 
+        tipo = vis.atual.categoria();
+
         if ( local == 'todos' ) {
 
           semanas = vis.dados.totais;
-          tipo = vis.atual.categoria();
-
-          console.log( semanas );
-
-          $( '.' + this.elemento ).find( 'li' ).each( function() {
-
-            li  = $( this );
-            sem = li.data( 'sem' );
-            ano = li.data( 'ano' );
-
-            for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
-
-              semana = semanas[ i ];
-
-              if ( semana.sem == sem && semana.ano == ano ) {
-
-                casos = semana.casos.unicos[ tipo ];
-                altura = casos;
-
-                if ( casos < 0 ) {
-
-                  li.addClass( 'negativo' );
-
-                  altura = Math.abs( casos );
-
-                } else {
-
-                  li.removeClass( 'negativo' );
-
-                }
-
-                altura = altura + 'px';
-
-                li.find( '.casos' ).text( casos );
-
-                li.find( '.barra' ).css( 'height', altura );
-
-                break
-
-              }
-
-            }
-
-          });
-
-          /*  
-
-          linhas = '';
-          totais = vis.dados.totais;
-          caso = vis.atual.categoria();
-
-          ol = document.createElement( 'ol' );
-
-          for ( var i = 0, leni = totais.length; i < leni; i++ ) { // para cada semana epidemiológica do Brasil
-
-            total           = totais[ i ];
-            unicos          = total.casos.unicos;
-            quantidade      = unicos[ caso ];
-            semana          = total.sem;
-            span            = {};
-            altura          = quantidade + 'px';
-            li              = document.createElement( 'li' );
-            div             = document.createElement( 'div' );
-            span.quantidade = document.createElement( 'span' );
-            span.semana     = document.createElement( 'span' );
-
-            span.quantidade.innerHTML = quantidade;
-            span.semana.innerHTML = ' Semana ' + semana;
-
-            div.dataset.tipo = caso;
-            div.dataset.casos = quantidade;
-            div.dataset.sem = quantidade;
-            div.className = 'barra';
-            div.setAttribute( 'style', 'height: ' + altura );
-
-            li.appendChild( span.quantidade );
-            li.appendChild( div );
-            li.appendChild( span.semana );
-
-            ol.appendChild( li );
-
-          }
-
-          return ol;
-
-          */
 
         } else {
 
-          linhas    = '';
           municipio = vis.dados.municipios[ local ];
-          casos     = municipio.casos;
-          
-          if ( !vis.atual.estado.iniciado ) {
-            
-            semanas = vis.dados.semanas.reverse();
-            vis.atual.estado.iniciado = true;
+          semanas = municipio.casos;
 
-          }
+        }
+
+        $( '.' + this.elemento ).find( 'li' ).each( function() {
+
+          li  = $( this );
+          sem = li.data( 'sem' );
+          ano = li.data( 'ano' );
+          consta = false;
 
           for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
 
-            semana = semanas[ i ]      
+            semana = semanas[ i ];
 
-            consta = false;
+            if ( semana.sem == sem && semana.ano == ano ) {
 
-            for ( var j = 0, lenj = casos.length; j < lenj; j++ ) { // para cada semana epidemiológica do Brasil
+              casos = local == 'todos' ? semana.casos.unicos[ tipo ] : semana[ tipo ];
+              altura = casos;
 
-              caso = casos[ j ];
+              if ( casos < 0 ) {
 
-              if ( semana.numero == caso.sem && semana.ano == caso.ano ) {
+                li.addClass( 'negativo' );
 
-                linhas += '<li><span>' + caso.tc + '</span><div class="barra" data-caso-' + 'tc' + '="' + caso.tc + '" data-caso-sem="' + semana.numero + '" style="height:' + caso.tc + 'px"></div><span>Semana ' + semana.numero + '</span></li>' ;
+                altura = Math.abs( casos );
 
-                consta = true;
+              } else {
 
-                break;
+                li.removeClass( 'negativo' );
 
               }
 
-            }
+              altura = altura + 'px';
 
-            if ( !consta ) {
+              li.find( '.casos' ).text( casos );
+              li.find( '.barra' ).css( 'height', altura );
 
-              linhas += '<li><span>' + 'Sem dados' + '</span><div class="barra" data-caso-' + 'tc' + '="' + 'Sem dados' + '" data-caso-sem="' + semana.numero + '" style="height:' + 0 + 'px"></div><span>Semana ' + semana.numero + '</span></li>' ;
+              consta = true;
+
+              break
 
             }
 
           }
 
-          return '<ol>' + linhas + '</ol>'
+          if ( !consta ) {
 
-        }
+            li.find( '.casos' ).text( 'Sem dados' );
+            li.find( '.barra' ).css( 'height', '0' );
+
+          }
+
+        });
 
       }
 
