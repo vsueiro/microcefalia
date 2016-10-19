@@ -1300,7 +1300,7 @@ var vis = {
 
     $( document ).on( 'change', '.semanas', function() {
 
-      index = $( vis.filtros.semana.seletor.elemento + ' option:selected' ).index();
+      index = $( '.semanas option:selected' ).index();
 
       step = vis.dados.semanas.length - index;
 
@@ -1310,7 +1310,28 @@ var vis = {
 
       vis.filtros.semana.deslizador.objeto.setStep( step, 0 );
 
-    })
+    });
+
+    $( document ).on( 'change', '.municipios', function() {
+
+      index = $( '.municipios option:selected' ).val();
+
+      vis.atual.local = index;
+
+      vis.mapa.circulos.selecionado = vis.mapa.circulos.lista[ index ];
+
+      new google.maps.event.trigger( 
+
+        vis.mapa.circulos.selecionado, 'click'
+
+      );
+
+      // vis.mapa.circulos.atualizar();
+
+      vis.fichas.atualizar();
+
+    });
+
 
   },
 
