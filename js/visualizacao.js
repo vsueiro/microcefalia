@@ -1181,14 +1181,59 @@ var vis = {
 
       elemento : 'municipio',
 
+      busca : {
+
+        criar : function( el ) {
+
+          campo = document.createElement( 'input' );
+          campo.type = 'search';
+          campo.name = this.elemento;
+          campo.placeholder = 'Buscar município';
+
+          $( el ).append( campo );
+
+        }
+
+      },
+
+      seletor : {
+
+        criar : function( el ) {
+
+          seletor = document.createElement( 'select' );
+          seletor.className = 'municipios';
+    
+          opcao = document.createElement( 'option' );
+          opcao.selected = true;
+          opcao.value = 'todos';
+          opcao.text = 'Todos os municípios';
+
+          seletor.appendChild( opcao );
+
+          municipios = vis.dados.municipios;
+
+          for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+
+            municipio = municipios[ i ];
+
+            opcao = document.createElement( 'option' );
+            opcao.value = i;
+            opcao.text = municipio.nome;
+
+            seletor.appendChild( opcao );
+
+          }    
+
+          $( el ).append( seletor );
+
+        }
+
+      },
+
       criar : function( el ) {
 
-        campo = document.createElement( 'input' );
-        campo.type = 'search';
-        campo.name = this.elemento;
-        campo.placeholder = 'Buscar município';
-
-        $( el ).append( campo );
+        this.busca.criar( el );
+        this.seletor.criar( el );
 
       }
 
