@@ -239,6 +239,8 @@ var vis = {
         vis.fichas.criar();
         vis.mapa.circulos.atualizar();
         vis.graficos.linhas.criar();
+
+        vis.atual.estado.iniciado = true;
         
       },
 
@@ -626,6 +628,20 @@ var vis = {
           sem = li.data( 'sem' );
           ano = li.data( 'ano' );
           consta = false;
+
+          if ( sem <= vis.atual.semana().numero && ano <= vis.atual.semana().ano ) {
+
+            console.log( 'ta ativo' );
+
+            li.addClass( 'ativo' );
+
+          } else {
+
+            console.log( 'nao ta ativo' );
+
+            li.removeClass( 'ativo' );
+
+          }
 
           for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
 
@@ -1196,6 +1212,12 @@ var vis = {
               seletor = $( vis.filtros.semana.elemento );
 
               seletor.val( $( vis.filtros.semana.elemento + ' option' ).eq( vis.dados.semanas.length - i ).val() );
+
+              if ( vis.atual.estado.iniciado ) {
+
+                vis.fichas.atualizar();
+
+              }
 
               $( '#' + this.wrapper.id ).addClass( 'loaded' ).find( '.handle' ).text( seletor.val() );
 

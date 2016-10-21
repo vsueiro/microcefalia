@@ -42,6 +42,10 @@ body {
     text-align: center;
 }
 
+[data-item="grafico"] ol li.ativo .barra {
+    background: #333;
+}
+
 [data-item="grafico"] ol li.negativo .barra {
   background: red;
   transform: translateY( 100% );
