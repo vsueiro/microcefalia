@@ -133,7 +133,18 @@ var vis = {
 
           circulo.addListener( 'click', function() {
 
-            vis.atual.local = this.indice;
+            console.log( 'vis.atual.local: ' + vis.atual.local  );
+            console.log( 'this.indice: ' + this.indice  );
+
+            if ( vis.atual.local == this.indice ) {
+
+              vis.atual.local = 'todos';
+
+            } else {
+
+              vis.atual.local = this.indice;
+
+            }
 
             vis.fichas.atualizar();
 
@@ -177,41 +188,17 @@ var vis = {
 
           circulo.addListener( 'mouseover', function() {
 
-            if ( this != vis.mapa.circulos.selecionado ) {
+            this.getIcon().strokeWeight = 1;
 
-              vis.mapa.circulos.tamanho = this.icon.scale;
-
-              this.setIcon({
-
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: vis.mapa.circulos.tamanho, 
-                fillColor: vis.mapa.circulos.cor.normal,
-                fillOpacity: 0.66,
-                strokeColor: vis.mapa.circulos.cor.destaque,
-                strokeWeight: 1
-
-              });
-
-            }
+            this.setIcon( this.getIcon() );
 
           });
 
           circulo.addListener( 'mouseout', function() {
 
-            if ( this != vis.mapa.circulos.selecionado ) {
-
-              this.setIcon({
-
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: vis.mapa.circulos.tamanho, 
-                fillColor: vis.mapa.circulos.cor.normal,
-                fillOpacity: 0.33,
-                strokeColor: vis.mapa.circulos.cor.normal,
-                strokeWeight: 0
-
-              });
-
-            }
+            this.getIcon().strokeWeight = 0;
+            
+            this.setIcon( this.getIcon() );
 
           });
 
@@ -1309,6 +1296,8 @@ var vis = {
         },
 
         atualizar : function() {
+
+          alert( vis.atual.local );
 
           $( '.' + vis.filtros.municipio.elemento ).val( vis.atual.local );
 
