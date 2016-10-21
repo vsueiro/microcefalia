@@ -622,6 +622,8 @@ var vis = {
 
         }
 
+        console.log( municipio );
+
         $( '.' + this.elemento ).find( 'li' ).each( function() {
 
           li  = $( this );
@@ -631,13 +633,9 @@ var vis = {
 
           if ( sem <= vis.atual.semana().numero && ano <= vis.atual.semana().ano ) {
 
-            console.log( 'ta ativo' );
-
             li.addClass( 'ativo' );
 
           } else {
-
-            console.log( 'nao ta ativo' );
 
             li.removeClass( 'ativo' );
 
@@ -649,7 +647,16 @@ var vis = {
 
             if ( semana.sem == sem && semana.ano == ano ) {
 
-              casos = local == 'todos' ? semana.casos.unicos[ tipo ] : semana[ tipo ];
+              if ( local == 'todos' ) {
+
+                casos = semana.casos.unicos[ tipo ] || 0;
+
+              } else {
+
+                casos = semana[ tipo ] || 0;
+
+              }
+
               altura = casos;
 
               if ( casos < 0 ) {
@@ -665,6 +672,8 @@ var vis = {
               }
 
               altura = altura + 'px';
+
+              console.log( 'indice: ' + i + ' | casos únicos nesta semana: ' + casos );
 
               li.find( '.casos' ).text( casos );
               li.find( '.barra' ).css( 'height', altura );
