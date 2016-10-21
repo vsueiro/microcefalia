@@ -64,7 +64,7 @@ var vis = {
     categoria : function() {
 
       // temp
-      return 'toc'
+      return 'tc'
 
     },
 
