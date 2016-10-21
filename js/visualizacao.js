@@ -80,6 +80,15 @@ var vis = {
 
     elemento : '#mapa',
 
+    zoom : 5,
+
+    centro : {
+
+      'lat' : -15.474053,
+      'lng' : -53.290964
+
+    },
+
     circulos : { 
 
       lista : [],
@@ -309,13 +318,35 @@ var vis = {
 
     },
 
+    centralizar : function ( index ) {
+
+      index = index || vis.atual.local;
+
+      if ( index != 'todos' ) {
+
+        position = vis.mapa.circulos.lista[ index ].position;
+        zoom = 9;
+
+      } else {
+
+        position = vis.mapa.centro;
+        zoom = vis.mapa.zoom;
+
+      }
+
+      vis.mapa.objeto.setZoom( zoom );
+      vis.mapa.objeto.panTo( position );
+
+    },
+
     criar : function() {
 
       this.objeto = new google.maps.Map( $( this.elemento )[ 0 ], {
 
-        zoom: 5,
+        zoom: this.zoom,
         minZoom: 5,
-        center: new google.maps.LatLng( -15.474053, -53.290964 ),    
+        maxZoom: 12,
+        center: this.centro,    
         styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"gamma":"0.00"},{"weight":"0.01"},{"visibility":"off"}]},{"featureType":"administrative.country","elementType":"geometry","stylers":[{"lightness":"70"},{"gamma":"1.00"}]},{"featureType":"administrative.country","elementType":"geometry.stroke","stylers":[{"color":"#e6e6e6"}]},{"featureType":"administrative.province","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"geometry.stroke","stylers":[{"visibility":"on"},{"color":"#cccccc"}]},{"featureType":"administrative.province","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#ffffff"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"},{"lightness":"32"},{"visibility":"on"}]},{"featureType":"road","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"visibility":"off"},{"lightness":"63"}]},{"featureType":"road.highway","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit.station","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#f2f2f2"}]}],
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         zoomControl: true,
@@ -561,8 +592,6 @@ var vis = {
               semana = semanas[ i ];
 
               anterior = 0;
-
-              console.log( semana );
 
               unicos[ i ] = {
 
@@ -1316,17 +1345,23 @@ var vis = {
 
       index = $( '.municipios option:selected' ).val();
 
+      // alert( index );
+
       vis.atual.local = index;
 
       vis.mapa.circulos.selecionado = vis.mapa.circulos.lista[ index ];
 
-      new google.maps.event.trigger( 
+      if ( index != 'todos' ) {
 
-        vis.mapa.circulos.selecionado, 'click'
+        new google.maps.event.trigger( 
 
-      );
+          vis.mapa.circulos.selecionado, 'click'
 
-      // vis.mapa.circulos.atualizar();
+        );
+
+      }
+
+      vis.mapa.centralizar();
 
       vis.fichas.atualizar();
 
