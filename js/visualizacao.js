@@ -1085,6 +1085,27 @@ var vis = {
 
         criar : function( el ) { 
 
+          function removeAno( str ) {
+
+            return str.replace( /\sde\s+\d{4}/gi ,'' );
+
+          }
+
+          function removeMesDuplicado( str ) {
+
+            mes = str.match( /\sde\s+(\w|ç)+/gi );
+
+            if ( mes[ 0 ] == mes[ 1 ] ) {
+
+              return str.replace( /\sde\s+(\w|ç)+/i , '' );
+
+            } else {
+
+              return str
+            }
+
+          }
+
           seletor = document.createElement( 'select' );
           seletor.className = 'semanas';
 
@@ -1093,23 +1114,20 @@ var vis = {
           vis.dados.semanas.forEach( function( semana ) {
 
             ano = semana.ano;
+            inicio = vis.filtros.semana.quando( semana.inicio );
+            fim = vis.filtros.semana.quando( semana.fim );
 
-            texto = vis.filtros.semana.quando( semana.inicio );
-            texto += ' a ';
-            texto += vis.filtros.semana.quando( semana.fim );
-            texto = texto.replace( /de\s+\d{4}/gi ,'' );
+            acumulados = 'Até ' + fim;
+            acumulados = removeAno( acumulados );
 
-            mes = texto.match( /de\s+(\w|ç)+/gi );
-
-            if ( mes[ 0 ] == mes[ 1 ] ) {
-
-              texto = texto.replace( /de\s+(\w|ç)+/i , '' )
-
-            }
+            unicos = inicio + ' a ' + fim;
+            unicos = removeAno( unicos );
+            unicos = removeMesDuplicado( unicos );
 
             opcao = document.createElement( 'option' );
             opcao.value = semana.numero + '/' + ano;
-            opcao.text = texto;
+            opcao.dataset.unicos = unicos;
+            opcao.text = acumulados;
 
             if ( ano in grupos ) {
 
