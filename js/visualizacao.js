@@ -40,7 +40,7 @@ var vis = {
   sobre : {
 
     titulo : 'Microcefalia em recém-nascidos no Brasil',
-    descricao : 'O mapa abaixo mostra a evolução dos casos de microcefalia e/ou alterações no sistema nervoso central, incluindo casos de óbito decorrentes desta condição. O tamanho dos círculos representa a quantidade de casos naquele município. É possível filtrar por cada semana da epidemia e também por óbitos',
+    descricao : 'O mapa abaixo mostra a evolução dos casos de microcefalia e/ou alterações no sistema nervoso central desde 15 de novembro de 2015, incluindo casos de óbito decorrentes desta condição. O tamanho dos círculos representa a quantidade de casos naquele município. É possível filtrar por cada semana da epidemia e também por óbitos',
 
   },
 
@@ -64,7 +64,7 @@ var vis = {
     categoria : function() {
 
       // temp
-      return 'tc'
+      return 'toc'
 
     },
 
