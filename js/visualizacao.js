@@ -133,9 +133,6 @@ var vis = {
 
           circulo.addListener( 'click', function() {
 
-            console.log( 'vis.atual.local: ' + vis.atual.local  );
-            console.log( 'this.indice: ' + this.indice  );
-
             if ( vis.atual.local == this.indice ) {
 
               vis.atual.local = 'todos';
@@ -146,59 +143,35 @@ var vis = {
 
             }
 
+            vis.mapa.circulos.atualizar();
+
             vis.fichas.atualizar();
 
             vis.filtros.municipio.seletor.atualizar();
-
-            // if ( vis.mapa.circulos.selecionado ) {
-
-            //   vis.mapa.circulos.selecionado.setIcon({
-
-            //     path: google.maps.SymbolPath.CIRCLE,
-            //     scale: vis.mapa.circulos.selecionado.tamanho, 
-            //     fillColor: vis.mapa.circulos.cor.normal,
-            //     fillOpacity: 0.33,
-            //     strokeColor: vis.mapa.circulos.cor.normal,
-            //     strokeWeight: 0
-
-            //   });
-
-            // }
-
-            // vis.atual.local = this.indice;
-
-            // vis.fichas.atualizar();
-
-            // vis.mapa.circulos.selecionado = this;
-
-            // vis.mapa.circulos.selecionado.tamanho = this.icon.scale;
-
-            // this.setIcon({
-
-            //   path: google.maps.SymbolPath.CIRCLE,
-            //   scale: vis.mapa.circulos.selecionado.tamanho, 
-            //   fillColor: vis.mapa.circulos.cor.normal,
-            //   fillOpacity: 0.75,
-            //   strokeColor: vis.mapa.circulos.cor.selecionado,
-            //   strokeWeight: 1
-
-            // });
             
           });
 
           circulo.addListener( 'mouseover', function() {
 
-            this.getIcon().strokeWeight = 1;
+            if ( this.indice != vis.atual.local ) {
 
-            this.setIcon( this.getIcon() );
+              this.getIcon().strokeWeight = 1;
+
+              this.setIcon( this.getIcon() );
+
+            }
 
           });
 
           circulo.addListener( 'mouseout', function() {
 
-            this.getIcon().strokeWeight = 0;
+            if ( this.indice != vis.atual.local ) {
+
+              this.getIcon().strokeWeight = 0;
             
-            this.setIcon( this.getIcon() );
+              this.setIcon( this.getIcon() );
+
+            }
 
           });
 
@@ -242,7 +215,10 @@ var vis = {
         sem = sem || vis.atual.semana();
         cat = cat || vis.atual.categoria();
 
+        indice = vis.atual.local;
+
         circulos = vis.mapa.circulos.lista;
+
 
         for ( var i = 0, leni = circulos.length; i < leni; i++ ) { // para cada círculo no mapa
 
@@ -256,33 +232,12 @@ var vis = {
 
             if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
 
-              if ( circulo == vis.mapa.circulos.selecionado ) {
-
-                circulo.setIcon({
-
-                  path: google.maps.SymbolPath.CIRCLE,
-                  scale: Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * vis.mapa.circulos.amplitude, 
-                  fillColor: vis.mapa.circulos.cor.normal,
-                  fillOpacity: 0.75,
-                  strokeColor: vis.mapa.circulos.cor.selecionado,
-                  strokeWeight: 1
-
-                });
-
-              } else {
-
-                circulo.setIcon({
-
-                  path: google.maps.SymbolPath.CIRCLE,
-                  scale: Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * vis.mapa.circulos.amplitude, 
-                  fillColor: vis.mapa.circulos.cor.normal,
-                  fillOpacity: 0.33,
-                  strokeColor: vis.mapa.circulos.cor.normal,
-                  strokeWeight: 0
-
-                });
-
-              }
+              tamanho = Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * vis.mapa.circulos.amplitude;
+              
+              circulo.getIcon().scale = tamanho;
+              circulo.getIcon().strokeWeight = 0;
+      
+              circulo.setIcon( circulo.getIcon() );
 
               consta = true;
 
@@ -294,18 +249,19 @@ var vis = {
 
           if ( !consta ) { // se não há informação, zera o círculo
 
-            circulo.setIcon({
-
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 0, 
-              fillColor: vis.mapa.circulos.cor.normal,
-              fillOpacity: 0.33,
-              strokeColor: vis.mapa.circulos.cor.normal,
-              strokeWeight: 0
-
-            });
+            circulo.getIcon().scale = 0;
+      
+            circulo.setIcon( circulo.getIcon() );
 
           }
+
+        }
+
+        if ( indice != 'todos' ) {
+
+          circulos[ indice ].getIcon().strokeWeight = 2;
+
+          circulos[ indice ].setIcon( circulos[ indice ].getIcon() );
 
         }
 
@@ -1297,8 +1253,6 @@ var vis = {
 
         atualizar : function() {
 
-          alert( vis.atual.local );
-
           $( '.' + vis.filtros.municipio.elemento ).val( vis.atual.local );
 
         }
@@ -1389,23 +1343,27 @@ var vis = {
 
     $( document ).on( 'change', '.municipios', function() {
 
-      index = $( '.municipios option:selected' ).val();
+      seletor = vis.filtros.municipio.elemento;
+
+      index = $( '.' +  seletor + ' option:selected' ).val();
 
       vis.atual.local = index;
 
-      vis.mapa.circulos.selecionado = vis.mapa.circulos.lista[ index ];
+      // vis.mapa.circulos.selecionado = vis.mapa.circulos.lista[ index ];
 
       if ( index != 'todos' ) {
 
-        new google.maps.event.trigger( 
+        // new google.maps.event.trigger( 
 
-          vis.mapa.circulos.selecionado, 'click'
+          // vis.mapa.circulos.selecionado, 'click'
 
-        );
+        // );
 
       }
 
-      vis.mapa.centralizar();
+      // vis.mapa.centralizar();
+
+      vis.mapa.circulos.atualizar();
 
       vis.fichas.atualizar();
 
