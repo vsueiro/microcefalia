@@ -431,7 +431,8 @@ var vis = {
           municipio = municipios[ i ];
 
           grupo = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
-          grupo.setAttribute( 'id', municipio.nome );
+          grupo.setAttribute( 'indice', i );
+          grupo.setAttribute( 'ibge', municipio.id );
 
           for ( var j = 0; j < ( municipio.casos.length - 1 ); j++ ) {
 
@@ -473,6 +474,12 @@ var vis = {
 
         svg.appendChild( linhas );
         document.getElementById( 'linhas' ).appendChild( svg );
+
+      },
+
+      atualizar : function() {
+
+        // destacar linha do municipio atual
 
       }
 
@@ -1348,18 +1355,6 @@ var vis = {
       index = $( '.' +  seletor + ' option:selected' ).val();
 
       vis.atual.local = index;
-
-      // vis.mapa.circulos.selecionado = vis.mapa.circulos.lista[ index ];
-
-      if ( index != 'todos' ) {
-
-        // new google.maps.event.trigger( 
-
-          // vis.mapa.circulos.selecionado, 'click'
-
-        // );
-
-      }
 
       // vis.mapa.centralizar();
 
