@@ -1393,6 +1393,8 @@ var vis = {
 
       vis.mapa.circulos.atualizar();
 
+      vis.graficos.linhas.atualizar();
+
       vis.fichas.atualizar();
 
     });
