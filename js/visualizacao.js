@@ -147,6 +147,8 @@ var vis = {
 
             vis.fichas.atualizar();
 
+            vis.graficos.linhas.atualizar();
+
             vis.filtros.municipio.seletor.atualizar();
             
           });
@@ -347,7 +349,7 @@ var vis = {
 
     linhas :  {
 
-      elemento : '#linhas',
+      elemento : 'acumulado',
 
       calcular : function( quanto, tipo ) {
 
@@ -378,14 +380,14 @@ var vis = {
 
       linha : {
 
-        espessura : 2,
+        espessura : 4,
         cor : '#000'
 
       },
 
       baixar : function( arquivo ) {
 
-        elemento = this.elemento.replace( '#', '' );
+        elemento = this.elemento;
 
         svg = document.getElementById( elemento ).innerHTML,
 
@@ -414,7 +416,7 @@ var vis = {
 
         svg = document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' );
         svg.setAttribute( 'version', '1.1' );
-        svg.setAttribute( 'id', 'grafico-linhas' );
+        // svg.setAttribute( 'id', 'grafico-linhas' );
         svg.setAttribute( 'x', '0' );
         svg.setAttribute( 'y', '0' );
         svg.setAttribute( 'width', ( ( this.semana.max - this.semana.min ) * this.escala.x ) + ( this.escala.x * 2 ) );
@@ -426,13 +428,13 @@ var vis = {
 
         municipios = vis.dados.municipios;
 
-        for ( var i = 0; i < municipios.length; i++ ) {
+        for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
 
           municipio = municipios[ i ];
 
           grupo = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
-          grupo.setAttribute( 'indice', i );
-          grupo.setAttribute( 'ibge', municipio.id );
+          grupo.setAttribute( 'data-indice', i );
+          grupo.setAttribute( 'id', 'municipio-' + municipio.id );
 
           for ( var j = 0; j < ( municipio.casos.length - 1 ); j++ ) {
 
@@ -443,6 +445,7 @@ var vis = {
             if ( caso[ cat ] ) {
 
               opacidade = ( 1 / this.categoria.max * caso[ cat ] );
+              // opacidade = 1;
 
               linha = document.createElementNS( 'http://www.w3.org/2000/svg', 'line' );
               linha.setAttribute( 'fill', 'none' );
@@ -470,16 +473,46 @@ var vis = {
 
           }
 
+          if ( i == ( leni - 1 ) ) {
+
+            use = document.createElementNS( 'http://www.w3.org/2000/svg', 'use' );
+            use.setAttribute( 'id', 'z-index' );
+            use.setAttributeNS( 'http://www.w3.org/1999/xlink', 'xlink:href', '#municipio-' + municipio.id );
+
+          }
+
         }
 
         svg.appendChild( linhas );
-        document.getElementById( 'linhas' ).appendChild( svg );
+        svg.appendChild( use );
+
+        document.getElementById( this.elemento ).appendChild( svg );
 
       },
 
       atualizar : function() {
 
-        // destacar linha do municipio atual
+        if ( vis.atual.local != 'todos' ) { // destacar linha do municipio atual
+
+          indice = vis.atual.local;
+
+          ibge = $( '#linhas g[data-indice="' + indice + '"]' ).attr( 'id' ).replace( 'municipio-', '' );
+
+          linha = {
+
+            todas : $( '#linhas g line' ),
+            atual : $( '#linhas g[data-indice="' + indice + '"] line' )
+
+          }
+
+          linha.todas.attr( 'stroke', '#ccc' );
+
+          linha.atual.attr( 'stroke', '#000' );
+          linha.atual.attr( 'opacity', 1 );
+
+          $( '#z-index' ).attr( 'xlink:href', '#municipio-' + ibge );
+
+        }
 
       }
 
@@ -1367,7 +1400,7 @@ var vis = {
 
   },
 
-  iniciar : function() {
+  criar : function() {
 
     for ( var i = 0; i < this.dependencias.length; i ++ ) {
 
@@ -1383,4 +1416,4 @@ var vis = {
 
 };
 
-vis.iniciar();
+vis.criar();

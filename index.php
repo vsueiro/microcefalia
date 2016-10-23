@@ -23,7 +23,7 @@
 
       <div class="grafico" id="mapa"></div>
 
-      <section class="grafico" id="linhas"></section>
+      <section class="grafico" id="acumulado"></section>
 
     </article>
 
