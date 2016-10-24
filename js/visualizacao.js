@@ -337,8 +337,24 @@ var vis = {
         fullscreenControl: false
 
       });
+      
+      callback = setInterval( function(){
 
-      vis.mapa.circulos.criar();
+        if ( 'requisicoes' in vis.dados ) {
+
+          console.log( 'dados tem requisicoes' );
+
+        } else {
+
+          console.log( 'dados nao tem mais requisicoes' );
+          
+          vis.mapa.circulos.criar();
+
+          clearInterval( callback );
+
+        }
+
+      }, 25 );
 
     }
 
