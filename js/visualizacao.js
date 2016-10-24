@@ -1293,10 +1293,11 @@ var vis = {
           for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
 
             municipio = municipios[ i ];
+            UF = vis.UF( municipio.id, 'sigla' );
 
             opcao = document.createElement( 'option' );
             opcao.value = i;
-            opcao.text = municipio.nome;
+            opcao.text = municipio.nome + ', ' + UF;
 
             seletor.appendChild( opcao );
 
