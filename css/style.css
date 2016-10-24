@@ -138,8 +138,7 @@ body {
 
 /* temporário, para ficar remover itens nõa funcionais */
 
-.filtros input,
-.filtros label {
+.filtros input[type="search"] {
   display: none;
 }
 
@@ -190,4 +189,8 @@ section.fichas {
 
 .filtros {
   margin-bottom: 48px;
+}
+
+input[type="checkbox"], select:not(:last-child) {
+  margin-right: 18px;
 }

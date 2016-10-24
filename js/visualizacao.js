@@ -220,9 +220,9 @@ var vis = {
 
                 categoria = vis.dados.categorias[ k ];
 
-                if ( categoria.visivel && caso[ categoria.apelido ] ) { // se este municipio tem dados sobre esta categoria em sua semana mais recente
+                if ( categoria.visivel && caso[ categoria.sigla ] ) { // se este municipio tem dados sobre esta categoria em sua semana mais recente
 
-                  categoria.total += caso[ categoria.apelido ];
+                  categoria.total += caso[ categoria.sigla ];
 
                 }
 
@@ -817,8 +817,8 @@ var vis = {
             if ( categoria.visivel ) {
 
               li = document.createElement( 'li' );
-              li.dataset.tipo = categoria.apelido;
-              li.innerHTML = categoria.nome + ': <span></span>';
+              li.dataset.tipo = categoria.sigla;
+              li.innerHTML = categoria.apelido + ': <span></span>';
 
               ol.appendChild( li );
 
@@ -949,7 +949,7 @@ var vis = {
 
           if ( categoria.visivel ) {
 
-            totais[ i ].casos.acumulados[ categoria.apelido ] = 0; 
+            totais[ i ].casos.acumulados[ categoria.sigla ] = 0; 
 
             municipios = vis.dados.municipios;
 
@@ -963,9 +963,9 @@ var vis = {
 
                 if ( caso.ano == semana.ano && caso.sem == semana.numero ) {
 
-                  if ( categoria.apelido in caso ) {
+                  if ( categoria.sigla in caso ) {
 
-                    totais[ i ][ 'casos' ][ 'acumulados' ][ categoria.apelido ] += caso[ categoria.apelido ];
+                    totais[ i ][ 'casos' ][ 'acumulados' ][ categoria.sigla ] += caso[ categoria.sigla ];
 
                   }
 
@@ -1328,19 +1328,35 @@ var vis = {
 
     },
 
-    obitos : {
+    categoria : {
 
       criar : function( el ) {
 
-        rotulo = document.createElement( 'label' );
-        rotulo.appendChild( document.createTextNode( 'Óbitos' ) );
-        rotulo.htmlFor = 'obitos';
+        categorias = vis.dados.categorias;
 
-        seletor = document.createElement( 'input' );
-        seletor.type = 'checkbox';
-        seletor.id = 'obitos';
-        
-        $( el ).append( rotulo ).append( seletor );
+        for ( var i = 0, leni = categorias.length; i < leni; i++ ) {
+
+          categoria = categorias[ i ];
+
+          if ( categoria.visivel ) {
+
+            rotulo = document.createElement( 'label' );
+            rotulo.appendChild( document.createTextNode( categoria.apelido ) );
+            rotulo.htmlFor = categoria.sigla;
+
+            seletor = document.createElement( 'input' );
+            seletor.type = 'checkbox';
+            seletor.id = categoria.sigla;
+            
+            $( el ).append( rotulo ).append( seletor );
+
+          }
+
+        }
+
+      },
+
+      atualizar : function() {
 
       }
 
@@ -1350,9 +1366,9 @@ var vis = {
 
       el = this.elemento;
 
+      this.categoria.criar( el );
       this.municipio.criar( el );
       this.semana.criar( el );
-      this.obitos.criar( el );
 
     }
 
