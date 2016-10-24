@@ -1408,11 +1408,9 @@ var vis = {
 
       step = vis.dados.semanas.length - index;
 
-      vis.mapa.circulos.atualizar();
-
-      vis.fichas.atualizar();
-
       vis.filtros.semana.deslizador.objeto.setStep( step, 0 );
+
+      vis.atualizar();
 
     });
 
@@ -1426,17 +1424,15 @@ var vis = {
 
       // vis.mapa.centralizar();
 
-      vis.mapa.circulos.atualizar();
-
-      vis.graficos.linhas.atualizar();
-
-      vis.fichas.atualizar();
+      vis.atualizar();
 
     });
 
     $( document ).on( 'change', 'input[name=categoria]', function() {
 
       vis.atual.categoria = this.value;
+
+      vis.atualizar();
 
     });
 
@@ -1494,6 +1490,14 @@ var vis = {
       }
 
     });
+
+  },
+
+  atualizar : function() {
+
+    vis.mapa.circulos.atualizar();
+    vis.fichas.atualizar();
+    vis.graficos.linhas.atualizar();
 
   }
 
