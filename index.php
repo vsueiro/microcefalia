@@ -15,9 +15,9 @@
 
     <article class="visualizacao">
 
-      <section class="fichas"></section>
-
       <form class="filtros"></form>
+      
+      <section class="fichas"></section>
 
       <nav class="navegacao"></nav>
 

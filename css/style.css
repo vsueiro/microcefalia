@@ -23,27 +23,43 @@ body {
 /* grafico de barras */
 
 [data-item="grafico"] {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 [data-item="grafico"] ol {
-    display: flex;
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 [data-item="grafico"] ol li {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    margin: 8px 0;
-    width: 8px;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: 8px 0;
+  width: 8px;
+  text-align: center;
+}
+
+[data-item="grafico"] ol li + li {
+  padding-left: 8px;
+}
+
+[data-item="grafico"] ol li span {
+  display: flex;
+  justify-content: center;
+  font-size: 66.666%;
+  text-shadow: -1px -1px #fff, 1px 1px #fff, -1px 1px #fff, 1px -1px #fff;
+  color: #ccc;
 }
 
 [data-item="grafico"] ol li.ativo .barra {
-    background: #333;
+  background: #666;
+}
+
+[data-item="grafico"] ol li.ativo span {
+  color: #333;
 }
 
 [data-item="grafico"] ol li.negativo .barra {
@@ -57,14 +73,14 @@ body {
 
 [data-item="grafico"] ol li .barra {
 	height: 0px;
-  background: #ccc;
+  background: #eee;
 }
 
 [data-item="grafico"] ol li + li .barra {
     border-left: 1px solid #fff;
 }
 
-[data-item="grafico"] ol li span {
+[data-item="grafico"] ol li span.semana {
     visibility: hidden;
     z-index: 1;
 }
@@ -74,7 +90,7 @@ body {
 }
 
 [data-item="grafico"] ol li:hover .barra {
-	background: #999;
+	background: #000;
 }
 
 [data-item="grafico"] ol li .barra.selecionada {
@@ -85,7 +101,7 @@ body {
 
 .dragdealer {
   position: relative;
-  width: 970px;
+  width: 100%;
   height: 30px;
   background: #eee;
   border-radius: 999px;
@@ -118,4 +134,56 @@ body {
 
 .dragdealer .disabled {
   background: #999;
+}
+
+/* temporário, para ficar remover itens nõa funcionais */
+
+.filtros input,
+.filtros label {
+  display: none;
+}
+
+.fichas [data-item="local"],
+.fichas [data-item="UF"],
+.fichas [data-item="local"],
+.fichas [data-item="data"] {
+  display: none;
+}
+
+.grafico#acumulado {
+  display: none;
+}
+
+.fichas ul,
+.fichas ol,
+.fichas li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+section.fichas {
+  width: 970px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.visualizacao {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.fichas [data-item="casos"] {
+  margin: 48px;
+}
+
+.fichas ul {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: flex-end;
 }

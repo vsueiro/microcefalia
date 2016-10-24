@@ -545,7 +545,7 @@ var vis = {
           span.quantidade.innerHTML = 0;
           span.quantidade.className = 'casos';
 
-          span.semana.innerHTML = 'Semana ' + numero + '/' + ano;
+          span.semana.innerHTML = 'semana ' + numero + '/' + ano;
           span.semana.className = 'semana';
 
           div.className = 'barra';
@@ -1191,7 +1191,7 @@ var vis = {
 
           div.appendChild( handle );
 
-          $( el ).append( div );
+          $( el ).prepend( div );
 
           this.objeto = new Dragdealer( this.elemento, {
 
@@ -1330,8 +1330,8 @@ var vis = {
 
       el = this.elemento;
 
-      this.semana.criar( el );
       this.municipio.criar( el );
+      this.semana.criar( el );
       this.obitos.criar( el );
 
     }
