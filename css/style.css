@@ -191,6 +191,8 @@ section.fichas {
   margin-bottom: 48px;
 }
 
-input[type="checkbox"], select:not(:last-child) {
+input[type="checkbox"],
+input[type="radio"],
+select:not(:last-child) {
   margin-right: 18px;
 }

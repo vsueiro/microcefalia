@@ -1345,8 +1345,11 @@ var vis = {
             rotulo.htmlFor = categoria.sigla;
 
             seletor = document.createElement( 'input' );
-            seletor.type = 'checkbox';
+            // seletor.type = 'checkbox';
+            seletor.type = 'radio';
+            seletor.name = 'categoria';
             seletor.id = categoria.sigla;
+            seletor.checked = categoria.atual;
             
             $( el ).append( rotulo ).append( seletor );
 
