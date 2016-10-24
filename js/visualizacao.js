@@ -92,12 +92,7 @@ var vis = {
 
     },
 
-    categoria : function() {
-
-      // temp
-      return 'tc'
-
-    },
+    categoria : undefined,
 
     estado : {
 
@@ -246,7 +241,7 @@ var vis = {
       atualizar : function( sem, cat ) {
 
         sem = sem || vis.atual.semana();
-        cat = cat || vis.atual.categoria();
+        cat = cat || vis.atual.categoria;
 
         indice = vis.atual.local;
 
@@ -570,7 +565,7 @@ var vis = {
 
       atualizar : function( local ) {
 
-        tipo = vis.atual.categoria();
+        tipo = vis.atual.categoria;
 
         if ( local == 'todos' ) {
 
@@ -1348,6 +1343,7 @@ var vis = {
             // seletor.type = 'checkbox';
             seletor.type = 'radio';
             seletor.name = 'categoria';
+            seletor.value = categoria.sigla;
             seletor.id = categoria.sigla;
             seletor.checked = categoria.atual;
             
@@ -1438,6 +1434,11 @@ var vis = {
 
     });
 
+    $( document ).on( 'change', 'input[name=categoria]', function() {
+
+      vis.atual.categoria = this.value;
+
+    });
 
   },
 
@@ -1475,6 +1476,22 @@ var vis = {
       }
 
       delete vis.dados.requisicoes;
+
+      // diz qual é a categoria atual
+
+      categorias = vis.dados.categorias;
+
+      for ( var i = 0, leni = categorias.length; i < leni; i++ ) {
+
+        categoria = categorias[ i ];
+
+        if ( categoria.atual ) {
+
+          vis.atual.categoria = categoria.sigla;
+
+        }
+          
+      }
 
     });
 
