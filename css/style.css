@@ -191,8 +191,15 @@ section.fichas {
   margin-bottom: 48px;
 }
 
-input[type="checkbox"],
-input[type="radio"],
-select:not(:last-child) {
+.filtros input[type="checkbox"],
+.filtros input[type="radio"],
+.filtros select:not(:last-child) {
   margin-right: 18px;
+  cursor: pointer;
+}
+
+.filtros input,
+.filtros select,
+.filtros label {
+  cursor: pointer;
 }
