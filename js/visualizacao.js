@@ -1244,6 +1244,22 @@ var vis = {
 
     },
 
+    UF : {
+
+      criar : function() {
+
+        // cria filtro por estado
+
+      },
+
+      atualizar : function() {
+
+        // atualiza filtro por estado
+
+      }
+
+    },
+
     municipio : {
 
       elemento : 'municipios',
