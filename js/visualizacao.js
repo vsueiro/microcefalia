@@ -1,27 +1,38 @@
 var vis = {
 
-  dados : {},
+  dados : {
+
+    requisicoes : []
+
+  },
 
   carrega : {
 
-    script : function( url ) {
+    script : function( dependencia ) {
 
       script = document.createElement( 'script' );
       script.type = 'text/javascript';
-      script.src = '//' + url;
+      script.src = dependencia.url;
       document.body.appendChild( script );
 
     },
 
-    dados : function( variavel, url, callback ) {
+    json : function( dependencia ) {
 
-      callback = callback || null;
+      vis.dados.requisicoes.push(
 
-      $.getJSON( url, function( dados ) {
+        $.ajax({
 
-        vis.dados[ variavel ] = dados;
+          dataType : dependencia.tipo,
+          url : dependencia.url,
+          success: function() {
 
-      }).done( callback );
+
+          }
+
+        })
+
+      );
 
     }
 
@@ -29,10 +40,30 @@ var vis = {
 
   dependencias : [
 
+    { 
+      nome : 'semanas',
+      tipo : 'json', 
+      url : 'data/semanas.json'
+    },
+    {
+      nome : 'UFs',
+      tipo : 'json', 
+      url : 'data/UFs.json'
+    },
+    {
+      nome : 'categorias',
+      tipo : 'json', 
+      url : 'data/categorias.json'
+    },
+    {
+      nome : 'municipios',
+      tipo : 'json', 
+      url : 'data/microcefalia-2016-10-07.json'
+    },
     {
       nome : 'Google Maps',
       tipo : 'script',      
-      url : 'maps.googleapis.com/maps/api/js?key=AIzaSyBoqFIX7oEYftU-MW9H49ivEpYtU6BZJRs&callback=vis.mapa.criar'
+      url : '//maps.googleapis.com/maps/api/js?key=AIzaSyBoqFIX7oEYftU-MW9H49ivEpYtU6BZJRs&callback=vis.mapa.criar'
     }
 
   ],
@@ -311,35 +342,8 @@ var vis = {
         fullscreenControl: false
 
       });
-      
-      vis.carrega.dados( 
 
-        'semanas',
-        'data/semanas.json',
-
-        vis.carrega.dados(
-
-          'UFs',
-          'data/UFs.json', 
-
-          vis.carrega.dados(
-
-            'categorias',
-            'data/categorias.json',
-
-            vis.carrega.dados(
-
-              'municipios',
-              'data/microcefalia-2016-10-07.json',
-              vis.mapa.circulos.criar
-
-            )
-
-          )
-
-        )
-
-      )
+      vis.mapa.circulos.criar();
 
     }
 
@@ -673,7 +677,7 @@ var vis = {
 
           if ( !consta ) {
 
-            li.find( '.casos' ).text( 'Sem dados' );
+            li.find( '.casos' ).text( '' );
             li.find( '.barra' ).css( 'height', '0' );
 
           }
@@ -1357,7 +1361,7 @@ var vis = {
 
       if ( UF.id == id ) {
 
-        return UF[ retorno ];
+        return UF[ retorno ]
 
       }
 
@@ -1404,15 +1408,40 @@ var vis = {
 
   criar : function() {
 
-    for ( var i = 0; i < this.dependencias.length; i ++ ) {
+    vis.eventos();
 
-      var dependencia = this.dependencias[ i ];
+    for ( var i = 0; i < vis.dependencias.length; i++ ) {
+      
+      dependencia = vis.dependencias[ i ];
+      tipo = dependencia.tipo;
 
-      this.carrega[ dependencia.tipo ]( dependencia.url );
+      this.carrega[ tipo ]( dependencia );
 
     }
 
-    this.eventos();
+    $.when.apply( undefined, vis.dados.requisicoes ).then( function() {
+
+      for ( var i = 0, j = 0; i < vis.dependencias.length; i++ ) {
+
+        dependencia = vis.dependencias[ i ];
+
+        if ( dependencia.tipo != 'script' ) {
+
+          requisicao  = vis.dados.requisicoes[ j ];
+          variavel    = dependencia.nome;
+          json        = requisicao.responseJSON;
+
+          vis.dados[ variavel ] = json;
+
+          j++
+
+        }
+
+      }
+
+      delete vis.dados.requisicoes;
+
+    });
 
   }
 

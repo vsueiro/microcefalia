@@ -14,10 +14,10 @@
   <body>
 
     <article class="visualizacao">
-
-      <form class="filtros"></form>
       
       <section class="fichas"></section>
+
+      <form class="filtros"></form>
 
       <nav class="navegacao"></nav>
 

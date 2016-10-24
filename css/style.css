@@ -187,3 +187,7 @@ section.fichas {
   justify-content: center;
   align-items: flex-end;
 }
+
+.filtros {
+  margin-bottom: 48px;
+}
