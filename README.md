@@ -69,8 +69,7 @@ vis.criar();
 
 
 ## Autor
-Este repositório é um trabalho em desenvolvimento, criado por mim, Vinicius Sueiro, como Trabalho de Conclusão de Curso (TCC) da graduação em Design pela Faculdade de Arquitetura e Urbanismo da Universidade de São Paulo (FAU USP), sob orientação de Giselle Beiguelman
-
+Este repositório é um trabalho em desenvolvimento, criado por mim, Vinicius Sueiro, como Trabalho de Conclusão de Curso (TCC) da graduação em Design pela Faculdade de Arquitetura e Urbanismo da Universidade de São Paulo (FAU USP), sob orientação de Giselle Beiguelman. Leia toda a pesquisa do projeto: [PDF no Issuu](https://issuu.com/viniciussueiro/docs/design_dos_informes_epidemiolo__gic)
 
 ## Licença
 MIT © [Vinicius Sueiro](https://vsueiro.com)
