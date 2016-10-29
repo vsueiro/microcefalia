@@ -14,12 +14,16 @@
   <body>
 
     <article class="visualizacao">
-      
+        
+      <section class="classificacao"></section>
+        
       <section class="fichas"></section>
 
       <form class="filtros"></form>
 
       <nav class="navegacao"></nav>
+
+      <section class="classificacao"></section>
 
       <div class="grafico" id="mapa"></div>
 

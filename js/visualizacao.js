@@ -1,5 +1,7 @@
 var vis = {
 
+  elemento : '.visualizacao',
+
   dados : {
 
     requisicoes : [],
@@ -121,8 +123,6 @@ var vis = {
     descricao : 'O mapa abaixo mostra a evolução dos casos de microcefalia e/ou alterações no sistema nervoso central desde 15 de novembro de 2015, incluindo casos de óbito decorrentes desta condição. O tamanho dos círculos representa a quantidade de casos naquele município. É possível filtrar por cada semana da epidemia e também por óbitos',
 
   },
-
-  elemento : '.visualizacao',
 
   atual : {
 
@@ -279,6 +279,7 @@ var vis = {
 
         vis.filtros.criar();
         vis.fichas.criar();
+        vis.classificacao.criar();
         vis.mapa.circulos.atualizar();
         vis.graficos.linhas.criar();
 
@@ -1455,6 +1456,48 @@ var vis = {
 
   },
 
+  classificacao : {
+
+    elemento : 'classificacao',
+
+    items : 5,
+
+    criar : function() {
+
+      elementos = document.getElementsByClassName( this.elemento );
+
+      for ( var i = 0; i < elementos.length; i++ ) {
+
+        elemento = elementos[ i ];
+        
+        ol = document.createElement( 'ol' );
+
+        for ( var j = 0; j < this.items; j++ ) {
+
+          municipio = vis.dados.municipios[ j ];
+          nome = document.createTextNode( municipio.nome );
+
+          li = document.createElement( 'li' );
+          li.appendChild( nome );
+          li.dataset.ibge = municipio.id;
+
+          ol.appendChild( li );
+
+        }
+
+        elemento.appendChild( ol );
+
+      }
+
+    },
+
+    atualizar : function () {
+
+
+    }
+
+  },
+
   ultimo : function( data ) {
 
     if ( data == 'semana' ) return vis.dados.semanas[ 0 ].numero;
@@ -1578,8 +1621,9 @@ var vis = {
   atualizar : function() {
 
     vis.dados.municipios.sort( vis.dados.ordenar.desc );
-    vis.mapa.circulos.atualizar();
     vis.fichas.atualizar();
+    vis.classificacao.atualizar();
+    vis.mapa.circulos.atualizar();
     vis.graficos.linhas.atualizar();
 
   }
