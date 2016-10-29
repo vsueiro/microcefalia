@@ -539,7 +539,7 @@ var vis = {
 
       escala : {
 
-        x : 8
+        x : 12
 
       },
 
@@ -638,6 +638,7 @@ var vis = {
           sem = li.data( 'sem' );
           ano = li.data( 'ano' );
           consta = false;
+          largura = vis.graficos.evolucao.escala.x;
 
           if ( sem <= vis.atual.semana().numero && ano <= vis.atual.semana().ano ) {
 
@@ -683,8 +684,6 @@ var vis = {
 
               if ( sem == 6 && ano == 2016 ) { // faz quadrado do acumulado
 
-                largura = vis.graficos.evolucao.escala.x,
-
                 lado = Math.sqrt( largura * altura );
 
                 console.log( lado );
@@ -695,6 +694,7 @@ var vis = {
 
                 altura = altura + 'px';
 
+                li.css( 'width', largura );
                 li.find( '.barra' ).css( 'height', altura );
 
               }

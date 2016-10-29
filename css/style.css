@@ -37,8 +37,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  margin: 8px 0;
-  width: 8px;
   text-align: center;
 }
 
@@ -81,13 +79,10 @@ body {
   background: #eee;
 }
 
-[data-item="grafico"] ol li + li .barra {
-    border-left: 1px solid #fff;
-}
-
 [data-item="grafico"] ol li span.semana {
-    visibility: hidden;
-    z-index: 1;
+  visibility: hidden;
+  z-index: 1;
+  height: 24px;
 }
 
 [data-item="grafico"] ol li:hover span {
