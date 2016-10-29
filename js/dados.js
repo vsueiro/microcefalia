@@ -64,14 +64,14 @@ function clean( json, format ) {
 
             "ano" : parseInt( dados[4]  ),
             "sem" : parseInt( dados[3]  ),
-            "tn"  : parseInt( dados[5]  ),
-            "ti"  : parseInt( dados[6]  ),
-            "tc"  : parseInt( dados[7]  ),
-            "td"  : parseInt( dados[8]  ),
-            "ton" : parseInt( dados[9]  ),
-            "toi" : parseInt( dados[10] ),
-            "toc" : parseInt( dados[11] ),
-            "tod" : parseInt( dados[12] )
+            "n"  : parseInt( dados[5]  ),
+            "i"  : parseInt( dados[6]  ),
+            "c"  : parseInt( dados[7]  ),
+            "d"  : parseInt( dados[8]  ),
+            "on" : parseInt( dados[9]  ),
+            "oi" : parseInt( dados[10] ),
+            "oc" : parseInt( dados[11] ),
+            "od" : parseInt( dados[12] )
 
           }
 
@@ -93,14 +93,14 @@ function clean( json, format ) {
 
             "ano" : parseInt( dados[4]  ),
             "sem" : parseInt( dados[3]  ),
-            "tn"  : parseInt( dados[5]  ),
-            "ti"  : parseInt( dados[6]  ),
-            "tc"  : parseInt( dados[7]  ),
-            "td"  : parseInt( dados[8]  ),
-            "ton" : parseInt( dados[9]  ),
-            "toi" : parseInt( dados[10] ),
-            "toc" : parseInt( dados[11] ),
-            "tod" : parseInt( dados[12] )
+            "n"  : parseInt( dados[5]   ),
+            "i"  : parseInt( dados[6]   ),
+            "c"  : parseInt( dados[7]   ),
+            "d"  : parseInt( dados[8]   ),
+            "on" : parseInt( dados[9]   ),
+            "oi" : parseInt( dados[10]  ),
+            "oc" : parseInt( dados[11]  ),
+            "od" : parseInt( dados[12]  )
 
           }
 
@@ -177,23 +177,23 @@ function clean( json, format ) {
 
             var caso = municipios[ i ].casos[ j ];
 
-            if ( caso.tn  == 0 ) delete caso.tn;
-            if ( caso.ti  == 0 ) delete caso.ti;
-            if ( caso.tc  == 0 ) delete caso.tc;
-            if ( caso.td  == 0 ) delete caso.td;
-            if ( caso.ton == 0 ) delete caso.ton;
-            if ( caso.toi == 0 ) delete caso.toi;
-            if ( caso.toc == 0 ) delete caso.toc;
-            if ( caso.tod == 0 ) delete caso.tod;
+            if ( caso.n  == 0 ) delete caso.n;
+            if ( caso.i  == 0 ) delete caso.i;
+            if ( caso.c  == 0 ) delete caso.c;
+            if ( caso.d  == 0 ) delete caso.d;
+            if ( caso.on == 0 ) delete caso.on;
+            if ( caso.oi == 0 ) delete caso.oi;
+            if ( caso.oc == 0 ) delete caso.oc;
+            if ( caso.od == 0 ) delete caso.od;
 
             { // deixar apenas casos e óbitos confirmados
 
-              if ( caso.tn ) delete caso.tn;
-              if ( caso.ti ) delete caso.ti;
-              if ( caso.td ) delete caso.td;
-              if ( caso.ton ) delete caso.ton;
-              if ( caso.toi ) delete caso.toi;
-              if ( caso.tod ) delete caso.tod;
+              if ( caso.n ) delete caso.n;
+              if ( caso.i ) delete caso.i;
+              if ( caso.d ) delete caso.d;
+              if ( caso.on ) delete caso.on;
+              if ( caso.oi ) delete caso.oi;
+              if ( caso.od ) delete caso.od;
 
             }
 
@@ -225,10 +225,8 @@ function clean( json, format ) {
 
       }
 
-      // transformar dados acumulados em dados para cada semana individualmente
-
   });
 
 }
 
-clean( caminho + 'data/lista-microcefalia-2016-10-07-sage.json', 'json' );
+clean( caminho + 'data/microcefalia.json', 'json' );

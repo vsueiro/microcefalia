@@ -58,7 +58,7 @@ var vis = {
     {
       nome : 'municipios',
       tipo : 'json', 
-      url : 'data/microcefalia-2016-10-07.json'
+      url : 'data/microcefalia-41-2016.json'
     },
     {
       nome : 'Google Maps',
@@ -422,7 +422,7 @@ var vis = {
 
       criar : function( cat ) {
 
-        cat = cat || 'tc';
+        cat = cat || 'c';
 
         this.categoria.max = this.calcular( 'max', cat   );
         this.categoria.min = this.calcular( 'min', cat   );
