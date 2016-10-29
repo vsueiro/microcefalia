@@ -537,6 +537,12 @@ var vis = {
 
       elemento : 'evolucao',
 
+      escala : {
+
+        x : 8
+
+      },
+
       criar: function() {
 
         ol = document.createElement( 'ol' );
@@ -673,11 +679,26 @@ var vis = {
 
               }
 
-              altura = altura + 'px';
-
               li.find( '.casos' ).text( casos );
-              li.find( '.barra' ).css( 'height', altura );
 
+              if ( sem == 6 && ano == 2016 ) { // faz quadrado do acumulado
+
+                largura = vis.graficos.evolucao.escala.x,
+
+                lado = Math.sqrt( largura * altura );
+
+                console.log( lado );
+
+                li.css( 'width', lado ).addClass( 'quadrado' );
+
+              } else {
+
+                altura = altura + 'px';
+
+                li.find( '.barra' ).css( 'height', altura );
+
+              }
+               
               consta = true;
 
               break

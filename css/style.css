@@ -54,6 +54,11 @@ body {
   color: #ccc;
 }
 
+[data-item="grafico"] ol li.quadrado .barra {
+  height: 0;
+  padding-bottom: 100%;
+}
+
 [data-item="grafico"] ol li.ativo .barra {
   background: #666;
 }
