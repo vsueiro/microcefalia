@@ -195,7 +195,7 @@ var vis = {
             icon: {
 
               path: google.maps.SymbolPath.CIRCLE,
-              scale: 1, // mudar para 0
+              scale: 0,
               fillColor: vis.mapa.circulos.cor.normal,
               fillOpacity: 0.33,
               strokeColor: vis.mapa.circulos.cor.normal,
@@ -1583,6 +1583,7 @@ var vis = {
 
   atualizar : function() {
 
+    vis.dados.municipios.sort( vis.dados.ordenar.desc );
     vis.mapa.circulos.atualizar();
     vis.fichas.atualizar();
     vis.graficos.linhas.atualizar();
