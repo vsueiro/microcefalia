@@ -2,7 +2,54 @@ var vis = {
 
   dados : {
 
-    requisicoes : []
+    requisicoes : [],
+
+    ordenar : {
+
+      desc : function( a, b ) {
+
+        A = 0;
+        B = 0;
+
+        tipo = vis.atual.categoria;
+
+        i = a.casos.length;
+
+        while ( i-- ) {
+
+          caso = a.casos[ i ];
+          
+          if ( tipo in caso ) {
+
+            A = caso[ tipo ];
+
+            break
+
+          }
+
+        }
+
+        i = b.casos.length;
+
+        while ( i-- ) {
+
+          caso = b.casos[ i ];
+          
+          if ( tipo in caso ) {
+
+            B = caso[ tipo ];
+
+            break
+
+          }
+
+        }
+
+        return B - A
+
+      }
+ 
+    }
 
   },
 
@@ -144,6 +191,7 @@ var vis = {
             map: vis.mapa.objeto,
             title: municipio.nome,
             position: municipio.geo,
+            zIndex : i,
             icon: {
 
               path: google.maps.SymbolPath.CIRCLE,
@@ -348,6 +396,8 @@ var vis = {
 
           console.log( 'dados nao tem mais requisicoes' );
           
+          vis.dados.municipios.sort( vis.dados.ordenar.desc );
+
           vis.mapa.circulos.criar();
 
           clearInterval( callback );
