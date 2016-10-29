@@ -388,11 +388,7 @@ var vis = {
       
       callback = setInterval( function(){
 
-        if ( 'requisicoes' in vis.dados ) {
-
-          console.log( 'dados tem requisicoes' );
-
-        } else {
+        if ( !( 'requisicoes' in vis.dados ) ) {
 
           console.log( 'dados nao tem mais requisicoes' );
           
@@ -735,8 +731,6 @@ var vis = {
               if ( sem == 6 && ano == 2016 ) { // faz quadrado do acumulado
 
                 lado = Math.sqrt( largura * altura );
-
-                console.log( lado );
 
                 li.css( 'width', lado ).addClass( 'quadrado' );
 
