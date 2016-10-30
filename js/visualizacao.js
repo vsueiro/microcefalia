@@ -1,6 +1,6 @@
 var vis = {
 
-  elemento : '.visualizacao',
+  elemento : 'visualizacao',
 
   dados : {
 
@@ -154,7 +154,7 @@ var vis = {
 
   mapa : {
 
-    elemento : '#mapa',
+    elemento : 'mapa',
 
     zoom : 5,
 
@@ -372,41 +372,47 @@ var vis = {
 
     criar : function() {
 
-      this.objeto = new google.maps.Map( $( this.elemento )[ 0 ], {
+      elementos = document.getElementsByClassName( this.elemento );
 
-        zoom: this.zoom,
-        minZoom: 5,
-        maxZoom: 12,
-        center: this.centro,    
-        styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"gamma":"0.00"},{"weight":"0.01"},{"visibility":"off"}]},{"featureType":"administrative.country","elementType":"geometry","stylers":[{"lightness":"70"},{"gamma":"1.00"}]},{"featureType":"administrative.country","elementType":"geometry.stroke","stylers":[{"color":"#e6e6e6"}]},{"featureType":"administrative.province","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"geometry.stroke","stylers":[{"visibility":"on"},{"color":"#cccccc"}]},{"featureType":"administrative.province","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#ffffff"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"},{"lightness":"32"},{"visibility":"on"}]},{"featureType":"road","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"visibility":"off"},{"lightness":"63"}]},{"featureType":"road.highway","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit.station","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#f2f2f2"}]}],
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        zoomControl: true,
-        scrollwheel: false,
-        mapTypeControl: false,
-        scaleControl: false,
-        streetViewControl: false,
-        rotateControl: false,
-        fullscreenControl: false
+      for ( var i = 0; i < elementos.length; i++ ) {
 
-      });
-      
-      callback = setInterval( function(){
+        elemento = elementos[ i ];
 
-        if ( !( 'requisicoes' in vis.dados ) ) {
+        this.objeto = new google.maps.Map( elemento, {
 
-          console.log( 'dados nao tem mais requisicoes' );
-          
-          vis.dados.municipios.sort( vis.dados.ordenar.desc );
+          zoom: this.zoom,
+          minZoom: 5,
+          maxZoom: 12,
+          center: this.centro,    
+          styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"gamma":"0.00"},{"weight":"0.01"},{"visibility":"off"}]},{"featureType":"administrative.country","elementType":"geometry","stylers":[{"lightness":"70"},{"gamma":"1.00"}]},{"featureType":"administrative.country","elementType":"geometry.stroke","stylers":[{"color":"#e6e6e6"}]},{"featureType":"administrative.province","elementType":"geometry.fill","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"geometry.stroke","stylers":[{"visibility":"on"},{"color":"#cccccc"}]},{"featureType":"administrative.province","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.province","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#ffffff"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"visibility":"on"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry.stroke","stylers":[{"visibility":"on"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":"-100"},{"lightness":"32"},{"visibility":"on"}]},{"featureType":"road","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"visibility":"off"},{"lightness":"63"}]},{"featureType":"road.highway","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit.station","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#f2f2f2"}]}],
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          zoomControl: true,
+          scrollwheel: false,
+          mapTypeControl: false,
+          scaleControl: false,
+          streetViewControl: false,
+          rotateControl: false,
+          fullscreenControl: false
 
-          vis.mapa.circulos.criar();
+        });
+        
+        callback = setInterval( function(){
 
-          clearInterval( callback );
+          if ( !( 'requisicoes' in vis.dados ) ) {
+            
+            vis.dados.municipios.sort( vis.dados.ordenar.desc );
 
-        }
+            vis.mapa.circulos.criar();
 
-      }, 25 );
+            clearInterval( callback );
 
-    }
+          }
+
+        }, 25 );
+
+      }
+
+    } 
 
   },
 

@@ -23,7 +23,7 @@
 
       <section class="classificacao"></section>
 
-      <div class="grafico" id="mapa"></div>
+      <div class="grafico mapa"></div>
 
       <section class="grafico" id="acumulado"></section>
 
