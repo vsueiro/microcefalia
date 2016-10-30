@@ -67,6 +67,10 @@ vis.criar();
   * **Importância**: Informa o dia de início e fim de cada semana do ano
   * **Observação**: As datas foram extraídas dos nomes dos links para os [Informes Epidemiológicos](http://combateaedes.saude.gov.br/en/epidemiological-situation#epidemiological-reports), mas acho que algumas não estavam com a quantidade de dias correta, então acho que arrumei. Nos informes constam detalhes sobre como são contadas as semanas epidemiológicas
 
+* **Dados**: `ibge-populacao-estimada-2016-07-01.csv`
+  * **Fonte**: http://www.ibge.gov.br/home/estatistica/populacao/estimativa2016/estimativa_dou.shtm
+  * **Importância**: Números estimados de população (com código IBGE de 7 dígitos)
+  * **Observação**: Estimativas da população residente no Brasil e Unidades da Federação com data de referência de 1º de julho de 2016. Fonte: IBGE. Diretoria de Pesquisas - DPE - Coordenação de População e Indicadores Socias - COPIS
 
 ## Autor
 Este repositório é um trabalho em desenvolvimento, criado por mim, Vinicius Sueiro, como Trabalho de Conclusão de Curso (TCC) da graduação em Design pela Faculdade de Arquitetura e Urbanismo da Universidade de São Paulo (FAU USP), sob orientação de Giselle Beiguelman. Leia toda a pesquisa do projeto: [PDF no Issuu](https://issuu.com/viniciussueiro/docs/design_dos_informes_epidemiolo__gic)
