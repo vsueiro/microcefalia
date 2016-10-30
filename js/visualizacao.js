@@ -25,13 +25,19 @@ var vis = {
 
       i = municipio.casos.length;
 
+      semana = vis.atual.semana();
+
       while ( i-- ) {
 
         caso = municipio.casos[ i ];
 
-        if ( tipo in caso ) {
+        if ( caso.ano <= semana.ano && caso.sem <= semana.numero ) {
 
-          return caso[ tipo ]
+          if ( tipo in caso ) {
+
+            return caso[ tipo ]
+
+          }
 
         }
 
@@ -116,16 +122,16 @@ var vis = {
 
     semana : function() {
 
-      // if ( $( vis.filtros.semana.elemento ).val() ) {
+      if ( $( vis.filtros.semana.elemento ).val() ) {
 
         semana = $( vis.filtros.semana.elemento ).val();
 
-      // } else {
+      } else {
 
         // console.log( "caller is " + arguments.callee.caller.toString() );
-        // semana = vis.dados.semanas[ 0 ].numero + '/' + vis.dados.semanas[ 0 ].ano;
+        semana = vis.dados.semanas[ 0 ].numero + '/' + vis.dados.semanas[ 0 ].ano; // padrão: semana mais recente
         
-      // }
+      }
 
       semana = semana.split( '/' );
 
@@ -1290,6 +1296,8 @@ var vis = {
               if ( vis.atual.estado.iniciado ) {
 
                 vis.fichas.atualizar();
+
+                vis.classificacao.atualizar();
 
               }
 
