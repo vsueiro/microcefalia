@@ -1487,6 +1487,8 @@ var vis = {
 
       elementos = document.getElementsByClassName( this.elemento );
 
+      posicoes = [];
+
       for ( var i = 0; i < elementos.length; i++ ) {
 
         elemento = elementos[ i ];
@@ -1498,19 +1500,45 @@ var vis = {
           li = lis[ j ];
           municipio = vis.dados.municipios[ j ];
           quantidade = vis.dados.acumulados( municipio, tipo ) || 0;
-          posicao = j + 1;
+          empate = false;
+
+          if ( j == 0 ) {
+          
+            posicao = 1;
+
+          } else if ( quantidade != posicoes[ j - 1 ].quantidade ) {
+
+            posicao = posicoes[ j - 1 ].posicao + 1;
+
+          } else {
+
+            posicao = posicoes[ j - 1 ].posicao;
+            empate = true;
+
+          }
+
+          posicoes.push({
+            
+            quantidade : quantidade,
+            posicao : posicao,
+
+          });
 
           divs = li.getElementsByTagName( 'div' );
 
-          divs[ 0 ].innerText = posicao;
+          divs[ 0 ].className = empate ? 'empate' : '';
+          divs[ 0 ].innerText = posicao + 'º';
           divs[ 1 ].innerText = municipio.nome;
           divs[ 2 ].innerText = quantidade;
 
           li.dataset.ibge = municipio.id;
 
+
         }
 
       }
+
+      console.log(  posicoes);
 
     }
 
