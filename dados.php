@@ -114,6 +114,10 @@
     src:  http://combateaedes.saude.gov.br/pt/situacao-epidemiologica#informes
     obs1: as datas foram extraídas dos nomes dos links para os Informes Epidemiológicos. Nos informes constam detalhes sobre como são contadas as semanas epidemiológicas
 
+    data: ibge-populacao-estimada-2016-07-01.csv
+    src: http://www.ibge.gov.br/home/estatistica/populacao/estimativa2016/estimativa_dou.shtm
+    obs1: estimativas da população residente no Brasil e Unidades da Federação com data de referência de 1º de julho de 2016. Fonte: IBGE. Diretoria de Pesquisas - DPE - Coordenação de População e Indicadores Socias - COPIS.
+
     -->
 
   </body>
