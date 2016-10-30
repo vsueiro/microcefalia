@@ -116,7 +116,18 @@ var vis = {
 
     semana : function() {
 
-      semana = $( vis.filtros.semana.elemento ).val().split( '/' );
+      // if ( $( vis.filtros.semana.elemento ).val() ) {
+
+        semana = $( vis.filtros.semana.elemento ).val();
+
+      // } else {
+
+        // console.log( "caller is " + arguments.callee.caller.toString() );
+        // semana = vis.dados.semanas[ 0 ].numero + '/' + vis.dados.semanas[ 0 ].ano;
+        
+      // }
+
+      semana = semana.split( '/' );
 
       return {
         'numero' : parseInt( semana[ 0 ] ),
@@ -839,6 +850,8 @@ var vis = {
 
           sem = vis.atual.semana();
 
+          console.log( sem );
+
           ficha = vis.fichas.elemento;
 
           item = ' [data-item="' + this.elemento + '"]';
@@ -1268,7 +1281,7 @@ var vis = {
             x: 1,
             animationCallback: function( x, y ) {
 
-              i = this.getStep()[ 0 ];
+              i = parseInt( this.getStep()[ 0 ] );
 
               seletor = $( vis.filtros.semana.elemento );
 
