@@ -1460,24 +1460,16 @@ var vis = {
 
         for ( var j = 0; j < this.items; j++ ) {
 
-          municipio = vis.dados.municipios[ j ];
-          quantidade = vis.dados.acumulados( municipio, tipo ) || 0;
-          posicao = j + 1;
-
           classificacao = document.createElement( 'div' );
-          classificacao.appendChild( document.createTextNode( posicao ) );
 
           nome = document.createElement( 'div' );
-          nome.appendChild( document.createTextNode( municipio.nome ) );
 
           casos = document.createElement( 'div' );
-          casos.appendChild( document.createTextNode( quantidade ) );
 
           li = document.createElement( 'li' );
           li.appendChild( classificacao );
           li.appendChild( nome );
           li.appendChild( casos );
-          li.dataset.ibge = municipio.id;
 
           ol.appendChild( li );
 
@@ -1486,6 +1478,8 @@ var vis = {
         elemento.appendChild( ol );
 
       }
+
+      this.atualizar();
 
     },
 
