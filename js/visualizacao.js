@@ -10,48 +10,34 @@ var vis = {
 
       desc : function( a, b ) {
 
-        A = 0;
-        B = 0;
-
         tipo = vis.atual.categoria;
 
-        i = a.casos.length;
-
-        while ( i-- ) {
-
-          caso = a.casos[ i ];
-          
-          if ( tipo in caso ) {
-
-            A = caso[ tipo ];
-
-            break
-
-          }
-
-        }
-
-        i = b.casos.length;
-
-        while ( i-- ) {
-
-          caso = b.casos[ i ];
-          
-          if ( tipo in caso ) {
-
-            B = caso[ tipo ];
-
-            break
-
-          }
-
-        }
+        A = vis.dados.acumulados( a, tipo ) || 0;
+        B = vis.dados.acumulados( b, tipo ) || 0;
 
         return B - A
 
       }
  
-    }
+    },
+
+    acumulados : function( municipio, tipo ) {
+
+      i = municipio.casos.length;
+
+      while ( i-- ) {
+
+        caso = municipio.casos[ i ];
+
+        if ( tipo in caso ) {
+
+          return caso[ tipo ]
+
+        }
+
+      } 
+
+    },
 
   },
 
@@ -1475,10 +1461,22 @@ var vis = {
         for ( var j = 0; j < this.items; j++ ) {
 
           municipio = vis.dados.municipios[ j ];
-          nome = document.createTextNode( municipio.nome );
+          quantidade = vis.dados.acumulados( municipio, tipo ) || 0;
+          posicao = j + 1;
+
+          classificacao = document.createElement( 'div' );
+          classificacao.appendChild( document.createTextNode( posicao ) );
+
+          nome = document.createElement( 'div' );
+          nome.appendChild( document.createTextNode( municipio.nome ) );
+
+          casos = document.createElement( 'div' );
+          casos.appendChild( document.createTextNode( quantidade ) );
 
           li = document.createElement( 'li' );
+          li.appendChild( classificacao );
           li.appendChild( nome );
+          li.appendChild( casos );
           li.dataset.ibge = municipio.id;
 
           ol.appendChild( li );
@@ -1493,6 +1491,32 @@ var vis = {
 
     atualizar : function () {
 
+      elementos = document.getElementsByClassName( this.elemento );
+
+      for ( var i = 0; i < elementos.length; i++ ) {
+
+        elemento = elementos[ i ];
+        
+        lis = elemento.getElementsByTagName( 'li' );
+
+        for ( var j = 0; j < this.items; j++ ) {
+
+          li = lis[ j ];
+          municipio = vis.dados.municipios[ j ];
+          quantidade = vis.dados.acumulados( municipio, tipo ) || 0;
+          posicao = j + 1;
+
+          divs = li.getElementsByTagName( 'div' );
+
+          divs[ 0 ].innerText = posicao;
+          divs[ 1 ].innerText = municipio.nome;
+          divs[ 2 ].innerText = quantidade;
+
+          li.dataset.ibge = municipio.id;
+
+        }
+
+      }
 
     }
 

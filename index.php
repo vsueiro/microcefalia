@@ -14,9 +14,7 @@
   <body>
 
     <article class="visualizacao">
-        
-      <section class="classificacao"></section>
-        
+                
       <section class="fichas"></section>
 
       <form class="filtros"></form>
