@@ -1276,6 +1276,48 @@ var vis = {
 
     elemento : '.filtros',
 
+    vincular : {
+
+      eventos : function() {
+
+        $( document ).on( 'change', '.semanas', function() {
+
+          index = $( '.semanas option:selected' ).index();
+
+          step = vis.dados.semanas.length - index;
+
+          vis.filtros.semana.deslizador.objeto.setStep( step, 0 );
+
+          vis.atualizar();
+
+        });
+
+        $( document ).on( 'change', '.municipios', function() {
+
+          seletor = vis.filtros.municipio.elemento;
+
+          index = $( '.' +  seletor + ' option:selected' ).val();
+
+          vis.atual.local = index;
+
+          // vis.mapa.centralizar();
+
+          vis.atualizar();
+
+        });
+
+        $( document ).on( 'change', 'input[name=categoria]', function() {
+
+          vis.atual.categoria = this.value;
+
+          vis.atualizar();
+
+        });
+
+      }
+
+    },
+
     semana : {
 
       elemento : '.semanas',
@@ -1699,47 +1741,9 @@ var vis = {
 
   },
 
-  eventos : function() {
-
-    $( document ).on( 'change', '.semanas', function() {
-
-      index = $( '.semanas option:selected' ).index();
-
-      step = vis.dados.semanas.length - index;
-
-      vis.filtros.semana.deslizador.objeto.setStep( step, 0 );
-
-      vis.atualizar();
-
-    });
-
-    $( document ).on( 'change', '.municipios', function() {
-
-      seletor = vis.filtros.municipio.elemento;
-
-      index = $( '.' +  seletor + ' option:selected' ).val();
-
-      vis.atual.local = index;
-
-      // vis.mapa.centralizar();
-
-      vis.atualizar();
-
-    });
-
-    $( document ).on( 'change', 'input[name=categoria]', function() {
-
-      vis.atual.categoria = this.value;
-
-      vis.atualizar();
-
-    });
-
-  },
-
   criar : function() {
 
-    vis.eventos();
+    vis.filtros.vincular.eventos();
 
     for ( var i = 0; i < vis.dependencias.length; i++ ) {
       
