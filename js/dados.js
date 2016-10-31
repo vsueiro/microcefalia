@@ -127,6 +127,8 @@ function clean( json, format ) {
 
           if ( municipio[ 'id' ] == trimId ) {
 
+            municipio[ 'id' ] = municipiosCoordenada[ 'id-ibge' ];
+
             municipio[ 'geo' ] = {
 
               "lat" : parseFloat( municipiosCoordenada[ 'latitude'  ] ),
@@ -219,14 +221,45 @@ function clean( json, format ) {
         }
       }
 
-      if ( format == 'json' ) {
-      
-        $( 'body' ).html( JSON.stringify( municipios ) ); // JSON para a visualização (com dados zerados e quantidades acumuladas)
+      // adicionar dado de população
 
-      }
+      console.log( 'total de municipios com casos e obitos confirmados' + municipios.length );
+
+      $.getJSON( caminho + 'data/ibge-populacao-estimada-2016-07-01.json', function( populacao ) {
+
+        for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+
+          var municipio = municipios[ i ];
+
+          // console.log( populacao[ municipio.id ] );
+
+          if ( populacao[ municipio.id ] ) {
+
+            console.log( 'adicionou dado de populacao' );
+
+            municipio[ 'pop' ] = populacao[ municipio.id ];
+
+          } else {
+
+            // console.error( municipio );
+
+          }
+
+        }
+
+        console.log( municipios );
+        
+        if ( format == 'json' ) {
+        
+          $( 'body' ).html( JSON.stringify( municipios ) ); // JSON para a visualização (com dados zerados e quantidades acumuladas)
+
+        }
+
+      });
+
 
   });
 
 }
 
-clean( caminho + 'data/microcefalia.json', 'json' );
+clean( caminho + 'data/listaMicrocefalia.json', 'json' );
