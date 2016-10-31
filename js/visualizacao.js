@@ -12,37 +12,13 @@ var vis = {
 
         tipo = vis.atual.categoria;
 
-        A = vis.dados.acumulados( a, tipo ) || 0;
-        B = vis.dados.acumulados( b, tipo ) || 0;
+        A = vis.obter.acumulados( a, tipo ) || 0;
+        B = vis.obter.acumulados( b, tipo ) || 0;
 
         return B - A
 
       }
  
-    },
-
-    acumulados : function( municipio, tipo ) {
-
-      i = municipio.casos.length;
-
-      semana = vis.atual.semana();
-
-      while ( i-- ) {
-
-        caso = municipio.casos[ i ];
-
-        if ( caso.ano <= semana.ano && caso.sem <= semana.numero ) { // pega o ultimo dado da categoria que consta, mesmo que não seja na semana mais recente
-
-          if ( tipo in caso ) {
-
-            return caso[ tipo ]
-
-          }
-
-        }
-
-      } 
-
     },
 
     calcularPorUF : function( UF ) {
@@ -62,7 +38,7 @@ var vis = {
 
         if ( UF == vis.UF( municipio.id, 'id' ) ) {
 
-          // quantidade = vis.dados.acumulados( municipio, tipo ) || 0;
+          // quantidade = vis.obter.acumulados( municipio, tipo ) || 0;
 
           for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) { // pega dado da categoria na semana mais recente
 
@@ -125,6 +101,34 @@ var vis = {
       );
 
     }
+
+  },
+
+  obter : {
+
+    acumulados : function( municipio, tipo ) {
+
+      i = municipio.casos.length;
+
+      semana = vis.atual.semana();
+
+      while ( i-- ) {
+
+        caso = municipio.casos[ i ];
+
+        if ( caso.ano <= semana.ano && caso.sem <= semana.numero ) { // pega o ultimo dado da categoria que consta, mesmo que não seja na semana mais recente
+
+          if ( tipo in caso ) {
+
+            return caso[ tipo ]
+
+          }
+
+        }
+
+      } 
+
+    },
 
   },
 
@@ -1575,7 +1579,7 @@ var vis = {
 
           li = lis[ j ];
           municipio = vis.dados.municipios[ j ];
-          quantidade = vis.dados.acumulados( municipio, tipo ) || 0;
+          quantidade = vis.obter.acumulados( municipio, tipo ) || 0;
           empate = false;
 
           if ( j == 0 ) {
@@ -1663,7 +1667,7 @@ var vis = {
 
         municipio = municipios[ i ];
 
-        casos = vis.dados.acumulados( municipio, tipo ) || 0;
+        casos = vis.obter.acumulados( municipio, tipo ) || 0;
 
         populacao = municipio.pop;
 
