@@ -4,8 +4,6 @@ var vis = {
 
   dados : {
 
-    requisicoes : [],
-
     ordenar : {
 
       desc : function( a, b ) {
@@ -1744,6 +1742,8 @@ var vis = {
   criar : function() {
 
     vis.filtros.vincular.eventos();
+
+    vis.dados.requisicoes = [];
 
     for ( var i = 0; i < vis.dependencias.length; i++ ) {
       
