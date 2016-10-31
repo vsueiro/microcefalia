@@ -23,7 +23,7 @@ var vis = {
 
   },
 
-  carrega : {
+  carregar : {
 
     script : function( dependencia ) {
 
@@ -1746,7 +1746,7 @@ var vis = {
       dependencia = vis.dependencias[ i ];
       tipo = dependencia.tipo;
 
-      this.carrega[ tipo ]( dependencia );
+      this.carregar[ tipo ]( dependencia );
 
     }
 
