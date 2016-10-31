@@ -131,7 +131,52 @@ var vis = {
 
       }
 
-    }
+    },
+
+    incidencia : {
+
+      base : 100000,
+
+      classificacao : [],
+
+      criar : function() {
+
+        tipo = vis.atual.categoria;
+
+        municipios = vis.dados.municipios;
+
+        for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+
+          municipio = municipios[ i ];
+
+          casos = vis.obter.acumulados( municipio, tipo ) || 0;
+
+          populacao = municipio.pop;
+
+          base = this.base;
+
+          incidencia = base * casos / populacao;
+
+          this.classificacao[ i ] = {
+
+            incidencia : incidencia,
+            municipio : municipio.nome
+
+          }
+
+        }
+
+        this.classificacao.sort( function( a, b ) {
+
+          return b.incidencia - a.incidencia
+
+        } );
+
+        console.log( this.classificacao );
+
+      }
+
+    },
 
   },
 
@@ -1649,51 +1694,6 @@ var vis = {
         return UF[ retorno ]
 
       }
-
-    }
-
-  },
-
-  incidencia : {
-
-    base : 100000,
-
-    classificacao : [],
-
-    criar : function() {
-
-      tipo = vis.atual.categoria;
-
-      municipios = vis.dados.municipios;
-
-      for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
-
-        municipio = municipios[ i ];
-
-        casos = vis.obter.acumulados( municipio, tipo ) || 0;
-
-        populacao = municipio.pop;
-
-        base = this.base;
-
-        incidencia = base * casos / populacao;
-
-        this.classificacao[ i ] = {
-
-          incidencia : incidencia,
-          municipio : municipio.nome
-
-        }
-
-      }
-
-      this.classificacao.sort( function( a, b ) {
-
-        return b.incidencia - a.incidencia
-
-      } );
-
-      console.log( this.classificacao );
 
     }
 
