@@ -1272,7 +1272,7 @@ var vis = {
 
   filtros : {
 
-    elemento : '.filtros',
+    elemento : 'filtros',
 
     vincular : {
 
@@ -1376,61 +1376,69 @@ var vis = {
 
           }
 
-          seletor = document.createElement( 'select' );
-          seletor.className = 'semanas';
+          elementos = document.getElementsByClassName( el );
 
-          grupos = {};
+          for ( var i = 0; i < elementos.length; i++ ) {
 
-          vis.dados.semanas.forEach( function( semana ) {
+            elemento = elementos[ i ];
 
-            ano = semana.ano;
-            inicio = vis.filtros.semana.quando( semana.inicio );
-            fim = vis.filtros.semana.quando( semana.fim );
+            seletor = document.createElement( 'select' );
+            seletor.className = 'semanas';
 
-            acumulados = 'Até ' + fim;
-            acumulados = removeAno( acumulados );
+            grupos = {};
 
-            unicos = inicio + ' a ' + fim;
-            unicos = removeAno( unicos );
-            unicos = removeMesDuplicado( unicos );
+            vis.dados.semanas.forEach( function( semana ) {
 
-            opcao = document.createElement( 'option' );
-            opcao.value = semana.numero + '/' + ano;
-            opcao.dataset.unicos = unicos;
-            opcao.text = acumulados;
+              ano = semana.ano;
+              inicio = vis.filtros.semana.quando( semana.inicio );
+              fim = vis.filtros.semana.quando( semana.fim );
 
-            if ( ano in grupos ) {
+              acumulados = 'Até ' + fim;
+              acumulados = removeAno( acumulados );
 
-            } else {
+              unicos = inicio + ' a ' + fim;
+              unicos = removeAno( unicos );
+              unicos = removeMesDuplicado( unicos );
 
-              grupos[ ano ] = document.createElement( 'optgroup' );
-              grupos[ ano ].label = ano;
+              opcao = document.createElement( 'option' );
+              opcao.value = semana.numero + '/' + ano;
+              opcao.dataset.unicos = unicos;
+              opcao.text = acumulados;
+
+              if ( ano in grupos ) {
+
+              } else {
+
+                grupos[ ano ] = document.createElement( 'optgroup' );
+                grupos[ ano ].label = ano;
+
+              }
+
+              grupos[ ano ].appendChild( opcao );
+
+            });
+
+            ordem = [];
+
+            for ( ano in grupos ) {
+
+              ordem.push( ano );
 
             }
 
-            grupos[ ano ].appendChild( opcao );
+            ordem.sort().reverse().forEach( function( ano ) {
 
-          });
+              seletor.appendChild( grupos[ ano ] );
 
-          ordem = [];
+            });
 
-          for ( ano in grupos ) {
+            elemento.appendChild( seletor );
 
-            ordem.push( ano );
+            $( vis.filtros.semana.elemento ).val( $( vis.filtros.semana.elemento + ' option:first' ).val() );
+
+            vis.filtros.semana.deslizador.criar( el );
 
           }
-
-          ordem.sort().reverse().forEach( function( ano ) {
-
-            seletor.appendChild( grupos[ ano ] );
-
-          });
-
-          $( el ).append( seletor );
-
-          $( vis.filtros.semana.elemento ).val( $( vis.filtros.semana.elemento + ' option:first' ).val() );
-
-          vis.filtros.semana.deslizador.criar( el );
 
         }
 
@@ -1442,53 +1450,61 @@ var vis = {
 
         criar: function( el ) {
 
-          div = document.createElement( 'div' );
-          div.id = this.elemento;
-          div.className = 'dragdealer';
+          elementos = document.getElementsByClassName( el );
 
-          handle = document.createElement( 'div' );
-          handle.className = 'handle';
+          for ( var i = 0; i < elementos.length; i++ ) {
 
-          div.appendChild( handle );
+            elemento = elementos[ i ];
 
-          $( el ).prepend( div );
+            div = document.createElement( 'div' );
+            div.id = this.elemento;
+            div.className = 'dragdealer';
 
-          this.objeto = new Dragdealer( this.elemento, {
+            handle = document.createElement( 'div' );
+            handle.className = 'handle';
 
-            steps: vis.dados.semanas.length,
-            slide: false,
-            snap: true,
-            x: 1,
-            animationCallback: function( x, y ) {
+            div.appendChild( handle );
 
-              i = parseInt( this.getStep()[ 0 ] );
+            elemento.appendChild( div );
 
-              seletor = $( vis.filtros.semana.elemento );
+            this.objeto = new Dragdealer( this.elemento, {
 
-              seletor.val( $( vis.filtros.semana.elemento + ' option' ).eq( vis.dados.semanas.length - i ).val() );
+              steps: vis.dados.semanas.length,
+              slide: false,
+              snap: true,
+              x: 1,
+              animationCallback: function( x, y ) {
 
-              if ( vis.atual.estado.iniciado ) {
+                i = parseInt( this.getStep()[ 0 ] );
+
+                seletor = $( vis.filtros.semana.elemento );
+
+                seletor.val( $( vis.filtros.semana.elemento + ' option' ).eq( vis.dados.semanas.length - i ).val() );
+
+                if ( vis.atual.estado.iniciado ) {
+
+                  vis.fichas.atualizar();
+
+                  vis.classificacao.atualizar();
+
+                }
+
+                $( '#' + this.wrapper.id ).addClass( 'loaded' ).find( '.handle' ).text( seletor.val() );
+
+              },
+              callback: function( x, y ) {
+
+                vis.mapa.circulos.atualizar();
 
                 vis.fichas.atualizar();
 
-                vis.classificacao.atualizar();
+                $( '#' + this.wrapper.id ).find( '.handle' ).text( seletor.val() );
 
               }
 
-              $( '#' + this.wrapper.id ).addClass( 'loaded' ).find( '.handle' ).text( seletor.val() );
+            });
 
-            },
-            callback: function( x, y ) {
-
-              vis.mapa.circulos.atualizar();
-
-              vis.fichas.atualizar();
-
-              $( '#' + this.wrapper.id ).find( '.handle' ).text( seletor.val() );
-
-            }
-
-          });
+          }
 
         } 
 
@@ -1504,13 +1520,47 @@ var vis = {
 
     UF : {
 
-      criar : function() {
+      elemento : 'UFs',
 
-        // cria filtro por estado
+      criar : function( el ) {
+
+        elementos = document.getElementsByClassName( el );
+
+        for ( var i = 0; i < elementos.length; i++ ) {
+
+          elemento = elementos[ i ];
+
+          seletor = document.createElement( 'select' );
+          seletor.className = this.elemento;
+    
+          opcao = document.createElement( 'option' );
+          opcao.selected = true;
+          opcao.value = 'todos';
+          opcao.text = 'Todas as UF';
+
+          seletor.appendChild( opcao );
+
+          UFs = vis.dados.UFs;
+
+          for ( var i = 0, leni = UFs.length; i < leni; i++ ) {
+
+            UF = UFs[ i ];
+
+            opcao = document.createElement( 'option' );
+            opcao.value = UF.id;
+            opcao.text = UF.nome;
+
+            seletor.appendChild( opcao );
+
+          }    
+
+          elemento.appendChild( seletor );
+
+        }
 
       },
 
-      atualizar : function() {
+      atualizar : function( el ) {
 
         // atualiza filtro por estado
 
@@ -1526,12 +1576,20 @@ var vis = {
 
         criar : function( el ) {
 
-          campo = document.createElement( 'input' );
-          campo.type = 'search';
-          campo.name = vis.filtros.municipio.elemento;
-          campo.placeholder = 'Buscar município';
+          elementos = document.getElementsByClassName( el );
 
-          $( el ).append( campo );
+          for ( var i = 0; i < elementos.length; i++ ) {
+
+            elemento = elementos[ i ];
+
+            campo = document.createElement( 'input' );
+            campo.type = 'search';
+            campo.name = vis.filtros.municipio.elemento;
+            campo.placeholder = 'Buscar município';
+
+            elemento.appendChild( campo );
+
+          }
 
         }
 
@@ -1541,32 +1599,40 @@ var vis = {
 
         criar : function( el ) {
 
-          seletor = document.createElement( 'select' );
-          seletor.className = 'municipios';
-    
-          opcao = document.createElement( 'option' );
-          opcao.selected = true;
-          opcao.value = 'todos';
-          opcao.text = 'Todos os municípios';
+          elementos = document.getElementsByClassName( el );
 
-          seletor.appendChild( opcao );
+          for ( var i = 0; i < elementos.length; i++ ) {
 
-          municipios = vis.dados.municipios;
+            elemento = elementos[ i ];
 
-          for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
-
-            municipio = municipios[ i ];
-            UF = vis.obter.UF( municipio.id, 'sigla' );
-
+            seletor = document.createElement( 'select' );
+            seletor.className = 'municipios';
+      
             opcao = document.createElement( 'option' );
-            opcao.value = i;
-            opcao.text = municipio.nome + ', ' + UF;
+            opcao.selected = true;
+            opcao.value = 'todos';
+            opcao.text = 'Todos os municípios';
 
             seletor.appendChild( opcao );
 
-          }    
+            municipios = vis.dados.municipios;
 
-          $( el ).append( seletor );
+            for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+
+              municipio = municipios[ i ];
+              UF = vis.obter.UF( municipio.id, 'sigla' );
+
+              opcao = document.createElement( 'option' );
+              opcao.value = i;
+              opcao.text = municipio.nome + ', ' + UF;
+
+              seletor.appendChild( opcao );
+
+            }    
+
+            elemento.appendChild( seletor );
+
+          }
 
         },
 
@@ -1591,27 +1657,37 @@ var vis = {
 
       criar : function( el ) {
 
-        categorias = vis.dados.categorias;
+        elementos = document.getElementsByClassName( el );
 
-        for ( var i = 0, leni = categorias.length; i < leni; i++ ) {
+        for ( var i = 0; i < elementos.length; i++ ) {
 
-          categoria = categorias[ i ];
+          elemento = elementos[ i ];
 
-          if ( categoria.visivel ) {
+          categorias = vis.dados.categorias;
 
-            rotulo = document.createElement( 'label' );
-            rotulo.appendChild( document.createTextNode( categoria.apelido ) );
-            rotulo.htmlFor = categoria.sigla;
+          for ( var i = 0, leni = categorias.length; i < leni; i++ ) {
 
-            seletor = document.createElement( 'input' );
-            // seletor.type = 'checkbox';
-            seletor.type = 'radio';
-            seletor.name = 'categoria';
-            seletor.value = categoria.sigla;
-            seletor.id = categoria.sigla;
-            seletor.checked = categoria.atual;
-            
-            $( el ).append( rotulo ).append( seletor );
+            categoria = categorias[ i ];
+
+            if ( categoria.visivel ) {
+
+              rotulo = document.createElement( 'label' );
+              rotulo.appendChild( document.createTextNode( categoria.apelido ) );
+              rotulo.htmlFor = categoria.sigla;
+
+              seletor = document.createElement( 'input' );
+              // seletor.type = 'checkbox';
+              seletor.type = 'radio';
+              seletor.name = 'categoria';
+              seletor.value = categoria.sigla;
+              seletor.id = categoria.sigla;
+              seletor.checked = categoria.atual;
+              
+              rotulo.appendChild( seletor );
+
+              elemento.appendChild( rotulo );
+
+            }
 
           }
 
@@ -1630,6 +1706,7 @@ var vis = {
       el = this.elemento;
 
       this.categoria.criar( el );
+      this.UF.criar( el );
       this.municipio.criar( el );
       this.semana.criar( el );
 
