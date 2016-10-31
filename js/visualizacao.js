@@ -31,7 +31,7 @@ var vis = {
 
         caso = municipio.casos[ i ];
 
-        if ( caso.ano <= semana.ano && caso.sem <= semana.numero ) {
+        if ( caso.ano <= semana.ano && caso.sem <= semana.numero ) { // pega o ultimo dado da categoria que consta, mesmo que não seja na semana mais recente
 
           if ( tipo in caso ) {
 
@@ -44,6 +44,55 @@ var vis = {
       } 
 
     },
+
+    calcularPorUF : function( UF ) {
+
+      soma = 0;
+
+      tipo = vis.atual.categoria;
+      tipo = 'oc';
+
+      semana = vis.atual.semana();
+
+      municipios = vis.dados.municipios;
+
+      for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+
+        municipio = municipios[ i ];
+
+        if ( UF == vis.UF( municipio.id, 'id' ) ) {
+
+          // quantidade = vis.dados.acumulados( municipio, tipo ) || 0;
+
+          for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) { // pega dado da categoria na semana mais recente
+
+            caso = municipio.casos[ j ];
+
+            quantidade = 0;
+
+            if ( caso.ano == semana.ano && caso.sem == semana.numero ) {
+
+              if ( tipo in caso ) {
+
+                quantidade = caso[ tipo ];
+
+                soma += quantidade;
+
+                console.log( 'somou com ' + municipio.nome );
+
+              }
+                
+            }
+
+          }
+
+        }
+
+      }
+
+      console.log( vis.UF( UF, 'nome' ) + ' tem ' + soma + ' casos ');
+
+    }
 
   },
 
@@ -99,7 +148,7 @@ var vis = {
     {
       nome : 'municipios',
       tipo : 'json', 
-      url : 'data/microcefalia-41-2016.json'
+      url : 'data/microcefalia-42-2016.json'
     },
     {
       nome : 'Google Maps',

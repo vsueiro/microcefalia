@@ -188,7 +188,7 @@ section.classificacao {
 }
 
 .grafico#acumulado {
-  display: none;
+  /*display: none;*/
 }
 
 .fichas ul,
