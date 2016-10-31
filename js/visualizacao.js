@@ -57,6 +57,33 @@ var vis = {
 
   obter : {
 
+    ultimo : function( data ) {
+
+      if ( data == 'semana' ) return vis.dados.semanas[ 0 ].numero;
+      if ( data == 'ano'    ) return vis.dados.semanas[ 0 ].ano;
+
+    },
+
+    UF : function( n, retorno ) {
+
+      id = n.toString().substring( 0, 2 );
+
+      UFs = vis.dados.UFs;
+
+      for ( var i = 0, leni = UFs.length; i < leni; i++ ) {
+
+        UF = UFs[ i ];
+
+        if ( UF.id == id ) {
+
+          return UF[ retorno ]
+
+        }
+
+      }
+
+    },
+
     acumulados : function( municipio, tipo ) {
 
       i = municipio.casos.length;
@@ -97,7 +124,7 @@ var vis = {
 
           municipio = municipios[ i ];
 
-          if ( UF == vis.UF( municipio.id, 'id' ) ) {
+          if ( UF == vis.obter.UF( municipio.id, 'id' ) ) {
 
             // quantidade = vis.obter.acumulados( municipio, tipo ) || 0;
 
@@ -127,7 +154,7 @@ var vis = {
 
         }
 
-        console.log( vis.UF( UF, 'nome' ) + ' tem ' + soma + ' casos ');
+        console.log( vis.obter.UF( UF, 'nome' ) + ' tem ' + soma + ' casos ');
 
       }
 
@@ -361,7 +388,7 @@ var vis = {
 
             caso = municipio.casos[ j ];
 
-            if ( caso.sem == vis.ultimo( 'semana' ) ) { // semana mais recente no geral
+            if ( caso.sem == vis.obter.ultimo( 'semana' ) ) { // semana mais recente no geral
 
               for ( var k = 0, lenk = vis.dados.categorias.length; k < lenk; k++ ) {
 
@@ -936,7 +963,7 @@ var vis = {
           } else {
 
             municipio = vis.dados.municipios[ local ];
-            conteudo = vis.UF( municipio.id, 'nome' )
+            conteudo = vis.obter.UF( municipio.id, 'nome' )
 
           }
 
@@ -1489,7 +1516,7 @@ var vis = {
           for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
 
             municipio = municipios[ i ];
-            UF = vis.UF( municipio.id, 'sigla' );
+            UF = vis.obter.UF( municipio.id, 'sigla' );
 
             opcao = document.createElement( 'option' );
             opcao.value = i;
@@ -1667,33 +1694,6 @@ var vis = {
       }
 
       console.log(  posicoes);
-
-    }
-
-  },
-
-  ultimo : function( data ) {
-
-    if ( data == 'semana' ) return vis.dados.semanas[ 0 ].numero;
-    if ( data == 'ano'    ) return vis.dados.semanas[ 0 ].ano;
-
-  },
-
-  UF : function( n, retorno ) {
-
-    id = n.toString().substring( 0, 2 );
-
-    UFs = vis.dados.UFs;
-
-    for ( var i = 0, leni = UFs.length; i < leni; i++ ) {
-
-      UF = UFs[ i ];
-
-      if ( UF.id == id ) {
-
-        return UF[ retorno ]
-
-      }
 
     }
 
