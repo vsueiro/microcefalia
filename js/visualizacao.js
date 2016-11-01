@@ -179,6 +179,17 @@ var vis = {
 
       },
 
+      corTeste : [
+
+        '#f99d9d',
+        '#d87c9a',
+        '#ad769d',
+        '#746b8d',
+        '#47617d',
+        '#2d4a60'
+
+      ],
+
       criar : function() {
 
         municipios = vis.dados.municipios;
@@ -200,7 +211,8 @@ var vis = {
               path: google.maps.SymbolPath.CIRCLE,
               scale: 0,
               fillColor: vis.mapa.circulos.cor.normal,
-              fillOpacity: 0.33,
+              // fillColor: vis.mapa.circulos.corTeste[Math.floor(Math.random()*vis.mapa.circulos.corTeste.length)],
+              fillOpacity: Math.random(),
               strokeColor: vis.mapa.circulos.cor.normal,
               strokeWeight: 0
 
@@ -1622,12 +1634,18 @@ var vis = {
 
         incidencia = base * casos / populacao;
 
-        this.classificacao[ i ] = {
+        // if ( casos >= 10 ||  ) {
 
-          incidencia : incidencia,
-          municipio : municipio.nome
+          this.classificacao[ i ] = {
 
-        }
+            populacao : populacao,
+            casos: casos,
+            incidencia : incidencia,
+            municipio : municipio.nome
+
+          }
+
+        // }
 
       }
 
