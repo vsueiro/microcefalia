@@ -100,6 +100,11 @@ var vis = {
 
     },
 
+    municipio : function( id ) {
+
+
+    },
+
     acumulados : function( municipio, tipo ) {
 
       i = municipio.casos.length;
@@ -1362,11 +1367,11 @@ var vis = {
 
         $( document ).on( 'change', '.municipios', function() {
 
-          seletor = vis.filtros.municipio.elemento;
+          // seletor = vis.filtros.municipio.elemento;
 
-          id = $( '.' +  seletor + ' option:selected' ).val();
+          // id = $( '.' +  seletor + ' option:selected' ).val();
 
-          vis.atual.local = id;
+          vis.atual.local = this.value;
 
           // vis.mapa.centralizar();
 
