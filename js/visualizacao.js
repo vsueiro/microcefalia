@@ -353,13 +353,13 @@ var vis = {
 
           circulo.addListener( 'click', function() {
 
-            if ( vis.atual.local == this.indice ) {
+            if ( vis.atual.local == this.id ) {
 
               vis.atual.local = 'todos';
 
             } else {
 
-              vis.atual.local = this.indice;
+              vis.atual.local = this.id;
 
             }
 
@@ -375,7 +375,7 @@ var vis = {
 
           circulo.addListener( 'mouseover', function() {
 
-            if ( this.indice != vis.atual.local ) {
+            if ( this.id != vis.atual.local ) {
 
               this.getIcon().strokeWeight = 1;
 
@@ -387,7 +387,7 @@ var vis = {
 
           circulo.addListener( 'mouseout', function() {
 
-            if ( this.indice != vis.atual.local ) {
+            if ( this.id != vis.atual.local ) {
 
               this.getIcon().strokeWeight = 0;
             
@@ -438,10 +438,9 @@ var vis = {
         sem = sem || vis.atual.semana();
         cat = cat || vis.atual.categoria;
 
-        indice = vis.atual.local;
+        id = vis.atual.local;
 
         circulos = vis.mapa.circulos.lista;
-
 
         for ( var i = 0, leni = circulos.length; i < leni; i++ ) { // para cada círculo no mapa
 
@@ -478,27 +477,35 @@ var vis = {
 
           }
 
+          if ( id != 'todos' && id == circulo.id ) {
+
+            circulo.getIcon().strokeWeight = 2;
+
+            circulo.setIcon( circulo.getIcon() );
+
+          }
+
         }
 
-        if ( indice != 'todos' ) {
+        // if ( indice != 'todos' ) {
 
-          circulos[ indice ].getIcon().strokeWeight = 2;
+        //   circulos[ indice ].getIcon().strokeWeight = 2;
 
-          circulos[ indice ].setIcon( circulos[ indice ].getIcon() );
+        //   circulos[ indice ].setIcon( circulos[ indice ].getIcon() );
 
-        }
+        // }
 
       }
 
     },
 
-    centralizar : function ( index ) {
+    centralizar : function ( id ) {
 
-      index = index || vis.atual.local;
+      id = id || vis.atual.local;
 
-      if ( index != 'todos' ) {
+      if ( id != 'todos' ) {
 
-        position = vis.mapa.circulos.lista[ index ].position;
+        // position = vis.mapa.circulos.lista[ index ].position; substituir por um loop que busca o círculo com id igual a id
         zoom = 9;
 
       } else {
@@ -708,9 +715,9 @@ var vis = {
 
         if ( vis.atual.local != 'todos' ) { // destacar linha do municipio atual
 
-          indice = vis.atual.local;
+          id = vis.atual.local;
 
-          ibge = $( '#linhas g[data-indice="' + indice + '"]' ).attr( 'id' ).replace( 'municipio-', '' );
+          ibge = $( '#linhas g[data-id="' + id + '"]' ).attr( 'id' ).replace( 'municipio-', '' );
 
           linha = {
 
@@ -825,9 +832,21 @@ var vis = {
 
           }
 
-          municipio = vis.dados.municipios[ local ];
+          municipios = vis.dados.municipios;
 
-          semanas = unicos( municipio.casos );
+          for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+
+            municipio = municipios[ i ];
+
+            if ( municipio.id == id ) {
+
+              semanas = unicos( municipio.casos );
+
+            }
+
+            break
+
+          }
 
         }
 
@@ -937,16 +956,29 @@ var vis = {
 
         },
 
-        atualizar : function( local ) {
+        atualizar : function( id ) {
 
-          if ( local == 'todos' ) {
+          if ( id == 'todos' ) {
 
             conteudo = 'Brasil';
 
           } else {
 
-            municipio = vis.dados.municipios[ local ];
-            conteudo = municipio.nome;
+            municipios = vis.dados.municipios;
+
+            for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+
+              municipio = municipios[ i ];
+
+              if ( municipio.id == id ) {
+
+                conteudo = municipio.nome;
+
+                break
+
+              }
+
+            }
 
           }
 
@@ -969,16 +1001,27 @@ var vis = {
 
         },
 
-        atualizar : function( local ) {
+        atualizar : function( id ) {
 
-          if ( local == 'todos' ) {
+          if ( id == 'todos' ) {
 
             conteudo = '–';
 
           } else {
 
-            municipio = vis.dados.municipios[ local ];
-            conteudo = vis.obter.UF( municipio.id, 'nome' )
+            municipios = vis.dados.municipios;
+
+            for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+
+              municipio = municipios[ i ];
+
+              if ( municipio.id == id ) {
+
+                conteudo = vis.obter.UF( id, 'nome' );
+
+              }
+
+            }
 
           }
 
@@ -1059,7 +1102,7 @@ var vis = {
 
         },
 
-        atualizar : function( local ) {
+        atualizar : function( id ) {
 
           sem = vis.atual.semana();
 
@@ -1067,7 +1110,7 @@ var vis = {
           
           item = ' [data-item="' + this.elemento + '"]';
 
-          if ( local == 'todos' ) {
+          if ( id == 'todos' ) {
 
             totais = vis.dados.totais;
 
@@ -1095,23 +1138,37 @@ var vis = {
 
           } else {
 
-            municipio = vis.dados.municipios[ local ];
+            // municipio = vis.dados.municipios[ local ];
 
-            for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) {
+            municipios = vis.dados.municipios;
 
-              caso = municipio.casos[ i ];
+            for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
 
-              if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
+              municipio = municipios[ i ];
 
-                $( ficha + item ).find( 'li' ).each( function() {
+              if ( municipio.id == id ) {
 
-                  tipo = $( this ).data( 'tipo' );
+                for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) {
 
-                  conteudo = caso[ tipo ] || 0;
+                  caso = municipio.casos[ i ];
 
-                  $( this ).find( 'span' ).text( conteudo );
+                  if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
 
-                });
+                    $( ficha + item ).find( 'li' ).each( function() {
+
+                      tipo = $( this ).data( 'tipo' );
+
+                      conteudo = caso[ tipo ] || 0;
+
+                      $( this ).find( 'span' ).text( conteudo );
+
+                    });
+
+                    break
+
+                  }
+
+                }
 
                 break
 
@@ -1309,9 +1366,9 @@ var vis = {
 
           seletor = vis.filtros.municipio.elemento;
 
-          index = $( '.' +  seletor + ' option:selected' ).val();
+          id = $( '.' +  seletor + ' option:selected' ).val();
 
-          vis.atual.local = index;
+          vis.atual.local = id;
 
           // vis.mapa.centralizar();
 
@@ -1643,7 +1700,7 @@ var vis = {
               UF = vis.obter.UF( municipio.id, 'sigla' );
 
               opcao = document.createElement( 'option' );
-              opcao.value = i;
+              opcao.value = municipio.id;
               opcao.text = municipio.nome + ', ' + UF;
 
               seletor.appendChild( opcao );
