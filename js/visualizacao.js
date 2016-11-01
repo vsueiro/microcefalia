@@ -747,7 +747,10 @@ var vis = {
           linha.atual.attr( 'stroke', '#000' );
           linha.atual.attr( 'opacity', 1 );
 
-          $( '#z-index' ).attr( 'xlink:href', '#municipio-' + id );
+          use = document.getElementById( 'z-index' );
+          use.href.baseVal = '#municipio-' + id;
+
+          // $( '#z-index' ).attr( 'xlink:href', '#municipio-' + id );
 
         }
 
