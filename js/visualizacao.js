@@ -102,6 +102,19 @@ var vis = {
 
     municipio : function( id ) {
 
+      municipios = vis.dados.municipios;
+
+      for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+
+        municipio = municipios[ i ];
+
+        if ( municipio.id == id ) {
+
+          return municipio
+
+        }
+
+      }
 
     },
 
@@ -835,21 +848,7 @@ var vis = {
 
           }
 
-          municipios = vis.dados.municipios;
-
-          for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
-
-            municipio = municipios[ i ];
-
-            if ( municipio.id == id ) {
-
-              semanas = unicos( municipio.casos );
-
-              break
-
-            }
-
-          }
+          semanas = unicos( vis.obter.municipio( id ).casos ); 
 
         }
 
@@ -967,21 +966,7 @@ var vis = {
 
           } else {
 
-            municipios = vis.dados.municipios;
-
-            for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
-
-              municipio = municipios[ i ];
-
-              if ( municipio.id == id ) {
-
-                conteudo = municipio.nome;
-
-                break
-
-              }
-
-            }
+            conteudo = vis.obter.municipio( id ).nome;
 
           }
 
@@ -1012,19 +997,7 @@ var vis = {
 
           } else {
 
-            municipios = vis.dados.municipios;
-
-            for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
-
-              municipio = municipios[ i ];
-
-              if ( municipio.id == id ) {
-
-                conteudo = vis.obter.UF( id, 'nome' );
-
-              }
-
-            }
+            conteudo = vis.obter.UF( id, 'nome' );
 
           }
 
@@ -1141,37 +1114,23 @@ var vis = {
 
           } else {
 
-            // municipio = vis.dados.municipios[ local ];
+            municipio = vis.obter.municipio( id );
 
-            municipios = vis.dados.municipios;
+            for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) {
 
-            for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+              caso = municipio.casos[ i ];
 
-              municipio = municipios[ i ];
+              if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
 
-              if ( municipio.id == id ) {
+                $( ficha + item ).find( 'li' ).each( function() {
 
-                for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) {
+                  tipo = $( this ).data( 'tipo' );
 
-                  caso = municipio.casos[ i ];
+                  conteudo = caso[ tipo ] || 0;
 
-                  if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
+                  $( this ).find( 'span' ).text( conteudo );
 
-                    $( ficha + item ).find( 'li' ).each( function() {
-
-                      tipo = $( this ).data( 'tipo' );
-
-                      conteudo = caso[ tipo ] || 0;
-
-                      $( this ).find( 'span' ).text( conteudo );
-
-                    });
-
-                    break
-
-                  }
-
-                }
+                });
 
                 break
 
@@ -1366,10 +1325,6 @@ var vis = {
         });
 
         $( document ).on( 'change', '.municipios', function() {
-
-          // seletor = vis.filtros.municipio.elemento;
-
-          // id = $( '.' +  seletor + ' option:selected' ).val();
 
           vis.atual.local = this.value;
 
