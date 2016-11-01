@@ -174,7 +174,7 @@ section.classificacao {
   width: 68%;
 }
 
-/* temporário, para ficar remover itens não funcionais */
+/* temporário, para ficar remover itens não funcionais
 
 .filtros input[type="search"] {
   display: none;
@@ -185,10 +185,6 @@ section.classificacao {
 .fichas [data-item="local"],
 .fichas [data-item="data"] {
   display: none;
-}
-
-.grafico#acumulado {
-  /*display: none;*/
 }
 
 .fichas ul,
@@ -241,3 +237,5 @@ section.fichas {
 .filtros label {
   cursor: pointer;
 }
+
+ */

@@ -769,7 +769,7 @@ var vis = {
       },
 
       criar: function() {
-        
+
         ol = document.createElement( 'ol' );
         ol.className = this.elemento;
 
@@ -967,7 +967,7 @@ var vis = {
 
   fichas : {
 
-    elemento : '.fichas',
+    elemento : 'fichas',
 
     ativo : false,
 
@@ -995,10 +995,19 @@ var vis = {
 
           }
 
-          ficha = vis.fichas.elemento;
-          item = ' [data-item="' + this.elemento + '"]';
+          elementos = document.getElementsByClassName( vis.fichas.elemento );
 
-          $( ficha + item ).find( 'span' ).text( conteudo );
+          for ( var i = 0; i < elementos.length; i++ ) {
+
+            elemento = elementos[ i ];
+  
+            item = elemento.querySelectorAll( '[data-item="' + this.elemento + '"]' )[ 0 ];            
+
+            span = item.getElementsByTagName( 'span' )[ 0 ];
+
+            span.innerHTML = conteudo;
+
+          }
 
         }
 
@@ -1026,10 +1035,19 @@ var vis = {
 
           }
 
-          ficha = vis.fichas.elemento;
-          item = ' [data-item="' + this.elemento + '"]';
+          elementos = document.getElementsByClassName( vis.fichas.elemento );
 
-          $( ficha + item ).find( 'span' ).text( conteudo );
+          for ( var i = 0; i < elementos.length; i++ ) {
+
+            elemento = elementos[ i ];
+  
+            item = elemento.querySelectorAll( '[data-item="' + this.elemento + '"]' )[ 0 ];            
+
+            span = item.getElementsByTagName( 'span' )[ 0 ];
+
+            span.innerHTML = conteudo;
+
+          }
 
         }
 
@@ -1049,10 +1067,6 @@ var vis = {
 
           sem = vis.atual.semana();
 
-          ficha = vis.fichas.elemento;
-
-          item = ' [data-item="' + this.elemento + '"]';
-
           for ( var i = 0, leni = vis.dados.semanas.length; i < leni; i++ ) {
 
             semana = vis.dados.semanas[ i ];
@@ -1061,7 +1075,19 @@ var vis = {
 
               conteudo = vis.filtros.semana.quando( semana.fim );
 
-              $( ficha + item ).find( 'span' ).text( conteudo );
+              elementos = document.getElementsByClassName( vis.fichas.elemento );
+
+              for ( var i = 0; i < elementos.length; i++ ) {
+
+                elemento = elementos[ i ];
+      
+                item = elemento.querySelectorAll( '[data-item="' + this.elemento + '"]' )[ 0 ];            
+
+                span = item.getElementsByTagName( 'span' )[ 0 ];
+
+                span.innerHTML = conteudo;
+
+              }
 
               break
 
@@ -1107,9 +1133,9 @@ var vis = {
 
           sem = vis.atual.semana();
 
-          ficha = vis.fichas.elemento;
+          // ficha = vis.fichas.elemento;
           
-          item = ' [data-item="' + this.elemento + '"]';
+          // item = ' [data-item="' + this.elemento + '"]';
 
           if ( id == 'todos' ) {
 
@@ -1121,15 +1147,33 @@ var vis = {
 
               if ( total.ano == sem.ano && total.sem == sem.numero ) {
 
-                $( ficha + item ).find( 'li' ).each( function() {
+                elementos = document.getElementsByClassName( vis.fichas.elemento );
 
-                  tipo = $( this ).data( 'tipo' );
+                for ( var j = 0; j < elementos.length; j++ ) {
 
-                  conteudo = total.casos.acumulados[ tipo ] || 0;
+                  elemento = elementos[ j ];
+          
+                  item = elemento.querySelectorAll( '[data-item="' + this.elemento + '"]' )[ 0 ];            
 
-                  $( this ).find( 'span' ).text( conteudo );
+                  console.log( item );
 
-                });
+                  lis = item.getElementsByTagName( 'li' );
+
+                  for ( var k = 0; k < lis.length; k++ ) {
+
+                    li = lis[ k ];
+
+                    tipo = li.dataset.tipo;
+
+                    conteudo = total.casos.acumulados[ tipo ] || 0;
+
+                    span = li.getElementsByTagName( 'span' )[ 0 ];
+
+                    span.innerHTML = conteudo;
+
+                  }
+
+                }
 
                 break
 
@@ -1147,15 +1191,31 @@ var vis = {
 
               if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
 
-                $( ficha + item ).find( 'li' ).each( function() {
+                elementos = document.getElementsByClassName( vis.fichas.elemento );
 
-                  tipo = $( this ).data( 'tipo' );
+                for ( var j = 0; j < elementos.length; j++ ) {
 
-                  conteudo = caso[ tipo ] || 0;
+                  elemento = elementos[ j ];
+        
+                  item = elemento.querySelectorAll( '[data-item="' + this.elemento + '"]' )[ 0 ];            
 
-                  $( this ).find( 'span' ).text( conteudo );
+                  lis = item.getElementsByTagName( 'li' );
 
-                });
+                  for ( var k = 0; k < lis.length; k++ ) {
+
+                    li = lis[ k ];
+
+                    tipo = li.dataset.tipo;
+
+                    conteudo = caso[ tipo ] || 0;
+
+                    span = li.getElementsByTagName( 'span' )[ 0 ];
+
+                    span.innerHTML = conteudo;
+
+                  }
+
+                }
 
                 break
 
@@ -1242,7 +1302,7 @@ var vis = {
 
                   }
 
-                  break;
+                  break
 
                 }
                 
@@ -1286,32 +1346,40 @@ var vis = {
 
       this.totais();
 
-      ul = document.createElement( 'ul' );
+      elementos = document.getElementsByClassName( this.elemento );
 
-      for ( nome in this.items ) {
+      for ( var i = 0; i < elementos.length; i++ ) {
 
-        conteudo = this.items[ nome ].criar( local );
+        elemento = elementos[ i ];
 
-        li = document.createElement( 'li' );
-        li.dataset.item = this.items[ nome ].elemento;
+        ul = document.createElement( 'ul' );
 
-        if ( typeof conteudo === 'object' ) {
+        for ( nome in this.items ) {
 
-          li.appendChild( conteudo );
-            
-        } else {
+          conteudo = this.items[ nome ].criar( local );
 
-          li.innerHTML = conteudo;
+          li = document.createElement( 'li' );
+          li.dataset.item = this.items[ nome ].elemento;
+
+          if ( typeof conteudo === 'object' ) {
+
+            li.appendChild( conteudo );
+              
+          } else {
+
+            li.innerHTML = conteudo;
+
+          }
+          
+          ul.appendChild( li );
 
         }
-        
-        ul.appendChild( li );
+
+        elemento.appendChild( ul );
+
+        this.atualizar( local )
 
       }
-
-      $( this.elemento ).append( ul );
-
-      this.atualizar( local )
 
     },
 
