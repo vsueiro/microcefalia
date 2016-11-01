@@ -24,7 +24,7 @@
       <section class="classificacao"></section>
 
       <div class="grafico mapa"></div>
-
+      
       <section class="grafico" id="acumulado"></section>
 
     </article>
