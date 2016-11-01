@@ -174,7 +174,7 @@ section.classificacao {
   width: 68%;
 }
 
-/* temporário, para ficar remover itens não funcionais
+/* temporário, para ficar remover itens não funcionais */
 
 .filtros input[type="search"] {
   display: none;
@@ -237,5 +237,3 @@ section.fichas {
 .filtros label {
   cursor: pointer;
 }
-
- */

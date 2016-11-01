@@ -280,6 +280,8 @@ var vis = {
 
   atual : {
 
+    UF : 'todos',
+
     local : 'todos',
 
     semana : function() {
@@ -336,7 +338,8 @@ var vis = {
  
         normal : '#333',
         destaque : '#222',
-        selecionado : '#000'
+        selecionado : '#000',
+        obito: '#41d893'
 
       },
 
@@ -361,7 +364,7 @@ var vis = {
               path: google.maps.SymbolPath.CIRCLE,
               scale: 0,
               fillColor: vis.mapa.circulos.cor.normal,
-              fillOpacity: 0.33,
+              fillOpacity: 0.5,
               strokeColor: vis.mapa.circulos.cor.normal,
               strokeWeight: 0
 
@@ -481,7 +484,7 @@ var vis = {
 
               consta = true;
 
-              break;
+              break
 
             }
 
@@ -495,7 +498,31 @@ var vis = {
 
           }
 
-          if ( id != 'todos' && id == circulo.id ) {
+          if ( vis.atual.UF != 'todos' ) {
+
+            if ( vis.atual.UF == vis.obter.UF( circulo.id, 'id' ) && vis.atual.local == 'todos' ) {
+
+              circulo.getIcon().fillOpacity = .9;
+
+              circulo.setIcon( circulo.getIcon() );
+
+            } else {
+
+              circulo.getIcon().fillOpacity = .1;
+
+              circulo.setIcon( circulo.getIcon() );
+
+            }
+
+          } else {
+
+            circulo.getIcon().fillOpacity = .5;
+
+            circulo.setIcon( circulo.getIcon() );
+
+          }
+
+          if ( vis.atual.local == circulo.id ) {
 
             circulo.getIcon().strokeWeight = 2;
 
@@ -1405,6 +1432,22 @@ var vis = {
 
       eventos : function() {
 
+
+
+        // select_element.onchange = function() {
+        //   var elem = (typeof this.selectedIndex === "undefined" ? window.event.srcElement : this);
+        //   var value = elem.value || elem.options[elem.selectedIndex].value;
+        //   alert(value);
+        // }​
+
+        $( document ).on( 'change', '.UFs', function() {
+
+          vis.atual.UF = this.value;
+
+          vis.atualizar();
+
+        });
+
         $( document ).on( 'change', '.semanas', function() {
 
           index = $( '.semanas option:selected' ).index();
@@ -1664,7 +1707,7 @@ var vis = {
           opcao = document.createElement( 'option' );
           opcao.selected = true;
           opcao.value = 'todos';
-          opcao.text = 'Todas as UF';
+          opcao.text = 'Todo o Brasil';
 
           seletor.appendChild( opcao );
 
