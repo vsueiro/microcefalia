@@ -654,7 +654,7 @@ var vis = {
           municipio = municipios[ i ];
 
           grupo = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
-          grupo.setAttribute( 'data-indice', i );
+          // grupo.setAttribute( 'data-indice', i );
           grupo.setAttribute( 'id', 'municipio-' + municipio.id );
 
           for ( var j = 0; j < ( municipio.casos.length - 1 ); j++ ) {
@@ -717,12 +717,10 @@ var vis = {
 
           id = vis.atual.local;
 
-          ibge = $( '#linhas g[data-id="' + id + '"]' ).attr( 'id' ).replace( 'municipio-', '' );
-
           linha = {
 
             todas : $( '#linhas g line' ),
-            atual : $( '#linhas g[data-indice="' + indice + '"] line' )
+            atual : $( '#linhas #municipio-' + id + ' line' )
 
           }
 
@@ -731,7 +729,7 @@ var vis = {
           linha.atual.attr( 'stroke', '#000' );
           linha.atual.attr( 'opacity', 1 );
 
-          $( '#z-index' ).attr( 'xlink:href', '#municipio-' + ibge );
+          $( '#z-index' ).attr( 'xlink:href', '#municipio-' + id );
 
         }
 
@@ -791,11 +789,11 @@ var vis = {
 
       },
 
-      atualizar : function( local ) {
+      atualizar : function( id ) {
 
         tipo = vis.atual.categoria;
 
-        if ( local == 'todos' ) {
+        if ( id == 'todos' ) {
 
           semanas = vis.dados.totais;
 
@@ -842,9 +840,9 @@ var vis = {
 
               semanas = unicos( municipio.casos );
 
-            }
+              break
 
-            break
+            }
 
           }
 
@@ -874,7 +872,7 @@ var vis = {
 
             if ( semana.sem == sem && semana.ano == ano ) {
 
-              if ( local == 'todos' ) {
+              if ( id == 'todos' ) {
 
                 casos = semana.casos.unicos[ tipo ] || 0;
 
