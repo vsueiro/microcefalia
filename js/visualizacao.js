@@ -445,7 +445,7 @@ var vis = {
         vis.fichas.criar();
         vis.classificacao.criar();
         vis.mapa.circulos.atualizar();
-        vis.graficos.linhas.criar();
+        // vis.graficos.linhas.criar();
 
         vis.atual.estado.iniciado = true;
         
@@ -769,7 +769,7 @@ var vis = {
       },
 
       criar: function() {
-
+        
         ol = document.createElement( 'ol' );
         ol.className = this.elemento;
 
@@ -855,74 +855,92 @@ var vis = {
 
         }
 
-        $( '.' + this.elemento ).find( 'li' ).each( function() {
+        elementos = document.getElementsByClassName( this.elemento );
 
-          li  = $( this );
-          sem = li.data( 'sem' );
-          ano = li.data( 'ano' );
-          consta = false;
-          largura = vis.graficos.evolucao.escala.x;
+        for ( var i = 0; i < elementos.length; i++ ) {
 
-          if ( sem <= vis.atual.semana().numero && ano <= vis.atual.semana().ano ) {
+          elemento = elementos[ i ];
 
-            li.addClass( 'ativo' );
+          lis = elemento.getElementsByTagName( 'li' );
 
-          } else {
+          for ( var j = 0; j < lis.length; j++ ) {
 
-            li.removeClass( 'ativo' );
+            li = lis[ j ];
 
-          }
+            sem = li.dataset.sem;
+            ano = li.dataset.ano;
+            consta = false;
+            largura = vis.graficos.evolucao.escala.x;
 
-          for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
+            if ( sem <= vis.atual.semana().numero && ano <= vis.atual.semana().ano ) {
 
-            semana = semanas[ i ];
+              li.classList.add( 'ativo' );
 
-            if ( semana.sem == sem && semana.ano == ano ) {
+            } else {
 
-              if ( id == 'todos' ) {
+              li.classList.remove( 'ativo' );
 
-                casos = semana.casos.unicos[ tipo ] || 0;
+            }
 
-              } else {
+            for ( var k = 0, lenk = semanas.length; k < lenk; k++ ) {
 
-                casos = semana[ tipo ] || 0;
+              semana = semanas[ k ];
+
+              if ( semana.sem == sem && semana.ano == ano ) {
+
+                if ( id == 'todos' ) {
+
+                  quantidade = semana.casos.unicos[ tipo ] || 0;
+
+                } else {
+
+                  quantidade = semana[ tipo ] || 0;
+
+                }
+
+                altura = quantidade;
+
+                if ( quantidade < 0 ) {
+
+                  li.classList.add( 'negativo' );
+
+                  altura = Math.abs( quantidade );
+
+                } else {
+
+                  li.classList.remove( 'negativo' );
+
+                }
+
+                casos = li.getElementsByClassName( 'casos' )[ 0 ];
+                casos.innerHTML = quantidade;
+
+                if ( sem == 6 && ano == 2016 ) { // faz quadrado do acumulado
+
+                  lado = Math.sqrt( largura * altura );
+
+                  li.style.width = lado + 'px';
+
+                  li.classList.add( 'quadrado' );
+
+                } else {
+
+                  altura += 'px';
+                  largura += 'px';
+
+                  barra = li.getElementsByClassName( 'barra' )[ 0 ];
+
+                  li.style.width = largura;
+
+                  barra.style.height = altura;
+
+                }
+                 
+                consta = true;
+
+                break
 
               }
-
-              altura = casos;
-
-              if ( casos < 0 ) {
-
-                li.addClass( 'negativo' );
-
-                altura = Math.abs( casos );
-
-              } else {
-
-                li.removeClass( 'negativo' );
-
-              }
-
-              li.find( '.casos' ).text( casos );
-
-              if ( sem == 6 && ano == 2016 ) { // faz quadrado do acumulado
-
-                lado = Math.sqrt( largura * altura );
-
-                li.css( 'width', lado ).addClass( 'quadrado' );
-
-              } else {
-
-                altura = altura + 'px';
-
-                li.css( 'width', largura );
-                li.find( '.barra' ).css( 'height', altura );
-
-              }
-               
-              consta = true;
-
-              break
 
             }
 
@@ -930,12 +948,16 @@ var vis = {
 
           if ( !consta ) {
 
-            li.find( '.casos' ).text( '' );
-            li.find( '.barra' ).css( 'height', '0' );
+            casos = li.getElementsByClassName( 'casos' )[ 0 ];
+            barra = li.getElementsByClassName( 'barra' )[ 0 ];
+
+            casos.innerHTML = '';
+            barra.style.height = 0;
+            // li.find( '.barra' ).css( 'height', '0' );
 
           }
 
-        });
+        }
 
       }
 
@@ -1918,7 +1940,7 @@ var vis = {
     vis.classificacao.atualizar();
     vis.fichas.atualizar();
     vis.mapa.circulos.atualizar();
-    vis.graficos.linhas.atualizar();
+    // vis.graficos.linhas.atualizar();
 
   }
 

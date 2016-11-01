@@ -30,6 +30,7 @@
     </article>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/classie/1.0.1/classie.min.js"></script>
     <script src="libs/dragdealer.js"></script>
     <script src="js/visualizacao.js"></script>
 
