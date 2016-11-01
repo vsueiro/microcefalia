@@ -272,7 +272,6 @@ var vis = {
 
       } else {
 
-        // console.log( "caller is " + arguments.callee.caller.toString() );
         semana = vis.dados.semanas[ 0 ].numero + '/' + vis.dados.semanas[ 0 ].ano; // padrão: semana mais recente
         
       }
@@ -1006,8 +1005,6 @@ var vis = {
 
           sem = vis.atual.semana();
 
-          console.log( sem );
-
           ficha = vis.fichas.elemento;
 
           item = ' [data-item="' + this.elemento + '"]';
@@ -1022,7 +1019,7 @@ var vis = {
 
               $( ficha + item ).find( 'span' ).text( conteudo );
 
-              break;
+              break
 
             }
 
@@ -1508,9 +1505,9 @@ var vis = {
 
                 if ( vis.atual.estado.iniciado ) {
 
-                  vis.fichas.atualizar();
-
                   vis.classificacao.atualizar();
+
+                  vis.fichas.atualizar();
 
                 }
 
@@ -1780,6 +1777,8 @@ var vis = {
 
     atualizar : function () {
 
+      vis.dados.municipios.sort( vis.dados.ordenar.desc );
+
       elementos = document.getElementsByClassName( this.elemento );
 
       posicoes = [];
@@ -1833,7 +1832,7 @@ var vis = {
 
       }
 
-      console.log(  posicoes);
+      console.log( posicoes );
 
     }
 
@@ -1898,9 +1897,8 @@ var vis = {
 
   atualizar : function() {
 
-    vis.dados.municipios.sort( vis.dados.ordenar.desc );
-    vis.fichas.atualizar();
     vis.classificacao.atualizar();
+    vis.fichas.atualizar();
     vis.mapa.circulos.atualizar();
     vis.graficos.linhas.atualizar();
 
