@@ -384,13 +384,15 @@ var vis = {
 
             }
 
-            vis.mapa.circulos.atualizar();
+            // vis.mapa.circulos.atualizar();
 
-            vis.fichas.atualizar();
+            // vis.fichas.atualizar();
 
-            vis.graficos.linhas.atualizar();
+            // vis.graficos.linhas.atualizar();
 
-            vis.filtros.municipio.seletor.atualizar();
+            // vis.filtros.municipio.seletor.atualizar();
+
+            vis.atualizar();
             
           });
 
@@ -787,7 +789,7 @@ var vis = {
 
               grupo = grupos[ k ];
 
-              if ( atual == grupo.id ) { // se for municipio selecionado
+              if ( vis.atual.local == 'todos' ) {
 
                 linhas = grupo.getElementsByTagName( 'line' );
 
@@ -796,20 +798,37 @@ var vis = {
                   linha = linhas[ l ];
 
                   linha.setAttribute( 'stroke', '#000' );
-                  linha.setAttribute( 'opacity', 1 );
+                  linha.setAttribute( 'opacity', .1 );
 
                 }
 
               } else {
 
-                linhas = grupo.getElementsByTagName( 'line' );
+                if ( atual == grupo.id ) { // se for municipio selecionado
 
-                for ( var l = 0, lenl = linhas.length; l < lenl; l++ ) {
+                  linhas = grupo.getElementsByTagName( 'line' );
 
-                  linha = linhas[ l ];
+                  for ( var l = 0, lenl = linhas.length; l < lenl; l++ ) {
 
-                  linha.setAttribute( 'stroke', '#ccc' );
-                  linha.setAttribute( 'opacity', 0.1 );
+                    linha = linhas[ l ];
+
+                    linha.setAttribute( 'stroke', '#000' );
+                    linha.setAttribute( 'opacity', 1 );
+
+                  }
+
+                } else {
+
+                  linhas = grupo.getElementsByTagName( 'line' );
+
+                  for ( var l = 0, lenl = linhas.length; l < lenl; l++ ) {
+
+                    linha = linhas[ l ];
+
+                    linha.setAttribute( 'stroke', '#ccc' );
+                    linha.setAttribute( 'opacity', 0.1 );
+
+                  }
 
                 }
 
@@ -2067,9 +2086,22 @@ var vis = {
 
   atualizar : function() {
 
+    // vis.classificacao.atualizar();
+    // vis.fichas.atualizar();
+    // vis.mapa.circulos.atualizar();
+
     vis.classificacao.atualizar();
+
     vis.fichas.atualizar();
+
     vis.mapa.circulos.atualizar();
+
+    vis.graficos.linhas.atualizar();
+
+    vis.filtros.municipio.seletor.atualizar();
+
+    // vis.filtros.atualizar();
+
     // vis.graficos.linhas.atualizar();
 
   }
