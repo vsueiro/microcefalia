@@ -82,6 +82,24 @@ var vis = {
 
     },
 
+    semana : function() {
+
+      classe = vis.filtros.semana.elemento;
+
+      elementos = document.getElementsByClassName( classe );
+
+      for ( var i = 0; i < elementos.length; i++ ) {
+
+        elemento = elementos[ i ];
+        
+        return elemento.value
+
+      }
+
+      return undefined
+
+    },
+
     acumulados : function( municipio, tipo ) {
 
       i = municipio.casos.length;
@@ -248,9 +266,9 @@ var vis = {
 
     semana : function() {
 
-      if ( $( vis.filtros.semana.elemento ).val() ) {
+      if ( vis.obter.semana() ) {
 
-        semana = $( vis.filtros.semana.elemento ).val();
+        semana = vis.obter.semana();
 
       } else {
 
@@ -1318,7 +1336,7 @@ var vis = {
 
     semana : {
 
-      elemento : '.semanas',
+      elemento : 'semanas',
 
       meses : [
 
@@ -1351,7 +1369,7 @@ var vis = {
 
       seletor : {
 
-        elemento : '.semanas',
+        // elemento : '.semanas',
 
         criar : function( el ) { 
 
@@ -1387,7 +1405,7 @@ var vis = {
 
             grupos = {};
 
-            vis.dados.semanas.forEach( function( semana ) {
+            vis.dados.semanas.forEach( function( semana, i ) {
 
               ano = semana.ano;
               inicio = vis.filtros.semana.quando( semana.inicio );
@@ -1402,8 +1420,9 @@ var vis = {
 
               opcao = document.createElement( 'option' );
               opcao.value = semana.numero + '/' + ano;
-              opcao.dataset.unicos = unicos;
+              opcao.selected = i == 0 ? true : false;
               opcao.text = acumulados;
+              opcao.dataset.unicos = unicos;
 
               if ( ano in grupos ) {
 
@@ -1433,8 +1452,6 @@ var vis = {
             });
 
             elemento.appendChild( seletor );
-
-            $( vis.filtros.semana.elemento ).val( $( vis.filtros.semana.elemento + ' option:first' ).val() );
 
             vis.filtros.semana.deslizador.criar( el );
 
@@ -1477,9 +1494,17 @@ var vis = {
 
                 i = parseInt( this.getStep()[ 0 ] );
 
-                seletor = $( vis.filtros.semana.elemento );
+                classe = vis.filtros.semana.elemento;
 
-                seletor.val( $( vis.filtros.semana.elemento + ' option' ).eq( vis.dados.semanas.length - i ).val() );
+                seletores = document.getElementsByClassName( classe );
+
+                for ( var j = 0; j < seletores.length; j++ ) {
+
+                  seletor = seletores[ j ];
+
+                  seletor.selectedIndex = vis.dados.semanas.length - i;
+
+                }
 
                 if ( vis.atual.estado.iniciado ) {
 
@@ -1489,7 +1514,7 @@ var vis = {
 
                 }
 
-                $( '#' + this.wrapper.id ).addClass( 'loaded' ).find( '.handle' ).text( seletor.val() );
+                $( '#' + this.wrapper.id ).addClass( 'loaded' ).find( '.handle' ).text( vis.obter.semana() );
 
               },
               callback: function( x, y ) {
@@ -1497,8 +1522,6 @@ var vis = {
                 vis.mapa.circulos.atualizar();
 
                 vis.fichas.atualizar();
-
-                $( '#' + this.wrapper.id ).find( '.handle' ).text( seletor.val() );
 
               }
 
