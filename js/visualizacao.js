@@ -747,7 +747,6 @@ var vis = {
             if ( i == ( leni - 1 ) ) {
 
               use = document.createElementNS( 'http://www.w3.org/2000/svg', 'use' );
-              use.setAttribute( 'id', 'z-index-' + h );
               use.setAttributeNS( 'http://www.w3.org/1999/xlink', 'xlink:href', '#municipio-' + municipio.id + '-' + h );
 
             }
@@ -773,6 +772,11 @@ var vis = {
 
           involucros = elemento.getElementsByClassName( 'linhas' );
 
+          atual = 'municipio-' + vis.atual.local + '-' + i;
+
+          use = document.getElementsByTagName( 'use' )[ 0 ];
+          use.href.baseVal = '#' + atual ;
+
           for ( var j = 0, lenj = involucros.length; j < lenj; j++ ) {
 
             involucro = involucros[ j ];
@@ -783,7 +787,7 @@ var vis = {
 
               grupo = grupos[ k ];
 
-              if ( 'municipio-' + vis.atual.local + '-' + i == grupo.id ) { // se for municipio selecionado
+              if ( atual == grupo.id ) { // se for municipio selecionado
 
                 linhas = grupo.getElementsByTagName( 'line' );
 
