@@ -25,7 +25,7 @@
 
       <div class="grafico mapa"></div>
       
-      <section class="grafico" id="acumulado"></section>
+      <section class="grafico acumulado"></section>
 
     </article>
 
