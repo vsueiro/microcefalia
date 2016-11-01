@@ -1618,7 +1618,11 @@ var vis = {
 
                 }
 
-                $( '#' + this.wrapper.id ).addClass( 'loaded' ).find( '.handle' ).text( vis.obter.semana() );
+                pai = document.getElementById( this.wrapper.id );
+
+                pai.classList.add( 'loaded' );
+
+                pai.getElementsByClassName( 'handle' )[ 0 ].innerHTML = vis.obter.semana();
 
               },
               callback: function( x, y ) {
