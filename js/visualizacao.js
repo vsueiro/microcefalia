@@ -1428,60 +1428,6 @@ var vis = {
 
     elemento : 'filtros',
 
-    vincular : {
-
-      eventos : function() {
-
-
-
-        // select_element.onchange = function() {
-        //   var elem = (typeof this.selectedIndex === "undefined" ? window.event.srcElement : this);
-        //   var value = elem.value || elem.options[elem.selectedIndex].value;
-        //   alert(value);
-        // }​
-
-        $( document ).on( 'change', '.UFs', function() {
-
-          vis.atual.UF = this.value;
-
-          vis.atualizar();
-
-        });
-
-        $( document ).on( 'change', '.semanas', function() {
-
-          index = $( '.semanas option:selected' ).index();
-
-          step = vis.dados.semanas.length - index;
-
-          vis.filtros.semana.deslizador.objeto.setStep( step, 0 );
-
-          vis.atualizar();
-
-        });
-
-        $( document ).on( 'change', '.municipios', function() {
-
-          vis.atual.local = this.value;
-
-          // vis.mapa.centralizar();
-
-          vis.atualizar();
-
-        });
-
-        $( document ).on( 'change', 'input[name=categoria]', function() {
-
-          vis.atual.categoria = this.value;
-
-          vis.atualizar();
-
-        });
-
-      }
-
-    },
-
     semana : {
 
       elemento : 'semanas',
@@ -1600,6 +1546,16 @@ var vis = {
             });
 
             elemento.appendChild( seletor );
+
+            seletor.addEventListener( 'change', function() {
+
+              step = vis.dados.semanas.length - this.selectedIndex;
+
+              vis.filtros.semana.deslizador.objeto.setStep( step, 0 );
+
+              vis.atualizar();
+
+            });
 
             vis.filtros.semana.deslizador.criar( el );
 
@@ -1727,6 +1683,13 @@ var vis = {
 
           elemento.appendChild( seletor );
 
+          seletor.addEventListener( 'change', function() {
+
+            vis.atual.UF = this.value;
+            vis.atualizar();
+
+          });
+
         }
 
       },
@@ -1803,6 +1766,13 @@ var vis = {
 
             elemento.appendChild( seletor );
 
+            seletor.addEventListener( 'change', function() {
+
+              vis.atual.local = this.value;
+              vis.atualizar();
+
+            });
+
           }
 
         },
@@ -1855,6 +1825,13 @@ var vis = {
               seletor.checked = categoria.atual;
               
               rotulo.appendChild( seletor );
+
+              seletor.addEventListener( 'change', function() {
+
+                vis.atual.categoria = this.value;
+                vis.atualizar();
+
+              });
 
               elemento.appendChild( rotulo );
 
@@ -1990,8 +1967,6 @@ var vis = {
   },
 
   criar : function() {
-
-    vis.filtros.vincular.eventos();
 
     vis.dados.requisicoes = [];
 
