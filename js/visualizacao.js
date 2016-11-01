@@ -675,9 +675,9 @@ var vis = {
 
         elementos = document.getElementsByClassName( this.elemento );
 
-        for ( var i = 0; i < elementos.length; i++ ) {
+        for ( var h = 0; h < elementos.length; h++ ) {
 
-          elemento = elementos[ i ];
+          elemento = elementos[ h ];
 
           cat = cat || 'c';
 
@@ -688,7 +688,6 @@ var vis = {
 
           svg = document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' );
           svg.setAttribute( 'version', '1.1' );
-          // svg.setAttribute( 'id', 'grafico-linhas' );
           svg.setAttribute( 'x', '0' );
           svg.setAttribute( 'y', '0' );
           svg.setAttribute( 'width', ( ( this.semana.max - this.semana.min ) * this.escala.x ) + ( this.escala.x * 2 ) );
@@ -696,7 +695,7 @@ var vis = {
           svg.setAttributeNS( 'http://www.w3.org/2000/xmlns/', 'xmlns:xlink', 'http://www.w3.org/1999/xlink' ); // http://www.w3.org/2000/xmlns/
 
           linhas = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
-          linhas.setAttribute( 'id', 'linhas' );
+          linhas.classList.add( 'linhas' );
 
           municipios = vis.dados.municipios;
 
@@ -705,8 +704,8 @@ var vis = {
             municipio = municipios[ i ];
 
             grupo = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
-            // grupo.setAttribute( 'data-indice', i );
-            grupo.setAttribute( 'id', 'municipio-' + municipio.id );
+            grupo.setAttribute( 'id', 'municipio-' + municipio.id + '-' + h );
+            grupo.setAttribute( 'opacity', 1 );
 
             for ( var j = 0; j < ( municipio.casos.length - 1 ); j++ ) {
 
@@ -717,7 +716,7 @@ var vis = {
               if ( caso[ cat ] ) {
 
                 opacidade = ( 1 / this.categoria.max * caso[ cat ] );
-                // opacidade = 1;
+                opacidade = .1;
 
                 linha = document.createElementNS( 'http://www.w3.org/2000/svg', 'line' );
                 linha.setAttribute( 'fill', 'none' );
@@ -748,8 +747,8 @@ var vis = {
             if ( i == ( leni - 1 ) ) {
 
               use = document.createElementNS( 'http://www.w3.org/2000/svg', 'use' );
-              use.setAttribute( 'id', 'z-index' );
-              use.setAttributeNS( 'http://www.w3.org/1999/xlink', 'xlink:href', '#municipio-' + municipio.id );
+              use.setAttribute( 'id', 'z-index-' + h );
+              use.setAttributeNS( 'http://www.w3.org/1999/xlink', 'xlink:href', '#municipio-' + municipio.id + '-' + h );
 
             }
 
@@ -772,24 +771,47 @@ var vis = {
 
           elemento = elementos[ i ];
 
-          if ( vis.atual.local != 'todos' ) { // destacar linha do municipio atual
+          involucros = elemento.getElementsByClassName( 'linhas' );
 
-            id = vis.atual.local;
+          for ( var j = 0, lenj = involucros.length; j < lenj; j++ ) {
 
-            // linha = {
+            involucro = involucros[ j ];
 
-            //   todas : $( '#linhas g line' ),
-            //   atual : $( '#linhas #municipio-' + id + ' line' )
+            grupos = involucro.getElementsByTagName( 'g' );
 
-            // }
+            for ( var k = 0, lenk = grupos.length; k < lenk; k++ ) {
 
-            // linha.todas.attr( 'stroke', '#ccc' );
+              grupo = grupos[ k ];
 
-            // linha.atual.attr( 'stroke', '#000' );
-            // linha.atual.attr( 'opacity', 1 );
+              if ( 'municipio-' + vis.atual.local + '-' + i == grupo.id ) { // se for municipio selecionado
 
-            use = document.getElementById( 'z-index' );
-            use.href.baseVal = '#municipio-' + id;
+                linhas = grupo.getElementsByTagName( 'line' );
+
+                for ( var l = 0, lenl = linhas.length; l < lenl; l++ ) {
+
+                  linha = linhas[ l ];
+
+                  linha.setAttribute( 'stroke', '#000' );
+                  linha.setAttribute( 'opacity', 1 );
+
+                }
+
+              } else {
+
+                linhas = grupo.getElementsByTagName( 'line' );
+
+                for ( var l = 0, lenl = linhas.length; l < lenl; l++ ) {
+
+                  linha = linhas[ l ];
+
+                  linha.setAttribute( 'stroke', '#ccc' );
+                  linha.setAttribute( 'opacity', 0.1 );
+
+                }
+
+              }
+
+            }
 
           }
 
