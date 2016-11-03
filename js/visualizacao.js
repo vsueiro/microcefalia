@@ -854,7 +854,7 @@ var vis = {
 
       },
 
-      negativos : false,
+      negativo : false,
 
       tamanho : '',
 
