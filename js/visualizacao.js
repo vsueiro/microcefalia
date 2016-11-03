@@ -1259,8 +1259,6 @@ var vis = {
           
                   item = elemento.querySelectorAll( '[data-item="' + this.elemento + '"]' )[ 0 ];            
 
-                  console.log( item );
-
                   lis = item.getElementsByTagName( 'li' );
 
                   for ( var k = 0; k < lis.length; k++ ) {
@@ -1716,8 +1714,6 @@ var vis = {
 
                 vis.filtros.semana.deslizador.temporizador = setTimeout( function(){
 
-                  console.log( 'entrou no temporizador' );
-
                   if ( !vis.filtros.semana.deslizador.atualizou ) {
 
                     vis.mapa.circulos.atualizar();
@@ -1780,7 +1776,7 @@ var vis = {
           opcao = document.createElement( 'option' );
           opcao.selected = true;
           opcao.value = 'todos';
-          opcao.text = 'Todo o Brasil';
+          opcao.text = 'Todos os Estados';
 
           seletor.appendChild( opcao );
 
@@ -1896,7 +1892,19 @@ var vis = {
 
         atualizar : function() {
 
-          $( '.' + vis.filtros.municipio.elemento ).val( vis.atual.local );
+          classe = vis.filtros.municipio.elemento;
+
+          seletores = document.getElementsByClassName( classe );
+
+          for ( var i = 0; i < seletores.length; i++ ) {
+
+            seletor = seletores[ i ];
+
+            seletor.value = vis.atual.local;
+
+            console.log( 'atualizado filtro de municipio' );
+
+          }
 
         }
 
@@ -1983,101 +1991,142 @@ var vis = {
 
     elemento : 'classificacao',
 
-    itens : 5,
+    municipios : {
 
-    criar : function() {
+      elemento : 'municipios',
 
-      elementos = document.getElementsByClassName( this.elemento );
+      itens : 10,
 
-      for ( var i = 0; i < elementos.length; i++ ) {
+      criar : function() {
 
-        elemento = elementos[ i ];
-        
-        ol = document.createElement( 'ol' );
+        classe = vis.classificacao.elemento + ' ' + this.elemento;
 
-        for ( var j = 0; j < this.itens; j++ ) {
+        elementos = document.getElementsByClassName( classe );
 
-          classificacao = document.createElement( 'div' );
+        for ( var i = 0; i < elementos.length; i++ ) {
 
-          nome = document.createElement( 'div' );
+          elemento = elementos[ i ];
+          
+          ol = document.createElement( 'ol' );
 
-          casos = document.createElement( 'div' );
+          for ( var j = 0; j < this.itens; j++ ) {
 
-          li = document.createElement( 'li' );
-          li.appendChild( classificacao );
-          li.appendChild( nome );
-          li.appendChild( casos );
+            classificacao = document.createElement( 'div' );
 
-          ol.appendChild( li );
+            nome = document.createElement( 'div' );
+
+            casos = document.createElement( 'div' );
+
+            li = document.createElement( 'li' );
+            li.appendChild( classificacao );
+            li.appendChild( nome );
+            li.appendChild( casos );
+
+            ol.appendChild( li );
+
+          }
+
+          elemento.appendChild( ol );
 
         }
 
-        elemento.appendChild( ol );
+        this.atualizar();
+
+      },
+
+      atualizar : function() {
+
+        vis.dados.municipios.sort( vis.dados.ordenar.desc );
+
+        classe = vis.classificacao.elemento + ' ' + this.elemento;
+
+        elementos = document.getElementsByClassName( classe );
+
+        posicoes = [];
+
+        for ( var i = 0; i < elementos.length; i++ ) {
+
+          elemento = elementos[ i ];
+          
+          lis = elemento.getElementsByTagName( 'li' );
+
+          for ( var j = 0; j < this.itens; j++ ) {
+
+            li = lis[ j ];
+            municipio = vis.dados.municipios[ j ];
+            quantidade = vis.obter.acumulados( municipio, tipo ) || 0;
+            empate = false;
+
+            if ( j == 0 ) {
+            
+              posicao = 1;
+
+            } else if ( quantidade != posicoes[ j - 1 ].quantidade ) {
+
+              posicao = posicoes[ j - 1 ].posicao + 1;
+
+            } else {
+
+              posicao = posicoes[ j - 1 ].posicao;
+              empate = true;
+
+            }
+
+            posicoes.push({
+              
+              quantidade : quantidade,
+              posicao : posicao,
+
+            });
+
+            divs = li.getElementsByTagName( 'div' );
+
+            divs[ 0 ].className = empate ? 'empate' : '';
+            divs[ 0 ].innerText = posicao + 'º';
+            divs[ 1 ].innerText = municipio.nome;
+            divs[ 2 ].innerText = quantidade;
+
+            li.dataset.ibge = municipio.id;
+
+          }
+
+        }
+
+        console.log( posicoes );
 
       }
 
-      this.atualizar();
+    },
+
+    UFs : {
+
+      criar : function() {
+
+        console.log( 'cria classificao de UFs' );
+
+        this.atualizar();
+
+      },
+
+      atualizar : function() {
+
+        console.log( 'atualiza classificao de UFs' );
+
+      }
+
+    },
+
+    criar : function() {
+
+      this.municipios.criar();
+      this.UFs.criar();
 
     },
 
     atualizar : function () {
 
-      vis.dados.municipios.sort( vis.dados.ordenar.desc );
-
-      elementos = document.getElementsByClassName( this.elemento );
-
-      posicoes = [];
-
-      for ( var i = 0; i < elementos.length; i++ ) {
-
-        elemento = elementos[ i ];
-        
-        lis = elemento.getElementsByTagName( 'li' );
-
-        for ( var j = 0; j < this.itens; j++ ) {
-
-          li = lis[ j ];
-          municipio = vis.dados.municipios[ j ];
-          quantidade = vis.obter.acumulados( municipio, tipo ) || 0;
-          empate = false;
-
-          if ( j == 0 ) {
-          
-            posicao = 1;
-
-          } else if ( quantidade != posicoes[ j - 1 ].quantidade ) {
-
-            posicao = posicoes[ j - 1 ].posicao + 1;
-
-          } else {
-
-            posicao = posicoes[ j - 1 ].posicao;
-            empate = true;
-
-          }
-
-          posicoes.push({
-            
-            quantidade : quantidade,
-            posicao : posicao,
-
-          });
-
-          divs = li.getElementsByTagName( 'div' );
-
-          divs[ 0 ].className = empate ? 'empate' : '';
-          divs[ 0 ].innerText = posicao + 'º';
-          divs[ 1 ].innerText = municipio.nome;
-          divs[ 2 ].innerText = quantidade;
-
-          li.dataset.ibge = municipio.id;
-
-
-        }
-
-      }
-
-      console.log( posicoes );
+      this.municipios.atualizar();
+      this.UFs.atualizar();
 
     }
 

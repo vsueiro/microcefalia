@@ -21,7 +21,7 @@
 
       <nav class="navegacao"></nav>
 
-      <section class="classificacao"></section>
+      <section class="classificacao municipios"></section>
 
       <div class="grafico mapa"></div>
       
