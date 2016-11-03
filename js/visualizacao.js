@@ -142,44 +142,67 @@ var vis = {
 
     },
 
-    total : {
+    totais : function( local ) {
 
-      UF : function( UF ) {
+      if ( local == 'todos' ) {
 
-        soma = 0;
+        vis.dados.totais = [];
+    
+        totais = vis.dados.totais;
 
-        tipo = vis.atual.categoria;
+        semanas = vis.dados.semanas;
 
-        semana = vis.atual.semana();
+        for ( var i = 0, leni = semanas.length; i < leni; i++ ) { // soma números acumulados por semana
 
-        municipios = vis.dados.municipios;
+          semana = semanas[ i ];
 
-        for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+          totais[ i ] = {
 
-          municipio = municipios[ i ];
+            ano : semana.ano,
+            sem : semana.numero,
+            casos : {
 
-          if ( UF == vis.obter.UF( municipio.id, 'id' ) ) {
+              acumulados : {},
+              unicos : {}
 
-            // quantidade = vis.obter.acumulados( municipio, tipo ) || 0;
+            }
 
-            for ( var j = 0, lenj = municipio.casos.length; j < lenj; j++ ) { // pega dado da categoria na semana mais recente
+          };
 
-              caso = municipio.casos[ j ];
+          categorias = vis.dados.categorias;
 
-              quantidade = 0;
+          for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
 
-              if ( caso.ano == semana.ano && caso.sem == semana.numero ) {
+            categoria = categorias[ j ];
 
-                if ( tipo in caso ) {
+            if ( categoria.visivel ) {
 
-                  quantidade = caso[ tipo ];
+              totais[ i ].casos.acumulados[ categoria.sigla ] = 0; 
 
-                  soma += quantidade;
+              municipios = vis.dados.municipios;
 
-                  console.log( 'somou com ' + municipio.nome );
+              for ( var k = 0, lenk = municipios.length; k < lenk; k++ ) {
 
-                }
+                municipio = municipios[ k ];
+
+                for ( var l = 0, lenl = municipio.casos.length; l < lenl; l++ ) {
+
+                  caso = municipio.casos[ l ];
+
+                  if ( caso.ano == semana.ano && caso.sem == semana.numero ) {
+
+                    if ( categoria.sigla in caso ) {
+
+                      totais[ i ][ 'casos' ][ 'acumulados' ][ categoria.sigla ] += caso[ categoria.sigla ];
+
+                    }
+
+                    break
+
+                  }
                   
+                }
+
               }
 
             }
@@ -188,7 +211,133 @@ var vis = {
 
         }
 
-        console.log( vis.obter.UF( UF, 'nome' ) + ' tem ' + soma + ' casos ');
+        totais = totais.reverse();
+
+        for ( var i = 0, leni = totais.length; i < leni; i++ ) { // calcula números específicos de cada semana
+
+          total = totais[ i ];
+
+          anterior = 0;
+
+          for ( caso in total.casos.acumulados ) {
+
+            if ( i > 0 ) {
+
+              anterior = totais[ i - 1 ].casos.acumulados[ caso ];
+
+            }
+
+            total.casos.unicos[ caso ] = total.casos.acumulados[ caso ] - anterior;
+
+          }
+
+        }
+
+      }
+
+      else if ( local == 'UF' ) {
+
+        municipios  = vis.dados.municipios;
+        categorias  = vis.dados.categorias;
+        semanas     = vis.dados.semanas;
+        UFs         = vis.dados.UFs;
+
+        for ( var i = 0, leni = UFs.length; i < leni; i++ ) { // cria os objetos zerados para cada semana
+
+          UF = UFs[ i ];
+
+          UF.casos = [];
+          
+          for ( var j = 0, lenj = semanas.length; j < lenj; j++ ) {
+
+            semana = semanas[ j ];
+
+            caso = {
+
+              ano : semana.ano,
+              sem : semana.numero,
+
+            };
+
+            for ( var k = 0, lenk = categorias.length; k < lenk; k++ ) {
+
+              categoria = categorias[ k ];
+
+              tipo = categoria.sigla;
+
+              if ( categoria.visivel ) {
+
+                caso[ tipo ] = 0;
+
+              }
+
+            }
+
+            UF.casos.push( caso );
+            
+          }
+
+        }
+
+        for ( var i = 0, leni = municipios.length; i < leni; i++ ) { // soma cada tipo de caso, para cada semana
+
+          municipio = municipios[ i ];
+
+          atual = vis.obter.UF( municipio.id, 'id' );
+
+          for ( var j = 0, lenj = UFs.length; j < lenj; j++ ) {
+
+            UF = UFs[ j ];
+
+            if ( UF.id == atual ) {
+
+              casos = UF.casos;
+
+              for ( var k = 0, lenk = casos.length; k < lenk; k++ ) {
+
+                caso = casos[ k ];
+
+                for ( var l = 0, lenl = municipio.casos.length; l < lenl; l++ ) { 
+
+                  casoAtual = municipio.casos[ l ];
+
+                  if ( casoAtual.ano == caso.ano && casoAtual.sem == caso.sem ) {
+
+                    for ( var m = 0, lenm = categorias.length; m < lenm; m++ ) {
+
+                      categoria = categorias[ m ];
+
+                      if ( categoria.visivel ) {
+
+                        tipo = categoria.sigla;
+
+                        quantidade = 0;
+
+                        if ( casoAtual[ tipo ] !== undefined ) {
+
+                          quantidade = casoAtual[ tipo ];
+
+                        }
+
+                        caso[ tipo ] += quantidade;
+
+                      }
+
+                    }
+
+                  }
+
+                }
+
+              }
+
+              break
+
+            }
+
+          }
+
+        }
 
       }
 
@@ -1351,106 +1500,12 @@ var vis = {
 
     },
 
-    totais : function() {
-
-      if ( vis.atual.UF == 'todos' ) {
-
-        vis.dados.totais = [];
-    
-        totais = vis.dados.totais;
-
-        semanas = vis.dados.semanas;
-
-        for ( var i = 0, leni = semanas.length; i < leni; i++ ) { // soma números acumulados por semana
-
-          semana = semanas[ i ];
-
-          totais[ i ] = {
-
-            ano : semana.ano,
-            sem : semana.numero,
-            casos : {
-
-              acumulados : {},
-              unicos : {}
-
-            }
-
-          };
-
-          categorias = vis.dados.categorias;
-
-          for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
-
-            categoria = categorias[ j ];
-
-            if ( categoria.visivel ) {
-
-              totais[ i ].casos.acumulados[ categoria.sigla ] = 0; 
-
-              municipios = vis.dados.municipios;
-
-              for ( var k = 0, lenk = municipios.length; k < lenk; k++ ) {
-
-                municipio = municipios[ k ];
-
-                for ( var l = 0, lenl = municipio.casos.length; l < lenl; l++ ) {
-
-                  caso = municipio.casos[ l ];
-
-                  if ( caso.ano == semana.ano && caso.sem == semana.numero ) {
-
-                    if ( categoria.sigla in caso ) {
-
-                      totais[ i ][ 'casos' ][ 'acumulados' ][ categoria.sigla ] += caso[ categoria.sigla ];
-
-                    }
-
-                    break
-
-                  }
-                  
-                }
-
-              }
-
-            }
-
-          }
-
-        }
-
-        totais = totais.reverse();
-
-        for ( var i = 0, leni = totais.length; i < leni; i++ ) { // calcula números específicos de cada semana
-
-          total = totais[ i ];
-
-          anterior = 0;
-
-          for ( caso in total.casos.acumulados ) {
-
-            if ( i > 0 ) {
-
-              anterior = totais[ i - 1 ].casos.acumulados[ caso ];
-
-            }
-
-            total.casos.unicos[ caso ] = total.casos.acumulados[ caso ] - anterior;
-
-          }
-
-        }
-
-      }
-
-    },
-
     criar : function( local ) {
 
       local = local || 'todos';
 
-      this.totais();
+      vis.obter.totais( 'todos' );
+      vis.obter.totais( 'UF' );
 
       elementos = document.getElementsByClassName( this.elemento );
 
@@ -1728,7 +1783,7 @@ var vis = {
 
                   }
 
-                }, 250);
+                }, 500);
 
               },
 

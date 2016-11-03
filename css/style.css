@@ -121,7 +121,8 @@ li {
 
 .dragdealer {
   position: relative;
-  width: 100%;
+  /*width: 100%;*/
+  width: 272px;
   height: 30px;
   background: #eee;
   border-radius: 999px;
