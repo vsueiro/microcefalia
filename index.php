@@ -25,7 +25,9 @@
 
       <div class="grafico mapa"></div>
       
-      <section class="grafico acumulado"></section>
+      <section class="grafico acumulado municipios"></section>
+
+      <section class="grafico acumulado UFs"></section>
 
     </article>
 

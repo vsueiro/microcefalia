@@ -599,7 +599,8 @@ var vis = {
         vis.fichas.criar();
         vis.classificacao.criar();
         vis.mapa.circulos.atualizar();
-        vis.graficos.linhas.criar();
+        vis.graficos.linhas.criar( 'municipios' );
+        vis.graficos.linhas.criar( 'UFs' );
 
         vis.atual.estado.iniciado = true;
         
@@ -768,13 +769,13 @@ var vis = {
 
       elemento : 'acumulado',
 
-      calcular : function( quanto, tipo ) {
+      calcular : function( quanto, tipo, entidade ) {
 
-        municipios = vis.dados.municipios;
+        locais = vis.dados[ entidade ];
 
-        return Math[ quanto ].apply( Math, municipios.map( function( municipio ) {
+        return Math[ quanto ].apply( Math, locais.map( function( local ) {
 
-          return Math[ quanto ].apply( Math, municipio.casos.map( function( caso ) {
+          return Math[ quanto ].apply( Math, local.casos.map( function( caso ) {
 
             return caso[ tipo ] ? caso[ tipo ] : 0;
 
@@ -822,20 +823,24 @@ var vis = {
 
       },
 
-      criar : function( cat ) {
+      criar : function( entidade ) {
 
-        elementos = document.getElementsByClassName( this.elemento );
+        entidade = entidade || 'municipios';
+
+        classe = this.elemento + ' ' + entidade;
+
+        elementos = document.getElementsByClassName( classe );
 
         for ( var h = 0; h < elementos.length; h++ ) {
 
           elemento = elementos[ h ];
 
-          cat = cat || 'c';
+          cat = vis.atual.categoria;
 
-          this.categoria.max = this.calcular( 'max', cat   );
-          this.categoria.min = this.calcular( 'min', cat   );
-          this.semana.max    = this.calcular( 'max', 'sem' );
-          this.semana.min    = this.calcular( 'min', 'sem' );
+          this.categoria.max = this.calcular( 'max', cat  , entidade );
+          this.categoria.min = this.calcular( 'min', cat  , entidade );
+          this.semana.max    = this.calcular( 'max', 'sem', entidade );
+          this.semana.min    = this.calcular( 'min', 'sem', entidade );
 
           svg = document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' );
           svg.setAttribute( 'version', '1.1' );
@@ -848,19 +853,19 @@ var vis = {
           linhas = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
           linhas.classList.add( 'linhas' );
 
-          municipios = vis.dados.municipios;
+          locais = vis.dados[ entidade ];
 
-          for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+          for ( var i = 0, leni = locais.length; i < leni; i++ ) {
 
-            municipio = municipios[ i ];
+            local = locais[ i ];
 
             grupo = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
-            grupo.setAttribute( 'id', 'municipio-' + municipio.id + '-' + h );
+            grupo.setAttribute( 'id', 'local-' + local.id + '-' + h );
             grupo.setAttribute( 'opacity', 1 );
 
-            for ( var j = 0; j < ( municipio.casos.length - 1 ); j++ ) {
+            for ( var j = 0; j < ( local.casos.length - 1 ); j++ ) {
 
-              caso = municipio.casos[ j ];
+              caso = local.casos[ j ];
 
               temCasos = false;
 
@@ -877,9 +882,9 @@ var vis = {
                 linha.setAttribute( 'stroke-linejoin', 'round' );
                 linha.setAttribute( 'opacity', opacidade );
                 linha.setAttribute( 'x1', ( ( caso.sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
-                linha.setAttribute( 'x2', ( ( municipio.casos[ j + 1 ].sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
+                linha.setAttribute( 'x2', ( ( local.casos[ j + 1 ].sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
                 linha.setAttribute( 'y1', ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y )  );
-                linha.setAttribute( 'y2', ( municipio.casos[ j + 1 ][ cat ] ? ( ( ( this.categoria.max + 1 ) - municipio.casos[ j + 1 ][ cat ] ) * this.escala.y ) : ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y ) ) );
+                linha.setAttribute( 'y2', ( local.casos[ j + 1 ][ cat ] ? ( ( ( this.categoria.max + 1 ) - local.casos[ j + 1 ][ cat ] ) * this.escala.y ) : ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y ) ) );
                     
                 grupo.appendChild( linha );
 
@@ -898,7 +903,7 @@ var vis = {
             if ( i == ( leni - 1 ) ) {
 
               use = document.createElementNS( 'http://www.w3.org/2000/svg', 'use' );
-              use.setAttributeNS( 'http://www.w3.org/1999/xlink', 'xlink:href', '#municipio-' + municipio.id + '-' + h );
+              use.setAttributeNS( 'http://www.w3.org/1999/xlink', 'xlink:href', '#local-' + local.id + '-' + h );
 
             }
 
@@ -913,9 +918,13 @@ var vis = {
 
       },
 
-      atualizar : function() {
+      atualizar : function( entidade ) {
 
-        elementos = document.getElementsByClassName( this.elemento );
+        entidade = entidade || 'municipios';
+
+        classe = this.elemento + ' ' + entidade;
+
+        elementos = document.getElementsByClassName( classe );
 
         for ( var i = 0; i < elementos.length; i++ ) {
 
@@ -923,7 +932,7 @@ var vis = {
 
           involucros = elemento.getElementsByClassName( 'linhas' );
 
-          atual = 'municipio-' + vis.atual.local + '-' + i;
+          atual = 'local-' + vis.atual.local + '-' + i;
 
           use = document.getElementsByTagName( 'use' )[ 0 ];
           use.href.baseVal = '#' + atual ;
@@ -992,6 +1001,235 @@ var vis = {
       }
 
     },
+
+    // linhasUF :  {
+
+    //   elemento : 'acumuladoUF',
+
+    //   calcular : function( quanto, tipo ) {
+
+    //     municipios = vis.dados.UFs;
+
+    //     return Math[ quanto ].apply( Math, municipios.map( function( municipio ) {
+
+    //       return Math[ quanto ].apply( Math, municipio.casos.map( function( caso ) {
+
+    //         return caso[ tipo ] ? caso[ tipo ] : 0;
+
+    //       }));
+
+    //     }));
+
+    //   },
+
+    //   categoria : {},
+
+    //   semana : {},
+
+    //   escala : {
+
+    //     x : 20,
+    //     y : 4
+
+    //   },
+
+    //   linha : {
+
+    //     espessura : 1,
+    //     cor : '#000'
+
+    //   },
+
+    //   baixar : function( arquivo ) {
+
+    //     elemento = this.elemento;
+
+    //     svg = document.getElementById( elemento ).innerHTML,
+
+    //     blob = new Blob( [ svg ], { 'type' : 'image/svg+xml' } ),
+
+    //     a = document.createElement( 'a' );
+
+    //     a.download = arquivo + '.svg';
+
+    //     a.type = 'image/svg+xml';
+
+    //     a.href = ( window.URL || webkitURL ).createObjectURL( blob );
+
+    //     a.click();
+
+    //   },
+
+    //   criar : function( cat, local ) {
+        
+    //     elementos = document.getElementsByClassName( this.elemento );
+
+    //     for ( var h = 0; h < elementos.length; h++ ) {
+
+    //       elemento = elementos[ h ];
+
+    //       cat = cat || 'c';
+
+    //       this.categoria.max = this.calcular( 'max', cat   );
+    //       this.categoria.min = this.calcular( 'min', cat   );
+    //       this.semana.max    = this.calcular( 'max', 'sem' );
+    //       this.semana.min    = this.calcular( 'min', 'sem' );
+
+    //       svg = document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' );
+    //       svg.setAttribute( 'version', '1.1' );
+    //       svg.setAttribute( 'x', '0' );
+    //       svg.setAttribute( 'y', '0' );
+    //       svg.setAttribute( 'width', ( ( this.semana.max - this.semana.min ) * this.escala.x ) + ( this.escala.x * 2 ) );
+    //       svg.setAttribute( 'height', ( this.categoria.max * this.escala.y ) + ( this.escala.y * 2) );
+    //       svg.setAttributeNS( 'http://www.w3.org/2000/xmlns/', 'xmlns:xlink', 'http://www.w3.org/1999/xlink' ); // http://www.w3.org/2000/xmlns/
+
+    //       linhas = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
+    //       linhas.classList.add( 'linhas' );
+
+    //       municipios = vis.dados.UFs;
+
+    //       for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+
+    //         municipio = municipios[ i ];
+
+    //         grupo = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
+    //         grupo.setAttribute( 'id', 'municipio-' + municipio.id + '-' + h );
+    //         grupo.setAttribute( 'opacity', 1 );
+
+    //         for ( var j = 0; j < ( municipio.casos.length - 1 ); j++ ) {
+
+    //           caso = municipio.casos[ j ];
+
+    //           temCasos = false;
+
+    //           if ( caso[ cat ] ) {
+
+    //             opacidade = ( 1 / this.categoria.max * caso[ cat ] );
+    //             opacidade = .1;
+
+    //             linha = document.createElementNS( 'http://www.w3.org/2000/svg', 'line' );
+    //             linha.setAttribute( 'fill', 'none' );
+    //             linha.setAttribute( 'stroke', this.linha.cor );
+    //             linha.setAttribute( 'stroke-width', this.linha.espessura );
+    //             linha.setAttribute( 'stroke-linecap', 'round' );
+    //             linha.setAttribute( 'stroke-linejoin', 'round' );
+    //             linha.setAttribute( 'opacity', opacidade );
+    //             linha.setAttribute( 'x1', ( ( caso.sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
+    //             linha.setAttribute( 'x2', ( ( municipio.casos[ j + 1 ].sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
+    //             linha.setAttribute( 'y1', ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y )  );
+    //             linha.setAttribute( 'y2', ( municipio.casos[ j + 1 ][ cat ] ? ( ( ( this.categoria.max + 1 ) - municipio.casos[ j + 1 ][ cat ] ) * this.escala.y ) : ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y ) ) );
+                    
+    //             grupo.appendChild( linha );
+
+    //             temCasos = true;
+
+    //           }
+
+    //           if ( temCasos ) {
+
+    //             linhas.appendChild( grupo );
+
+    //           }
+
+    //         }
+
+    //         if ( i == ( leni - 1 ) ) {
+
+    //           use = document.createElementNS( 'http://www.w3.org/2000/svg', 'use' );
+    //           use.setAttributeNS( 'http://www.w3.org/1999/xlink', 'xlink:href', '#municipio-' + municipio.id + '-' + h );
+
+    //         }
+
+    //       }
+
+    //       svg.appendChild( linhas );
+    //       svg.appendChild( use );
+
+    //       elemento.appendChild( svg );
+
+    //     }
+
+    //   },
+
+    //   atualizar : function() {
+
+    //     elementos = document.getElementsByClassName( this.elemento );
+
+    //     for ( var i = 0; i < elementos.length; i++ ) {
+
+    //       elemento = elementos[ i ];
+
+    //       involucros = elemento.getElementsByClassName( 'linhas' );
+
+    //       atual = 'municipio-' + vis.atual.local + '-' + i;
+
+    //       use = document.getElementsByTagName( 'use' )[ 0 ];
+    //       use.href.baseVal = '#' + atual ;
+
+    //       for ( var j = 0, lenj = involucros.length; j < lenj; j++ ) {
+
+    //         involucro = involucros[ j ];
+
+    //         grupos = involucro.getElementsByTagName( 'g' );
+
+    //         for ( var k = 0, lenk = grupos.length; k < lenk; k++ ) {
+
+    //           grupo = grupos[ k ];
+
+    //           if ( vis.atual.local == 'todos' ) {
+
+    //             linhas = grupo.getElementsByTagName( 'line' );
+
+    //             for ( var l = 0, lenl = linhas.length; l < lenl; l++ ) {
+
+    //               linha = linhas[ l ];
+
+    //               linha.setAttribute( 'stroke', '#000' );
+    //               linha.setAttribute( 'opacity', .1 );
+
+    //             }
+
+    //           } else {
+
+    //             if ( atual == grupo.id ) { // se for municipio selecionado
+
+    //               linhas = grupo.getElementsByTagName( 'line' );
+
+    //               for ( var l = 0, lenl = linhas.length; l < lenl; l++ ) {
+
+    //                 linha = linhas[ l ];
+
+    //                 linha.setAttribute( 'stroke', '#000' );
+    //                 linha.setAttribute( 'opacity', 1 );
+
+    //               }
+
+    //             } else {
+
+    //               linhas = grupo.getElementsByTagName( 'line' );
+
+    //               for ( var l = 0, lenl = linhas.length; l < lenl; l++ ) {
+
+    //                 linha = linhas[ l ];
+
+    //                 linha.setAttribute( 'stroke', '#ccc' );
+    //                 linha.setAttribute( 'opacity', 0.1 );
+
+    //               }
+
+    //             }
+
+    //           }
+
+    //         }
+
+    //       }
+
+    //     }
+
+    //   }
+
+    // },
 
     evolucao : {
 
