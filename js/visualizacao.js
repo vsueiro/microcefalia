@@ -1697,7 +1697,7 @@ var vis = {
 
                 pai = document.getElementById( this.wrapper.id );
 
-                pai.classList.add( 'loaded' );
+                pai.classList.add( 'carregado' );
 
                 pai.getElementsByClassName( 'handle' )[ 0 ].innerHTML = vis.obter.semana();
 
