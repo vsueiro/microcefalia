@@ -850,13 +850,13 @@ var vis = {
 
       escala : {
 
-        x : 4
+        x : 8
 
       },
 
       negativos : false,
 
-      tamanho : 'pequeno',
+      tamanho : '',
 
       criar: function() {
 
@@ -1646,7 +1646,11 @@ var vis = {
 
         elemento : 'deslizador',
 
-        criar: function( el ) {
+        atualizou : false,
+
+        temporizador : undefined,
+
+        criar : function( el ) {
 
           elementos = document.getElementsByClassName( el );
 
@@ -1667,11 +1671,20 @@ var vis = {
 
             this.objeto = new Dragdealer( this.elemento, {
 
-              steps: vis.dados.semanas.length,
-              slide: false,
-              snap: true,
-              x: 1,
-              animationCallback: function( x, y ) {
+              steps : vis.dados.semanas.length,
+              slide : false,
+              snap : true,
+              x : 1,
+
+              animationCallback : function( x, y ) {
+
+                vis.filtros.semana.deslizador.atualizou = false;
+
+                if ( vis.filtros.semana.deslizador.temporizador ) {
+
+                  clearTimeout( vis.filtros.semana.deslizador.temporizador );
+
+                }
 
                 i = parseInt( this.getStep()[ 0 ] );
 
@@ -1701,12 +1714,35 @@ var vis = {
 
                 pai.getElementsByClassName( 'handle' )[ 0 ].innerHTML = vis.obter.semana();
 
+                vis.filtros.semana.deslizador.temporizador = setTimeout( function(){
+
+                  console.log( 'entrou no temporizador' );
+
+                  if ( !vis.filtros.semana.deslizador.atualizou ) {
+
+                    vis.mapa.circulos.atualizar();
+
+                    vis.fichas.atualizar();
+
+                    vis.filtros.semana.deslizador.atualizou = true;
+
+                  }
+
+                }, 250);
+
               },
-              callback: function( x, y ) {
 
-                vis.mapa.circulos.atualizar();
+              callback : function( x, y ) {
 
-                vis.fichas.atualizar();
+                if ( !vis.filtros.semana.deslizador.atualizou ) {
+
+                  vis.mapa.circulos.atualizar();
+
+                  vis.fichas.atualizar();
+
+                  vis.filtros.semana.deslizador.atualizou = true;
+
+                }
 
               }
 
