@@ -261,7 +261,7 @@ var vis = {
     {
       nome : 'municipios',
       tipo : 'json', 
-      url : 'data/microcefalia-42-2016-c-i-o-oi.json'
+      url : 'data/microcefalia-42-2016.json' // 'data/microcefalia-42-2016-c-i-o-oi.json'
     },
     {
       nome : 'Google Maps',
@@ -1353,61 +1353,65 @@ var vis = {
 
     totais : function() {
 
-      vis.dados.totais = [];
-  
-      totais = vis.dados.totais;
+      if ( vis.atual.UF == 'todos' ) {
 
-      semanas = vis.dados.semanas;
+        vis.dados.totais = [];
+    
+        totais = vis.dados.totais;
 
-      for ( var i = 0, leni = semanas.length; i < leni; i++ ) { // soma números acumulados por semana
+        semanas = vis.dados.semanas;
 
-        semana = semanas[ i ];
+        for ( var i = 0, leni = semanas.length; i < leni; i++ ) { // soma números acumulados por semana
 
-        totais[ i ] = {
+          semana = semanas[ i ];
 
-          ano : semana.ano,
-          sem : semana.numero,
-          casos : {
+          totais[ i ] = {
 
-            acumulados : {},
-            unicos : {}
+            ano : semana.ano,
+            sem : semana.numero,
+            casos : {
 
-          }
+              acumulados : {},
+              unicos : {}
 
-        };
+            }
 
-        categorias = vis.dados.categorias;
+          };
 
-        for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
+          categorias = vis.dados.categorias;
 
-          categoria = categorias[ j ];
+          for ( var j = 0, lenj = categorias.length; j < lenj; j++ ) {
 
-          if ( categoria.visivel ) {
+            categoria = categorias[ j ];
 
-            totais[ i ].casos.acumulados[ categoria.sigla ] = 0; 
+            if ( categoria.visivel ) {
 
-            municipios = vis.dados.municipios;
+              totais[ i ].casos.acumulados[ categoria.sigla ] = 0; 
 
-            for ( var k = 0, lenk = municipios.length; k < lenk; k++ ) {
+              municipios = vis.dados.municipios;
 
-              municipio = municipios[ k ];
+              for ( var k = 0, lenk = municipios.length; k < lenk; k++ ) {
 
-              for ( var l = 0, lenl = municipio.casos.length; l < lenl; l++ ) {
+                municipio = municipios[ k ];
 
-                caso = municipio.casos[ l ];
+                for ( var l = 0, lenl = municipio.casos.length; l < lenl; l++ ) {
 
-                if ( caso.ano == semana.ano && caso.sem == semana.numero ) {
+                  caso = municipio.casos[ l ];
 
-                  if ( categoria.sigla in caso ) {
+                  if ( caso.ano == semana.ano && caso.sem == semana.numero ) {
 
-                    totais[ i ][ 'casos' ][ 'acumulados' ][ categoria.sigla ] += caso[ categoria.sigla ];
+                    if ( categoria.sigla in caso ) {
+
+                      totais[ i ][ 'casos' ][ 'acumulados' ][ categoria.sigla ] += caso[ categoria.sigla ];
+
+                    }
+
+                    break
 
                   }
-
-                  break
-
+                  
                 }
-                
+
               }
 
             }
@@ -1416,25 +1420,25 @@ var vis = {
 
         }
 
-      }
+        totais = totais.reverse();
 
-      totais = totais.reverse();
+        for ( var i = 0, leni = totais.length; i < leni; i++ ) { // calcula números específicos de cada semana
 
-      for ( var i = 0, leni = totais.length; i < leni; i++ ) { // calcula números específicos de cada semana
+          total = totais[ i ];
 
-        total = totais[ i ];
+          anterior = 0;
 
-        anterior = 0;
+          for ( caso in total.casos.acumulados ) {
 
-        for ( caso in total.casos.acumulados ) {
+            if ( i > 0 ) {
 
-          if ( i > 0 ) {
+              anterior = totais[ i - 1 ].casos.acumulados[ caso ];
 
-            anterior = totais[ i - 1 ].casos.acumulados[ caso ];
+            }
+
+            total.casos.unicos[ caso ] = total.casos.acumulados[ caso ] - anterior;
 
           }
-
-          total.casos.unicos[ caso ] = total.casos.acumulados[ caso ] - anterior;
 
         }
 
@@ -1979,9 +1983,9 @@ var vis = {
       el = this.elemento;
 
       this.categoria.criar( el );
+      this.semana.criar( el );
       this.UF.criar( el );
       this.municipio.criar( el );
-      this.semana.criar( el );
 
     }
 
