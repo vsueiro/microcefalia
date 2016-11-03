@@ -850,9 +850,11 @@ var vis = {
 
       escala : {
 
-        x : 12
+        x : 2
 
       },
+
+      tamanho : 'pequeno',
 
       criar: function() {
 
@@ -947,6 +949,8 @@ var vis = {
 
           elemento = elementos[ i ];
 
+          elemento.classList.add( this.tamanho );
+
           lis = elemento.getElementsByTagName( 'li' );
 
           for ( var j = 0; j < lis.length; j++ ) {
@@ -984,13 +988,13 @@ var vis = {
 
                 }
 
-                altura = quantidade;
+                altura = quantidade * 2;
 
                 if ( quantidade < 0 ) {
 
                   li.classList.add( 'negativo' );
 
-                  altura = Math.abs( quantidade );
+                  altura = Math.abs( quantidade * 2 );
 
                 } else {
 
@@ -1057,7 +1061,7 @@ var vis = {
 
     ativo : false,
 
-    items : {
+    itens : {
 
       local : {
 
@@ -1440,12 +1444,12 @@ var vis = {
 
         ul = document.createElement( 'ul' );
 
-        for ( nome in this.items ) {
+        for ( nome in this.itens ) {
 
-          conteudo = this.items[ nome ].criar( local );
+          conteudo = this.itens[ nome ].criar( local );
 
           li = document.createElement( 'li' );
-          li.dataset.item = this.items[ nome ].elemento;
+          li.dataset.item = this.itens[ nome ].elemento;
 
           if ( typeof conteudo === 'object' ) {
 
@@ -1473,9 +1477,9 @@ var vis = {
 
       local = local || vis.atual.local;
 
-      for ( nome in this.items ) {
+      for ( nome in this.itens ) {
 
-        conteudo = this.items[ nome ].atualizar( local );
+        conteudo = this.itens[ nome ].atualizar( local );
 
       }
 
@@ -1929,7 +1933,7 @@ var vis = {
 
     elemento : 'classificacao',
 
-    items : 5,
+    itens : 5,
 
     criar : function() {
 
@@ -1941,7 +1945,7 @@ var vis = {
         
         ol = document.createElement( 'ol' );
 
-        for ( var j = 0; j < this.items; j++ ) {
+        for ( var j = 0; j < this.itens; j++ ) {
 
           classificacao = document.createElement( 'div' );
 
@@ -1980,7 +1984,7 @@ var vis = {
         
         lis = elemento.getElementsByTagName( 'li' );
 
-        for ( var j = 0; j < this.items; j++ ) {
+        for ( var j = 0; j < this.itens; j++ ) {
 
           li = lis[ j ];
           municipio = vis.dados.municipios[ j ];
@@ -2096,7 +2100,7 @@ var vis = {
 
     vis.mapa.circulos.atualizar();
 
-    vis.graficos.linhas.atualizar();
+    // vis.graficos.linhas.atualizar();
 
     vis.filtros.municipio.seletor.atualizar();
 

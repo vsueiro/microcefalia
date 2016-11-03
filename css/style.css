@@ -94,7 +94,7 @@ li {
 }
 
 [data-item="grafico"] ol li:hover span {
-    visibility: visible;
+  visibility: visible;
 }
 
 [data-item="grafico"] ol li:hover .barra {
@@ -102,7 +102,19 @@ li {
 }
 
 [data-item="grafico"] ol li .barra.selecionada {
-    background: #000;
+  background: #000;
+}
+
+[data-item="grafico"] ol.pequeno li:first-child {
+    padding-right: 12px;
+}
+
+[data-item="grafico"] ol.pequeno li + li {
+    padding-left: 1px;
+}
+
+[data-item="grafico"] ol.pequeno li .casos, [data-item="grafico"] ol.pequeno li .semana {
+    visibility: hidden;
 }
 
 /* dragdealer */
