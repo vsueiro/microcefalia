@@ -188,13 +188,13 @@ function clean( json, format ) {
             if ( caso.oc == 0 ) delete caso.oc;
             if ( caso.od == 0 ) delete caso.od;
 
-            { // deixar apenas casos e óbitos confirmados
+            { // deixar apenas casos e óbitos confirmados e investigados
 
               if ( caso.n ) delete caso.n;
-              if ( caso.i ) delete caso.i;
+              // if ( caso.i ) delete caso.i;
               if ( caso.d ) delete caso.d;
               if ( caso.on ) delete caso.on;
-              if ( caso.oi ) delete caso.oi;
+              // if ( caso.oi ) delete caso.oi;
               if ( caso.od ) delete caso.od;
 
             }

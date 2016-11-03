@@ -261,7 +261,7 @@ var vis = {
     {
       nome : 'municipios',
       tipo : 'json', 
-      url : 'data/microcefalia-42-2016.json'
+      url : 'data/microcefalia-42-2016-c-i-o-oi.json'
     },
     {
       nome : 'Google Maps',

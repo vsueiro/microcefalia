@@ -13,7 +13,7 @@
     "nome" : "Total investigado",
     "total" : 0,
     "atual" : false,
-    "visivel" : false
+    "visivel" : true
   },
   {
     "sigla" : "c",
@@ -45,7 +45,7 @@
     "nome" : "Total de óbitos investigados",
     "total" : 0,
     "atual" : false,
-    "visivel" : false
+    "visivel" : true
   },
   {
     "sigla" : "oc",
