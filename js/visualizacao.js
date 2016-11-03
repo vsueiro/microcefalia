@@ -850,9 +850,11 @@ var vis = {
 
       escala : {
 
-        x : 2
+        x : 4
 
       },
+
+      negativos : false,
 
       tamanho : 'pequeno',
 
@@ -949,7 +951,11 @@ var vis = {
 
           elemento = elementos[ i ];
 
-          elemento.classList.add( this.tamanho );
+          if ( this.tamanho != '' ) {
+
+            elemento.classList.add( this.tamanho );
+
+          }
 
           lis = elemento.getElementsByTagName( 'li' );
 
@@ -994,7 +1000,15 @@ var vis = {
 
                   li.classList.add( 'negativo' );
 
-                  altura = Math.abs( quantidade * 2 );
+                  if ( this.negativo ) {
+
+                    altura = Math.abs( quantidade * 2 );
+
+                  } else {
+
+                    altura = 0;
+
+                  }
 
                 } else {
 
