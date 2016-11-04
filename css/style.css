@@ -106,15 +106,16 @@ li {
 }
 
 [data-item="grafico"] ol.pequeno li:first-child {
-    padding-right: 12px;
+  padding-right: 12px;
+  display: none;
 }
 
 [data-item="grafico"] ol.pequeno li + li {
-    padding-left: 1px;
+  padding-left: 1px;
 }
 
 [data-item="grafico"] ol.pequeno li .casos, [data-item="grafico"] ol.pequeno li .semana {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 /* dragdealer */
@@ -263,15 +264,38 @@ section.classificacao {
   box-shadow: inset 0 0 1px;
 }
 
-.classificacao li > div {
+.classificacao > ol > li > div {
   flex: 1;
   box-shadow: inset 0 0 1px;
 }
 
-.classificacao li > div:nth-child(even) {
-  background: pink;
+.classificacao > ol > li > div:nth-child(even) {
+  /*background: pink;*/
 }
 
-.classificacao li > div:nth-child(odd) {
-  background: lightblue;
+.classificacao > ol > li > div:nth-child(odd) {
+  /*background: lightblue;*/
+}
+
+.classificacao ol.evolucao {
+  flex-direction: row;
+}
+
+.classificacao > ol > li > div {
+  padding: 4px 8px;
+  flex: 1;
+}
+
+.classificacao > ol > li > div:nth-child(1) {
+  /*background: red;*/
+  max-width: 24px;
+  text-align: right;
+}
+
+.classificacao > ol > li > div:nth-child(2) span {
+  opacity: .5
+}
+
+.classificacao > ol > li > div:nth-child(2) span:before {
+  content: ', ';
 }

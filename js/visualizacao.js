@@ -382,7 +382,7 @@ var vis = {
 
         } );
 
-        console.log( this.classificacao );
+        // console.log( this.classificacao );
 
       }
 
@@ -462,7 +462,7 @@ var vis = {
 
         }
 
-        console.log( csv );
+        // console.log( csv );
 
         this.baixar( csv, 'Acumulado de casos confirmados por semana dos 10 municípios mais afetados.csv' );
 
@@ -524,7 +524,7 @@ var vis = {
 
         }
 
-        console.log( csv );
+        // console.log( csv );
 
         this.baixar( csv, 'Acumulado de casos confirmados por semana de todas as UFs.csv' );
 
@@ -862,7 +862,7 @@ var vis = {
     },
 
     criar : function() {
-
+      
       elementos = document.getElementsByClassName( this.elemento );
 
       for ( var i = 0; i < elementos.length; i++ ) {
@@ -902,6 +902,19 @@ var vis = {
         }, 25 );
 
       }
+      
+      
+      /*
+      // temp
+
+      vis.filtros.criar();
+      vis.classificacao.criar();
+      vis.graficos.linhas.criar( 'municipios' );
+      vis.graficos.linhas.criar( 'UFs' );
+
+      vis.atual.estado.iniciado = true;
+
+      */      
 
     } 
 
@@ -1153,253 +1166,26 @@ var vis = {
 
     },
 
-    // linhasUF :  {
-
-    //   elemento : 'acumuladoUF',
-
-    //   calcular : function( quanto, tipo ) {
-
-    //     municipios = vis.dados.UFs;
-
-    //     return Math[ quanto ].apply( Math, municipios.map( function( municipio ) {
-
-    //       return Math[ quanto ].apply( Math, municipio.casos.map( function( caso ) {
-
-    //         return caso[ tipo ] ? caso[ tipo ] : 0;
-
-    //       }));
-
-    //     }));
-
-    //   },
-
-    //   categoria : {},
-
-    //   semana : {},
-
-    //   escala : {
-
-    //     x : 20,
-    //     y : 4
-
-    //   },
-
-    //   linha : {
-
-    //     espessura : 1,
-    //     cor : '#000'
-
-    //   },
-
-    //   baixar : function( arquivo ) {
-
-    //     elemento = this.elemento;
-
-    //     svg = document.getElementById( elemento ).innerHTML,
-
-    //     blob = new Blob( [ svg ], { 'type' : 'image/svg+xml' } ),
-
-    //     a = document.createElement( 'a' );
-
-    //     a.download = arquivo + '.svg';
-
-    //     a.type = 'image/svg+xml';
-
-    //     a.href = ( window.URL || webkitURL ).createObjectURL( blob );
-
-    //     a.click();
-
-    //   },
-
-    //   criar : function( cat, local ) {
-        
-    //     elementos = document.getElementsByClassName( this.elemento );
-
-    //     for ( var h = 0; h < elementos.length; h++ ) {
-
-    //       elemento = elementos[ h ];
-
-    //       cat = cat || 'c';
-
-    //       this.categoria.max = this.calcular( 'max', cat   );
-    //       this.categoria.min = this.calcular( 'min', cat   );
-    //       this.semana.max    = this.calcular( 'max', 'sem' );
-    //       this.semana.min    = this.calcular( 'min', 'sem' );
-
-    //       svg = document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' );
-    //       svg.setAttribute( 'version', '1.1' );
-    //       svg.setAttribute( 'x', '0' );
-    //       svg.setAttribute( 'y', '0' );
-    //       svg.setAttribute( 'width', ( ( this.semana.max - this.semana.min ) * this.escala.x ) + ( this.escala.x * 2 ) );
-    //       svg.setAttribute( 'height', ( this.categoria.max * this.escala.y ) + ( this.escala.y * 2) );
-    //       svg.setAttributeNS( 'http://www.w3.org/2000/xmlns/', 'xmlns:xlink', 'http://www.w3.org/1999/xlink' ); // http://www.w3.org/2000/xmlns/
-
-    //       linhas = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
-    //       linhas.classList.add( 'linhas' );
-
-    //       municipios = vis.dados.UFs;
-
-    //       for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
-
-    //         municipio = municipios[ i ];
-
-    //         grupo = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
-    //         grupo.setAttribute( 'id', 'municipio-' + municipio.id + '-' + h );
-    //         grupo.setAttribute( 'opacity', 1 );
-
-    //         for ( var j = 0; j < ( municipio.casos.length - 1 ); j++ ) {
-
-    //           caso = municipio.casos[ j ];
-
-    //           temCasos = false;
-
-    //           if ( caso[ cat ] ) {
-
-    //             opacidade = ( 1 / this.categoria.max * caso[ cat ] );
-    //             opacidade = .1;
-
-    //             linha = document.createElementNS( 'http://www.w3.org/2000/svg', 'line' );
-    //             linha.setAttribute( 'fill', 'none' );
-    //             linha.setAttribute( 'stroke', this.linha.cor );
-    //             linha.setAttribute( 'stroke-width', this.linha.espessura );
-    //             linha.setAttribute( 'stroke-linecap', 'round' );
-    //             linha.setAttribute( 'stroke-linejoin', 'round' );
-    //             linha.setAttribute( 'opacity', opacidade );
-    //             linha.setAttribute( 'x1', ( ( caso.sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
-    //             linha.setAttribute( 'x2', ( ( municipio.casos[ j + 1 ].sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
-    //             linha.setAttribute( 'y1', ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y )  );
-    //             linha.setAttribute( 'y2', ( municipio.casos[ j + 1 ][ cat ] ? ( ( ( this.categoria.max + 1 ) - municipio.casos[ j + 1 ][ cat ] ) * this.escala.y ) : ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y ) ) );
-                    
-    //             grupo.appendChild( linha );
-
-    //             temCasos = true;
-
-    //           }
-
-    //           if ( temCasos ) {
-
-    //             linhas.appendChild( grupo );
-
-    //           }
-
-    //         }
-
-    //         if ( i == ( leni - 1 ) ) {
-
-    //           use = document.createElementNS( 'http://www.w3.org/2000/svg', 'use' );
-    //           use.setAttributeNS( 'http://www.w3.org/1999/xlink', 'xlink:href', '#municipio-' + municipio.id + '-' + h );
-
-    //         }
-
-    //       }
-
-    //       svg.appendChild( linhas );
-    //       svg.appendChild( use );
-
-    //       elemento.appendChild( svg );
-
-    //     }
-
-    //   },
-
-    //   atualizar : function() {
-
-    //     elementos = document.getElementsByClassName( this.elemento );
-
-    //     for ( var i = 0; i < elementos.length; i++ ) {
-
-    //       elemento = elementos[ i ];
-
-    //       involucros = elemento.getElementsByClassName( 'linhas' );
-
-    //       atual = 'municipio-' + vis.atual.local + '-' + i;
-
-    //       use = document.getElementsByTagName( 'use' )[ 0 ];
-    //       use.href.baseVal = '#' + atual ;
-
-    //       for ( var j = 0, lenj = involucros.length; j < lenj; j++ ) {
-
-    //         involucro = involucros[ j ];
-
-    //         grupos = involucro.getElementsByTagName( 'g' );
-
-    //         for ( var k = 0, lenk = grupos.length; k < lenk; k++ ) {
-
-    //           grupo = grupos[ k ];
-
-    //           if ( vis.atual.local == 'todos' ) {
-
-    //             linhas = grupo.getElementsByTagName( 'line' );
-
-    //             for ( var l = 0, lenl = linhas.length; l < lenl; l++ ) {
-
-    //               linha = linhas[ l ];
-
-    //               linha.setAttribute( 'stroke', '#000' );
-    //               linha.setAttribute( 'opacity', .1 );
-
-    //             }
-
-    //           } else {
-
-    //             if ( atual == grupo.id ) { // se for municipio selecionado
-
-    //               linhas = grupo.getElementsByTagName( 'line' );
-
-    //               for ( var l = 0, lenl = linhas.length; l < lenl; l++ ) {
-
-    //                 linha = linhas[ l ];
-
-    //                 linha.setAttribute( 'stroke', '#000' );
-    //                 linha.setAttribute( 'opacity', 1 );
-
-    //               }
-
-    //             } else {
-
-    //               linhas = grupo.getElementsByTagName( 'line' );
-
-    //               for ( var l = 0, lenl = linhas.length; l < lenl; l++ ) {
-
-    //                 linha = linhas[ l ];
-
-    //                 linha.setAttribute( 'stroke', '#ccc' );
-    //                 linha.setAttribute( 'opacity', 0.1 );
-
-    //               }
-
-    //             }
-
-    //           }
-
-    //         }
-
-    //       }
-
-    //     }
-
-    //   }
-
-    // },
-
     evolucao : {
 
       elemento : 'evolucao',
 
-      escala : {
+      estilo : {
 
-        x : 8
+        tamanho : 'pequeno',
+        x : 4 // 8
 
       },
 
       negativo : false,
 
-      tamanho : '',
+      criar: function( local ) {
 
-      criar: function() {
+        local = local || 'todos';
 
         ol = document.createElement( 'ol' );
         ol.className = this.elemento;
+        ol.dataset.local = local;
 
         semanas = vis.dados.semanas;
 
@@ -1438,11 +1224,15 @@ var vis = {
 
       },
 
-      atualizar : function( id ) {
+      atualizar : function( local, estilo ) {
+
+        local = local || 'todos';
+
+        estilo = estilo || this.estilo;
 
         tipo = vis.atual.categoria;
 
-        if ( id == 'todos' ) {
+        if ( local == 'todos' ) {
 
           semanas = vis.dados.totais;
 
@@ -1479,9 +1269,13 @@ var vis = {
 
           }
 
-          semanas = unicos( vis.obter.municipio( id ).casos ); 
+          semanas = unicos( vis.obter.municipio( local ).casos ); 
 
         }
+
+        console.log( 'atualiza ' + vis.obter.municipio( local ).nome );
+
+        console.log( semanas );
 
         elementos = document.getElementsByClassName( this.elemento );
 
@@ -1489,113 +1283,117 @@ var vis = {
 
           elemento = elementos[ i ];
 
-          if ( this.tamanho != '' ) {
+          if ( elemento.dataset.local == local ) {
 
-            elemento.classList.add( this.tamanho );
+            if ( estilo.tamanho != '' ) {
 
-          }
-
-          lis = elemento.getElementsByTagName( 'li' );
-
-          for ( var j = 0; j < lis.length; j++ ) {
-
-            li = lis[ j ];
-
-            sem = li.dataset.sem;
-            ano = li.dataset.ano;
-            consta = false;
-            largura = vis.graficos.evolucao.escala.x;
-
-            if ( sem <= vis.atual.semana().numero && ano <= vis.atual.semana().ano ) {
-
-              li.classList.add( 'ativo' );
-
-            } else {
-
-              li.classList.remove( 'ativo' );
+              elemento.classList.add( estilo.tamanho );
 
             }
 
-            for ( var k = 0, lenk = semanas.length; k < lenk; k++ ) {
+            lis = elemento.getElementsByTagName( 'li' );
 
-              semana = semanas[ k ];
+            for ( var j = 0; j < lis.length; j++ ) {
 
-              if ( semana.sem == sem && semana.ano == ano ) {
+              li = lis[ j ];
 
-                if ( id == 'todos' ) {
+              sem = li.dataset.sem;
+              ano = li.dataset.ano;
+              consta = false;
+              largura = estilo.x;
 
-                  quantidade = semana.casos.unicos[ tipo ] || 0;
+              if ( sem <= vis.atual.semana().numero && ano <= vis.atual.semana().ano ) {
 
-                } else {
+                li.classList.add( 'ativo' );
 
-                  quantidade = semana[ tipo ] || 0;
+              } else {
 
-                }
+                li.classList.remove( 'ativo' );
 
-                altura = quantidade * 2;
+              }
 
-                if ( quantidade < 0 ) {
+              for ( var k = 0, lenk = semanas.length; k < lenk; k++ ) {
 
-                  li.classList.add( 'negativo' );
+                semana = semanas[ k ];
 
-                  if ( this.negativo ) {
+                if ( semana.sem == sem && semana.ano == ano ) {
 
-                    altura = Math.abs( quantidade * 2 );
+                  if ( local == 'todos' ) {
+
+                    quantidade = semana.casos.unicos[ tipo ] || 0;
 
                   } else {
 
-                    altura = 0;
+                    quantidade = semana[ tipo ] || 0;
 
                   }
 
-                } else {
+                  altura = quantidade * 2;
 
-                  li.classList.remove( 'negativo' );
+                  if ( quantidade < 0 ) {
+
+                    li.classList.add( 'negativo' );
+
+                    if ( this.negativo ) {
+
+                      altura = Math.abs( quantidade * 2 );
+
+                    } else {
+
+                      altura = 0;
+
+                    }
+
+                  } else {
+
+                    li.classList.remove( 'negativo' );
+
+                  }
+
+                  casos = li.getElementsByClassName( 'casos' )[ 0 ];
+                  casos.innerHTML = quantidade;
+
+                  if ( sem == 6 && ano == 2016 ) { // faz quadrado do acumulado
+
+                    lado = Math.sqrt( largura * altura );
+
+                    li.style.width = lado + 'px';
+
+                    li.classList.add( 'quadrado' );
+
+                  } else {
+
+                    altura += 'px';
+                    largura += 'px';
+
+                    barra = li.getElementsByClassName( 'barra' )[ 0 ];
+
+                    li.style.width = largura;
+
+                    barra.style.height = altura;
+
+                  }
+                   
+                  consta = true;
+
+                  break
 
                 }
-
-                casos = li.getElementsByClassName( 'casos' )[ 0 ];
-                casos.innerHTML = quantidade;
-
-                if ( sem == 6 && ano == 2016 ) { // faz quadrado do acumulado
-
-                  lado = Math.sqrt( largura * altura );
-
-                  li.style.width = lado + 'px';
-
-                  li.classList.add( 'quadrado' );
-
-                } else {
-
-                  altura += 'px';
-                  largura += 'px';
-
-                  barra = li.getElementsByClassName( 'barra' )[ 0 ];
-
-                  li.style.width = largura;
-
-                  barra.style.height = altura;
-
-                }
-                 
-                consta = true;
-
-                break
 
               }
 
             }
 
-          }
+            if ( !consta ) {
 
-          if ( !consta ) {
+              casos = li.getElementsByClassName( 'casos' )[ 0 ];
+              barra = li.getElementsByClassName( 'barra' )[ 0 ];
 
-            casos = li.getElementsByClassName( 'casos' )[ 0 ];
-            barra = li.getElementsByClassName( 'barra' )[ 0 ];
+              casos.innerHTML = '';
+              barra.style.height = 0;
+              // li.find( '.barra' ).css( 'height', '0' );
 
-            casos.innerHTML = '';
-            barra.style.height = 0;
-            // li.find( '.barra' ).css( 'height', '0' );
+            }
 
           }
 
@@ -1611,135 +1409,7 @@ var vis = {
 
     elemento : 'fichas',
 
-    ativo : false,
-
     itens : {
-
-      local : {
-
-        elemento : 'local',
-
-        criar : function() {
-            
-          return 'Local: <span></span>';
-
-        },
-
-        atualizar : function( id ) {
-
-          if ( id == 'todos' ) {
-
-            conteudo = 'Brasil';
-
-          } else {
-
-            conteudo = vis.obter.municipio( id ).nome;
-
-          }
-
-          elementos = document.getElementsByClassName( vis.fichas.elemento );
-
-          for ( var i = 0; i < elementos.length; i++ ) {
-
-            elemento = elementos[ i ];
-  
-            item = elemento.querySelectorAll( '[data-item="' + this.elemento + '"]' )[ 0 ];            
-
-            span = item.getElementsByTagName( 'span' )[ 0 ];
-
-            span.innerHTML = conteudo;
-
-          }
-
-        }
-
-      },
-
-      UF : {
-
-        elemento : 'UF',
-
-        criar : function() {
-
-          return 'UF: <span></span>';
-
-        },
-
-        atualizar : function( id ) {
-
-          if ( id == 'todos' ) {
-
-            conteudo = '–';
-
-          } else {
-
-            conteudo = vis.obter.UF( id, 'nome' );
-
-          }
-
-          elementos = document.getElementsByClassName( vis.fichas.elemento );
-
-          for ( var i = 0; i < elementos.length; i++ ) {
-
-            elemento = elementos[ i ];
-  
-            item = elemento.querySelectorAll( '[data-item="' + this.elemento + '"]' )[ 0 ];            
-
-            span = item.getElementsByTagName( 'span' )[ 0 ];
-
-            span.innerHTML = conteudo;
-
-          }
-
-        }
-
-      },
-
-      data : {
-
-        elemento : 'data',
-
-        criar : function() {
-
-          return 'Até: <span></span>';
-
-        },
-
-        atualizar : function( local ) {
-
-          sem = vis.atual.semana();
-
-          for ( var i = 0, leni = vis.dados.semanas.length; i < leni; i++ ) {
-
-            semana = vis.dados.semanas[ i ];
-
-            if ( semana.numero == sem.numero && semana.ano == sem.ano ) {
-
-              conteudo = vis.filtros.semana.quando( semana.fim );
-
-              elementos = document.getElementsByClassName( vis.fichas.elemento );
-
-              for ( var i = 0; i < elementos.length; i++ ) {
-
-                elemento = elementos[ i ];
-      
-                item = elemento.querySelectorAll( '[data-item="' + this.elemento + '"]' )[ 0 ];            
-
-                span = item.getElementsByTagName( 'span' )[ 0 ];
-
-                span.innerHTML = conteudo;
-
-              }
-
-              break
-
-            }
-
-          }
-
-        }
-
-      },
 
       casos : {
 
@@ -1867,30 +1537,12 @@ var vis = {
 
         }
 
-      },
-
-      grafico : {
-
-        elemento : 'grafico',
-
-        criar : function() {
-
-          return vis.graficos.evolucao.criar();
-
-        },
-
-        atualizar : function( local ) {
-
-          return vis.graficos.evolucao.atualizar( local );
-
-        }
-        
       }
 
     },
 
     criar : function( local ) {
-
+      
       local = local || 'todos';
 
       vis.obter.totais( 'todos' );
@@ -1930,11 +1582,11 @@ var vis = {
         this.atualizar( local )
 
       }
-
+      
     },
 
     atualizar : function( local ) {
-
+      
       local = local || vis.atual.local;
 
       for ( nome in this.itens ) {
@@ -1942,6 +1594,7 @@ var vis = {
         conteudo = this.itens[ nome ].atualizar( local );
 
       }
+      
 
     }
 
@@ -2350,7 +2003,7 @@ var vis = {
 
             seletor.value = vis.atual.local;
 
-            console.log( 'atualizado filtro de municipio' );
+            // console.log( 'atualizado filtro de municipio' );
 
           }
 
@@ -2461,22 +2114,25 @@ var vis = {
 
             classificacao = document.createElement( 'div' );
 
+            UF  = document.createElement( 'span' );
+
             nome  = document.createElement( 'div' );
-            
-            UF  = document.createElement( 'div' );
+            nome.appendChild( UF );
 
             casos = document.createElement( 'div' );
 
             unicos = document.createElement( 'div' );
+            unicos.dataset.item = 'grafico';
             unicos.classList.add( 'grafico', 'unicos' );
 
             acumulado = document.createElement( 'div' );
+            acumulado.dataset.item = 'grafico';
             acumulado.classList.add( 'grafico', 'acumulado' );
 
             li = document.createElement( 'li' );
             li.appendChild( classificacao );
             li.appendChild( nome );
-            li.appendChild( UF );
+            // li.appendChild( UF );
             li.appendChild( unicos );
             li.appendChild( acumulado );
             li.appendChild( casos );
@@ -2540,13 +2196,20 @@ var vis = {
 
             divs = li.getElementsByTagName( 'div' );
 
+            span = divs[ 1 ].getElementsByTagName( 'span' )[ 0 ];
+            span.appendChild( document.createTextNode( vis.obter.UF( municipio.id, 'sigla' ) ) )
+
+            nome = document.createTextNode( municipio.nome );
+
             divs[ 0 ].className = empate ? 'empate' : '';
             divs[ 0 ].innerText = posicao + 'º';
-            divs[ 1 ].innerText = municipio.nome;
-            divs[ 2 ].innerText = vis.obter.UF( municipio.id, 'sigla' );
-            divs[ 3 ].innerText = 'unicos';
-            divs[ 4 ].innerText = 'acumulado';
-            divs[ 5 ].innerText = quantidade;            
+            // divs[ 1 ].innerText = municipio.nome;
+            divs[ 1 ].appendChild( nome );
+            divs[ 1 ].appendChild( span );
+            // divs[ 2 ].innerText = vis.obter.UF( municipio.id, 'sigla' );
+            divs[ 2 ].dataset.local = municipio.id;
+            divs[ 3 ].innerText = 'acumulado';
+            divs[ 4 ].innerText = quantidade;            
 
             li.dataset.ibge = municipio.id;
 
@@ -2554,7 +2217,35 @@ var vis = {
 
         }
 
-        console.log( posicoes );
+        classe = vis.classificacao.elemento + ' ' + this.elemento;
+
+        elementos = document.getElementsByClassName( classe );
+
+        for ( var i = 0; i < elementos.length; i++ ) {
+
+          elemento = elementos[ i ];
+
+          graficos = elemento.getElementsByClassName( 'grafico' );
+
+          for ( var j = 0; j < graficos.length; j++ ) {
+
+            grafico = graficos[ j ];
+
+            if ( grafico.classList.contains( 'unicos' ) ) {
+
+              local = grafico.dataset.local;
+
+              grafico.appendChild( vis.graficos.evolucao.criar( local ) );
+
+              vis.graficos.evolucao.atualizar( local );
+
+            }
+
+          }
+
+        }
+
+        // vis.graficos.evolucao.atualizar();
 
       }
 
@@ -2564,7 +2255,7 @@ var vis = {
 
       criar : function() {
 
-        console.log( 'cria classificao de UFs' );
+        // console.log( 'cria classificao de UFs' );
 
         this.atualizar();
 
@@ -2572,7 +2263,7 @@ var vis = {
 
       atualizar : function() {
 
-        console.log( 'atualiza classificao de UFs' );
+        // console.log( 'atualiza classificao de UFs' );
 
       }
 
