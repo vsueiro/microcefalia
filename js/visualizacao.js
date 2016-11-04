@@ -792,13 +792,13 @@ var vis = {
       escala : {
 
         x : 20,
-        y : 4
+        y : 2
 
       },
 
       linha : {
 
-        espessura : 4,
+        espessura : 2,
         cor : '#000'
 
       },
@@ -862,6 +862,13 @@ var vis = {
             grupo = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
             grupo.setAttribute( 'id', 'local-' + local.id + '-' + h );
             grupo.setAttribute( 'opacity', 1 );
+            // console.log( local );
+            grupo.setAttribute( 'nome', local.nome );
+            grupo.addEventListener( 'click', function() {
+
+              alert( this.getAttribute( 'nome' ) );
+              
+            });
 
             for ( var j = 0; j < ( local.casos.length - 1 ); j++ ) {
 
