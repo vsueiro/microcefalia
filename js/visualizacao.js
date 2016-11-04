@@ -388,6 +388,150 @@ var vis = {
 
     },
 
+    csv : {
+
+      baixar : function( conteudo, arquivo ) {
+
+        blob = new Blob( [ conteudo ], { 'type' : 'text/csv' } ),
+
+        a = document.createElement( 'a' );
+
+        a.download = arquivo + '.csv';
+
+        a.type = 'image/svg+xml';
+
+        a.href = ( window.URL || webkitURL ).createObjectURL( blob );
+
+        a.click();
+
+      },
+
+      municipios : function( tipo ) {
+
+        tipo = tipo || 'c';
+
+        municipios = vis.dados.municipios;
+
+        semanas = vis.dados.semanas;
+
+        csv = 'até';
+
+        for ( var i = 0; i < 10; i++ ) { // monta cabeçalho
+
+          municipio = municipios[ i ];
+
+          csv += ',' + municipio.nome;
+
+          if ( i == 9 ) {
+
+            csv += '\n';
+
+          }
+
+        }
+
+        for ( var j = 0, lenj = semanas.length; j < lenj; j++ ) { // adiciona conteúdo
+
+          semana = semanas[ j ];
+
+          csv += semana.inicio;
+
+          for ( var i = 0; i < 10; i++ ) {
+
+            municipio = municipios[ i ];
+
+            for ( var k = 0, lenk = municipio.casos.length; k < lenk; k++ ) {
+
+              caso = municipio.casos[ k ];
+
+              if ( semana.ano == caso.ano && semana.numero == caso.sem ) {
+
+                csv += ',' + caso[ tipo ];
+
+              }
+
+            }
+
+            if ( i == 9 ) {
+
+              csv += '\n';
+
+            }
+
+          }
+
+        }
+
+        console.log( csv );
+
+        this.baixar( csv, 'Acumulado de casos confirmados por semana dos 10 municípios mais afetados.csv' );
+
+      },
+
+      UFs : function() {
+
+        tipo = tipo || 'c';
+
+        UFs = vis.dados.UFs;
+
+        semanas = vis.dados.semanas;
+
+        csv = 'até';
+
+        for ( var i = 0, leni = UFs.length; i < leni; i++ ) { // monta cabeçalho
+
+          UF = UFs[ i ];
+
+          csv += ',' + UF.sigla;
+
+          if ( i == leni - 1 ) {
+
+            csv += '\n';
+
+          }
+
+        }
+
+        for ( var j = 0, lenj = semanas.length; j < lenj; j++ ) { // adiciona conteúdo
+
+          semana = semanas[ j ];
+
+          csv += semana.inicio;
+
+          for ( var i = 0, leni = UFs.length; i < leni; i++ ) { // monta cabeçalho
+
+            UF = UFs[ i ];
+
+            for ( var k = 0, lenk = UF.casos.length; k < lenk; k++ ) {
+
+              caso = UF.casos[ k ];
+
+              if ( semana.ano == caso.ano && semana.numero == caso.sem ) {
+
+                csv += ',' + caso[ tipo ];
+
+              }
+
+            }
+
+            if ( i == leni - 1 ) {
+
+              csv += '\n';
+
+            }
+
+          }
+
+        }
+
+        console.log( csv );
+
+        this.baixar( csv, 'Acumulado de casos confirmados por semana de todas as UFs.csv' );
+
+      }
+
+    }
+
   },
 
   dependencias : [
