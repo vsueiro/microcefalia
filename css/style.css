@@ -256,7 +256,7 @@ li {
 
 /* temp */ 
 
-section.classificacao {
+.classificacao {
   max-width: 1200px;
 }
 
@@ -267,14 +267,6 @@ section.classificacao {
 .classificacao > ol > li > div {
   flex: 1;
   box-shadow: inset 0 0 1px;
-}
-
-.classificacao > ol > li > div:nth-child(even) {
-  /*background: pink;*/
-}
-
-.classificacao > ol > li > div:nth-child(odd) {
-  /*background: lightblue;*/
 }
 
 .classificacao ol.evolucao {
@@ -298,4 +290,11 @@ section.classificacao {
 
 .classificacao > ol > li > div:nth-child(2) span:before {
   content: ', ';
+}
+
+.circulo {
+  /*width: 30px;*/
+  /*height: 30px;*/
+  background: #333;
+  border-radius: 50%;
 }

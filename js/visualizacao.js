@@ -677,14 +677,6 @@ var vis = {
 
             }
 
-            // vis.mapa.circulos.atualizar();
-
-            // vis.fichas.atualizar();
-
-            // vis.graficos.linhas.atualizar();
-
-            // vis.filtros.municipio.seletor.atualizar();
-
             vis.atualizar();
             
           });
@@ -771,9 +763,9 @@ var vis = {
 
             if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
 
-              tamanho = Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * vis.mapa.circulos.amplitude;
+              raio = Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * vis.mapa.circulos.amplitude;
               
-              circulo.getIcon().scale = tamanho;
+              circulo.getIcon().scale = raio;
               circulo.getIcon().strokeWeight = 0;
       
               circulo.setIcon( circulo.getIcon() );
@@ -922,7 +914,7 @@ var vis = {
 
   graficos : {
 
-    linhas :  {
+    linhas : {
 
       elemento : 'acumulado',
 
@@ -1189,8 +1181,6 @@ var vis = {
 
         semanas = vis.dados.semanas;
 
-        console.log( semanas );
-
         semanas.sort( function( a, b ) {
 
           if ( a.inicio < b.inicio ) return -1;
@@ -1281,9 +1271,9 @@ var vis = {
 
         }
 
-        console.log( 'atualiza ' + vis.obter.municipio( local ).nome );
+        // console.log( 'atualiza ' + vis.obter.municipio( local ).nome );
 
-        console.log( semanas );
+        // console.log( semanas );
 
         elementos = document.getElementsByClassName( this.elemento );
 
@@ -1404,6 +1394,68 @@ var vis = {
               // li.find( '.barra' ).css( 'height', '0' );
 
             }
+
+          }
+
+        }
+
+      }
+
+    },
+
+    circulo : {
+
+      criar : function( local ) {
+
+        circulos = document.createElement( 'div' );
+        circulos.classList.add( 'circulos' );
+
+        circulo = document.createElement( 'div' );
+        circulo.classList.add( 'circulo' );
+        circulo.dataset.local = local;
+
+        circulos.appendChild( circulo );
+
+        return circulos;
+
+      },
+
+      atualizar : function( local ) {
+
+        cat = vis.atual.categoria;
+
+        circulos = document.getElementsByClassName( 'circulo' );
+
+        sem = vis.atual.semana();
+
+        municipio = vis.obter.municipio( local );
+
+        raio = 0;
+
+        for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) { // para cada caso do respectivo município
+
+          caso = municipio.casos[ i ];
+
+          if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
+
+            console.log(  '')
+
+            raio = Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * vis.mapa.circulos.amplitude;
+
+            break
+
+          }
+
+        }
+
+        for ( var j = 0, lenj = circulos.length; j < lenj; j++ ) {
+
+          circulo = circulos[ j ];
+
+          if ( circulo.dataset.local == local ) {
+
+            circulo.style.width  = raio * 2 + 'px';
+            circulo.style.height = raio * 2 + 'px';
 
           }
 
@@ -2142,10 +2194,15 @@ var vis = {
             li = document.createElement( 'li' );
             li.appendChild( classificacao );
             li.appendChild( nome );
-            // li.appendChild( UF );
             li.appendChild( unicos );
             li.appendChild( acumulado );
             li.appendChild( casos );
+
+            if ( j == -1 ) {
+
+              li.classList.add( 'cabecalho' );
+
+            }
 
             ol.appendChild( li );
 
@@ -2213,12 +2270,10 @@ var vis = {
 
             divs[ 0 ].className = empate ? 'empate' : '';
             divs[ 0 ].innerText = posicao + 'º';
-            // divs[ 1 ].innerText = municipio.nome;
             divs[ 1 ].appendChild( nome );
             divs[ 1 ].appendChild( span );
-            // divs[ 2 ].innerText = vis.obter.UF( municipio.id, 'sigla' );
             divs[ 2 ].dataset.local = municipio.id;
-            divs[ 3 ].innerText = 'acumulado';
+            divs[ 3 ].dataset.local = municipio.id;
             divs[ 4 ].innerText = quantidade;            
 
             li.dataset.ibge = municipio.id;
@@ -2241,13 +2296,21 @@ var vis = {
 
             grafico = graficos[ j ];
 
-            if ( grafico.classList.contains( 'unicos' ) ) {
+            local = grafico.dataset.local;
 
-              local = grafico.dataset.local;
+            if ( grafico.classList.contains( 'unicos' ) ) {
 
               grafico.appendChild( vis.graficos.evolucao.criar( local ) );
 
               vis.graficos.evolucao.atualizar( local );
+
+            }
+
+            else if ( grafico.classList.contains( 'acumulado' ) ) {
+
+              grafico.appendChild( vis.graficos.circulo.criar( local ) );
+
+              vis.graficos.circulo.atualizar( local );
 
             }
 
