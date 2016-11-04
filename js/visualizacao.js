@@ -2461,13 +2461,24 @@ var vis = {
 
             classificacao = document.createElement( 'div' );
 
-            nome = document.createElement( 'div' );
+            nome  = document.createElement( 'div' );
+            
+            UF  = document.createElement( 'div' );
 
             casos = document.createElement( 'div' );
+
+            unicos = document.createElement( 'div' );
+            unicos.classList.add( 'grafico', 'unicos' );
+
+            acumulado = document.createElement( 'div' );
+            acumulado.classList.add( 'grafico', 'acumulado' );
 
             li = document.createElement( 'li' );
             li.appendChild( classificacao );
             li.appendChild( nome );
+            li.appendChild( UF );
+            li.appendChild( unicos );
+            li.appendChild( acumulado );
             li.appendChild( casos );
 
             ol.appendChild( li );
@@ -2532,7 +2543,10 @@ var vis = {
             divs[ 0 ].className = empate ? 'empate' : '';
             divs[ 0 ].innerText = posicao + 'º';
             divs[ 1 ].innerText = municipio.nome;
-            divs[ 2 ].innerText = quantidade;
+            divs[ 2 ].innerText = vis.obter.UF( municipio.id, 'sigla' );
+            divs[ 3 ].innerText = 'unicos';
+            divs[ 4 ].innerText = 'acumulado';
+            divs[ 5 ].innerText = quantidade;            
 
             li.dataset.ibge = municipio.id;
 
