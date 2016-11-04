@@ -1189,7 +1189,15 @@ var vis = {
 
         semanas = vis.dados.semanas;
 
-        semanas.reverse();
+        console.log( semanas );
+
+        semanas.sort( function( a, b ) {
+
+          if ( a.inicio < b.inicio ) return -1;
+          if ( a.inicio > b.inicio ) return 1;
+          return 0;
+
+        });
 
         for ( var i = 0, leni = semanas.length; i < leni; i++ ) { // para cada semana epidemiológica do Brasil
 
@@ -1370,7 +1378,7 @@ var vis = {
 
                     barra = li.getElementsByClassName( 'barra' )[ 0 ];
 
-                    li.style.width = largura;
+                    // li.style.width = largura;
 
                     barra.style.height = altura;
 
