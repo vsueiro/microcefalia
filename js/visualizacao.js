@@ -1302,6 +1302,8 @@ var vis = {
               consta = false;
               largura = estilo.x;
 
+              li.style.width = largura + 'px';
+
               if ( sem <= vis.atual.semana().numero && ano <= vis.atual.semana().ano ) {
 
                 li.classList.add( 'ativo' );
