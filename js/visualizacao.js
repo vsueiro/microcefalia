@@ -940,7 +940,7 @@ var vis = {
               vis.filtros.semana.deslizador.objeto.setStep( step, 0 );
               vis.atualizar();
             });
-            vis.filtros.semana.deslizador.criar( el );
+            vis.filtros.semana.deslizador.criar( involucro );
           }
         }
       },
@@ -948,10 +948,10 @@ var vis = {
         elemento : 'deslizador',
         atualizou : false,
         temporizador : undefined,
-        criar : function( el ) {
-          elementos = document.getElementsByClassName( el );
-          for ( var i = 0; i < elementos.length; i++ ) {
-            elemento = elementos[ i ];
+        criar : function( elemento ) {
+          // elementos = document.getElementsByClassName( el );
+          //for ( var i = 0; i < elementos.length; i++ ) {
+            // elemento = elementos[ i ];
             div = document.createElement( 'div' );
             div.id = this.elemento;
             div.className = 'dragdealer';
@@ -999,7 +999,7 @@ var vis = {
                 }
               }
             });
-          }
+          /*}*/
         } 
       },
       criar : function( el ) {

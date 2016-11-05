@@ -392,7 +392,25 @@ select {
 
 /* temporário, para ficar remover itens não funcionais */
 
-.filtros input[type="search"],
-.dragdealer {
+.filtros input[type="search"]/*,
+.dragdealer*/ {
   display: none;
+}
+
+.dragdealer {
+  position: absolute;
+  top: 36px;
+  margin-left: 16px;
+  border-radius: 999px;
+  width: 178px;
+  height: 8px;
+  background: #e8e8e8;  
+}
+.dragdealer .handle {
+  margin-top: -10px;
+  border: 5px solid #fff;
+  width: 28px;
+  height: 28px;
+  background: #393b41;
+  color: transparent;
 }
