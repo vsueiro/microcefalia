@@ -136,7 +136,7 @@ li {
 }
 
 [data-item="grafico"] ol li:first-child {
-  margin-right: 12px;
+  /*margin-right: 12px;*/
   display: none;
 }
 
@@ -341,6 +341,13 @@ li {
   justify-content: center;
   align-items: center;
   margin-left: 12px;
+}
+
+.seletor.inativo,
+.seletor.inativo:before,
+.seletor.inativo select {
+  pointer-events: none;
+  color: #ccc;
 }
 
 .seletor:first-child { 

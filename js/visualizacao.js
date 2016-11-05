@@ -797,20 +797,17 @@ var vis = {
                     li.classList.remove( 'negativo' );
                   }
                   casos = li.getElementsByClassName( 'casos' )[ 0 ];
-                    
                   casos.innerHTML = quantidade > 0 ? quantidade : '';
-                  if ( sem == 6 && ano == 2016 ) { // faz quadrado do acumulado
-                    lado = Math.sqrt( largura * altura );
-                    li.style.width = lado + 'px';
-                    li.classList.add( 'quadrado' );
-                  } else {
+                  // if ( sem == 6 && ano == 2016 ) { // faz quadrado do acumulado
+                    // lado = Math.sqrt( largura * altura );
+                    // li.style.width = lado + 'px';
+                    // li.classList.add( 'quadrado' );
+                  // } else {
                     altura += 'px';
                     largura += 'px';
                     barra = li.getElementsByClassName( 'barra' )[ 0 ];
-                    // li.style.width = largura;
                     barra.style.height = altura;
-                  }
-                   
+                  // }
                   consta = true;
                   break
                 }
@@ -821,7 +818,6 @@ var vis = {
               barra = li.getElementsByClassName( 'barra' )[ 0 ];
               casos.innerHTML = '';
               barra.style.height = 0;
-              // li.find( '.barra' ).css( 'height', '0' );
             }
           }
         }
@@ -846,7 +842,6 @@ var vis = {
         for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) { // para cada caso do respectivo município
           caso = municipio.casos[ i ];
           if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
-            console.log(  '')
             raio = Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * vis.mapa.circulos.amplitude;
             break
           }
@@ -1069,11 +1064,30 @@ var vis = {
       },
       seletor : {
         criar : function( el ) {
+          this.opcoes = [];
+          municipios = vis.dados.municipios;
+          for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+            municipio = municipios[ i ];
+            opcao = {
+              id : municipio.id,
+              nome : municipio.nome
+            };
+            this.opcoes.push( opcao );
+          }
+          ascii = /^[ -~]+$/;
+          this.opcoes.sort( function( a, b ) {
+            if ( !ascii.test( a.nome ) || !ascii.test( b.nome ) ) {
+              return a.nome.localeCompare( b.nome ); // faz comparação de caracteres com acentos apenas se eles existirem no nome
+            }
+            if ( a.nome < b.nome ) return -1;
+            if ( a.nome > b.nome ) return 1;
+            return 0;
+          });
           elementos = document.getElementsByClassName( el );
           for ( var i = 0; i < elementos.length; i++ ) {
             elemento = elementos[ i ];
             involucro = document.createElement( 'label' );
-            involucro.classList.add( 'seletor' );
+            involucro.classList.add( 'seletor', 'inativo' );
             rotulo = document.createElement( 'span' );
             rotulo.innerHTML = 'em ';
             involucro.appendChild( rotulo );
@@ -1084,15 +1098,15 @@ var vis = {
             opcao.value = 'todos';
             opcao.text = 'todos os municípios';
             seletor.appendChild( opcao );
-            municipios = vis.dados.municipios;
-            for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
-              municipio = municipios[ i ];
-              UF = vis.obter.UF( municipio.id, 'sigla' );
-              opcao = document.createElement( 'option' );
-              opcao.value = municipio.id;
-              opcao.text = municipio.nome + ', ' + UF;
-              seletor.appendChild( opcao );
-            }    
+            // municipios = vis.dados.municipios;
+            // for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+            //   municipio = municipios[ i ];
+            //   UF = vis.obter.UF( municipio.id, 'sigla' );
+            //   opcao = document.createElement( 'option' );
+            //   opcao.value = municipio.id;
+            //   opcao.text = municipio.nome + ', ' + UF;
+            //   seletor.appendChild( opcao );
+            // }    
             involucro.appendChild( seletor );
             elemento.appendChild( involucro );
             seletor.addEventListener( 'change', function() {
@@ -1100,20 +1114,76 @@ var vis = {
               vis.atualizar();
             });
           }
+          this.atualizar( el );
         },
-        atualizar : function() {
+        atualizar : function( el ) {
+          local = vis.atual.local();
+          classe = vis.filtros.municipio.elemento;
+          filtros = document.getElementsByClassName( el );
+          municipios = vis.dados.municipios;
+          console.log( 'atualizando' );
+          for ( var i = 0; i < filtros.length; i++ ) {
+            filtro = filtros[ i ];
+            seletores = filtro.getElementsByClassName( classe );
+            for ( var j = 0; j < seletores.length; j++ ) {
+              seletor = seletores[ j ];
+              if ( local.tipo == 'todos' ) {
+                seletor.parentElement.classList.add( 'inativo' );
+              }
+              if ( local.tipo == 'UF' ) {
+                console.log( local.tipo );
+                vis.filtros.limpar( seletor );
+                itens = this.opcoes;
+                for ( var k = 0, lenk = itens.length; k < lenk; k++ ) {
+                  item = itens[ k ];
+                  UF = vis.obter.UF( item.id, 'id' );
+                  if ( UF == local.valor ) {
+                    opcao = document.createElement( 'option' );
+                    opcao.value = item.id;
+                    opcao.text = item.nome;
+                    seletor.appendChild( opcao );
+                  }
+                }  
+                seletor.parentElement.classList.remove( 'inativo' );
+              }
+              if ( local.tipo == 'municipio' ) {
+                // console.log( local.tipo );
+                // if ( vis.atual.UF != vis.obter.UF( seletor.options[ 1 ].value, 'id' ) ) {
+                //   vis.filtros.limpar( seletor );
+                //   itens = this.opcoes;
+                //   for ( var k = 0, lenk = itens.length; k < lenk; k++ ) {
+                //     item = itens[ k ];
+                //     UF = vis.obter.UF( item.id, 'id' );
+                //     if ( UF == local.valor ) {
+                //       opcao = document.createElement( 'option' );
+                //       opcao.value = item.id;
+                //       opcao.text = item.nome;
+                //       seletor.appendChild( opcao );
+                //     }
+                //   }
+                // } 
+                // limpa filtro se o UF for diferente
+                seletor.value = local.valor;
+                // seletor.parentElement.classList.remove( 'inativo' );
+              }
+            }
+          }
+          /*
           classe = vis.filtros.municipio.elemento;
           seletores = document.getElementsByClassName( classe );
           for ( var i = 0; i < seletores.length; i++ ) {
             seletor = seletores[ i ];
             seletor.value = vis.atual.municipio;
-            // console.log( 'atualizado filtro de municipio' );
           }
+          */
         }
       },
       criar : function( el ) {
         this.busca.criar( el );
         this.seletor.criar( el );
+      },
+      atualizar : function( el ) {
+        this.seletor.atualizar( el );
       }
     },
     categoria : {
@@ -1158,6 +1228,15 @@ var vis = {
       this.semana.criar( el );
       this.UF.criar( el );
       this.municipio.criar( el );
+    },
+    limpar : function( seletor ) {
+      for ( var i = seletor.options.length - 1 ; i > 0 ; i-- ) { // remove todos os itens menos o primeiro
+        seletor.remove( i );
+      }
+    },
+    atualizar : function( el ) {
+      el = this.elemento;
+      this.municipio.atualizar( el );
     }
   },
   classificacao : {
@@ -1237,7 +1316,6 @@ var vis = {
             unicos = divs[ 2 ];
             acumulado = divs[ 3 ];
             casos = divs[ 4 ];
-            console.log( quantidade );
             nome = local.getElementsByTagName( 'span' )[ 0 ];
             UF = local.getElementsByTagName( 'span' )[ 1 ];
             classificacao.className = empate ? 'empate' : '';
@@ -1247,7 +1325,6 @@ var vis = {
             unicos.dataset.local = municipio.id;
             acumulado.dataset.local = municipio.id;
             casos.innerHTML = quantidade;            
-            console.log( casos );
             li.dataset.ibge = municipio.id;
           }
         }
@@ -1327,8 +1404,8 @@ var vis = {
     vis.classificacao.atualizar();
     // vis.totais.atualizar();
     vis.mapa.circulos.atualizar();
-    vis.filtros.municipio.seletor.atualizar();
-    // vis.filtros.atualizar();
+    // vis.filtros.municipio.seletor.atualizar();
+    vis.filtros.atualizar();
     // vis.graficos.linhas.atualizar();
   }
 };
