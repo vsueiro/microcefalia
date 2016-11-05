@@ -398,13 +398,13 @@ var vis = {
           });
           circulo.addListener( 'click', function() {
             if ( vis.atual.municipio == this.id ) {
+              vis.atual.UF = 'todos';
               vis.atual.municipio = 'todos';
             } else {
+              vis.atual.UF = vis.obter.UF( this.id, 'id' );
               vis.atual.municipio = this.id;
             }
-            // alert( vis.obter.municipio( this.id ).nome );
             vis.atualizar();
-            
           });
           circulo.addListener( 'mouseover', function() {
             if ( this.id != vis.atual.municipio ) {
@@ -415,7 +415,6 @@ var vis = {
           circulo.addListener( 'mouseout', function() {
             if ( this.id != vis.atual.municipio ) {
               this.getIcon().strokeWeight = 0;
-            
               this.setIcon( this.getIcon() );
             }
           });
@@ -608,7 +607,6 @@ var vis = {
             grupo.setAttribute( 'nome', local.nome );
             grupo.addEventListener( 'click', function() {
               alert( this.getAttribute( 'nome' ) );
-              
             });
             for ( var j = 0; j < ( local.casos.length - 1 ); j++ ) {
               caso = local.casos[ j ];
@@ -1039,12 +1037,22 @@ var vis = {
           elemento.appendChild( involucro );
           seletor.addEventListener( 'change', function() {
             vis.atual.UF = this.value;
+            vis.atual.municipio = 'todos';
             vis.atualizar();
           });
         }
       },
       atualizar : function( el ) {
-        // atualiza filtro por estado
+        classe = vis.filtros.UF.elemento;
+        filtros = document.getElementsByClassName( el );
+        for ( var i = 0; i < filtros.length; i++ ) {
+          filtro = filtros[ i ];
+          seletores = filtro.getElementsByClassName( classe );
+          for ( var j = 0; j < seletores.length; j++ ) {
+            seletor = seletores[ j ];
+            seletor.value = vis.atual.UF;
+          }
+        }
       }
     },
     municipio : {
@@ -1076,7 +1084,7 @@ var vis = {
           }
           ascii = /^[ -~]+$/;
           this.opcoes.sort( function( a, b ) {
-            if ( !ascii.test( a.nome ) || !ascii.test( b.nome ) ) {
+            if ( !ascii.test( a.nome + b.nome) ) {
               return a.nome.localeCompare( b.nome ); // faz comparação de caracteres com acentos apenas se eles existirem no nome
             }
             if ( a.nome < b.nome ) return -1;
@@ -1117,65 +1125,34 @@ var vis = {
           this.atualizar( el );
         },
         atualizar : function( el ) {
+          itens = this.opcoes;
           local = vis.atual.local();
           classe = vis.filtros.municipio.elemento;
           filtros = document.getElementsByClassName( el );
-          municipios = vis.dados.municipios;
-          console.log( 'atualizando' );
           for ( var i = 0; i < filtros.length; i++ ) {
             filtro = filtros[ i ];
             seletores = filtro.getElementsByClassName( classe );
             for ( var j = 0; j < seletores.length; j++ ) {
               seletor = seletores[ j ];
+              vis.filtros.limpar( seletor );
               if ( local.tipo == 'todos' ) {
                 seletor.parentElement.classList.add( 'inativo' );
-              }
-              if ( local.tipo == 'UF' ) {
-                console.log( local.tipo );
-                vis.filtros.limpar( seletor );
-                itens = this.opcoes;
+              } else {
                 for ( var k = 0, lenk = itens.length; k < lenk; k++ ) {
                   item = itens[ k ];
                   UF = vis.obter.UF( item.id, 'id' );
-                  if ( UF == local.valor ) {
+                  if ( UF == vis.atual.UF ) {
                     opcao = document.createElement( 'option' );
                     opcao.value = item.id;
+                    opcao.selected = item.id == vis.atual.municipio ? true : false;
                     opcao.text = item.nome;
                     seletor.appendChild( opcao );
                   }
-                }  
+                }
                 seletor.parentElement.classList.remove( 'inativo' );
-              }
-              if ( local.tipo == 'municipio' ) {
-                // console.log( local.tipo );
-                // if ( vis.atual.UF != vis.obter.UF( seletor.options[ 1 ].value, 'id' ) ) {
-                //   vis.filtros.limpar( seletor );
-                //   itens = this.opcoes;
-                //   for ( var k = 0, lenk = itens.length; k < lenk; k++ ) {
-                //     item = itens[ k ];
-                //     UF = vis.obter.UF( item.id, 'id' );
-                //     if ( UF == local.valor ) {
-                //       opcao = document.createElement( 'option' );
-                //       opcao.value = item.id;
-                //       opcao.text = item.nome;
-                //       seletor.appendChild( opcao );
-                //     }
-                //   }
-                // } 
-                // limpa filtro se o UF for diferente
-                seletor.value = local.valor;
-                // seletor.parentElement.classList.remove( 'inativo' );
               }
             }
           }
-          /*
-          classe = vis.filtros.municipio.elemento;
-          seletores = document.getElementsByClassName( classe );
-          for ( var i = 0; i < seletores.length; i++ ) {
-            seletor = seletores[ i ];
-            seletor.value = vis.atual.municipio;
-          }
-          */
         }
       },
       criar : function( el ) {
@@ -1233,9 +1210,11 @@ var vis = {
       for ( var i = seletor.options.length - 1 ; i > 0 ; i-- ) { // remove todos os itens menos o primeiro
         seletor.remove( i );
       }
+      seletor.value = 'todos';
     },
     atualizar : function( el ) {
       el = this.elemento;
+      this.UF.atualizar( el );
       this.municipio.atualizar( el );
     }
   },
@@ -1401,11 +1380,11 @@ var vis = {
     });
   },
   atualizar : function() {
+    vis.filtros.atualizar();
     vis.classificacao.atualizar();
     // vis.totais.atualizar();
     vis.mapa.circulos.atualizar();
     // vis.filtros.municipio.seletor.atualizar();
-    vis.filtros.atualizar();
     // vis.graficos.linhas.atualizar();
   }
 };
