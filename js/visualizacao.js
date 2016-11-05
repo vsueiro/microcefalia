@@ -1328,7 +1328,7 @@ var vis = {
 
                   }
 
-                  altura = quantidade * 2;
+                  altura = quantidade * 4;
 
                   if ( quantidade < 0 ) {
 
@@ -1336,7 +1336,7 @@ var vis = {
 
                     if ( this.negativo ) {
 
-                      altura = Math.abs( quantidade * 2 );
+                      altura = Math.abs( quantidade * 4 );
 
                     } else {
 
@@ -2158,7 +2158,7 @@ var vis = {
 
       elemento : 'municipios',
 
-      itens : 10,
+      itens : 20,
 
       criar : function() {
 

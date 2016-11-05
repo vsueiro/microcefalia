@@ -2,8 +2,8 @@
 
 html,
 body {
-	height: 100%;
-	font-family: 'Open Sans', sans-serif;
+  height: 100%;
+  font-family: 'Open Sans', sans-serif;
 }
 
 ol,
@@ -15,16 +15,16 @@ li {
 }
 
 .mapa {
-	width: 970px;
-	height: 970px;
+  width: 970px;
+  height: 970px;
 }
 
 .ficha {
-	border: 2px solid #eee;
+  border: 2px solid #eee;
 }
 
 .selecionada {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 
@@ -83,7 +83,7 @@ li {
 }
 
 [data-item="grafico"] ol li .barra {
-	height: 0px;
+  height: 0px;
   background: #eee;
 }
 
@@ -98,7 +98,7 @@ li {
 }
 
 [data-item="grafico"] ol li:hover .barra {
-	background: #000;
+  background: #000;
 }
 
 [data-item="grafico"] ol li .barra.selecionada {
@@ -115,7 +115,7 @@ li {
 }
 
 [data-item="grafico"] ol.pequeno li .casos, [data-item="grafico"] ol.pequeno li .semana {
-  visibility: hidden;
+  display: none;
 }
 
 /* dragdealer */
@@ -257,25 +257,41 @@ li {
 /* temp */ 
 
 .classificacao {
-  max-width: 1200px;
+  max-width: 960px;
+  margin-bottom: 48px;
+}
+
+.classificacao > ol > li:first-child {
+  /*box-shadow: inset 0 0 1px;*/
+  border-top: 1px solid #eee;
+}
+
+.classificacao > ol > li {
+  display: flex;
+  justify-content: center;
+  /*align-items: center;*/
+  /*box-shadow: inset 0 0 1px;*/
+  border-bottom: 1px solid #eee;
+  min-height: 68px;
 }
 
 .classificacao li {
-  box-shadow: inset 0 0 1px;
+  /*box-shadow: inset 0 0 1px;*/
 }
 
 .classificacao > ol > li > div {
+  display: flex;
   flex: 1;
-  box-shadow: inset 0 0 1px;
+  align-items: center;
+  padding: 4px 8px;
+  /*box-shadow: inset 0 0 1px;*/
 }
 
 .classificacao ol.evolucao {
+  justify-content: center;
   flex-direction: row;
-}
-
-.classificacao > ol > li > div {
-  padding: 4px 8px;
-  flex: 1;
+  align-self: flex-end;
+  /*justify-content: center;*/
 }
 
 .classificacao > ol > li > div:nth-child(1) {
@@ -292,9 +308,34 @@ li {
   content: ', ';
 }
 
+.classificacao > ol > li > div:nth-child(3) {
+  background: #f9f9f9;
+}
+
+.classificacao > ol > li > div:nth-child(3):hover {
+  cursor: pointer;
+  background: #f2f2f2;
+}
+
+.classificacao > ol > li > div:nth-child(4) {
+
+}
+
+.classificacao > ol > li > div:nth-child(5) {
+  /*background: red;*/
+  max-width: 48px;
+  text-align: right;
+}
+
+.circulos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  /*background: palegoldenrod;*/
+}
+
 .circulo {
-  /*width: 30px;*/
-  /*height: 30px;*/
-  background: #333;
   border-radius: 50%;
+  background: #333;
 }
