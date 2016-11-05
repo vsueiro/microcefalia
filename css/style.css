@@ -270,11 +270,11 @@ li {
   text-align: right;
 }
 
-.classificacao > ol > li > div:nth-child(2) span {
+.classificacao > ol > li > div:nth-child(2) span:nth-child(2) {
   opacity: .5
 }
 
-.classificacao > ol > li > div:nth-child(2) span:before {
+.classificacao > ol > li > div:nth-child(2) span:nth-child(2):before {
   content: ', ';
 }
 

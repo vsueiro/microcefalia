@@ -1997,54 +1997,6 @@ var vis = {
 
       },
 
-      /*
-      criar : function( el ) {
-
-        elementos = document.getElementsByClassName( el );
-
-        for ( var i = 0; i < elementos.length; i++ ) {
-
-          elemento = elementos[ i ];
-
-          categorias = vis.dados.categorias;
-
-          for ( var i = 0, leni = categorias.length; i < leni; i++ ) {
-
-            categoria = categorias[ i ];
-
-            if ( categoria.visivel ) {
-
-              rotulo = document.createElement( 'label' );
-              rotulo.appendChild( document.createTextNode( categoria.apelido ) );
-              rotulo.htmlFor = categoria.sigla;
-
-              seletor = document.createElement( 'input' );
-              // seletor.type = 'checkbox';
-              seletor.type = 'radio';
-              seletor.name = 'categoria';
-              seletor.value = categoria.sigla;
-              seletor.id = categoria.sigla;
-              seletor.checked = categoria.atual;
-              
-              rotulo.appendChild( seletor );
-
-              seletor.addEventListener( 'change', function() {
-
-                vis.atual.categoria = this.value;
-                vis.atualizar();
-
-              });
-
-              elemento.appendChild( rotulo );
-
-            }
-
-          }
-
-        }
-
-      },
-      */
       atualizar : function() {
 
       }
@@ -2092,8 +2044,11 @@ var vis = {
 
             UF  = document.createElement( 'span' );
 
-            nome  = document.createElement( 'div' );
-            nome.appendChild( UF );
+            nome = document.createElement( 'span' );
+
+            local = document.createElement( 'div' );
+            local.appendChild( nome );
+            local.appendChild( UF );
 
             casos = document.createElement( 'div' );
 
@@ -2107,7 +2062,7 @@ var vis = {
 
             li = document.createElement( 'li' );
             li.appendChild( classificacao );
-            li.appendChild( nome );
+            li.appendChild( local );
             li.appendChild( unicos );
             li.appendChild( acumulado );
             li.appendChild( casos );
@@ -2138,19 +2093,27 @@ var vis = {
 
         elementos = document.getElementsByClassName( classe );
 
+        tipo = vis.atual.categoria;
+
+        console.log( tipo );
+
         posicoes = [];
 
         for ( var i = 0; i < elementos.length; i++ ) {
 
           elemento = elementos[ i ];
           
-          lis = elemento.getElementsByTagName( 'li' );
+          ol = elemento.getElementsByTagName( 'ol' )[ 0 ];
+
+          // lis = ele
+
+          lis = ol.childNodes;
 
           for ( var j = 0; j < this.itens; j++ ) {
 
             li = lis[ j ];
             municipio = vis.dados.municipios[ j ];
-            quantidade = vis.obter.acumulados( municipio, tipo ) || 0;
+            quantidade = vis.obter.total( municipio.id, tipo ) || 0;
             empate = false;
 
             if ( j == 0 ) {
@@ -2175,20 +2138,28 @@ var vis = {
 
             });
 
-            divs = li.getElementsByTagName( 'div' );
+            divs = li.childNodes;
 
-            span = divs[ 1 ].getElementsByTagName( 'span' )[ 0 ];
-            span.appendChild( document.createTextNode( vis.obter.UF( municipio.id, 'sigla' ) ) )
+            classificacao = divs[ 0 ];
+            local = divs[ 1 ];
+            unicos = divs[ 2 ];
+            acumulado = divs[ 3 ];
+            casos = divs[ 4 ];
 
-            nome = document.createTextNode( municipio.nome );
+            console.log( quantidade );
 
-            divs[ 0 ].className = empate ? 'empate' : '';
-            divs[ 0 ].innerText = posicao + 'º';
-            divs[ 1 ].appendChild( nome );
-            divs[ 1 ].appendChild( span );
-            divs[ 2 ].dataset.local = municipio.id;
-            divs[ 3 ].dataset.local = municipio.id;
-            divs[ 4 ].innerText = quantidade;            
+            nome = local.getElementsByTagName( 'span' )[ 0 ];
+            UF = local.getElementsByTagName( 'span' )[ 1 ];
+
+            classificacao.className = empate ? 'empate' : '';
+            classificacao.innerHTML = posicao + 'º';
+            nome.innerHTML = municipio.nome;
+            UF.innerHTML = vis.obter.UF( municipio.id, 'sigla' );
+            unicos.dataset.local = municipio.id;
+            acumulado.dataset.local = municipio.id;
+            casos.innerHTML = quantidade;            
+
+            console.log( casos );
 
             li.dataset.ibge = municipio.id;
 
@@ -2214,6 +2185,8 @@ var vis = {
 
             if ( grafico.classList.contains( 'unicos' ) ) {
 
+              grafico.innerHTML = '';
+
               grafico.appendChild( vis.graficos.evolucao.criar( local ) );
 
               vis.graficos.evolucao.atualizar( local );
@@ -2221,6 +2194,8 @@ var vis = {
             }
 
             else if ( grafico.classList.contains( 'acumulado' ) ) {
+
+              grafico.innerHTML = '';
 
               grafico.appendChild( vis.graficos.circulo.criar( local ) );
 
@@ -2337,7 +2312,7 @@ var vis = {
 
     vis.filtros.municipio.seletor.atualizar();
 
-    vis.filtros.atualizar();
+    // vis.filtros.atualizar();
 
     // vis.graficos.linhas.atualizar();
 
