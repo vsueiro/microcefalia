@@ -49,7 +49,7 @@ li {
 }
 
 [data-item="grafico"] ol li + li {
-  padding-left: 8px;
+  margin-left: 8px;
 }
 
 [data-item="grafico"] ol li span {
@@ -105,13 +105,13 @@ li {
   background: #000;
 }
 
-[data-item="grafico"] ol.pequeno li:first-child {
-  padding-right: 12px;
+[data-item="grafico"] ol li:first-child {
+  margin-right: 12px;
   display: none;
 }
 
 [data-item="grafico"] ol.pequeno li + li {
-  padding-left: 1px;
+  margin-left: 2px;
 }
 
 [data-item="grafico"] ol.pequeno li .casos, [data-item="grafico"] ol.pequeno li .semana {
@@ -272,7 +272,7 @@ li {
   /*align-items: center;*/
   /*box-shadow: inset 0 0 1px;*/
   border-bottom: 1px solid #eee;
-  min-height: 68px;
+  min-height: 72px;
 }
 
 .classificacao li {
@@ -291,7 +291,22 @@ li {
   justify-content: center;
   flex-direction: row;
   align-self: flex-end;
+  min-height: 100%;
   /*justify-content: center;*/
+}
+
+.classificacao ol.evolucao li {
+  background: #f2f2f2;
+}
+
+.classificacao ol.evolucao li:hover,
+.classificacao ol.evolucao li.hovered {
+  background: #e5e5e5;
+}
+
+.classificacao ol.evolucao li:hover .barra,
+.classificacao ol.evolucao li.hovered .barra {
+  background: #8ba566;
 }
 
 .classificacao > ol > li > div:nth-child(1) {
@@ -309,16 +324,16 @@ li {
 }
 
 .classificacao > ol > li > div:nth-child(3) {
-  background: #f9f9f9;
+  /*background: #f9f9f9;*/
 }
 
 .classificacao > ol > li > div:nth-child(3):hover {
   cursor: pointer;
-  background: #f2f2f2;
+  /*background: #f2f2f2;*/
 }
 
 .classificacao > ol > li > div:nth-child(4) {
-
+  
 }
 
 .classificacao > ol > li > div:nth-child(5) {
@@ -332,10 +347,12 @@ li {
   justify-content: center;
   align-items: center;
   width: 100%;
+  transition: height .3s;
   /*background: palegoldenrod;*/
 }
 
 .circulo {
   border-radius: 50%;
   background: #333;
+  opacity: .75;
 }

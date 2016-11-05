@@ -1351,7 +1351,8 @@ var vis = {
                   }
 
                   casos = li.getElementsByClassName( 'casos' )[ 0 ];
-                  casos.innerHTML = quantidade;
+                    
+                  casos.innerHTML = quantidade > 0 ? quantidade : '';
 
                   if ( sem == 6 && ano == 2016 ) { // faz quadrado do acumulado
 
