@@ -15,8 +15,14 @@ li {
 }
 
 .mapa {
-  width: 970px;
-  height: 970px;
+  width: 100%;
+  max-width: 960px;
+  height: 0;
+  max-height: 960px;
+  padding-bottom: 100%;
+  margin: 48px auto;
+  border: 1px solid #eee;
+  /*transform: scale( .5);*/
 }
 
 .ficha {
@@ -128,6 +134,7 @@ li {
   background: #eee;
   border-radius: 999px;
   margin: 18px 0;
+  display: none;
 }
 
 .dragdealer .handle {
@@ -158,46 +165,10 @@ li {
   background: #999;
 }
 
-/* classificação */
-
-.classificacao li {
-  display: flex;
-  width: 100%;
-}
-
-.classificacao {
-  width: 100%;
-  max-width: 272px;
-}
-
-.classificacao li div {
-  /*width: 16%;*/
-}
-
-.classificacao li div.empate {
-  opacity: .25;
-}
-
-.classificacao ol {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.classificacao li div:nth-child( 2 ) {
-  /*width: 68%;*/
-}
 
 /* temporário, para ficar remover itens não funcionais */
 
 .filtros input[type="search"] {
-  display: none;
-}
-
-.fichas [data-item="local"],
-.fichas [data-item="UF"],
-.fichas [data-item="local"],
-.fichas [data-item="data"] {
   display: none;
 }
 
@@ -207,14 +178,6 @@ li {
   list-style-type: none;
   margin: 0;
   padding: 0;
-}
-
-.fichas {
-  width: 970px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .visualizacao {
@@ -254,7 +217,28 @@ li {
 
 
 
-/* temp */ 
+/* classificação */
+
+.classificacao li {
+  display: flex;
+  width: 100%;
+}
+
+.classificacao {
+  width: 100%;
+  max-width: 272px;
+}
+
+.classificacao li div.empate {
+  opacity: .125;
+}
+
+.classificacao ol {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 
 .classificacao {
   max-width: 960px;
@@ -355,4 +339,15 @@ li {
   border-radius: 50%;
   background: #333;
   opacity: .75;
+}
+
+/* media queries */ 
+
+@media ( min-width: 960px ) {
+
+  .mapa {
+    height: 960px;
+    padding-bottom: 0;
+  }
+
 }

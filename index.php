@@ -15,19 +15,19 @@
 
     <article class="visualizacao">
                 
-      <section class="fichas"></section>
+      <section class="totais"></section>
 
       <form class="filtros"></form>
 
       <nav class="navegacao"></nav>
 
-      <section class="classificacao municipios"></section>
-
       <div class="grafico mapa"></div>
-      
-      <section class="grafico acumulado municipios"></section>
 
-      <section class="grafico acumulado UFs"></section>
+      <section class="classificacao municipios"></section>
+      
+      <!-- <section class="grafico acumulado municipios"></section> -->
+
+      <!-- <section class="grafico acumulado UFs"></section> -->
 
     </article>
 
