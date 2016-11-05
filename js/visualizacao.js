@@ -455,10 +455,8 @@ var vis = {
             caso = municipio.casos[ j ];
             if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
               raio = Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * vis.mapa.circulos.amplitude;
-              
               circulo.getIcon().scale = raio;
               circulo.getIcon().strokeWeight = 0;
-      
               circulo.setIcon( circulo.getIcon() );
               consta = true;
               break
@@ -505,7 +503,6 @@ var vis = {
       vis.mapa.objeto.panTo( position );
     },
     criar : function() {
-      
       elementos = document.getElementsByClassName( this.elemento );
       for ( var i = 0; i < elementos.length; i++ ) {
         elemento = elementos[ i ];
@@ -690,8 +687,14 @@ var vis = {
     evolucao : {
       elemento : 'evolucao',
       estilo : {
-        tamanho : 'pequeno',
-        x : 4 // 8
+        pequeno : {
+          classe : 'pequeno',
+          x : 4
+        },
+        grande : {
+          classe : '',
+          x : 8
+        }
       },
       negativo : false,
       criar: function( local ) {
@@ -728,9 +731,9 @@ var vis = {
         }
         return ol;
       },
-      atualizar : function( local, estilo ) {
+      atualizar : function( local, estilos ) {
         local = local || 'todos';
-        estilo = estilo || this.estilo;
+        estilo = this.estilo[ estilos ] || this.estilo.pequeno;
         tipo = vis.atual.categoria;
         if ( local == 'todos' ) {
           semanas = vis.dados.totais;
@@ -759,8 +762,8 @@ var vis = {
         for ( var i = 0; i < elementos.length; i++ ) {
           elemento = elementos[ i ];
           if ( elemento.dataset.local == local ) {
-            if ( estilo.tamanho != '' ) {
-              elemento.classList.add( estilo.tamanho );
+            if ( estilo.classe != '' ) {
+              elemento.classList.add( estilo.classe );
             }
             lis = elemento.getElementsByTagName( 'li' );
             for ( var j = 0; j < lis.length; j++ ) {
@@ -850,6 +853,23 @@ var vis = {
             circulo.style.width  = raio * 2 + 'px';
             circulo.style.height = raio * 2 + 'px';
           }
+        }
+      }
+    },
+    criar : function() {
+      graficos = elemento.getElementsByClassName( 'grafico' );
+      for ( var j = 0; j < graficos.length; j++ ) {
+        grafico = graficos[ j ];
+        local = grafico.dataset.local;
+        if ( grafico.classList.contains( 'unicos' ) ) {
+          grafico.innerHTML = '';
+          grafico.appendChild( vis.graficos.evolucao.criar( local ) );
+          vis.graficos.evolucao.atualizar( local );
+        }
+        else if ( grafico.classList.contains( 'acumulado' ) ) {
+          grafico.innerHTML = '';
+          grafico.appendChild( vis.graficos.circulo.criar( local ) );
+          vis.graficos.circulo.atualizar( local );
         }
       }
     }
@@ -1228,7 +1248,6 @@ var vis = {
         elementos = document.getElementsByClassName( classe );
         for ( var i = 0; i < elementos.length; i++ ) {
           elemento = elementos[ i ];
-          
           ol = document.createElement( 'ol' );
           for ( var j = 0; j < this.itens; j++ ) {
             classificacao = document.createElement( 'div' );
