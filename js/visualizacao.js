@@ -642,11 +642,12 @@ var vis = {
 
       lista : [],
 
-      amplitude : 7.5,
+      amplitude : 6.5,
 
       cor : {
- 
-        normal : '#333',
+        
+        esmaecido : '#8ba566',
+        normal : '#6A814B',
         destaque : '#222',
         selecionado : '#000',
         obito: '#41d893'
@@ -674,7 +675,7 @@ var vis = {
               path: google.maps.SymbolPath.CIRCLE,
               scale: 0,
               fillColor: vis.mapa.circulos.cor.normal,
-              fillOpacity: 0.5,
+              fillOpacity: 1,
               strokeColor: vis.mapa.circulos.cor.normal,
               strokeWeight: 0
 
@@ -1559,8 +1560,16 @@ var vis = {
 
             elemento = elementos[ i ];
 
+            rotulo = document.createElement( 'span' );
+            rotulo.innerHTML = 'até ';
+
+            involucro = document.createElement( 'label' );
+            involucro.classList.add( 'seletor' );
+
+            involucro.appendChild( rotulo );
+
             seletor = document.createElement( 'select' );
-            seletor.className = 'semanas';
+            seletor.classList.add( 'semanas' );
 
             grupos = {};
 
@@ -1570,7 +1579,7 @@ var vis = {
               inicio = vis.filtros.semana.quando( semana.inicio );
               fim = vis.filtros.semana.quando( semana.fim );
 
-              acumulados = 'Até ' + fim;
+              acumulados = fim; // acumulados = 'até ' + fim;
               acumulados = removeAno( acumulados );
 
               unicos = inicio + ' a ' + fim;
@@ -1610,7 +1619,9 @@ var vis = {
 
             });
 
-            elemento.appendChild( seletor );
+            involucro.appendChild( seletor );
+
+            elemento.appendChild( involucro );
 
             seletor.addEventListener( 'change', function() {
 
@@ -1760,13 +1771,21 @@ var vis = {
 
           elemento = elementos[ i ];
 
+          involucro = document.createElement( 'label' );
+          involucro.classList.add( 'seletor' );
+
+          rotulo = document.createElement( 'span' );
+          rotulo.innerHTML = 'em ';
+
+          involucro.appendChild( rotulo );
+
           seletor = document.createElement( 'select' );
           seletor.className = this.elemento;
     
           opcao = document.createElement( 'option' );
           opcao.selected = true;
           opcao.value = 'todos';
-          opcao.text = 'Todos os Estados';
+          opcao.text = 'todos os Estados';
 
           seletor.appendChild( opcao );
 
@@ -1784,7 +1803,9 @@ var vis = {
 
           }    
 
-          elemento.appendChild( seletor );
+          involucro.appendChild( seletor );
+
+          elemento.appendChild( involucro );
 
           seletor.addEventListener( 'change', function() {
 
@@ -1842,13 +1863,21 @@ var vis = {
 
             elemento = elementos[ i ];
 
+            involucro = document.createElement( 'label' );
+            involucro.classList.add( 'seletor' );
+
+            rotulo = document.createElement( 'span' );
+            rotulo.innerHTML = 'em ';
+
+            involucro.appendChild( rotulo );
+
             seletor = document.createElement( 'select' );
             seletor.className = 'municipios';
       
             opcao = document.createElement( 'option' );
             opcao.selected = true;
             opcao.value = 'todos';
-            opcao.text = 'Todos os municípios';
+            opcao.text = 'todos os municípios';
 
             seletor.appendChild( opcao );
 
@@ -1867,7 +1896,9 @@ var vis = {
 
             }    
 
-            elemento.appendChild( seletor );
+            involucro.appendChild( seletor );
+
+            elemento.appendChild( involucro );
 
             seletor.addEventListener( 'change', function() {
 
@@ -1911,6 +1942,62 @@ var vis = {
 
     categoria : {
 
+      elemento : 'categoria',
+
+      criar : function( el ) {
+
+        elementos = document.getElementsByClassName( el );
+
+        for ( var i = 0; i < elementos.length; i++ ) {
+
+          elemento = elementos[ i ];
+
+          involucro = document.createElement( 'label' );
+          involucro.classList.add( 'seletor' );
+
+          rotulo = document.createElement( 'span' );
+          rotulo.innerHTML = 'Ver ';
+
+          involucro.appendChild( rotulo );
+
+          seletor = document.createElement( 'select' );
+          seletor.className = this.elemento;
+    
+          categorias = vis.dados.categorias;
+
+          for ( var i = 0, leni = categorias.length; i < leni; i++ ) {
+
+            categoria = categorias[ i ];
+
+            if ( categoria.visivel ) {
+
+              opcao = document.createElement( 'option' );
+              opcao.value = categoria.sigla;
+              opcao.selected = categoria.sigla == 'c' ? true : false;
+              opcao.text = categoria.apelido;
+
+              seletor.appendChild( opcao );
+
+            }
+
+          }    
+
+          involucro.appendChild( seletor );
+
+          elemento.appendChild( involucro );
+
+          seletor.addEventListener( 'change', function() {
+
+            vis.atual.categoria = this.value;
+            vis.atualizar();
+
+          });
+
+        }
+
+      },
+
+      /*
       criar : function( el ) {
 
         elementos = document.getElementsByClassName( el );
@@ -1957,7 +2044,7 @@ var vis = {
         }
 
       },
-
+      */
       atualizar : function() {
 
       }
