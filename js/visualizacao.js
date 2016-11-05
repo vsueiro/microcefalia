@@ -2186,7 +2186,7 @@ var vis = {
             if ( grafico.classList.contains( 'unicos' ) ) {
 
               grafico.innerHTML = '';
-
+              
               grafico.appendChild( vis.graficos.evolucao.criar( local ) );
 
               vis.graficos.evolucao.atualizar( local );

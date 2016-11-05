@@ -114,7 +114,7 @@ li {
 
 [data-item="grafico"] ol li .barra {
   height: 0px;
-  background: #eee;
+  background: #ddd;
 }
 
 [data-item="grafico"] ol li span.semana {
@@ -251,7 +251,11 @@ li {
 }
 
 .classificacao ol.evolucao li {
-  background: #f2f2f2;
+  background: #f9f9f9;
+}
+
+.classificacao ol.evolucao li.ativo {
+  background: #f0f0f0;
 }
 
 .classificacao ol.evolucao li:hover,
