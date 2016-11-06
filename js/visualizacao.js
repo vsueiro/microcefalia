@@ -435,12 +435,12 @@ var vis = {
         vis.calcular.totais( 'todos' );
         vis.calcular.totais( 'UF' );
         vis.filtros.criar();
+        vis.totais.criar();
         vis.classificacao.criar();
         vis.mapa.circulos.atualizar();
         vis.graficos.linhas.criar( 'municipios' );
         vis.graficos.linhas.criar( 'UFs' );
         vis.atual.estado.iniciado = true;
-        
       },
       atualizar : function( sem, cat ) {
         sem = sem || vis.atual.semana();
@@ -786,6 +786,9 @@ var vis = {
                     quantidade = semana[ tipo ] || 0;
                   }
                   altura = quantidade * 4;
+                  if ( principal ) {
+                    altura = quantidade * 2;  
+                  }
                   if ( quantidade < 0 ) {
                     li.classList.add( 'negativo' );
                     if ( this.negativo ) {
@@ -996,7 +999,7 @@ var vis = {
                 }
                 if ( vis.atual.estado.iniciado ) {
                   vis.classificacao.atualizar();
-                  // vis.totais.atualizar();
+                  vis.totais.atualizar();
                 }
                 pai = document.getElementById( this.wrapper.id );
                 pai.classList.add( 'carregado' );
@@ -1004,7 +1007,6 @@ var vis = {
                 vis.filtros.semana.deslizador.temporizador = setTimeout( function(){
                   if ( !vis.filtros.semana.deslizador.atualizou ) {
                     vis.mapa.circulos.atualizar();
-                    // vis.totais.atualizar();
                     vis.filtros.semana.deslizador.atualizou = true;
                   }
                 }, 500);
@@ -1236,6 +1238,58 @@ var vis = {
       this.municipio.atualizar( el );
     }
   },
+  totais : {
+    elemento : 'totais',
+    criar : function() {
+      elementos = document.getElementsByClassName( this.elemento );
+      for ( var i = 0; i < elementos.length; i++ ) {
+        elemento = elementos[ i ];
+        cabecalho = document.createElement( 'header' );
+        entidade = document.createElement( 'span' );
+        entidade.classList.add( 'local' );
+        casos = document.createElement( 'span' );
+        casos.classList.add( 'casos' );
+        rotulo = document.createElement( 'span' );
+        rotulo.classList.add( 'rotulo' );
+        unicos = document.createElement( 'div' );
+        unicos.classList.add( 'grafico', 'unicos', 'principal' );
+        // unicos.dataset.local = 'todos';
+        cabecalho.appendChild( entidade );
+        cabecalho.appendChild( casos );
+        cabecalho.appendChild( rotulo );
+        cabecalho.appendChild( unicos );
+        elemento.appendChild( cabecalho );
+      }
+      this.atualizar();
+    },
+    atualizar : function() {
+      console.log( 'atualizando*' );
+      elementos = document.getElementsByClassName( this.elemento );
+      tipo = vis.atual.categoria;
+      local = vis.atual.UF;
+      for ( var i = 0; i < elementos.length; i++ ) {
+        elemento = elementos[ i ];
+        entidade = elemento.getElementsByClassName( 'local' )[ 0 ];
+        casos = elemento.getElementsByClassName( 'casos' )[ 0 ];
+        rotulo = elemento.getElementsByClassName( 'rotulo' )[ 0 ];
+        unicos = elemento.getElementsByClassName( 'grafico unicos' )[ 0 ];
+        acumulado = elemento.getElementsByClassName( 'grafico acumulado' )[ 0 ];
+        entidade.innerHTML = local == 'todos' ? 'Brasil' : local; 
+        casos.innerHTML = vis.obter.total( local, tipo ); 
+        rotulo.innerHTML = vis.atual.categoria; 
+        if ( unicos ) {
+          unicos.innerHTML = '';
+          unicos.appendChild( vis.graficos.evolucao.criar( local ) );
+          vis.graficos.evolucao.atualizar( local );
+        }
+        if ( acumulado ) {
+          acumulado.innerHTML = '';
+          acumulado.appendChild( vis.graficos.circulo.criar( local ) );
+          vis.graficos.circulo.atualizar( local );
+        }
+      }
+    }
+  },
   classificacao : {
     elemento : 'classificacao',
     municipios : {
@@ -1321,12 +1375,11 @@ var vis = {
             li.dataset.ibge = municipio.id;
           }
         }
-        // classe = vis.classificacao.elemento + ' ' + this.elemento;
-        // elementos = document.getElementsByClassName( classe );
-        // for ( var i = 0; i < elementos.length; i++ ) {
-          // elemento = elementos[ i ];
-          // graficos = elemento.getElementsByClassName( 'grafico' );
-          graficos = document.getElementsByClassName( 'grafico' );
+        classe = vis.classificacao.elemento + ' ' + this.elemento;
+        elementos = document.getElementsByClassName( classe );
+        for ( var i = 0; i < elementos.length; i++ ) {
+          elemento = elementos[ i ];
+          graficos = elemento.getElementsByClassName( 'grafico' );
           for ( var j = 0; j < graficos.length; j++ ) {
             grafico = graficos[ j ];
             local = grafico.dataset.local;
@@ -1341,8 +1394,8 @@ var vis = {
               vis.graficos.circulo.atualizar( local );
             }
           }
-        // }
-        // vis.graficos.evolucao.atualizar();
+        }
+        vis.graficos.evolucao.atualizar();
       }
     },
     UFs : {
@@ -1395,7 +1448,9 @@ var vis = {
     });
   },
   atualizar : function() {
+    console.log( 'oi' );
     vis.filtros.atualizar();
+    vis.totais.atualizar();
     vis.classificacao.atualizar();
     // vis.totais.atualizar();
     vis.mapa.circulos.atualizar();

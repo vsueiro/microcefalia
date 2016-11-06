@@ -9,9 +9,8 @@
   </head>
   <body>
     <article class="visualizacao">    
-      <section class="totais"></section>
       <form class="filtros"></form>
-      <section class="grafico unicos principal" data-local="todos"></section>
+      <section class="totais"></section>
       <section class="classificacao municipios"></section>
       <nav class="navegacao"></nav>
       <div class="grafico mapa"></div>
