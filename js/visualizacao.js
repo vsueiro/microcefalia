@@ -156,6 +156,18 @@ var vis = {
         }
       }
     },
+    categoria : function( sigla, retorno ) {
+      categorias = vis.dados.categorias;
+      for ( var i = 0, leni = categorias.length; i < leni; i++ ) {
+        categoria = categorias[ i ];
+        if ( categoria.sigla == sigla ) {
+          if ( retorno ) {
+            return categoria[ retorno ]
+          }
+          return categoria
+        }
+      }
+    },
     semana : function() {
       classe = vis.filtros.semana.elemento;
       elementos = document.getElementsByClassName( classe );
@@ -202,19 +214,30 @@ var vis = {
           }
         }         
       } else if ( local > 99 ) { // municipio
+        console.log( 'to achando que é município' );
         entidade = vis.obter.municipio( local );
-      } else { // UF
-        entidade = vis.obter.UF( local );
-      }
-      i = entidade.casos.length;
-      while ( i-- ) {
-        caso = entidade.casos[ i ];
-        if ( caso.ano <= sem.ano && caso.sem <= sem.numero ) { // pega o ultimo dado da categoria que consta, mesmo que não seja na semana mais recente
-          if ( tipo in caso ) {
-            return caso[ tipo ]
+        i = entidade.casos.length;
+        while ( i-- ) {
+          caso = entidade.casos[ i ];
+          if ( caso.ano <= sem.ano && caso.sem <= sem.numero ) { // pega o ultimo dado da categoria que consta, mesmo que não seja na semana mais recente
+            if ( tipo in caso ) {
+              return caso[ tipo ]
+            }
           }
         }
-      } 
+      } else { // UF
+        console.log( 'to achando que é UF' );
+        entidade = vis.obter.UF( local );
+        i = entidade.casos.length;
+        while ( i-- ) {
+          caso = entidade.casos[ i ];
+          if ( caso.ano >= sem.ano && caso.sem >= sem.numero ) { // pega o ultimo dado da categoria que consta, mesmo que não seja na semana mais recente
+            if ( tipo in caso ) {
+              return caso[ tipo ]
+            }
+          }
+        }
+      }
     },
     csv : {
       baixar : function( conteudo, arquivo ) {
@@ -736,8 +759,17 @@ var vis = {
         if ( local == 'todos' ) {
           semanas = vis.dados.totais;
         } else {
-          function unicos( semanas ) {
+          function unicos( casos, entidade ) {
             unicos = [];
+            if ( entidade == 'UF' ) {
+              if ( semanas[ 0 ].sem != 6 ) {
+                semanas = JSON.parse( JSON.stringify( casos ) );
+                semanas.reverse(); 
+              }
+              console.log( semanas[ 0 ].sem );
+            } else {
+              semanas = casos;
+            }
             for ( var i = 0, leni = semanas.length; i < leni; i++ ) {
               semana = semanas[ i ];
               anterior = 0;
@@ -752,10 +784,12 @@ var vis = {
             }
             return unicos;
           }
-          semanas = unicos( vis.obter.municipio( local ).casos ); 
+          if ( local > 99 ) {
+            semanas = unicos( vis.obter.municipio( local ).casos, 'municipio' ); 
+          } else {
+            semanas = unicos( vis.obter.UF( local ).casos, 'UF' ); 
+          }
         }
-        // console.log( 'atualiza ' + vis.obter.municipio( local ).nome );
-        // console.log( semanas );
         elementos = document.getElementsByClassName( this.elemento );
         for ( var i = 0; i < elementos.length; i++ ) {
           elemento = elementos[ i ];
@@ -1253,7 +1287,6 @@ var vis = {
         rotulo.classList.add( 'rotulo' );
         unicos = document.createElement( 'div' );
         unicos.classList.add( 'grafico', 'unicos', 'principal' );
-        // unicos.dataset.local = 'todos';
         cabecalho.appendChild( entidade );
         cabecalho.appendChild( casos );
         cabecalho.appendChild( rotulo );
@@ -1263,7 +1296,6 @@ var vis = {
       this.atualizar();
     },
     atualizar : function() {
-      console.log( 'atualizando*' );
       elementos = document.getElementsByClassName( this.elemento );
       tipo = vis.atual.categoria;
       local = vis.atual.UF;
@@ -1274,9 +1306,13 @@ var vis = {
         rotulo = elemento.getElementsByClassName( 'rotulo' )[ 0 ];
         unicos = elemento.getElementsByClassName( 'grafico unicos' )[ 0 ];
         acumulado = elemento.getElementsByClassName( 'grafico acumulado' )[ 0 ];
-        entidade.innerHTML = local == 'todos' ? 'Brasil' : local; 
-        casos.innerHTML = vis.obter.total( local, tipo ); 
-        rotulo.innerHTML = vis.atual.categoria; 
+        entidade.innerHTML = local == 'todos' ? 'Brasil' : vis.obter.UF( local, 'nome' ); 
+        casos.innerHTML = vis.obter.total( local, tipo );
+        console.log( 'local: ' + local );
+        console.log( 'tipo: ' + tipo );
+        console.log( 'vis.obter.total: ' + vis.obter.total( local, tipo ) );
+        // console.log( 'vis.obter.acumulados: ' + vis.obter.acumulados( local, tipo ) );
+        rotulo.innerHTML = vis.obter.categoria( tipo, 'nome' ); 
         if ( unicos ) {
           unicos.innerHTML = '';
           unicos.appendChild( vis.graficos.evolucao.criar( local ) );
@@ -1452,7 +1488,6 @@ var vis = {
     vis.filtros.atualizar();
     vis.totais.atualizar();
     vis.classificacao.atualizar();
-    // vis.totais.atualizar();
     vis.mapa.circulos.atualizar();
     // vis.filtros.municipio.seletor.atualizar();
     // vis.graficos.linhas.atualizar();
