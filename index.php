@@ -11,10 +11,10 @@
     <article class="visualizacao">    
       <section class="totais"></section>
       <form class="filtros"></form>
+      <section class="grafico unicos principal" data-local="todos"></section>
       <section class="classificacao municipios"></section>
       <nav class="navegacao"></nav>
       <div class="grafico mapa"></div>
-      <section class="grafico unicos principal" data-item="grafico" data-local="todos"></section>
       <!-- <section class="grafico acumulado municipios"></section> -->
       <!-- <section class="grafico acumulado UFs"></section> -->
     </article>

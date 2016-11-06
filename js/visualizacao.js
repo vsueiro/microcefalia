@@ -689,11 +689,9 @@ var vis = {
       estilo : {
         pequeno : {
           classe : 'pequeno',
-          x : 4
         },
         grande : {
           classe : '',
-          x : 8
         }
       },
       negativo : false,
@@ -762,8 +760,11 @@ var vis = {
         for ( var i = 0; i < elementos.length; i++ ) {
           elemento = elementos[ i ];
           if ( elemento.dataset.local == local ) {
+            principal = elemento.parentElement.classList.contains( 'principal' );
             if ( estilo.classe != '' ) {
-              elemento.classList.add( estilo.classe );
+              if ( !principal ) {
+                elemento.classList.add( estilo.classe );
+              }
             }
             lis = elemento.getElementsByTagName( 'li' );
             for ( var j = 0; j < lis.length; j++ ) {
@@ -771,8 +772,6 @@ var vis = {
               sem = li.dataset.sem;
               ano = li.dataset.ano;
               consta = false;
-              largura = estilo.x;
-              li.style.width = largura + 'px';
               if ( sem <= vis.atual.semana().numero && ano <= vis.atual.semana().ano ) {
                 li.classList.add( 'ativo' );
               } else {
@@ -805,7 +804,6 @@ var vis = {
                     // li.classList.add( 'quadrado' );
                   // } else {
                     altura += 'px';
-                    largura += 'px';
                     barra = li.getElementsByClassName( 'barra' )[ 0 ];
                     barra.style.height = altura;
                   // }
@@ -1258,10 +1256,10 @@ var vis = {
             local.appendChild( UF );
             casos = document.createElement( 'div' );
             unicos = document.createElement( 'div' );
-            unicos.dataset.item = 'grafico';
+            // unicos.dataset.item = 'grafico';
             unicos.classList.add( 'grafico', 'unicos' );
             acumulado = document.createElement( 'div' );
-            acumulado.dataset.item = 'grafico';
+            // acumulado.dataset.item = 'grafico';
             acumulado.classList.add( 'grafico', 'acumulado' );
             li = document.createElement( 'li' );
             li.appendChild( classificacao );
@@ -1269,9 +1267,6 @@ var vis = {
             li.appendChild( unicos );
             li.appendChild( acumulado );
             li.appendChild( casos );
-            if ( j == -1 ) {
-              li.classList.add( 'cabecalho' );
-            }
             ol.appendChild( li );
           }
           elemento.appendChild( ol );
@@ -1326,11 +1321,12 @@ var vis = {
             li.dataset.ibge = municipio.id;
           }
         }
-        classe = vis.classificacao.elemento + ' ' + this.elemento;
-        elementos = document.getElementsByClassName( classe );
-        for ( var i = 0; i < elementos.length; i++ ) {
-          elemento = elementos[ i ];
-          graficos = elemento.getElementsByClassName( 'grafico' );
+        // classe = vis.classificacao.elemento + ' ' + this.elemento;
+        // elementos = document.getElementsByClassName( classe );
+        // for ( var i = 0; i < elementos.length; i++ ) {
+          // elemento = elementos[ i ];
+          // graficos = elemento.getElementsByClassName( 'grafico' );
+          graficos = document.getElementsByClassName( 'grafico' );
           for ( var j = 0; j < graficos.length; j++ ) {
             grafico = graficos[ j ];
             local = grafico.dataset.local;
@@ -1345,7 +1341,7 @@ var vis = {
               vis.graficos.circulo.atualizar( local );
             }
           }
-        }
+        // }
         // vis.graficos.evolucao.atualizar();
       }
     },
