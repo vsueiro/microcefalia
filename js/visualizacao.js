@@ -2199,12 +2199,6 @@ var vis = {
             li.appendChild( acumulado );
             li.appendChild( casos );
 
-            if ( j == -1 ) {
-
-              li.classList.add( 'cabecalho' );
-
-            }
-
             ol.appendChild( li );
 
           }
@@ -2319,8 +2313,6 @@ var vis = {
 
         }
 
-        // vis.graficos.evolucao.atualizar();
-
       }
 
     },
@@ -2329,15 +2321,15 @@ var vis = {
 
       criar : function() {
 
-        // console.log( 'cria classificao de UFs' );
+        console.log( 'cria classificao de UFs' );
 
-        this.atualizar();
+        // this.atualizar();
 
       },
 
       atualizar : function() {
 
-        // console.log( 'atualiza classificao de UFs' );
+        console.log( 'atualiza classificao de UFs' );
 
       }
 
