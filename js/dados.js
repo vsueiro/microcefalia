@@ -192,10 +192,10 @@ function clean( json, format ) {
 
               if ( caso.n ) delete caso.n;
               // if ( caso.i ) delete caso.i;
-              if ( caso.d ) delete caso.d;
+              // if ( caso.d ) delete caso.d;
               if ( caso.on ) delete caso.on;
               // if ( caso.oi ) delete caso.oi;
-              if ( caso.od ) delete caso.od;
+              // if ( caso.od ) delete caso.od;
 
             }
 
@@ -262,4 +262,4 @@ function clean( json, format ) {
 
 }
 
-clean( caminho + 'data/listaMicrocefalia.json', 'json' );
+clean( caminho + 'data/listaMicrocefalia-mais-recente.json', 'json' );
