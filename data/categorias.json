@@ -18,7 +18,7 @@
   {
     "sigla" : "c",
     "apelido" : "casos",
-    "nome" : "Total confirmado",
+    "nome" : "Casos confirmados",
     "total" : 0,
     "atual" : true,
     "visivel" : true
@@ -50,7 +50,7 @@
   {
     "sigla" : "oc",
     "apelido" : "óbitos",
-    "nome" : "Total de óbitos confirmados",
+    "nome" : "Óbitos confirmados",
     "total" : 0,
     "atual" : false,
     "visivel" : true

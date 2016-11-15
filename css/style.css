@@ -35,6 +35,7 @@ li {
     padding-bottom: 100%;
     margin: 48px auto;
     border: 1px solid #eee;
+    /*transform: scale( .5 );*/
 }
 @media ( min-width: 960px) {
     .mapa {
@@ -51,76 +52,77 @@ li {
 
 /* grafico de barras */
 
-[data-item="grafico"] {
-    list-style-type: none;
+.grafico {
+
 }
-[data-item="grafico"] ol {
+.grafico ol {
     display: flex;
     margin: 0;
     padding: 0;
-    list-style-type: none;
 }
-[data-item="grafico"] ol li {
+.grafico ol li {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     text-align: center;
+    width: 10px;
 }
-[data-item="grafico"] ol li + li {
-    margin-left: 8px;
+.grafico ol li + li {
+    /*margin-left: 2px;*/
+    border-left: 2px solid #fff;
 }
-[data-item="grafico"] ol li span {
+.grafico ol li span {
     display: flex;
     justify-content: center;
     font-size: 66.666%;
     text-shadow: -1px -1px #fff, 1px 1px #fff, -1px 1px #fff, 1px -1px #fff;
-    color: #ccc;
+    margin-bottom: 4px;
+    z-index: 1;
+    /*height: 24px;*/
+    visibility: hidden;
 }
-[data-item="grafico"] ol li.quadrado .barra {
-    height: 0;
-    padding-bottom: 100%;
+.grafico ol li:first-child {
+    display: none;
 }
-[data-item="grafico"] ol li.ativo .barra {
-    background: #006194;
-}
-[data-item="grafico"] ol li.ativo span {
-    color: #393b41;
-}
-[data-item="grafico"] ol li.negativo .barra {
-    background: red;
-    transform: translateY( 100%);
-}
-[data-item="grafico"] ol li.negativo span {
-    color: red;
-}
-[data-item="grafico"] ol li .barra {
+.grafico ol li .barra {
     height: 0px;
     background: #ddd;
 }
-[data-item="grafico"] ol li span.semana {
-    visibility: hidden;
-    z-index: 1;
-    height: 24px;
+.grafico ol li.ativo .barra {
+    background: #006194;
+    /*background: rgba( 0, 96, 148, .5 );*/
 }
-[data-item="grafico"] ol li:hover span {
+.grafico ol li:hover .barra {
+    background: #393b41;
+}
+.grafico ol li .barra.selecionada {
+    background: #393b41;
+}
+.grafico ol li.ativo span {
+    color: #393b41;
+}
+.grafico ol li:hover span {
     visibility: visible;
 }
-[data-item="grafico"] ol li:hover .barra {
-    background: #393b41;
+.grafico ol.pequeno li {
+    width: 6px;
 }
-[data-item="grafico"] ol li .barra.selecionada {
-    background: #393b41;
+.grafico ol.pequeno li + li {
+    /*margin-left: 2px;*/
+    border-left: 2px solid #fff;
 }
-[data-item="grafico"] ol li:first-child {
+.grafico ol.pequeno li .casos,
+.grafico ol.pequeno li .semana {
     display: none;
 }
-[data-item="grafico"] ol.pequeno li + li {
-    margin-left: 2px;
+/*
+.grafico ol li.negativo .barra {
+    background: red;
+    transform: translateY( 100%);
 }
-[data-item="grafico"] ol.pequeno li .casos,
-[data-item="grafico"] ol.pequeno li .semana {
-    display: none;
-}
+.grafico ol li.negativo span {
+    color: red;
+}*/
 
 /* dragdealer */
 
@@ -259,6 +261,7 @@ li {
     padding: 12px;
     width: 100%;
     max-width: 960px;
+    margin: 0 0 56px 0;
 }
 .seletor {
     position: relative;
@@ -307,6 +310,16 @@ select {
 }
 .seletor span {
     margin-right: 6px;
+}
+
+/* totais */
+
+.totais span {
+    margin: 0 4px;
+}
+
+.totais .rotulo {
+    text-transform: lowercase;
 }
 
 /* temporário, para ficar remover itens não funcionais */
