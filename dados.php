@@ -306,6 +306,10 @@
     data: ibge-populacao-estimada-2016-07-01.csv
     src: http://www.ibge.gov.br/home/estatistica/populacao/estimativa2016/estimativa_dou.shtm
     obs1: estimativas da população residente no Brasil e Unidades da Federação com data de referência de 1º de julho de 2016. Fonte: IBGE. Diretoria de Pesquisas - DPE - Coordenação de População e Indicadores Socias - COPIS.
+  
+    data: idh-municipio-2010.csv e idh-UF-2010.csv
+    src: http://www.atlasbrasil.org.br/2013/pt/consulta/
+    obs1: índice de desenvolvimento humano de cada UF e município brasileiro relativo a 2010. Fonte: ONU
 
     -->
   </body>
