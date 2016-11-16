@@ -137,6 +137,28 @@ var vis = {
         }
       }
     },
+    incidencia : function() {
+      base = 100000,
+      classificacao = [],
+      tipo = vis.atual.categoria;
+      municipios = vis.dados.municipios;
+      for ( var i = 0, leni = municipios.length; i < leni; i++ ) {
+        municipio = municipios[ i ];
+        casos = vis.obter.acumulados( municipio, tipo ) || 0;
+        populacao = municipio.pop;
+        incidencia = base * casos / populacao;
+        classificacao[ i ] = {
+          incidencia : incidencia,
+          municipio : municipio.nome,
+          populacao : populacao,
+          casos : casos
+        }
+      }
+      classificacao.sort( function( a, b ) {
+        return b.incidencia - a.incidencia
+      });
+      vis.dados.incidencia = classificacao;
+    },
   },
   obter : {
     ultimo : function( data ) {
