@@ -59,6 +59,29 @@ img {
   clip: auto;
 }
 
+/* página */
+
+footer {
+  margin-top: 6.4rem;
+  font-size: 75%;
+  line-height: 1.5;
+}
+
+footer p {
+  margin: 3.2rem 0;
+}
+
+footer article > ul > li {
+  margin: 3.2rem 0;
+}
+
+footer ul p {
+  margin: 0;
+}
+
+footer ul p {
+  margin: 0;
+}
 
 /* visualização */
 
