@@ -41,19 +41,30 @@
         <div class="grupo">
           <section class="classificacao municipios"></section>
         </div>
-        <nav class="navegacao"></nav>
+        <div class="grupo">
+          <nav class="navegacao">
+            <ul>
+              <li>
+                <a class="botao" href="data/microcefalia-44-2016-c-i-d-oc-oi-od.json" download>
+                  Baixar dados <span>JSON</span>
+                </a>
+                <p class="legenda">Casos e óbitos confirmados, investigados e descartados, por município — semana 6 a 44/2016</p>
+              </li>
+            </ul>
+          </nav>
+        </div>
         <div class="grupo">
           <footer>
             <article>
               <p>[Trabalho em desenvolvimento]</p>
-              <p>Esta visualização de dados é de código aberto e está disponível neste <a href="https://github.com/vsueiro/microcefalia">repositório do GitHub</a>.</p>
+              <p>Esta visualização de dados é de código aberto e está disponível neste <a href="https://github.com/vsueiro/microcefalia">repositório do GitHub</a></p>
               <p>Este material é criado por mim, Vinicius Sueiro, como Trabalho de Conclusão de Curso (TCC) da graduação em Design pela Faculdade de Arquitetura e Urbanismo da Universidade de São Paulo (FAU USP), sob orientação de Giselle Beiguelman. Leia toda a pesquisa do projeto: <a href="https://issuu.com/viniciussueiro/docs/design_dos_informes_epidemiolo__gic">PDF no Issuu</a></p>
               <p>A base de dados utilizada é oficial e está disponível no site da <a href="http://sage.saude.gov.br/">Sala de Apoio à Gestão Estratégica do Ministério da Saúde</a>, mais especificamente através do botão <code>Lista microcefalia</code> no <a href="http://sage.saude.gov.br/?link=microcefalia&amp;flt=true&amp;param=amp;uf_origem=BR-5570-204482459amp;cidade_origem=amp;uf_cidade=BR%20-%20%C2%A0amp;no_estado=BRASILamp;idPagina=176">painel</a> de visualização de dados que eles possuem</p>
               <ul>
                 <li>
                   <p><strong>Dados</strong>: <code>microcefalia.json</code></p>
                   <ul>
-                    <li><strong>Fonte</strong>: <a href="http://sage.saude.gov.br/paineis/microcefalia/listaMicrocefalia.php?%20output=json&amp;ufs=&amp;ibges=&amp;cg=&amp;tc=&amp;re_giao=&amp;rm=&amp;qs=&amp;ufcidade=Brasil&amp;qt=5570%20munic%C3%ADpios&amp;pop=204482459&amp;cor=005984&amp;nonono=html&amp;title=&amp;codPainel=176">SAGE</a></li>
+                    <li><strong>Fonte</strong>: <a href="http://sage.saude.gov.br/paineis/microcefalia/listaMicrocefalia.php?%20output=json&amp;ufs=&amp;ibges=&amp;cg=&amp;tc=&amp;re_giao=&amp;rm=&amp;qs=&amp;ufcidade=Brasil&amp;qt=5570%20munic%C3%ADpios&amp;pop=204482459&amp;cor=005984&amp;nonono=html&amp;title=&amp;codPainel=176">http://sage.saude.gov.br/paineis/microcefalia/listaMicrocefalia.php?%20output=json&amp;ufs=&amp;ibges=&amp;cg=&amp;tc=&amp;re_giao=&amp;rm=&amp;qs=&amp;ufcidade=Brasil&amp;qt=5570%20munic%C3%ADpios&amp;pop=204482459&amp;cor=005984&amp;nonono=html&amp;title=&amp;codPainel=176</a></li>
                     <li><strong>Importância</strong>: É atualizado semanalmente com os dados mais recentes sobre microcefalia no Brasil</li>
                     <li><strong>Observação</strong>: Só existem informações por município a partir da semana 6/2016. Quando soliticei estes dados (consultar pedido <code>25820002666201645</code> no <a href="http://esic.cgu.gov.br/sistema/site/">esic.gov.br</a>) obtive a seguinte resposta: “Informamos que da semana epidemiológica 45/2015 até a semana epidemiológica 05/2016, os casos eram informados de forma agregada por UF; a desagregação dos casos por município e de acordo com a classificação (Notificados, em investigação, confirmados e descartados) só teve início a partir da semana epidemiológica 06/2016”</li>
                   </ul>

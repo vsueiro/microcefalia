@@ -65,6 +65,8 @@ footer {
   margin-top: 6.4rem;
   font-size: 75%;
   line-height: 1.5;
+  width: 100%;
+  word-wrap: break-word;
 }
 
 footer p {
@@ -666,3 +668,42 @@ section.totais {
     -ms-flex: 1;
     flex: 1;
 }
+
+/* navegação */
+.navegacao li {
+    /*max-width: 25.6rem;*/
+    /*display: flex*/
+}
+
+.navegacao p {
+    margin: 1.6rem 0;
+}
+
+.botao {
+    display: inline-block;
+    background: #eeeeee;
+    padding: .8rem 1.6rem;
+    /*border: .1rem solid #e8e8e8;*/
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: background .3s, color .3s;
+}
+
+.botao:hover {
+    background: #333;
+    /*border: .1rem solid #333;*/
+    color: #f9f9f9;
+}
+
+.botao span {
+    margin-left: .8rem;
+    font-size: 75%;
+    line-height: 1.5;
+    opacity: .5;
+}
+
+.legenda {
+    font-size: 75%;
+    line-height: 1.5;
+}  
