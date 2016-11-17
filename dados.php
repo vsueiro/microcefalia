@@ -148,13 +148,13 @@
                   if ( caso.oi == 0 ) delete caso.oi;
                   if ( caso.oc == 0 ) delete caso.oc;
                   if ( caso.od == 0 ) delete caso.od;
-                  { // deixar apenas casos e óbitos confirmados e investigados
+                  { // deixar apenas casos e óbitos confirmados
                     if ( caso.n ) delete caso.n;
-                    // if ( caso.i ) delete caso.i;
-                    // if ( caso.d ) delete caso.d;
+                    if ( caso.i ) delete caso.i;
+                    if ( caso.d ) delete caso.d;
                     if ( caso.on ) delete caso.on;
-                    // if ( caso.oi ) delete caso.oi;
-                    // if ( caso.od ) delete caso.od;
+                    if ( caso.oi ) delete caso.oi;
+                    if ( caso.od ) delete caso.od;
                   }
                   if ( Object.keys( caso )
                     .length > 2 )
@@ -278,9 +278,8 @@
     -->
     <!--
     
-    data: lista-microcefalia-2016-09-08.json
+    data: microcefalia.json / microcefalia-44-2016-c-i-d-oc-oi-od.json
     src: http://sage.saude.gov.br/paineis/microcefalia/listaMicrocefalia.php?output=json&ufs=&ibges=&cg=&tc=&re_giao=&rm=&qs=&ufcidade=Brasil&qt=5570%20munic%C3%ADpios&pop=204482459&cor=005984&nonono=html&title=&codPainel=176
-    obs1: Atualizado até 08/09/2016 às 00:00
     obs2: Só existem informações por município a partir da semana 06/2016. Quando soliticei estes dados (consultar pedido 25820002666201645 no esic.gov.br) obtive a seguinte resposta: “Informamos que da semana epidemiológica 45/2015 até a semana epidemiológica 05/2016, os casos eram informados de forma agregada por UF; a desagregação dos casos por município e de acordo com a classificação (Notificados, em investigação, confirmados e descartados) só teve início a partir da semana epidemiológica 06/2016”
   
     data: codigo-dos-municipios.json
