@@ -319,7 +319,7 @@ var vis = {
             }
           }
         }
-        this.baixar( csv, 'Acumulado de casos confirmados por semana dos 10 municípios mais afetados' );
+        this.baixar( csv, 'Acumulado de ' + vis.obter.categoria( tipo, 'nome' ).toLowerCase() + ' por semana' );
         vis.atual.categoria = tipoAtual;
       },
       UFs : function() {
