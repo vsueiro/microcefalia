@@ -6,7 +6,17 @@ var vis = {
         tipo = vis.atual.categoria;
         A = vis.obter.acumulados( a, tipo ) || 0;
         B = vis.obter.acumulados( b, tipo ) || 0;
-        return B - A
+        if ( B - A == 0 ) { // ordena alfabeticamente em caso de empate
+          ascii = /^[ -~]+$/;
+          if ( !ascii.test( a.nome + b.nome ) ) {
+            return a.nome.localeCompare( b.nome ); // faz comparação de caracteres com acentos apenas se eles existirem no nome
+          }
+          if ( a.nome < b.nome ) return -1;
+          if ( a.nome > b.nome ) return 1;
+          return 0
+        } else {
+          return B - A
+        }
       }
     },
   },
@@ -274,6 +284,9 @@ var vis = {
         tipo = tipo || 'c';
         municipios = vis.dados.municipios;
         semanas = vis.dados.semanas;
+        tipoAtual = vis.atual.categoria;
+        vis.atual.categoria = tipo;
+        vis.dados.municipios.sort( vis.dados.ordenar.desc );
         csv = 'até';
         for ( var i = 0; i < 10; i++ ) { // monta cabeçalho
           municipio = municipios[ i ];
@@ -287,18 +300,21 @@ var vis = {
           csv += semana.inicio;
           for ( var i = 0; i < 10; i++ ) {
             municipio = municipios[ i ];
+            valor = '';
             for ( var k = 0, lenk = municipio.casos.length; k < lenk; k++ ) {
               caso = municipio.casos[ k ];
-              if ( semana.ano == caso.ano && semana.numero == caso.sem ) {
-                csv += ',' + caso[ tipo ];
+              if ( semana.ano == caso.ano && semana.numero == caso.sem && caso[ tipo ] ) {
+                valor = caso[ tipo ];
               }
             }
+            csv += ',' + valor;
             if ( i == 9 ) {
               csv += '\n';
             }
           }
         }
         this.baixar( csv, 'Acumulado de casos confirmados por semana dos 10 municípios mais afetados' );
+        vis.atual.categoria = tipoAtual;
       },
       UFs : function() {
         tipo = tipo || 'c';
