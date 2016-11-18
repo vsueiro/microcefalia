@@ -246,7 +246,6 @@ var vis = {
           }
         }         
       } else if ( local > 99 ) { // municipio
-        console.log( 'to achando que é município' );
         entidade = vis.obter.municipio( local );
         i = entidade.casos.length;
         while ( i-- ) {
@@ -258,7 +257,6 @@ var vis = {
           }
         }
       } else { // UF
-        console.log( 'to achando que é UF' );
         entidade = vis.obter.UF( local );
         i = entidade.casos.length;
         while ( i-- ) {
@@ -814,7 +812,7 @@ var vis = {
                 semanas = JSON.parse( JSON.stringify( casos ) );
                 semanas.reverse(); 
               }
-              console.log( semanas[ 0 ].sem );
+              // console.log( semanas[ 0 ].sem );
             } else {
               semanas = casos;
             }
@@ -1580,10 +1578,12 @@ var vis = {
         }
           
       }
+      console.log( 'Essa visualização está livre no GitHub, fique à vontade para contribuir' );
+      console.log( 'Se notar algum erro ou tiver alguma dúvida, pode enviar um email para hi@vsueiro.com' );
     });
   },
   atualizar : function() {
-    console.log( 'oi' );
+    // console.log( 'oi' );
     vis.filtros.atualizar();
     vis.totais.atualizar();
     vis.classificacao.atualizar();
