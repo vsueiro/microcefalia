@@ -280,25 +280,31 @@ var vis = {
         a.href = ( window.URL || webkitURL ).createObjectURL( blob );
         a.click();
       },
-      municipios : function( tipo ) {
+      municipios : function( tipo, limite ) {
         tipo = tipo || 'c';
+        limite = limite || undefined;
         municipios = vis.dados.municipios;
         semanas = vis.dados.semanas;
         tipoAtual = vis.atual.categoria;
         vis.atual.categoria = tipo;
         vis.dados.municipios.sort( vis.dados.ordenar.desc );
         csv = 'até';
-        for ( var i = 0; i < 10; i++ ) { // monta cabeçalho
+        if ( limite ) {
+          limiteCalculado = limite;
+        } else {
+          limiteCalculado = vis.dados.municipios.length;
+        }
+        for ( var i = 0; i < limiteCalculado; i++ ) { // monta cabeçalho
           municipio = municipios[ i ];
           csv += ',' + municipio.nome;
-          if ( i == 9 ) {
+          if ( i == limiteCalculado - 1 ) {
             csv += '\n';
           }
         }
         for ( var j = 0, lenj = semanas.length; j < lenj; j++ ) { // adiciona conteúdo
           semana = semanas[ j ];
           csv += semana.inicio;
-          for ( var i = 0; i < 10; i++ ) {
+          for ( var i = 0; i < limiteCalculado; i++ ) {
             municipio = municipios[ i ];
             valor = '';
             for ( var k = 0, lenk = municipio.casos.length; k < lenk; k++ ) {
@@ -308,7 +314,7 @@ var vis = {
               }
             }
             csv += ',' + valor;
-            if ( i == 9 ) {
+            if ( i == limiteCalculado - 1 ) {
               csv += '\n';
             }
           }
