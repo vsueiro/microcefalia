@@ -10,7 +10,6 @@
     <meta name="description" content="Visualização de dados mostra a evolução dos casos de microcefalia e/ou alterações no sistema nervoso central desde novembro de 2015, incluindo casos de óbito decorrentes desta condição. O tamanho dos círculos representa a quantidade de casos naquele município. É possível filtrar por cada semana da epidemia e também por óbitos" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700,800">
-    <link rel="stylesheet" href="css/core.css">
     <link rel="stylesheet" href="css/vis.css">
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -129,7 +128,6 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="libs/dragdealer.js"></script>
-    <script src="js/core.js"></script>
     <script src="js/vis.js"></script>
   </body>
 </html>
