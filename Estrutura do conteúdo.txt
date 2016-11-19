@@ -1,0 +1,96 @@
+Filtros
+	Categoria
+		Casos
+			Confirmados
+			Investigados
+			Descartados
+		Óbitos
+			Confirmados
+			Investigados
+			Descartados
+	Semana
+		Desde a semana 6 de 2016 até a mais atual
+	Local
+		Unidade Federativa
+			Estados e Distrito Federal
+		Município
+			Todos os municípios da [Unidade Federativa] atual
+Totais
+	Quantidade de cada [Categoria] até a [Semana] atual
+Gráficos
+	Mapa
+		Distribuição de [Categoria] em cada município até a [Semana] atual
+	Classificação
+		Unidade Federativa
+			10 com mais [Categoria]
+				Posição, nome, [Casos únicos], quantidade de [Categoria]
+		Município
+			10 com mais [Categoria]
+				Posição, nome, [Casos únicos], quantidade de [Categoria]
+	Casos únicos
+		Colunas mostram a quantidade de [Categoria] por semana do [Local] atual
+	Casos acumulados
+		Linhas mostram o crescimento de [Categoria] por semana de cada [Local]
+Fichas
+	País
+		Nome
+		Quantidade de cada [Categoria]
+		Mapa local com destaque
+		IDH
+		Gráfico de casos únicos
+		Observação (opcional)
+	Unidade Federativa
+		Nome
+		Quantidade de cada [Categoria]
+		Mapa com local em destaque
+		Posição na classificação da [Categoria] atual
+		IDH
+		Gráfico de casos únicos
+		Gráfico de casos acumulados
+		Observação (opcional)
+	Município
+		Nome
+		Quantidade de cada [Categoria]
+		Mapa com local em destaque
+		Posição na classificação da [Categoria] atual
+		IDH
+		Gráfico de casos únicos
+		Gráfico de casos acumulados
+		Observação (opcional)
+Comparar
+Baixar
+	Dados
+		CSV, JSON
+	Gráficos
+		SVG, PNG
+	Informes epidemiológicos (microcefalia)
+		PDF (51+ )
+	Boletim epidemiológico (microcefalia)
+		PDF (7+)
+	Boletim epidemiológico (dengue, chikungunya e zika)
+		PDF (20+)
+Incorporar (?)
+	Iframe (?)
+	Script (?)
+Navegação (?)
+	Explorar
+	Passo a passo
+	Sobre
+Fontes
+	De cada base de dados utilizada
+Git
+	Texto e link para repositório
+Método
+	Descrever como os dados foram mesclados, o que foi ocultado e o motivo (ex: números negativos no gráfico de casos únicos, que são os "desconfirmados")
+Explicações
+	Desde quando os dados são registrados (novembro de 2015)
+	Dados por semana só a partir de 13/fev/2016
+	Como os casos são registrados. Criança com suspeita começa a ser investigada. Pode ser confirmado ou descartado.
+	Existem casos “desconfirmados”, por isso as linhas dos casos acumulados às vezes caem.
+	Por que os casos são descartados. Descartados por apresentar exames normais, por apresentar microcefalia e/ou malformações congênitas confirmada por causas não infecciosas ou por não se enquadrar nas definições de casos
+	Óbitos são registrados separados dos casos, ou seja, se uma criança morre por microcefalia, ela é registrada apenas como óbito, não como caso
+	[Casos únicos] não significam bebês nascidos naquela semana. “Os dados são contabilizados nas estatísticas na semana em que foram confirmados, mas muitos se referem a registros de bebês nascidos meses atrás. De maneira nenhuma o risco pode ser minimizado, mas os números registrados mês a mês no Sudeste se mantêm estáveis”, diz Eduardo Hage, diretor do Departamento das Doenças Transmissíveis do ministério. Números foram obtidos pela subtração da semana seguintes.
+	Microcefalia e/ou alterações do SNC, sugestivas de infecção congênita, em fetos, recém-nascidos, abortamentos ou natimortos. Apresentam alterações típicas: indicativas de infecção congênita, como: calcificações cerebrais, alterações ventriculares e de fossa posterior entre outros sinais clínicos observados por qualquer método de imagem ou identificação do vírus Zika em testes laboratoriais
+	Variação de critérios ao longo do tempo. Número cumulativo de casos notificados que preenchiam a definição de caso operacional anterior (33 cm), além das definições adotadas no Protocolo de Vigilância (a partir de 09/12/2015) que definiu o Perímetro Cefálico de 32 cm para recém-nascidos com 37 ou mais semanas de gestação e demais definições do protocolo
+	Quantos casos foram confirmados em laboratório. Foram confirmados 417 casos por critério laboratorial específico para vírus Zika (técnica de PCR e sorologia) 
+	Foram omitidos os casos notificados, por que esses são a soma das outras 3 categorias
