@@ -371,7 +371,8 @@ var vis = {
     {
       nome : 'municipios',
       tipo : 'json', 
-      url : 'data/microcefalia.json'
+      url : 'data/microcefalia-44-2016-c-i-d-oc-oi-od.json'
+      // url : 'data/microcefalia.json'
     },
     {
       nome : 'Google Maps',
@@ -909,10 +910,19 @@ var vis = {
       criar : function( local ) {
         circulos = document.createElement( 'div' );
         circulos.classList.add( 'circulos' );
-        circulo = document.createElement( 'div' );
-        circulo.classList.add( 'circulo' );
-        circulo.dataset.local = local;
-        circulos.appendChild( circulo );
+        circulo = {}
+        circulo.c = document.createElement( 'div' );
+        circulo.c.title = 'círculo representa os confirmados';
+        circulo.c.classList.add( 'circulo' );
+        circulo.c.dataset.local = local;
+        circulo.c.dataset.tipo = 'c';
+        circulo.i = document.createElement( 'div' );
+        circulo.i.title = 'tracejado é o potecial de crescimento (quantos estão em investigação)';
+        circulo.i.classList.add( 'circulo' );
+        circulo.i.dataset.local = local;
+        circulo.i.dataset.tipo = 'i';
+        circulo.i.appendChild( circulo.c );
+        circulos.appendChild( circulo.i );
         return circulos;
       },
       atualizar : function( local ) {
@@ -920,19 +930,24 @@ var vis = {
         circulos = document.getElementsByClassName( 'circulo' );
         sem = vis.atual.semana();
         municipio = vis.obter.municipio( local );
-        raio = 0;
+        raio = {
+          c : 0,
+          i : 0
+        };
         for ( var i = 0, leni = municipio.casos.length; i < leni; i++ ) { // para cada caso do respectivo município
           caso = municipio.casos[ i ];
           if ( caso.sem == sem.numero && caso.ano == sem.ano ) {
-            raio = Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * vis.mapa.circulos.amplitude;
+            raio.c = Math.sqrt( parseInt( caso[ cat ] ) ) / Math.PI * vis.mapa.circulos.amplitude;
+            raio.i = Math.sqrt( parseInt( caso.i ) + parseInt( caso[ cat ] ) ) / Math.PI * vis.mapa.circulos.amplitude; // soma os investigados com os confirmados para obter o total possível (ex: o município tem X casos confirmados, mas se todos os investigados forem confirmados ele teria Y, representado pelo círculo pontilhado)
             break
           }
         }
         for ( var j = 0, lenj = circulos.length; j < lenj; j++ ) {
           circulo = circulos[ j ];
           if ( circulo.dataset.local == local ) {
-            circulo.style.width  = raio * 2 + 'px';
-            circulo.style.height = raio * 2 + 'px';
+            tipo = circulo.dataset.tipo;
+            circulo.style.width  = raio[ tipo ] * 2 + 'px';
+            circulo.style.height = raio[ tipo ] * 2 + 'px';
           }
         }
       }
@@ -1437,23 +1452,24 @@ var vis = {
             local = document.createElement( 'div' );
             local.appendChild( nome );
             local.appendChild( UF );
-            casos = document.createElement( 'div' );
-            casos.title = "total acumulado desde novembro de 2015";
-            unicos.title = "casos por semana a partir de 13 de fevereiro";
+            casos = {};
+            casos.c = document.createElement( 'div' );
+            casos.c.title = "confirmados desde novembro de 2015";
+            casos.i = document.createElement( 'div' );
+            casos.i.title = "em investigação (podem ser confirmados ou descartados)";
+            unicos.title = "por semana a partir de 13 de fevereiro";
             unicos = document.createElement( 'div' );
-            // unicos.dataset.item = 'grafico';
             unicos.classList.add( 'grafico', 'unicos' );
-            unicos.title = "casos por semana a partir de 13 de fevereiro";
+            unicos.title = "por semana a partir de 13 de fevereiro";
             acumulado = document.createElement( 'div' );
-            acumulado.title = "representa o total acumulado desde novembro de 2015";
-            // acumulado.dataset.item = 'grafico';
             acumulado.classList.add( 'grafico', 'acumulado' );
             li = document.createElement( 'li' );
             li.appendChild( classificacao );
             li.appendChild( local );
             li.appendChild( unicos );
             li.appendChild( acumulado );
-            li.appendChild( casos );
+            li.appendChild( casos.c );
+            li.appendChild( casos.i );
             ol.appendChild( li );
           }
           elemento.appendChild( ol );
@@ -1468,26 +1484,25 @@ var vis = {
         posicoes = [];
         for ( var i = 0; i < elementos.length; i++ ) {
           elemento = elementos[ i ];
-          
           ol = elemento.getElementsByTagName( 'ol' )[ 0 ];
           lis = ol.childNodes;
           for ( var j = 0; j < this.itens; j++ ) {
             li = lis[ j ];
             municipio = vis.dados.municipios[ j ];
-            quantidade = vis.obter.total( municipio.id, tipo ) || 0;
+            quantidade = {};
+            quantidade[ tipo ] = vis.obter.total( municipio.id, tipo ) || 0;
+            quantidade.i = vis.obter.total( municipio.id, 'i' ) || 0;
             empate = false;
             if ( j == 0 ) {
-            
               posicao = 1;
-            } else if ( quantidade != posicoes[ j - 1 ].quantidade ) {
+            } else if ( quantidade[ tipo ] != posicoes[ j - 1 ].quantidade ) {
               posicao = posicoes[ j - 1 ].posicao + 1;
             } else {
               posicao = posicoes[ j - 1 ].posicao;
               empate = true;
             }
             posicoes.push({
-              
-              quantidade : quantidade,
+              quantidade : quantidade[ tipo ],
               posicao : posicao,
             });
             divs = li.childNodes;
@@ -1495,7 +1510,9 @@ var vis = {
             local = divs[ 1 ];
             unicos = divs[ 2 ];
             acumulado = divs[ 3 ];
-            casos = divs[ 4 ];
+            casos = {};
+            casos.c = divs[ 4 ];
+            casos.i = divs[ 5 ];
             nome = local.getElementsByTagName( 'span' )[ 0 ];
             UF = local.getElementsByTagName( 'span' )[ 1 ];
             classificacao.className = empate ? 'empate' : '';
@@ -1504,7 +1521,8 @@ var vis = {
             UF.innerHTML = vis.obter.UF( municipio.id, 'sigla' );
             unicos.dataset.local = municipio.id;
             acumulado.dataset.local = municipio.id;
-            casos.innerHTML = quantidade;            
+            casos.c.innerHTML = quantidade[ tipo ];
+            casos.i.innerHTML = quantidade.i;
             li.dataset.ibge = municipio.id;
           }
         }
@@ -1552,7 +1570,6 @@ var vis = {
   criar : function() {
     vis.dados.requisicoes = [];
     for ( var i = 0; i < vis.dependencias.length; i++ ) {
-      
       dependencia = vis.dependencias[ i ];
       tipo = dependencia.tipo;
       this.carregar[ tipo ]( dependencia );
@@ -1569,7 +1586,6 @@ var vis = {
         }
       }
       delete vis.dados.requisicoes;
-      // diz qual é a categoria atual
       categorias = vis.dados.categorias;
       for ( var i = 0, leni = categorias.length; i < leni; i++ ) {
         categoria = categorias[ i ];

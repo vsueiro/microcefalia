@@ -416,9 +416,16 @@ footer ul p {
 .classificacao>ol>li>div:nth-child(4) {}
 
 .classificacao>ol>li>div:nth-child(5) {
-    max-width: 4.8rem;
-    text-align: right;
+    max-width: 6.4rem;
+    justify-content: flex-end;
+    font-weight: bold;
     color: #666;
+}
+
+.classificacao>ol>li>div:nth-child(6) {
+    max-width: 6.4rem;
+    justify-content: flex-end;
+    color: #ccc;
 }
 
 .circulos {
@@ -436,12 +443,26 @@ footer ul p {
     transition: height .3s;
 }
 
-.circulo {
+.circulo[data-tipo="c"] {
     border-radius: 50%;
     background: #666;
     opacity: .75;
 }
 
+.circulo[data-tipo="i"] {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px dashed #000;
+    opacity: 1;
+}
 
 /* filtros */
 
