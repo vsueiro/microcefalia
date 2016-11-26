@@ -628,6 +628,7 @@ var vis = {
       },
       linha : {
         espessura : 2,
+        opacidade : 0.1,
         cor : '#000'
       },
       baixar : function( arquivo ) {
@@ -666,7 +667,6 @@ var vis = {
             grupo = document.createElementNS( 'http://www.w3.org/2000/svg', 'g' );
             grupo.setAttribute( 'id', 'local-' + local.id + '-' + h );
             grupo.setAttribute( 'opacity', 1 );
-            // console.log( local );
             grupo.setAttribute( 'nome', local.nome );
             grupo.addEventListener( 'click', function() {
               alert( this.getAttribute( 'nome' ) );
@@ -675,20 +675,22 @@ var vis = {
               caso = local.casos[ j ];
               temCasos = false;
               if ( caso[ cat ] ) {
-                opacidade = ( 1 / this.categoria.max * caso[ cat ] );
-                opacidade = .1;
+                posicao = {};
+                posicao.x1 = ( caso.sem - ( this.semana.min - 1 ) ) * this.escala.x;
+                posicao.x2 = ( local.casos[ j + 1 ].sem - ( this.semana.min - 1 ) ) * this.escala.x;
+                posicao.y1 = ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y;
+                posicao.y2 = ( local.casos[ j + 1 ][ cat ] ? ( ( ( this.categoria.max + 1 ) - local.casos[ j + 1 ][ cat ] ) * this.escala.y ) : posicao.y1 );
                 linha = document.createElementNS( 'http://www.w3.org/2000/svg', 'line' );
                 linha.setAttribute( 'fill', 'none' );
                 linha.setAttribute( 'stroke', this.linha.cor );
                 linha.setAttribute( 'stroke-width', this.linha.espessura );
                 linha.setAttribute( 'stroke-linecap', 'round' );
                 linha.setAttribute( 'stroke-linejoin', 'round' );
-                linha.setAttribute( 'opacity', opacidade );
-                linha.setAttribute( 'x1', ( ( caso.sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
-                linha.setAttribute( 'x2', ( ( local.casos[ j + 1 ].sem - ( this.semana.min - 1 ) ) * this.escala.x ) );
-                linha.setAttribute( 'y1', ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y )  );
-                linha.setAttribute( 'y2', ( local.casos[ j + 1 ][ cat ] ? ( ( ( this.categoria.max + 1 ) - local.casos[ j + 1 ][ cat ] ) * this.escala.y ) : ( ( ( this.categoria.max + 1 ) - caso[ cat ] ) * this.escala.y ) ) );
-                    
+                linha.setAttribute( 'opacity', this.linha.opacidade );
+                linha.setAttribute( 'x1', posicao.x1 );
+                linha.setAttribute( 'x2', posicao.x2 );
+                linha.setAttribute( 'y1', posicao.y1 );
+                linha.setAttribute( 'y2', posicao.y2 );
                 grupo.appendChild( linha );
                 temCasos = true;
               }
