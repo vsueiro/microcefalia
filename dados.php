@@ -148,13 +148,13 @@
                   if ( caso.oi == 0 ) delete caso.oi;
                   if ( caso.oc == 0 ) delete caso.oc;
                   if ( caso.od == 0 ) delete caso.od;
-                  { // deixar apenas casos e óbitos confirmados
-                    // if ( caso.n ) delete caso.n;
-                    if ( caso.i ) delete caso.i;
-                    if ( caso.d ) delete caso.d;
-                    // if ( caso.on ) delete caso.on;
-                    if ( caso.oi ) delete caso.oi;
-                    if ( caso.od ) delete caso.od;
+                  { // excluir todos os casos notificados, pois são a soma dos outros 3
+                    if ( caso.n ) delete caso.n;
+                    // if ( caso.i ) delete caso.i;
+                    // if ( caso.d ) delete caso.d;
+                    if ( caso.on ) delete caso.on;
+                    // if ( caso.oi ) delete caso.oi;
+                    // if ( caso.od ) delete caso.od;
                   }
                   if ( Object.keys( caso )
                     .length > 2 )
