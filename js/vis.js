@@ -371,7 +371,7 @@ var vis = {
     {
       nome : 'municipios',
       tipo : 'json', 
-      url : 'data/microcefalia-44-2016-c-i-d-oc-oi-od.json'
+      url : 'data/microcefalia-45-2016-c-i-d-oc-oi-od.json'
       // url : 'data/microcefalia.json'
     },
     {
