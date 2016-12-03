@@ -33,10 +33,10 @@
         <div class="grupo">
           <form class="filtros"></form>
         </div>
-        <div class="grupo">
+        <!-- <div class="grupo"> -->
           <div class="grafico mapa"></div> 
           <section class="totais"></section>
-        </div>
+        <!-- </div> -->
         <div class="grupo">
           <section class="classificacao municipios"></section>
         </div>
@@ -121,8 +121,8 @@
             </article>
           </footer>
         </div>
-        <!-- <section class="grafico acumulado municipios"></section> -->
-        <!-- <section class="grafico acumulado UFs"></section> -->
+        <section class="grafico acumulado municipios"></section>
+        <section class="grafico acumulado UFs"></section>
       </article>
     </div>
 

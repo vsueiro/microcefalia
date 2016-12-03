@@ -89,7 +89,7 @@ footer ul p {
 
 .involucro {
     padding: 9.6rem 0;
-    background: #f9f9f9;
+    /*background: #f9f9f9;*/
     overflow-x: scroll;
 }
 
@@ -113,7 +113,7 @@ footer ul p {
 .mapa {
     width: 48rem;
     max-height: 48rem;
-    border: .1rem solid #eeeeee;
+    /*border: .1rem solid #eeeeee;*/
 }
 
 @media ( min-width: 960px) {
@@ -728,3 +728,26 @@ section.totais {
     font-size: 75%;
     line-height: 1.5;
 }  
+
+/* temporário */
+
+.mapa {
+    width: 192rem;
+    min-height: 192rem;
+    max-height: 192rem;
+}
+
+.totais {
+    display: none !important;
+}
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
+}
+.gmnoprint div {
+    background:none !important;
+    /*display: none;*/
+    opacity: 0;
+}

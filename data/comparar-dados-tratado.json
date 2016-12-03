@@ -1,0 +1,41 @@
+{
+    "id": 3304557,
+    "nome": "Rio de Janeiro",
+    "pop": 6498837,
+    "geo": {
+        "lat": -22.8766521181865,
+        "lng": -43.2278751249952
+    },
+    "casos": [
+        {
+            "ano": 2016,
+            "sem": 43,
+            "confirmados": 110,
+            "descartados": 184,
+            "investigados": 68,
+            "óbitosconfirmados": 10,
+            "óbitosdescartados": 12,
+            "óbitosinvestigados": 3,
+        },
+        {
+            "ano": 2016,
+            "sem": 44,
+            "confirmados": 110,
+            "descartados": 184,
+            "investigados": 69,
+            "óbitosconfirmados": 10,
+            "óbitosdescartados": 12,
+            "óbitosinvestigados": 4,
+        },
+        {
+            "ano": 2016,
+            "sem": 45,
+            "confirmados": 110,
+            "descartados": 184,
+            "investigados": 69,
+            "óbitosconfirmados": 10,
+            "óbitosdescartados": 12,
+            "óbitosinvestigados": 4,
+        }
+    ]
+}
