@@ -13,7 +13,7 @@
     "nome" : "Total investigado",
     "total" : 0,
     "atual" : false,
-    "visivel" : false
+    "visivel" : true
   },
   {
     "sigla" : "c",
@@ -29,7 +29,7 @@
     "nome" : "Total descartado", 
     "total" : 0,
     "atual" : false,
-    "visivel" : false
+    "visivel" : true
   },
   {
     "sigla" : "on",
@@ -37,7 +37,7 @@
     "nome" : "Total de óbitos notificados",
     "total" : 0,
     "atual" : false,
-    "visivel" : false
+    "visivel" : true
   },
   {
     "sigla" : "oi",
@@ -45,7 +45,7 @@
     "nome" : "Total de óbitos investigados",
     "total" : 0,
     "atual" : false,
-    "visivel" : false
+    "visivel" : true
   },
   {
     "sigla" : "oc",
@@ -61,6 +61,6 @@
     "nome" : "Total de óbitos descartados",
     "total" : 0,
     "atual" : false,
-    "visivel" : false
+    "visivel" : true
   }
 ]
