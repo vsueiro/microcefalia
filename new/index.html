@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700,800">
-    <link rel="stylesheet" href="css/vis.css">
+    <link rel="stylesheet" href="css/visu.css">
 
   </head>
   <body>
@@ -20,46 +20,143 @@
 
         <article>
 
-          <header>Microcefalia</header>
+          <header>
+            <h1>Microcefalia</h1>
+          </header>
 
           <nav>
             <ul>
-              <li>Categoria</li>
-              <li>Local</li>
-              <li>Tempo</li>
-              <li>Reproduzir</li>
+              <li>
+                <ul>
+                  <li><button>Casos</button></li>
+                  <li><button>Óbitos</button></li>
+                </ul>
+              </li>
+              <li>
+                <ol>
+                  <li><button data-UF="todos">Brasil</button></li>
+                  <li><button data-UF="12">Acre</button></li>
+                  <li><button data-UF="27">Alagoas</button></li>
+                  <li><button data-UF="13">Amazonas</button></li>
+                  <li><button data-UF="16">Amapá</button></li>
+                  <li><button data-UF="29">Bahia</button></li>
+                  <li><button data-UF="23">Ceará</button></li>
+                  <li><button data-UF="53">Distrito Federal</button></li>
+                  <li><button data-UF="32">Espírito Santo</button></li>
+                  <li><button data-UF="52">Goiás</button></li>
+                  <li><button data-UF="21">Maranhão</button></li>
+                  <li><button data-UF="31">Minas Gerais</button></li>
+                  <li><button data-UF="50">Mato Grosso do Sul</button></li>
+                  <li><button data-UF="51">Mato Grosso</button></li>
+                  <li><button data-UF="15">Pará</button></li>
+                  <li><button data-UF="25">Paraíba</button></li>
+                  <li><button data-UF="26">Pernambuco</button></li>
+                  <li><button data-UF="22">Piauí</button></li>
+                  <li><button data-UF="41">Paraná</button></li>
+                  <li><button data-UF="33">Rio de Janeiro</button></li>
+                  <li><button data-UF="24">Rio Grande do Norte</button></li>
+                  <li><button data-UF="11">Rondônia</button></li>
+                  <li><button data-UF="14">Roraima</button></li>
+                  <li><button data-UF="43">Rio Grande do Sul</button></li>
+                  <li><button data-UF="42">Santa Catarina</button></li>
+                  <li><button data-UF="28">Sergipe</button></li>
+                  <li><button data-UF="35">São Paulo</button></li>
+                  <li><button data-UF="17">Tocantins</button></li>
+                </ol>
+                <form>
+                  <input type="search" name="municipio" placeholder="Buscar município">
+                </form>
+              </li>
+              <li>
+                <header><h2><span>20 agosto 2016</span> <span>Semana 0</span></h2><header>
+                <input type="range" name="week" min="0" max="40">
+              </li>
+              <li><button><i>▶</i><span>Reproduzir</span></button></li>
             </ul>
           <nav>
 
-          <p>Descrição</p>
+          <p>Você está vendo <span>casos confirmados</span> de microcefalia por zika em crianças nascidas <span>no Brasil</span> até <span>20 de agosto</span></p>
 
           <section>
             <header>Totais</header>
             <ul>
-              <li>Confirmados</li>
-              <li>Descartados</li>
-              <li>Em análise</li>
+              <li><i>✓</i><span>Confirmados</span><output>000</output></li>
+              <li><i>×</i><span>Descartados</span><output>000</output></li>
+              <li><i>?</i><span>Em análise</span><output>000</output></li>
             </ul>
           </section>
 
           <section>
-            <header>Novos casos</header>
+            <header>
+              <h3>Novos casos confirmados por</h3>
+              <nav>
+                <ul>
+                  <li>Semana</li>
+                  <li>Mês</li>
+                <ul>
+              </nav>
+            </header>
             <figure>
               <div>Gráfico de colunas</div>
-              <figcaption>Legenda</figcaption>
+              <figcaption>
+                <ol>
+                  <li>Fev</li>
+                  <li>Mar</li>
+                  <li>Abr</li>
+                  <li>Mai</li>
+                  <li>Jun</li>
+                  <li>Jul</li>
+                  <li>Ago</li>
+                  <li>Set</li>
+                  <li>Out</li>
+                  <li>Nov</li>
+                  <li>Dez</li>
+                </ol>
+              </figcaption>
             </figure>
           </section>
 
           <section>
-            <header>Evolução de casos</header>
+            <header>
+              <h3>Evolução de casos por</h3>
+              <nav>
+                <ul>
+                  <li>Região</li>
+                  <li>UF</li>
+                  <li>município</li>
+                <ul>
+              </nav>
+            </header>
             <figure>
               <div>Gráfico de linhas</div>
-              <figcaption>Legenda</figcaption>
+              <figcaption>
+                <ol>
+                  <li>Fev</li>
+                  <li>Mar</li>
+                  <li>Abr</li>
+                  <li>Mai</li>
+                  <li>Jun</li>
+                  <li>Jul</li>
+                  <li>Ago</li>
+                  <li>Set</li>
+                  <li>Out</li>
+                  <li>Nov</li>
+                  <li>Dez</li>
+                </ol>
+              </figcaption>
             </figure>
           </section>
 
           <section>
-            <header>Mapa</header>
+            <header>
+              <h3>Distribuição geográfica</h3>
+              <nav>
+                <ul>
+                  <li><i>+</i><span>Ampliar</span></li>
+                  <li><i>-</i><span>Reduzir</span></li>
+                <ul>
+              </nav>
+            </header>
             <figure>
               <div>Mapa</div>
               <figcaption>Legenda</figcaption>
@@ -67,10 +164,18 @@
           </section>
 
           <section>
-            <header>Ranking</header>
+            <header>
+              <h3>Ranking</h3>
+            </header>
             <figure>
-              <div>Tabela</div>
-              <figcaption>Legenda</figcaption>
+              <ul>
+                <li><span>0</span><span>Local</span><output>0</output><output>0</output><output>0</output></li>
+                <li><span>0</span><span>Local</span><output>0</output><output>0</output><output>0</output></li>
+                <li><span>0</span><span>Local</span><output>0</output><output>0</output><output>0</output></li>
+                <li><span>0</span><span>Local</span><output>0</output><output>0</output><output>0</output></li>
+                <li><span>0</span><span>Local</span><output>0</output><output>0</output><output>0</output></li>
+              </ul>
+              <figcaption><p><strong>Todos</strong> têm casos confirmados</p><i>✓</i><i>×</i><i>?</i></figcaption>
             </figure>
           </section>
 
@@ -119,8 +224,7 @@
     </main>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="libs/dragdealer.js"></script>
-    <script src="js/vis.js"></script>
+    <!-- <script src="js/visu.js"></script> -->
 
   </body>
 </html>
