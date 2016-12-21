@@ -121,8 +121,8 @@
             </article>
           </footer>
         </div>
-        <section class="grafico acumulado municipios"></section>
-        <section class="grafico acumulado UFs"></section>
+        <!-- <section class="grafico acumulado municipios"></section> -->
+        <!-- <section class="grafico acumulado UFs"></section> -->
       </article>
     </div>
 

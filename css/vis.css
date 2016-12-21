@@ -737,6 +737,12 @@ section.totais {
     max-height: 192rem;
 }
 
+.mapa {
+    width: 96rem;
+    min-height: 96rem;
+    max-height: 96rem;
+}
+
 .totais {
     display: none !important;
 }
