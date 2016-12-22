@@ -134,14 +134,26 @@ button {
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column; }
-  .filters .category ul, .filters .category ol, .filters .location ul, .filters .location ol, .filters .time ul, .filters .time ol {
-    flex-direction: row; }
+  .filters .category, .filters .location, .filters .time {
+    margin-bottom: 4.8rem; }
+    .filters .category ul, .filters .category ol, .filters .location ul, .filters .location ol, .filters .time ul, .filters .time ol {
+      flex-direction: row; }
   .filters .category button {
     width: 14.4rem; }
   .filters .location ol {
     flex-wrap: wrap; }
     .filters .location ol li:first-child button {
       width: 14.4rem; }
+  .filters .time {
+    width: 100%; }
+    .filters .time header {
+      width: 100%; }
+      .filters .time header h2 {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row; }
+    .filters .time button {
+      width: 100%; }
 
 .filters > header {
   height: 9.6rem; }

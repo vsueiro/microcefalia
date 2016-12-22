@@ -82,6 +82,7 @@ button {
 	}
 
 	.category, .location, .time {
+		margin-bottom: blocks( 1 );
 		ul, ol {
 			flex-direction: row;
 		}
@@ -103,6 +104,21 @@ button {
 					}
 				}
 			}
+		}
+	}
+
+	.time {
+		width: 100%;
+		header {
+			width: 100%;
+			h2 {
+				display: flex;
+			    justify-content: space-between;
+			    flex-direction: row;
+			}
+		}
+		button {
+			width: 100%;
 		}
 	}
 }	
