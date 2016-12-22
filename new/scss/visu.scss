@@ -11,6 +11,8 @@ $neutral-6 : #ecedf1;
 
 $block: 4.8rem;
 
+@import 'reset';
+
 *,
 *:before,
 *:after {
@@ -37,7 +39,7 @@ main {
 	background: $neutral-5;
 }
 
-main > article > nav {
+.filters nav {
 	background: $neutral-1;
 	color: $neutral-4;
 }

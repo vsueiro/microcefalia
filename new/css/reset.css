@@ -41,33 +41,4 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box; }
-
-html {
-  font-size: 62.5%;
-  -webkit-tap-highlight-color: transparent; }
-
-body {
-  background: #353844;
-  color: #4e5267;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.6rem;
-  line-height: 2.4rem; }
-
-main {
-  margin: 0 auto;
-  max-width: 124.8rem;
-  max-height: 76.8rem;
-  background: #cacdd8; }
-
-.filters nav {
-  background: #4e5267;
-  color: #a8adbd; }
-
-i {
-  font-style: normal; }
-
-/*# sourceMappingURL=visu.css.map */
+/*# sourceMappingURL=reset.css.map */

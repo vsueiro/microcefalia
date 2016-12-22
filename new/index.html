@@ -9,7 +9,7 @@
     <meta name="author" content="Vinicius Sueiro" />
     <meta name="description" content="" />
 
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" />
+    <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" /> -->
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700,800">
     <link rel="stylesheet" href="css/visu.css">
 
@@ -20,60 +20,64 @@
 
         <article>
 
-          <header>
-            <h1>Microcefalia</h1>
-          </header>
+          <div class="filters">
 
-          <nav>
-            <ul>
-              <li>
-                <ul>
-                  <li><button>Casos</button></li>
-                  <li><button>Óbitos</button></li>
-                </ul>
-              </li>
-              <li>
-                <ol>
-                  <li><button data-UF="todos">Brasil</button></li>
-                  <li><button data-UF="12" title="Acre">AC</button></li>
-                  <li><button data-UF="27" title="Alagoas">AL</button></li>
-                  <li><button data-UF="13" title="Amazonas">AM</button></li>
-                  <li><button data-UF="16" title="Amapá">AP</button></li>
-                  <li><button data-UF="29" title="Bahia">BA</button></li>
-                  <li><button data-UF="23" title="Ceará">CE</button></li>
-                  <li><button data-UF="53" title="Distrito Federal">DF</button></li>
-                  <li><button data-UF="32" title="Espírito Santo">ES</button></li>
-                  <li><button data-UF="52" title="Goiás">GO</button></li>
-                  <li><button data-UF="21" title="Maranhão">MA</button></li>
-                  <li><button data-UF="31" title="Minas Gerais">MG</button></li>
-                  <li><button data-UF="50" title="Mato Grosso do Sul">MS</button></li>
-                  <li><button data-UF="51" title="Mato Grosso">MT</button></li>
-                  <li><button data-UF="15" title="Pará">PA</button></li>
-                  <li><button data-UF="25" title="Paraíba">PB</button></li>
-                  <li><button data-UF="26" title="Pernambuco">PE</button></li>
-                  <li><button data-UF="22" title="Piauí">PI</button></li>
-                  <li><button data-UF="41" title="Paraná">PR</button></li>
-                  <li><button data-UF="33" title="Rio de Janeiro">RJ</button></li>
-                  <li><button data-UF="24" title="Rio Grande do Norte">RN</button></li>
-                  <li><button data-UF="11" title="Rondônia">RO</button></li>
-                  <li><button data-UF="14" title="Roraima">RR</button></li>
-                  <li><button data-UF="43" title="Rio Grande do Sul">RS</button></li>
-                  <li><button data-UF="42" title="Santa Catarina">SC</button></li>
-                  <li><button data-UF="28" title="Sergipe">SE</button></li>
-                  <li><button data-UF="35" title="São Paulo">SP</button></li>
-                  <li><button data-UF="17" title="Tocantins">TO</button></li>
-                </ol>
-                <form>
-                  <input type="search" name="municipio" placeholder="Buscar município">
-                </form>
-              </li>
-              <li>
-                <header><h2><span>20 agosto 2016</span> <span>Semana 0</span></h2></header>
-                <input type="range" name="week" min="0" max="40">
-              </li>
-              <li><button><i>▶</i><span>Reproduzir</span></button></li>
-            </ul>
-          </nav>
+            <header>
+              <h1>Microcefalia</h1>
+            </header>
+
+            <nav>
+              <ul>
+                <li>
+                  <ul>
+                    <li><button>Casos</button></li>
+                    <li><button>Óbitos</button></li>
+                  </ul>
+                </li>
+                <li>
+                  <ol>
+                    <li><button data-UF="todos">Brasil</button></li>
+                    <li><button data-UF="12" title="Acre">AC</button></li>
+                    <li><button data-UF="27" title="Alagoas">AL</button></li>
+                    <li><button data-UF="13" title="Amazonas">AM</button></li>
+                    <li><button data-UF="16" title="Amapá">AP</button></li>
+                    <li><button data-UF="29" title="Bahia">BA</button></li>
+                    <li><button data-UF="23" title="Ceará">CE</button></li>
+                    <li><button data-UF="53" title="Distrito Federal">DF</button></li>
+                    <li><button data-UF="32" title="Espírito Santo">ES</button></li>
+                    <li><button data-UF="52" title="Goiás">GO</button></li>
+                    <li><button data-UF="21" title="Maranhão">MA</button></li>
+                    <li><button data-UF="31" title="Minas Gerais">MG</button></li>
+                    <li><button data-UF="50" title="Mato Grosso do Sul">MS</button></li>
+                    <li><button data-UF="51" title="Mato Grosso">MT</button></li>
+                    <li><button data-UF="15" title="Pará">PA</button></li>
+                    <li><button data-UF="25" title="Paraíba">PB</button></li>
+                    <li><button data-UF="26" title="Pernambuco">PE</button></li>
+                    <li><button data-UF="22" title="Piauí">PI</button></li>
+                    <li><button data-UF="41" title="Paraná">PR</button></li>
+                    <li><button data-UF="33" title="Rio de Janeiro">RJ</button></li>
+                    <li><button data-UF="24" title="Rio Grande do Norte">RN</button></li>
+                    <li><button data-UF="11" title="Rondônia">RO</button></li>
+                    <li><button data-UF="14" title="Roraima">RR</button></li>
+                    <li><button data-UF="43" title="Rio Grande do Sul">RS</button></li>
+                    <li><button data-UF="42" title="Santa Catarina">SC</button></li>
+                    <li><button data-UF="28" title="Sergipe">SE</button></li>
+                    <li><button data-UF="35" title="São Paulo">SP</button></li>
+                    <li><button data-UF="17" title="Tocantins">TO</button></li>
+                  </ol>
+                  <form>
+                    <input type="search" name="municipio" placeholder="Buscar município">
+                  </form>
+                </li>
+                <li>
+                  <header><h2><span>20 agosto 2016</span> <span>Semana 0</span></h2></header>
+                  <input type="range" name="week" min="0" max="40">
+                </li>
+                <li><button><i>▶</i><span>Reproduzir</span></button></li>
+              </ul>
+            </nav>
+
+          </div>
 
           <p>Você está vendo <span>casos confirmados</span> de microcefalia por zika em crianças nascidas <span>no Brasil</span> até <span>20 de agosto</span></p>
 
