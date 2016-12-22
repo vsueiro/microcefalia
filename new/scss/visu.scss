@@ -1,0 +1,47 @@
+$paper     : #ffffff;
+$highlight : #569bfc;
+$alert     : #ffb400;
+$neutral-0 : #353844;
+$neutral-1 : #4e5267;
+$neutral-2 : #676f89;
+$neutral-3 : #868da4;
+$neutral-4 : #a8adbd;
+$neutral-5 : #cacdd8;
+$neutral-6 : #ecedf1;
+
+$block: 4.8rem;
+
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+	-webkit-tap-highlight-color: transparent;
+}
+
+body {
+	background: $neutral-0;
+	color: $neutral-1;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.6rem;
+	line-height: 2.4rem;
+}
+
+main {
+	margin: 0 auto;
+	max-width: 124.8rem;
+	max-height: 76.8rem;
+	background: $neutral-5;
+}
+
+main > article > nav {
+	background: $neutral-1;
+	color: $neutral-4;
+}
+
+i {
+	font-style: normal;
+}
