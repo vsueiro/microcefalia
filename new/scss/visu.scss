@@ -11,6 +11,10 @@ $neutral-6 : #ecedf1;
 
 $block: 4.8rem;
 
+@function blocks( $times ) {
+  @return $block * $times
+}
+
 @import 'reset';
 
 *,
@@ -39,11 +43,74 @@ main {
 	background: $neutral-5;
 }
 
-.filters nav {
-	background: $neutral-1;
-	color: $neutral-4;
-}
-
 i {
 	font-style: normal;
+}
+
+h1 {
+	font-size: 1.8rem;
+}
+
+h3 {
+	font-size: 1.4rem;
+}
+
+button {
+    background-color: #f0f0f0;
+    height: blocks( 1 );
+    box-shadow: 0 0 1px black;
+    /*border: 1px solid rgb(0, 0, 0);*/
+    /*border-radius: 0.25em;*/
+    /*height: 2.5em;*/
+    /*line-height: 2.5;*/
+    /*margin: 0.25em;*/
+    /*padding: 0 1em;*/
+    /*width: 14em;*/
+}
+
+.filters {
+
+	background: $neutral-1;
+	color: $neutral-4;
+	max-width: blocks( 6 );
+
+	ul, ol, li {
+	    display: flex;
+	    justify-content: flex-start;
+	    align-items: flex-start;
+	    flex-direction: column;
+	}
+
+	.category, .location, .time {
+		ul, ol {
+			flex-direction: row;
+		}
+	}
+
+	.category {
+		button {
+			width: blocks( 3 );
+		}
+	}
+
+	.location {
+		ol {
+			flex-wrap: wrap;
+			li {
+				&:first-child {
+					button {
+						width: blocks( 3 );
+					}
+				}
+			}
+		}
+	}
+}	
+
+.filters > header {
+	height: blocks( 2 );
+}
+
+.filters button {
+	width: blocks( 1 );
 }

@@ -41,6 +41,47 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+[role="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box; }
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 0;
+  -webkit-appearance: button;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none; }
+
+input::-moz-focus-inner,
+button::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+[role="button"] {
+  color: inherit;
+  cursor: default;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  white-space: pre;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none; }
+
 *,
 *:before,
 *:after {
@@ -63,11 +104,49 @@ main {
   max-height: 76.8rem;
   background: #cacdd8; }
 
-.filters nav {
-  background: #4e5267;
-  color: #a8adbd; }
-
 i {
   font-style: normal; }
+
+h1 {
+  font-size: 1.8rem; }
+
+h3 {
+  font-size: 1.4rem; }
+
+button {
+  background-color: #f0f0f0;
+  height: 4.8rem;
+  box-shadow: 0 0 1px black;
+  /*border: 1px solid rgb(0, 0, 0);*/
+  /*border-radius: 0.25em;*/
+  /*height: 2.5em;*/
+  /*line-height: 2.5;*/
+  /*margin: 0.25em;*/
+  /*padding: 0 1em;*/
+  /*width: 14em;*/ }
+
+.filters {
+  background: #4e5267;
+  color: #a8adbd;
+  max-width: 28.8rem; }
+  .filters ul, .filters ol, .filters li {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column; }
+  .filters .category ul, .filters .category ol, .filters .location ul, .filters .location ol, .filters .time ul, .filters .time ol {
+    flex-direction: row; }
+  .filters .category button {
+    width: 14.4rem; }
+  .filters .location ol {
+    flex-wrap: wrap; }
+    .filters .location ol li:first-child button {
+      width: 14.4rem; }
+
+.filters > header {
+  height: 9.6rem; }
+
+.filters button {
+  width: 4.8rem; }
 
 /*# sourceMappingURL=visu.css.map */
