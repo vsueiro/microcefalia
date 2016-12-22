@@ -82,4 +82,19 @@ button::-moz-focus-inner {
   -moz-user-select: none;
   -ms-user-select: none; }
 
+input[type="search"] {
+  display: block;
+  margin: 0;
+  width: 100%;
+  font-family: sans-serif;
+  font-size: 18px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  box-shadow: none;
+  border-radius: none; }
+
+input[type="search"]:focus {
+  outline: none; }
+
 /*# sourceMappingURL=reset.css.map */

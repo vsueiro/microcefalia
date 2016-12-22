@@ -105,12 +105,20 @@ button {
 				}
 			}
 		}
+		form {
+			width: 100%;
+			input {
+				width: 100%;
+				height: blocks( 1 );
+			}
+		}
 	}
 
 	.time {
 		width: 100%;
 		header {
 			width: 100%;
+			height: blocks( 1 );
 			h2 {
 				display: flex;
 			    justify-content: space-between;
@@ -129,4 +137,17 @@ button {
 
 .filters button {
 	width: blocks( 1 );
+}
+
+input {
+	margin: 0;
+	border: 0;
+	padding: 0;
+	color: red;
+	background: red;
+    border-radius: 0;
+    -webkit-box-shadow: 0; 
+    -moz-box-shadow: 0; 
+    box-shadow: 0; 
+    background: rgba(255,255,255,0.5);
 }
