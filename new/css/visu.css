@@ -129,16 +129,18 @@ h3 {
   font-size: 1.4rem; }
 
 button {
-  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   height: 4.8rem;
-  box-shadow: 0 0 1px black;
-  /*border: 1px solid rgb(0, 0, 0);*/
-  /*border-radius: 0.25em;*/
-  /*height: 2.5em;*/
-  /*line-height: 2.5;*/
-  /*margin: 0.25em;*/
-  /*padding: 0 1em;*/
-  /*width: 14em;*/ }
+  background-color: #f0f0f0;
+  box-shadow: 0 0 1px black; }
+  button i + span {
+    flex-direction: row;
+    width: 100%;
+    text-align: left;
+    padding: 0 1.2rem; }
 
 .filters {
   background: #4e5267;
@@ -175,6 +177,10 @@ button {
         flex-direction: row; }
     .filters .time button {
       width: 100%; }
+  .filters .autoplay {
+    width: 100%; }
+    .filters .autoplay button {
+      width: 100%; }
 
 .filters > header {
   height: 9.6rem; }
@@ -193,5 +199,25 @@ input {
   -moz-box-shadow: 0;
   box-shadow: 0;
   background: rgba(255, 255, 255, 0.5); }
+
+i.icon {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: 4.8rem;
+  height: 4.8rem;
+  background: lightblue; }
+
+i.icon:before {
+  content: '';
+  width: 2.4rem;
+  height: 2.4rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath fill='%234E5267' d='M16.59 10L12 14.59 7.41 10 6 11.41l6 6 6-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  background-color: rgba(255, 0, 0, 0.5); }
 
 /*# sourceMappingURL=visu.css.map */
