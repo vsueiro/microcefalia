@@ -454,9 +454,9 @@ html {
           display: flex;
           flex-direction: column;
           flex-shrink: 0;
-          /*flex-wrap: wrap;*/
           width: 96rem;
-          height: 76.8rem; }
+          height: 76.8rem;
+          overflow: auto; }
           html body main > article .content .primary {
             display: flex;
             flex-direction: column;

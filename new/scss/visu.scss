@@ -217,9 +217,9 @@ html {
 				    display: flex;
 				    flex-direction: column;
 				    flex-shrink: 0;
-				    /*flex-wrap: wrap;*/
 				    width: blocks( 20 );
 				    height: blocks( 16 );
+				    overflow: auto;
 
 				    .primary {
 				    	display: flex;
