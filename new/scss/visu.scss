@@ -73,8 +73,19 @@ html {
 			    justify-content: flex-start;
 			    align-items: center;
 			    height: blocks( 1 );
+			    width: 100%;
 			    background-color: #f0f0f0;
 			    box-shadow: 0 0 1px black;
+
+			    &.small {
+			    	width: blocks( .5 );
+			    	height: blocks( .5 );
+
+			    	i[data-icon] {
+				    	width: blocks( .5 );
+				    	height: blocks( .5 );
+					}
+			    }
 
 			    span {
 				    display: flex;
@@ -89,27 +100,28 @@ html {
 				    width: 100%;
 				    text-align: left;
 				    padding: 0 1.2rem;
+				    font-size: 1.4rem
 				}
 
-			}
+				i[data-icon] {
+					position: relative;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					flex-shrink: 0;
+					width: blocks( 1 );
+					height: blocks( 1 );
+				}
 
-			i[data-icon] {
-				position: relative;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				flex-shrink: 0;
-				width: blocks( 1 );
-				height: blocks( 1 );
-			}
+				i[data-icon]:before {
+					content: '';
+				    width: 2.4rem;
+				    height: 2.4rem;
+				    background-repeat: no-repeat;
+				    background-position: center;
+				    background-size: 100%;
+				}
 
-			i[data-icon]:before {
-				content: '';
-			    width: 2.4rem;
-			    height: 2.4rem;
-			    background-repeat: no-repeat;
-			    background-position: center;
-			    background-size: 100%;
 			}
 
 			.sr-only {

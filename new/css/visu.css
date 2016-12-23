@@ -365,8 +365,17 @@ html {
         justify-content: flex-start;
         align-items: center;
         height: 4.8rem;
+        width: 100%;
         background-color: #f0f0f0;
         box-shadow: 0 0 1px black; }
+        html body main button.small,
+        html body main a[role="button"].small {
+          width: 2.4rem;
+          height: 2.4rem; }
+          html body main button.small i[data-icon],
+          html body main a[role="button"].small i[data-icon] {
+            width: 2.4rem;
+            height: 2.4rem; }
         html body main button span,
         html body main a[role="button"] span {
           display: flex;
@@ -379,22 +388,25 @@ html {
           justify-content: flex-start;
           width: 100%;
           text-align: left;
-          padding: 0 1.2rem; }
-      html body main i[data-icon] {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-shrink: 0;
-        width: 4.8rem;
-        height: 4.8rem; }
-      html body main i[data-icon]:before {
-        content: '';
-        width: 2.4rem;
-        height: 2.4rem;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 100%; }
+          padding: 0 1.2rem;
+          font-size: 1.4rem; }
+        html body main button i[data-icon],
+        html body main a[role="button"] i[data-icon] {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-shrink: 0;
+          width: 4.8rem;
+          height: 4.8rem; }
+        html body main button i[data-icon]:before,
+        html body main a[role="button"] i[data-icon]:before {
+          content: '';
+          width: 2.4rem;
+          height: 2.4rem;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 100%; }
       html body main .sr-only {
         position: absolute;
         margin: -1px;
