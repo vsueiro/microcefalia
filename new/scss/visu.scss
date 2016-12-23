@@ -272,6 +272,30 @@ main {
 						}
 					}
 		    	}
+
+		    	.method {
+
+					ul {
+					    display: flex;
+					    flex-direction: row;
+
+					    li {
+					    	display: flex;
+						    width: 100%;
+						    height: blocks( 10 );
+						    background: $paper;
+						    box-shadow: 0 0 1px black;
+						}
+					}
+		    	}
+
+		    	footer {
+		    		display: flex;
+		    		justify-content: center;
+		    		align-items: center;
+		    		min-height: blocks( 3 );
+		    		background: gold;
+		    	}
 			}
 		}
 	}
