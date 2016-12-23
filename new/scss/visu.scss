@@ -240,7 +240,8 @@ html {
 				    flex-shrink: 0;
 				    width: blocks( 20 );
 				    height: blocks( 16 );
-				    overflow: auto;
+				    overflow-y: scroll;
+  					-webkit-overflow-scrolling: touch;
 
 				    .primary {
 				    	display: flex;
