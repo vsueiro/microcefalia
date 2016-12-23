@@ -62,7 +62,8 @@ input {
     background: rgba(255,255,255,0.5);
 }
 
-button {
+button,
+a[role="button"] {
 	display: flex;
     flex-direction: row;
     justify-content: center;
@@ -178,6 +179,7 @@ main {
 
 			.autoplay {
 				width: 100%;
+				margin-top: blocks( 1 );
 
 				button {
 					width: 100%;
@@ -194,10 +196,82 @@ main {
 		}
 
 		.content {
-			> p {
-				height: blocks( 2 );
-				background: pink;
-				width: blocks( 10 );
+		    display: flex;
+		    flex-direction: column;
+		    flex-shrink: 0;
+		    /*flex-wrap: wrap;*/
+		    width: blocks( 20 );
+		    height: blocks( 16 );
+
+		    .primary {
+		    	display: flex;
+		    	flex-direction: column;
+		    	flex-wrap: wrap;
+		    	flex-shrink: 0;
+		    	height: blocks( 16 );
+
+				> p {
+					height: blocks( 2 );
+					background: pink;
+					width: blocks( 10 );
+				}
+
+				.totals {
+					height: blocks( 3 );
+					background: lightblue;
+				}
+
+				.cases {
+
+					&.new {
+						height: blocks( 5 );
+						background: orange;
+					}
+
+					&.cumulative {
+						height: blocks( 6 );
+						background: teal;
+					}
+				}
+
+				.map {
+					width: blocks( 10 );
+					height: blocks( 10 );
+					background: yellow;
+				}
+
+				.ranking {
+					height: blocks( 6 );
+					background: green;
+				}
+			}
+
+			.secondary {
+				display: flex;
+		    	flex-direction: column;
+		    	/*flex-wrap: wrap;*/
+		    	height: blocks( 16 );
+		    	width: 100%;
+		    	background: red;
+
+		    	.related {
+		    		margin: blocks( 1 ) 0;
+
+		    		ul {
+					    display: flex;
+					    width: 100%;
+					    flex-grow: 1;
+
+					    li {
+						    display: flex;
+						    width: 100%;
+
+						     a {
+							    width: 100%;
+							}
+						}
+					}
+		    	}
 			}
 		}
 	}

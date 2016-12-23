@@ -359,7 +359,8 @@ input {
   box-shadow: 0;
   background: rgba(255, 255, 255, 0.5); }
 
-button {
+button,
+a[role="button"] {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -367,7 +368,8 @@ button {
   height: 4.8rem;
   background-color: #f0f0f0;
   box-shadow: 0 0 1px black; }
-  button i + span {
+  button i + span,
+  a[role="button"] i + span {
     flex-direction: row;
     width: 100%;
     text-align: left;
@@ -433,16 +435,64 @@ main {
         main > article .filters .time button {
           width: 100%; }
       main > article .filters .autoplay {
-        width: 100%; }
+        width: 100%;
+        margin-top: 4.8rem; }
         main > article .filters .autoplay button {
           width: 100%; }
       main > article .filters > header {
         height: 9.6rem; }
       main > article .filters button {
         width: 4.8rem; }
-    main > article .content > p {
-      height: 9.6rem;
-      background: pink;
-      width: 48rem; }
+    main > article .content {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      /*flex-wrap: wrap;*/
+      width: 96rem;
+      height: 76.8rem; }
+      main > article .content .primary {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        flex-shrink: 0;
+        height: 76.8rem; }
+        main > article .content .primary > p {
+          height: 9.6rem;
+          background: pink;
+          width: 48rem; }
+        main > article .content .primary .totals {
+          height: 14.4rem;
+          background: lightblue; }
+        main > article .content .primary .cases.new {
+          height: 24rem;
+          background: orange; }
+        main > article .content .primary .cases.cumulative {
+          height: 28.8rem;
+          background: teal; }
+        main > article .content .primary .map {
+          width: 48rem;
+          height: 48rem;
+          background: yellow; }
+        main > article .content .primary .ranking {
+          height: 28.8rem;
+          background: green; }
+      main > article .content .secondary {
+        display: flex;
+        flex-direction: column;
+        /*flex-wrap: wrap;*/
+        height: 76.8rem;
+        width: 100%;
+        background: red; }
+        main > article .content .secondary .related {
+          margin: 4.8rem 0; }
+          main > article .content .secondary .related ul {
+            display: flex;
+            width: 100%;
+            flex-grow: 1; }
+            main > article .content .secondary .related ul li {
+              display: flex;
+              width: 100%; }
+              main > article .content .secondary .related ul li a {
+                width: 100%; }
 
 /*# sourceMappingURL=visu.css.map */
