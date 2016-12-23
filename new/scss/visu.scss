@@ -70,18 +70,27 @@ html {
 			a[role="button"] {
 				display: flex;
 			    flex-direction: row;
-			    justify-content: center;
+			    justify-content: flex-start;
 			    align-items: center;
 			    height: blocks( 1 );
 			    background-color: #f0f0f0;
 			    box-shadow: 0 0 1px black;
 
+			    span {
+				    display: flex;
+				    width: 100%;
+				    justify-content: center;
+				    align-items: center;
+				}
+
 			    i + span {
 			    	flex-direction: row;
+			    	justify-content: flex-start;
 				    width: 100%;
 				    text-align: left;
 				    padding: 0 1.2rem;
 				}
+
 			}
 
 			i[data-icon] {

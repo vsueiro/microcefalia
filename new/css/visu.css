@@ -362,14 +362,21 @@ html {
       html body main a[role="button"] {
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         height: 4.8rem;
         background-color: #f0f0f0;
         box-shadow: 0 0 1px black; }
+        html body main button span,
+        html body main a[role="button"] span {
+          display: flex;
+          width: 100%;
+          justify-content: center;
+          align-items: center; }
         html body main button i + span,
         html body main a[role="button"] i + span {
           flex-direction: row;
+          justify-content: flex-start;
           width: 100%;
           text-align: left;
           padding: 0 1.2rem; }
