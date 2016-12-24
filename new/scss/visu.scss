@@ -333,6 +333,28 @@ a[role="button"] {
 					}
 				}
 
+				.amount {
+
+					li {
+						display: flex;
+						height: blocks( 1 );
+						width: 100%;
+						background: lavender;
+						box-shadow: 0 0 1px black;
+
+						span {
+							display: flex;
+						    justify-content: center;
+						    align-items: flex-start;
+						    padding: .4rem;
+						    width: blocks( 1 );
+							height: blocks( 1 );
+						    font-size: 1.2rem;
+						}
+					}
+
+				}
+
 				&.new {
 					height: blocks( 5 );
 					background: orange;
