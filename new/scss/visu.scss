@@ -66,17 +66,31 @@ header + p {
 	padding-top: 0;
 }
 
-input {
+input[type="search"] {
 	margin: 0;
 	border: 0;
+	border-radius: 0;
 	padding: 0;
-	color: red;
-	background: red;
-    border-radius: 0;
-    -webkit-box-shadow: 0; 
-    -moz-box-shadow: 0; 
-    box-shadow: 0; 
-    background: rgba(255,255,255,0.5);
+	background: transparent;
+    box-shadow: 0;
+    font-size: 1.6rem; 
+    font-family: inherit;
+    color: $paper;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: $neutral-4;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: $neutral-4;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: $neutral-4;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: $neutral-4;
 }
 
 button,
@@ -87,8 +101,8 @@ a[role="button"] {
     align-items: center;
     height: blocks( 1 );
     width: 100%;
-    background-color: #f0f0f0;
-    box-shadow: 0 0 1px black;
+    background-color: $paper;
+    /*box-shadow: 0 0 1px black;*/
 
     &.small {
     	width: blocks( .5 );
@@ -188,6 +202,11 @@ a[role="button"] {
 		    flex-direction: column;
 		}
 
+		button,
+		a[role="button"] {
+			background: transparent;
+		}
+
 		.category, .location, .date {
 			margin-bottom: blocks( 1 );
 
@@ -204,6 +223,7 @@ a[role="button"] {
 		}
 
 		.location {
+
 			ol {
 				flex-wrap: wrap;
 
@@ -217,12 +237,50 @@ a[role="button"] {
 					}
 				}
 			}
+
 			form {
 				width: 100%;
 
 				input {
 					width: 100%;
 					height: blocks( 1 );
+				}
+			}
+
+			.input {
+			    display: flex;
+			}
+
+			.results {
+			    height: 24rem;
+			    background: #353844;
+			    font-size: 1.4rem;
+
+ 				.hint {
+				    width: 100%;
+				    height: 4.8rem;
+				    display: flex;
+				    justify-content: flex-start;
+				    align-items: center;
+				    padding: 0 1.6rem;
+				    display: none;
+				}
+
+				 ol {
+				    display: flex;
+				}
+
+				li {
+				    display: flex;
+				    justify-content: flex-start;
+				    flex-direction: row;
+				    align-items: center;
+				    padding: 1.2rem 1.6rem;
+				    width: 100%;
+				    height: 4.8rem;
+				}
+				li .location {
+				    margin: 0;
 				}
 			}
 		}
@@ -280,7 +338,7 @@ a[role="button"] {
 		    	margin-bottom: 2.4rem;
 			}
 		}
-		
+
 		button {
 			width: blocks( 1 );
 		}
