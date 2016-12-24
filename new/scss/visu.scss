@@ -11,8 +11,8 @@ $neutral-6 : #ecedf1;
 
 $block: 4.8rem;
 
-@function blocks( $times ) {
-  @return $block * $times
+@function blocks( $dates ) {
+  @return $block * $dates
 }
 
 @import '_reset';
@@ -179,7 +179,7 @@ a[role="button"] {
 		    flex-direction: column;
 		}
 
-		.category, .location, .time {
+		.category, .location, .date {
 			margin-bottom: blocks( 1 );
 
 			ul, ol {
@@ -218,7 +218,7 @@ a[role="button"] {
 			}
 		}
 
-		.time {
+		.date {
 			width: 100%;
 
 			header {
@@ -236,11 +236,11 @@ a[role="button"] {
 			        width: 100%;
 				}
 
-				time {
+				date {
 					padding: 0 1.6rem;
 					color: $paper;
 
-					&[datetime*="W"] {
+					&[datedate*="W"] {
 						font-size: 1.4rem;
 						color: $neutral-4;
 					}
@@ -276,8 +276,8 @@ a[role="button"] {
 	    flex-shrink: 0;
 	    width: blocks( 20 );
 	    height: blocks( 16 );
-	    overflow-y: scroll;
-			-webkit-overflow-scrolling: touch;
+	    /*overflow-y: scroll;*/
+		/*-webkit-overflow-scrolling: touch;*/
 
 	    .primary {
 	    	display: flex;
@@ -323,18 +323,8 @@ a[role="button"] {
 				    align-items: center;
 				    padding: 0 1.6rem;
 
-
-/*				    nav {
-						display: flex;
-					}
-					*/
 					ul {
 						display: flex;
-					    /*display: flex;
-					    flex-direction: row;
-					    justify-content: center;
-					    align-items: center;
-					    width: 100%;*/
 					}
 					
 					li {
@@ -346,6 +336,10 @@ a[role="button"] {
 				&.new {
 					height: blocks( 5 );
 					background: orange;
+
+					.time {
+						@extend .sr-only;
+					}
 				}
 
 				&.cumulative {

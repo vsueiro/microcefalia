@@ -425,7 +425,7 @@ a[role="button"] {
     background-position: center;
     background-size: 100%; }
 
-.sr-only {
+.sr-only, .visu .content .primary .cases.new .time {
   position: absolute;
   margin: -1px;
   border: 0;
@@ -434,7 +434,7 @@ a[role="button"] {
   height: 1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0); }
-  .sr-only:active, .sr-only:focus {
+  .sr-only:active, .visu .content .primary .cases.new .time:active, .sr-only:focus, .visu .content .primary .cases.new .time:focus {
     position: static;
     margin: 0;
     width: auto;
@@ -459,9 +459,9 @@ a[role="button"] {
       justify-content: flex-start;
       align-items: flex-start;
       flex-direction: column; }
-    .visu .filters .category, .visu .filters .location, .visu .filters .time {
+    .visu .filters .category, .visu .filters .location, .visu .filters .date {
       margin-bottom: 4.8rem; }
-      .visu .filters .category ul, .visu .filters .category ol, .visu .filters .location ul, .visu .filters .location ol, .visu .filters .time ul, .visu .filters .time ol {
+      .visu .filters .category ul, .visu .filters .category ol, .visu .filters .location ul, .visu .filters .location ol, .visu .filters .date ul, .visu .filters .date ol {
         flex-direction: row; }
     .visu .filters .category button {
       width: 14.4rem; }
@@ -474,27 +474,27 @@ a[role="button"] {
       .visu .filters .location form input {
         width: 100%;
         height: 4.8rem; }
-    .visu .filters .time {
+    .visu .filters .date {
       width: 100%; }
-      .visu .filters .time header {
+      .visu .filters .date header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         flex-direction: row;
         width: 100%;
         height: 4.8rem; }
-        .visu .filters .time header h2 {
+        .visu .filters .date header h2 {
           display: flex;
           justify-content: space-between;
           flex-direction: row;
           width: 100%; }
-        .visu .filters .time header time {
+        .visu .filters .date header date {
           padding: 0 1.6rem;
           color: #ffffff; }
-          .visu .filters .time header time[datetime*="W"] {
+          .visu .filters .date header date[datedate*="W"] {
             font-size: 1.4rem;
             color: #a8adbd; }
-      .visu .filters .time button {
+      .visu .filters .date button {
         width: 100%; }
     .visu .filters .autoplay {
       width: 100%;
@@ -511,8 +511,8 @@ a[role="button"] {
     flex-shrink: 0;
     width: 96rem;
     height: 76.8rem;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch; }
+    /*overflow-y: scroll;*/
+    /*-webkit-overflow-scrolling: touch;*/ }
     .visu .content .primary {
       display: flex;
       flex-direction: column;
@@ -543,18 +543,9 @@ a[role="button"] {
         flex-direction: row;
         justify-content: flex-start;
         align-items: center;
-        padding: 0 1.6rem;
-        /*				    nav {
-        						display: flex;
-        					}
-        					*/ }
+        padding: 0 1.6rem; }
         .visu .content .primary .cases header ul {
-          display: flex;
-          /*display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
-          width: 100%;*/ }
+          display: flex; }
         .visu .content .primary .cases header li {
           display: flex;
           margin-left: .8rem; }
