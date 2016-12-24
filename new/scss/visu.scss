@@ -15,8 +15,8 @@ $block: 4.8rem;
   @return $block * $times
 }
 
-@import 'reset';
-@import 'icons';
+@import '_reset';
+@import '_icons';
 
 *,
 *:before,

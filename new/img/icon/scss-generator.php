@@ -1,6 +1,6 @@
 <?php
 
-  $scss = "@import 'svg-url'; \n";
+  $scss = "@import '_svg-url'; \n";
 
   foreach ( glob( 'svg/*.svg' ) as $path ) {
 
@@ -13,4 +13,4 @@
 
   }
   echo $scss;
-  file_put_contents( '../../scss/icons.scss', $scss );
+  file_put_contents( '../../scss/_icons.scss', $scss );
