@@ -355,6 +355,13 @@ h1 {
 h3 {
   font-size: 1.4rem; }
 
+p {
+  padding: 1.2rem 1.6rem;
+  font-size: 1.4rem; }
+
+header + p {
+  padding-top: 0; }
+
 input {
   margin: 0;
   border: 0;
@@ -682,10 +689,13 @@ a[role="button"] {
           box-shadow: 0 0 1px black; }
       .visu .content .secondary .method article:before {
         content: '';
-        background: #ecedf1;
+        display: flex;
+        margin-bottom: 1.6rem;
         width: 100%;
-        height: 144px;
-        display: flex; }
+        height: 14.4rem;
+        background: #ecedf1; }
+      .visu .content .secondary .method article header {
+        padding: 1.2rem 1.6rem; }
       .visu .content .secondary footer {
         display: flex;
         justify-content: center;
