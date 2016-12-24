@@ -295,10 +295,16 @@ a[role="button"] {
 	    	flex-shrink: 0;
 	    	height: blocks( 16 );
 
-			> p {
+			.description { 
+			    display: flex;
+				align-items: flex-end;
+				width: blocks( 10 );
 				height: blocks( 2 );
 				background: pink;
-				width: blocks( 10 );
+
+				p {
+
+				}
 			}
 
 			.totals {

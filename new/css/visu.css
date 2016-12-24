@@ -527,10 +527,12 @@ a[role="button"] {
       flex-wrap: wrap;
       flex-shrink: 0;
       height: 76.8rem; }
-      .visu .content .primary > p {
+      .visu .content .primary .description {
+        display: flex;
+        align-items: flex-end;
+        width: 48rem;
         height: 9.6rem;
-        background: pink;
-        width: 48rem; }
+        background: pink; }
       .visu .content .primary .totals {
         height: 14.4rem;
         background: lightblue; }
