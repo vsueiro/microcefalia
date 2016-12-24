@@ -584,9 +584,22 @@ a[role="button"] {
         height: 28.8rem;
         background: teal; }
       .visu .content .primary .map {
+        position: relative;
         width: 48rem;
         height: 48rem;
         background: yellow; }
+        .visu .content .primary .map header {
+          position: absolute;
+          display: flex;
+          justify-content: flex-end;
+          align-items: flex-end;
+          right: 0;
+          bottom: 0;
+          margin: 1.6rem;
+          width: 2.4rem;
+          height: 4.8rem; }
+        .visu .content .primary .map .graphic {
+          height: 48rem; }
       .visu .content .primary .ranking {
         height: 28.8rem;
         font-size: 1.4rem; }

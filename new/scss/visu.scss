@@ -390,9 +390,26 @@ a[role="button"] {
 			}
 
 			.map {
+				position: relative;
 				width: blocks( 10 );
 				height: blocks( 10 );
 				background: yellow;
+
+				header {
+					position: absolute;
+				    display: flex;
+				    justify-content: flex-end;
+				    align-items: flex-end;
+				    right: 0;
+				    bottom: 0;
+				    margin: 1.6rem;
+			        width: 2.4rem;
+				    height: 4.8rem;
+				}
+				
+				.graphic {
+				    height: blocks( 10 );
+				}
 			}
 
 			.ranking {
