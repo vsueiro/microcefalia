@@ -461,12 +461,23 @@ a[role="button"] {
     .visu .filters .time {
       width: 100%; }
       .visu .filters .time header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
         width: 100%;
         height: 4.8rem; }
         .visu .filters .time header h2 {
           display: flex;
           justify-content: space-between;
-          flex-direction: row; }
+          flex-direction: row;
+          width: 100%; }
+        .visu .filters .time header time {
+          padding: 0 1.6rem;
+          color: #ffffff; }
+          .visu .filters .time header time[datetime*="W"] {
+            font-size: 1.4rem;
+            color: #a8adbd; }
       .visu .filters .time button {
         width: 100%; }
     .visu .filters .autoplay {

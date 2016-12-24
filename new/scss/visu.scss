@@ -204,6 +204,10 @@ a[role="button"] {
 			width: 100%;
 
 			header {
+			    display: flex;
+			    justify-content: space-between;
+			    align-items: center;
+			    flex-direction: row;
 				width: 100%;
 				height: blocks( 1 );
 
@@ -211,7 +215,19 @@ a[role="button"] {
 					display: flex;
 				    justify-content: space-between;
 				    flex-direction: row;
+			        width: 100%;
 				}
+
+				time {
+					padding: 0 1.6rem;
+					color: $paper;
+
+					&[datetime*="W"] {
+						font-size: 1.4rem;
+						color: $neutral-4;
+					}
+				}
+
 			}
 			button {
 				width: 100%;
