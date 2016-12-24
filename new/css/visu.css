@@ -702,5 +702,8 @@ a[role="button"] {
         align-items: center;
         min-height: 14.4rem;
         background: gold; }
+        .visu .content .secondary footer p {
+          width: 480px;
+          text-align: center; }
 
 /*# sourceMappingURL=visu.css.map */
