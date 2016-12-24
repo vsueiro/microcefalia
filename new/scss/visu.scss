@@ -70,7 +70,7 @@ input[type="search"] {
 	margin: 0;
 	border: 0;
 	border-radius: 0;
-	padding: 0;
+	padding: 0 1.2rem;
 	background: transparent;
     box-shadow: 0;
     font-size: 1.6rem; 
@@ -303,11 +303,11 @@ a[role="button"] {
 			        width: 100%;
 				}
 
-				date {
+				time {
 					padding: 0 1.6rem;
 					color: $paper;
 
-					&[datedate*="W"] {
+					&[datetime*="W"] {
 						font-size: 1.4rem;
 						color: $neutral-4;
 					}

@@ -366,7 +366,7 @@ input[type="search"] {
   margin: 0;
   border: 0;
   border-radius: 0;
-  padding: 0;
+  padding: 0 1.2rem;
   background: transparent;
   box-shadow: 0;
   font-size: 1.6rem;
@@ -542,10 +542,10 @@ a[role="button"] {
           justify-content: space-between;
           flex-direction: row;
           width: 100%; }
-        .visu .filters .date header date {
+        .visu .filters .date header time {
           padding: 0 1.6rem;
           color: #ffffff; }
-          .visu .filters .date header date[datedate*="W"] {
+          .visu .filters .date header time[datetime*="W"] {
             font-size: 1.4rem;
             color: #a8adbd; }
       .visu .filters .date button {
