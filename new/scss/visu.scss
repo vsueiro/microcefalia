@@ -271,9 +271,16 @@ a[role="button"] {
 		}
 
 		> header {
+			display: flex;
+    		align-items: flex-end;
 			height: blocks( 2 );
-		}
 
+			h1 {
+		    	padding: 1.2rem 1.6rem;
+		    	margin-bottom: 2.4rem;
+			}
+		}
+		
 		button {
 			width: blocks( 1 );
 		}
