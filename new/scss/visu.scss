@@ -265,6 +265,17 @@ a[role="button"] {
 				i + span {
 				    font-size: 1.6rem
 				}
+
+				output {
+					display: flex;
+				    justify-content: flex-end;
+				    align-items: center;
+				    width: blocks( 2 );
+				    height: blocks( 1 );
+				    padding: 0 1.6rem;
+				    font-size: 1.8rem;
+				}
+
 			}
 
 			.cases {
