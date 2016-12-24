@@ -102,6 +102,7 @@ a[role="button"] {
     height: blocks( 1 );
     width: 100%;
     background-color: $paper;
+    cursor: pointer;
     /*box-shadow: 0 0 1px black;*/
 
     &.small {
