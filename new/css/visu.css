@@ -562,7 +562,20 @@ a[role="button"] {
           padding: .4rem;
           width: 4.8rem;
           height: 4.8rem;
-          font-size: 1.2rem; }
+          font-size: 1.2rem;
+          color: #a8adbd; }
+      .visu .content .primary .cases .time {
+        height: 4.8rem; }
+        .visu .content .primary .cases .time ol {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 100%;
+          padding: 0 4.8rem; }
+          .visu .content .primary .cases .time ol li {
+            font-size: 1.2rem;
+            color: #a8adbd;
+            text-transform: lowercase; }
       .visu .content .primary .cases.new {
         height: 24rem;
         background: orange; }

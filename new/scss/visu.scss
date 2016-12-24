@@ -350,9 +350,28 @@ a[role="button"] {
 						    width: blocks( 1 );
 							height: blocks( 1 );
 						    font-size: 1.2rem;
+						    color: $neutral-4;
 						}
 					}
 
+				}
+
+				.time {
+					height: blocks( 1 );
+
+					ol {
+					    display: flex;
+					    justify-content: space-between;
+					    align-items: center;
+					    height: 100%;
+					    padding: 0 blocks( 1 );
+
+					    li {
+					    	font-size: 1.2rem;
+					    	color: $neutral-4;
+					    	text-transform: lowercase;
+					    }
+					}
 				}
 
 				&.new {
