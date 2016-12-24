@@ -157,6 +157,13 @@ a[role="button"] {
 	}
 }
 
+.initials {
+    text-transform: uppercase !important;
+    font-size: 1.4rem;
+    font-weight: 400;
+    letter-spacing: .05rem;
+}
+
 .visu {
     display: flex;
 
