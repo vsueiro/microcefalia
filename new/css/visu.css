@@ -680,6 +680,12 @@ a[role="button"] {
           height: 48rem;
           background: #ffffff;
           box-shadow: 0 0 1px black; }
+      .visu .content .secondary .method article:before {
+        content: '';
+        background: #ecedf1;
+        width: 100%;
+        height: 144px;
+        display: flex; }
       .visu .content .secondary footer {
         display: flex;
         justify-content: center;
