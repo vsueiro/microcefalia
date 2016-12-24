@@ -261,6 +261,10 @@ a[role="button"] {
 			.totals {
 				height: blocks( 3 );
 				background: lightblue;
+
+				i + span {
+				    font-size: 1.6rem
+				}
 			}
 
 			.cases {

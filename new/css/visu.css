@@ -499,6 +499,8 @@ a[role="button"] {
       .visu .content .primary .totals {
         height: 14.4rem;
         background: lightblue; }
+        .visu .content .primary .totals i + span {
+          font-size: 1.6rem; }
       .visu .content .primary .cases.new {
         height: 24rem;
         background: orange; }
