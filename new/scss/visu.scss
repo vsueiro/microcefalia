@@ -489,7 +489,6 @@ a[role="button"] {
 						display: flex;
 						height: blocks( 1 );
 						width: 100%;
-						box-shadow: 0 0 1px black;
 
 						span {
 							display: flex;
@@ -569,7 +568,6 @@ a[role="button"] {
 				    justify-content: space-between;
 				    align-items: center;
 				    height: blocks( 1 );
-				    box-shadow: 0 0 1px;
 				}
 
 				.position {
@@ -677,7 +675,6 @@ a[role="button"] {
 					    width: 100%;
 					    height: blocks( 10 );
 					    background: $paper;
-					    box-shadow: 0 0 1px black;
 					}
 				}
 
