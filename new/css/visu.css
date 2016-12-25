@@ -405,14 +405,6 @@ a[role="button"] {
   cursor: pointer;
   outline: none;
   transition: background .3s, color .3s; }
-  button:hover:not(.active),
-  a[role="button"]:hover:not(.active) {
-    background-color: #ecedf1;
-    /*color: $paper;*/ }
-  button.active,
-  a[role="button"].active {
-    background-color: #569bfc;
-    color: #ffffff; }
   button.small,
   a[role="button"].small {
     width: 2.4rem;
@@ -428,8 +420,26 @@ a[role="button"] {
     border-radius: 1.2rem;
     justify-content: center;
     /* align-items: center; */
+    background: #ecedf1;
+    color: #a8adbd;
     font-size: 1.4rem;
     text-transform: lowercase; }
+    button.inline:hover:not(.active),
+    a[role="button"].inline:hover:not(.active) {
+      background-color: #a8adbd;
+      color: #ffffff; }
+    button.inline.active,
+    a[role="button"].inline.active {
+      background-color: #569bfc;
+      color: #ffffff; }
+  button:hover:not(.active),
+  a[role="button"]:hover:not(.active) {
+    background-color: #ecedf1;
+    /*color: $paper;*/ }
+  button.active,
+  a[role="button"].active {
+    background-color: #569bfc;
+    color: #ffffff; }
   button span,
   a[role="button"] span {
     display: flex;
