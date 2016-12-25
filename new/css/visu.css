@@ -498,9 +498,11 @@ a[role="button"] {
 .visu {
   display: flex; }
   .visu .filters {
+    position: relative;
     background: #4e5267;
     color: #a8adbd;
-    max-width: 28.8rem; }
+    max-width: 28.8rem;
+    /*border-right: .1rem solid $neutral-5;*/ }
     .visu .filters ul, .visu .filters ol, .visu .filters li {
       display: flex;
       justify-content: flex-start;
@@ -548,11 +550,10 @@ a[role="button"] {
       .visu .filters .location[data-search="true"] form {
         height: 28.8rem;
         top: 0; }
-      .visu .filters .location[data-search="true"] > ol::after {
+      .visu .filters .location[data-search="true"] .button-group ol::after {
         opacity: .75; }
       .visu .filters .location form {
         position: absolute;
-        width: 100%;
         overflow: hidden;
         transition: top .3s, height .3s; }
         .visu .filters .location form input {
@@ -806,5 +807,46 @@ a[role="button"] {
         .visu .content .secondary footer p {
           width: 480px;
           text-align: center; }
+
+/* dividers */
+.visu .content .primary .description::after,
+.visu .content .primary > .totals::after,
+.visu .content .primary .cases .core::after,
+.visu .content .primary .cases .scale.time::after,
+.visu .content .primary .map::after,
+.visu .content .primary .ranking .table::after,
+.visu .content .primary .ranking figcaption::after,
+.visu .content .secondary .related li::after,
+.visu .content .secondary .method ul li::after {
+  content: '';
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: inset 0 0 0 0.1rem #cacdd8;
+  pointer-events: none; }
+
+.visu .content .primary .description,
+.visu .content .primary > .totals,
+.visu .content .primary .cases .core,
+.visu .content .primary .cases .scale.time,
+.visu .content .primary .map,
+.visu .content .primary .ranking .table,
+.visu .content .primary .ranking figcaption,
+.visu .content .secondary .related li,
+.visu .content .secondary .method ul li {
+  position: relative; }
+
+.visu .filters::after {
+  content: '';
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-right: 0.1rem solid #cacdd8;
+  pointer-events: none; }
 
 /*# sourceMappingURL=visu.css.map */
