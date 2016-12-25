@@ -323,7 +323,7 @@ a[role="button"] {
 
 			.results {
 			    height: 24rem;
-			    background: #353844;
+			    background: $neutral-0;
 			    font-size: 1.4rem;
 
  				.hint {
@@ -436,7 +436,7 @@ a[role="button"] {
 				align-items: flex-end;
 				width: blocks( 10 );
 				height: blocks( 2 );
-				background: pink;
+				background: $paper;
 
 				p {
 
@@ -445,7 +445,6 @@ a[role="button"] {
 
 			.totals {
 				height: blocks( 3 );
-				background: lightblue;
 
 				i + span {
 				    font-size: 1.6rem
@@ -467,7 +466,6 @@ a[role="button"] {
 
 				header {
 					height: blocks( 1 );
-				    background: lightblue;
 				    display: flex;
 				    flex-direction: row;
 				    justify-content: flex-start;
@@ -490,7 +488,6 @@ a[role="button"] {
 						display: flex;
 						height: blocks( 1 );
 						width: 100%;
-						background: lavender;
 						box-shadow: 0 0 1px black;
 
 						span {
@@ -527,7 +524,6 @@ a[role="button"] {
 
 				&.new {
 					height: blocks( 5 );
-					background: orange;
 
 					.time {
 						@extend .sr-only;
@@ -536,7 +532,6 @@ a[role="button"] {
 
 				&.cumulative {
 					height: blocks( 6 );
-					background: teal;
 				}
 			}
 
@@ -544,7 +539,6 @@ a[role="button"] {
 				position: relative;
 				width: blocks( 10 );
 				height: blocks( 10 );
-				background: yellow;
 
 				header {
 					position: absolute;
@@ -572,7 +566,6 @@ a[role="button"] {
 				    justify-content: space-between;
 				    align-items: center;
 				    height: blocks( 1 );
-				    background: antiquewhite;
 				    box-shadow: 0 0 1px;
 				}
 
@@ -582,7 +575,6 @@ a[role="button"] {
 					align-items: center;
 					width: blocks( 1 );
 					height: blocks( 1 );
-					background: pink;
 
 					&::after {
 						content: 'º';
@@ -651,7 +643,6 @@ a[role="button"] {
 	    	flex-direction: column;
 	    	height: blocks( 16 );
 	    	width: 100%;
-	    	background: red;
 
 	    	.related {
 	    		margin: blocks( 1 ) 0;
@@ -709,7 +700,6 @@ a[role="button"] {
 	    		justify-content: center;
 	    		align-items: center;
 	    		min-height: blocks( 3 );
-	    		background: gold;
 
 	    		p {
 		    		width: 480px;

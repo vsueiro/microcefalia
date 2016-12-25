@@ -630,10 +630,9 @@ a[role="button"] {
         align-items: flex-end;
         width: 48rem;
         height: 9.6rem;
-        background: pink; }
+        background: #ffffff; }
       .visu .content .primary .totals {
-        height: 14.4rem;
-        background: lightblue; }
+        height: 14.4rem; }
         .visu .content .primary .totals i + span {
           font-size: 1.6rem; }
         .visu .content .primary .totals output {
@@ -646,7 +645,6 @@ a[role="button"] {
           font-size: 1.8rem; }
       .visu .content .primary .cases header {
         height: 4.8rem;
-        background: lightblue;
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
@@ -661,7 +659,6 @@ a[role="button"] {
         display: flex;
         height: 4.8rem;
         width: 100%;
-        background: lavender;
         box-shadow: 0 0 1px black; }
         .visu .content .primary .cases .amount li span {
           display: flex;
@@ -685,16 +682,13 @@ a[role="button"] {
             color: #a8adbd;
             text-transform: lowercase; }
       .visu .content .primary .cases.new {
-        height: 24rem;
-        background: orange; }
+        height: 24rem; }
       .visu .content .primary .cases.cumulative {
-        height: 28.8rem;
-        background: teal; }
+        height: 28.8rem; }
       .visu .content .primary .map {
         position: relative;
         width: 48rem;
-        height: 48rem;
-        background: yellow; }
+        height: 48rem; }
         .visu .content .primary .map header {
           position: absolute;
           display: flex;
@@ -715,15 +709,13 @@ a[role="button"] {
           justify-content: space-between;
           align-items: center;
           height: 4.8rem;
-          background: antiquewhite;
           box-shadow: 0 0 1px; }
         .visu .content .primary .ranking .position {
           display: flex;
           justify-content: center;
           align-items: center;
           width: 4.8rem;
-          height: 4.8rem;
-          background: pink; }
+          height: 4.8rem; }
           .visu .content .primary .ranking .position::after {
             content: 'º'; }
         .visu .content .primary .ranking .totals {
@@ -765,8 +757,7 @@ a[role="button"] {
       display: flex;
       flex-direction: column;
       height: 76.8rem;
-      width: 100%;
-      background: red; }
+      width: 100%; }
       .visu .content .secondary .related {
         margin: 4.8rem 0; }
         .visu .content .secondary .related ul {
@@ -800,8 +791,7 @@ a[role="button"] {
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 14.4rem;
-        background: gold; }
+        min-height: 14.4rem; }
         .visu .content .secondary footer p {
           width: 480px;
           text-align: center; }
