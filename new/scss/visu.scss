@@ -463,6 +463,7 @@ a[role="button"] {
 			}
 
 			.cases {
+				background: $paper;
 
 				header {
 					height: blocks( 1 );
@@ -554,11 +555,13 @@ a[role="button"] {
 
 				.graphic {
 				    height: blocks( 10 );
+				    background: $neutral-6;
 				}
 			}
 
 			.ranking {
 				height: blocks( 6 );
+				background: $paper;
 			    font-size: 1.4rem;
 
 				li {

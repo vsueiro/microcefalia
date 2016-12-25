@@ -643,48 +643,50 @@ a[role="button"] {
           height: 4.8rem;
           padding: 0 1.6rem;
           font-size: 1.8rem; }
-      .visu .content .primary .cases header {
-        height: 4.8rem;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        padding: 0 1.6rem; }
-        .visu .content .primary .cases header ul {
-          display: flex; }
-        .visu .content .primary .cases header li {
-          display: flex;
-          margin-left: .8rem; }
-      .visu .content .primary .cases .amount li {
-        display: flex;
-        height: 4.8rem;
-        width: 100%;
-        box-shadow: 0 0 1px black; }
-        .visu .content .primary .cases .amount li span {
-          display: flex;
-          justify-content: center;
-          align-items: flex-start;
-          padding: .4rem;
-          width: 4.8rem;
+      .visu .content .primary .cases {
+        background: #ffffff; }
+        .visu .content .primary .cases header {
           height: 4.8rem;
-          font-size: 1.2rem;
-          color: #a8adbd; }
-      .visu .content .primary .cases .time {
-        height: 4.8rem; }
-        .visu .content .primary .cases .time ol {
           display: flex;
-          justify-content: space-between;
+          flex-direction: row;
+          justify-content: flex-start;
           align-items: center;
-          height: 100%;
-          padding: 0 4.8rem; }
-          .visu .content .primary .cases .time ol li {
+          padding: 0 1.6rem; }
+          .visu .content .primary .cases header ul {
+            display: flex; }
+          .visu .content .primary .cases header li {
+            display: flex;
+            margin-left: .8rem; }
+        .visu .content .primary .cases .amount li {
+          display: flex;
+          height: 4.8rem;
+          width: 100%;
+          box-shadow: 0 0 1px black; }
+          .visu .content .primary .cases .amount li span {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: .4rem;
+            width: 4.8rem;
+            height: 4.8rem;
             font-size: 1.2rem;
-            color: #a8adbd;
-            text-transform: lowercase; }
-      .visu .content .primary .cases.new {
-        height: 24rem; }
-      .visu .content .primary .cases.cumulative {
-        height: 28.8rem; }
+            color: #a8adbd; }
+        .visu .content .primary .cases .time {
+          height: 4.8rem; }
+          .visu .content .primary .cases .time ol {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            padding: 0 4.8rem; }
+            .visu .content .primary .cases .time ol li {
+              font-size: 1.2rem;
+              color: #a8adbd;
+              text-transform: lowercase; }
+        .visu .content .primary .cases.new {
+          height: 24rem; }
+        .visu .content .primary .cases.cumulative {
+          height: 28.8rem; }
       .visu .content .primary .map {
         position: relative;
         width: 48rem;
@@ -700,9 +702,11 @@ a[role="button"] {
           width: 2.4rem;
           height: 4.8rem; }
         .visu .content .primary .map .graphic {
-          height: 48rem; }
+          height: 48rem;
+          background: #ecedf1; }
       .visu .content .primary .ranking {
         height: 28.8rem;
+        background: #ffffff;
         font-size: 1.4rem; }
         .visu .content .primary .ranking li {
           display: flex;
