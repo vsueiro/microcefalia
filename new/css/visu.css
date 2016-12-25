@@ -362,6 +362,7 @@ p {
 header + p {
   padding-top: 0; }
 
+input[type="text"],
 input[type="search"] {
   margin: 0;
   border: 0;
@@ -371,7 +372,8 @@ input[type="search"] {
   box-shadow: 0;
   font-size: 1.6rem;
   font-family: inherit;
-  color: #ffffff; }
+  color: #ffffff;
+  outline: none; }
 
 ::-webkit-input-placeholder {
   /* WebKit, Blink, Edge */
@@ -401,7 +403,16 @@ a[role="button"] {
   width: 100%;
   background-color: #ffffff;
   cursor: pointer;
-  /*box-shadow: 0 0 1px black;*/ }
+  outline: none;
+  transition: background .3s, color .3s; }
+  button:hover:not(.active),
+  a[role="button"]:hover:not(.active) {
+    background-color: #ecedf1;
+    /*color: $paper;*/ }
+  button.active,
+  a[role="button"].active {
+    background-color: #569bfc;
+    color: #ffffff; }
   button.small,
   a[role="button"].small {
     width: 2.4rem;
@@ -485,51 +496,86 @@ a[role="button"] {
       justify-content: flex-start;
       align-items: flex-start;
       flex-direction: column; }
-    .visu .filters button,
-    .visu .filters a[role="button"] {
-      background: transparent; }
+    .visu .filters .input {
+      background: #4e5267; }
+      .visu .filters .input button {
+        background: transparent !important; }
+    .visu .filters [data-search="true"] .input {
+      background: #676f89; }
+    .visu .filters button:not(.active),
+    .visu .filters a[role="button"]:not(.active) {
+      background: #4e5267; }
+    .visu .filters button:hover:not(.active),
+    .visu .filters a[role="button"]:hover:not(.active) {
+      background-color: #676f89;
+      color: #ffffff; }
     .visu .filters .category, .visu .filters .location, .visu .filters .date {
       margin-bottom: 4.8rem; }
       .visu .filters .category ul, .visu .filters .category ol, .visu .filters .location ul, .visu .filters .location ol, .visu .filters .date ul, .visu .filters .date ol {
         flex-direction: row; }
     .visu .filters .category button {
       width: 14.4rem; }
-    .visu .filters .location ol {
-      flex-wrap: wrap; }
-      .visu .filters .location ol li:first-child button {
-        width: 14.4rem; }
-    .visu .filters .location form {
-      width: 100%; }
-      .visu .filters .location form input {
-        width: 100%;
-        height: 4.8rem; }
-    .visu .filters .location .input {
-      display: flex; }
-    .visu .filters .location .results {
-      height: 24rem;
-      background: #353844;
-      font-size: 1.4rem; }
-      .visu .filters .location .results .hint {
-        width: 100%;
+    .visu .filters .location {
+      position: relative; }
+      .visu .filters .location ol {
+        flex-wrap: wrap; }
+        .visu .filters .location ol li:first-child button {
+          width: 14.4rem; }
+        .visu .filters .location ol::after {
+          content: '';
+          background: #353844;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          position: absolute;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity .3s; }
+      .visu .filters .location[data-search="false"] form {
         height: 4.8rem;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        padding: 0 1.6rem;
-        display: none; }
-      .visu .filters .location .results ol {
-        display: flex; }
-      .visu .filters .location .results li {
-        display: flex;
-        justify-content: flex-start;
-        flex-direction: row;
-        align-items: center;
-        padding: 1.2rem 1.6rem;
+        top: 240px; }
+      .visu .filters .location[data-search="true"] form {
+        height: 28.8rem;
+        top: 0; }
+      .visu .filters .location[data-search="true"] > ol::after {
+        opacity: .75; }
+      .visu .filters .location form {
+        position: absolute;
         width: 100%;
-        height: 4.8rem; }
-      .visu .filters .location .results li .location {
-        margin: 0; }
+        overflow: hidden;
+        transition: top .3s, height .3s; }
+        .visu .filters .location form input {
+          width: 100%;
+          height: 4.8rem; }
+      .visu .filters .location .input {
+        display: flex; }
+      .visu .filters .location .results {
+        height: 24rem;
+        background: #353844;
+        font-size: 1.4rem; }
+        .visu .filters .location .results .hint {
+          width: 100%;
+          height: 4.8rem;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          padding: 0 1.6rem;
+          display: none; }
+        .visu .filters .location .results ol {
+          display: flex; }
+        .visu .filters .location .results li {
+          display: flex;
+          justify-content: flex-start;
+          flex-direction: row;
+          align-items: center;
+          padding: 1.2rem 1.6rem;
+          width: 100%;
+          height: 4.8rem; }
+        .visu .filters .location .results li .location {
+          margin: 0; }
     .visu .filters .date {
+      margin-top: 4.8rem;
       width: 100%; }
       .visu .filters .date header {
         display: flex;

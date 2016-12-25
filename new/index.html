@@ -30,13 +30,13 @@
               <ul>
                 <li class="category">
                   <ul>
-                    <li><button><span>Casos</span></button></li>
+                    <li><button class="active"><span>Casos</span></button></li>
                     <li><button><span>Óbitos</span></button></li>
                   </ul>
                 </li>
-                <li class="location">
+                <li class="location" data-search="false">
                   <ol>
-                    <li><button data-UF="todos"><span>Brasil</span></button></li>
+                    <li><button data-UF="todos" class="active"><span>Brasil</span></button></li>
                     <li><button data-UF="12" title="Acre"><span class="initials">AC</span></button></li>
                     <li><button data-UF="27" title="Alagoas"><span class="initials">AL</span></button></li>
                     <li><button data-UF="13" title="Amazonas"><span class="initials">AM</span></button></li>
@@ -68,7 +68,7 @@
                   <form>
                     <div class="input">
                       <button><i data-icon="search" data-color="medium"></i><span class="sr-only">Pesquisar</span></button>
-                      <input type="search" name="municipio" placeholder="Buscar município">
+                      <input type="text" name="municipio" placeholder="Buscar município">
                       <button><i data-icon="wrong" data-color="medium"></i><span class="sr-only">Limpar</span></button>
                     </div>
                     <div class="results">
@@ -116,7 +116,7 @@
               <section class="totals">
                 <header class="sr-only">Totais</header>
                 <ul>
-                  <li><button><i data-icon="right" data-color="medium"></i><span>Confirmados</span><output>000</output></button></li>
+                  <li><button class="active"><i data-icon="right" data-color="medium"></i><span>Confirmados</span><output>000</output></button></li>
                   <li><button><i data-icon="wrong" data-color="medium"></i><span>Descartados</span><output>000</output></button></li>
                   <li><button><i data-icon="question" data-color="medium"></i><span>Em análise</span><output>000</output></button></li>
                 </ul>
