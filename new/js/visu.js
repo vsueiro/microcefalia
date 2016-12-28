@@ -1,37 +1,3 @@
-each = function( thing, callback ) {
-	if ( typeof thing === 'string' ) {
-		thing = document.getElementsByClassName( thing );
-	}
-	for ( var i = 0, len = thing.length; i < len; i++ ) {
-		callback.call( thing[ i ], i )
-	}
-}
-
-the = function( thing ) {
-	if ( typeof thing === 'string' ) {
-		thing = document.getElementsByClassName( thing );
-	}
-	return thing[ 0 ]
-}
-
-/*
-
-How to use:
-
-each( 'filter', function() { 		// parameter can be class names or node list
-	console.log( this ); 			// multiple nodes
-});
-
-each( 'filter', function( index ) {
-	console.log( this, index ); 	// multiple nodes and numbers
-});
-
-the( 'filter', function() {
-	console.log( this ); 			// only first node
-});
-
-*/
-
 var visu = {
 
 	options : {
@@ -144,3 +110,67 @@ var visu = {
 };
 
 visu.initialize();
+
+/* temp below
+
+function readFile( filename, enc ){
+  return new Promise( function ( fulfill, reject ) {
+    fs.readFile(filename, enc, function ( err, res ) {
+      if (err) reject(err);
+      else fulfill(res);
+    });
+  });
+}
+
+function readJSON( filename ) {
+  return readFile( filename, 'utf8' ).then( function ( res ) {
+    return JSON.parse( res )
+  })
+}
+ */
+/* 
+
+
+$.ajax
+$.when.apply( a, b, ).then( c );
+
+carregar : {
+script : function( dependencia ) {
+  script = document.createElement( 'script' );
+  script.type = 'text/javascript';
+  script.src = dependencia.url;
+  document.body.appendChild( script );
+},
+json : function( dependencia ) {
+  vis.dados.requisicoes.push(
+    $.ajax({
+      dataType : dependencia.tipo,
+      url : dependencia.url,
+      success: function() {
+      }
+    })
+  );
+}
+},
+
+
+vis.dados.requisicoes = [];
+for ( var i = 0; i < vis.dependencias.length; i++ ) {
+  dependencia = vis.dependencias[ i ];
+  tipo = dependencia.tipo;
+  this.carregar[ tipo ]( dependencia );
+}
+$.when.apply( undefined, vis.dados.requisicoes ).then( function() {
+  for ( var i = 0, j = 0; i < vis.dependencias.length; i++ ) {
+    dependencia = vis.dependencias[ i ];
+    if ( dependencia.tipo != 'script' ) {
+      requisicao  = vis.dados.requisicoes[ j ];
+      variavel    = dependencia.nome;
+      json        = requisicao.responseJSON;
+      vis.dados[ variavel ] = json;
+      j++
+    }
+  }
+  delete vis.dados.requisicoes;
+
+  */
