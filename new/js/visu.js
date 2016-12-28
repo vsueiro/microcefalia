@@ -7,9 +7,8 @@ var visu = {
 		subcategory : 'c',
 		location : 'all',
 		date : '2016-W6',
-
-		locationMode : 'region',
-		dateMode : 'month'
+		level : 'region',
+		periodicity : 'month'
 	},
 
 	dependencies : {
@@ -62,11 +61,11 @@ var visu = {
 		date : function( value ) {
 			visu.options.date = value;
 		},
-		locationMode : function( value ) {
-			visu.options.locationMode = value;
+		level : function( value ) {
+			visu.options.level = value;
 		},
-		dateMode : function( value ) {
-			visu.options.dateMode = value;
+		periodicity : function( value ) {
+			visu.options.periodicity = value;
 		}
 	},
 
