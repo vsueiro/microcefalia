@@ -126,6 +126,7 @@ var visu = {
 
 						this.classList.remove( 'active' );
 						visu.set[ this.name ]( this.value );
+
 						console.log( visu.options );
 
 					} else {
@@ -138,6 +139,7 @@ var visu = {
 
 						this.classList.add( 'active' );
 						visu.set[ this.name ]( this.value );
+
 						console.log( visu.options );
 
 					}

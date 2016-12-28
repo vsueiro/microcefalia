@@ -33,17 +33,19 @@ each = function( thing, callback, parent ) {
 
 }
 
-the = function( thing ) {
+the = function( thing, parent ) {
 
   var item, list;
+
+  parent = parent || document;
 
   item = document.getElementById( thing );
   if ( item !== null ) return item
 
-  list = document.getElementsByClassName( thing );
+  list = parent.getElementsByClassName( thing );
   if ( list.length ) return list[ 0 ]
 
-  list = document.getElementsByTagName( thing );
+  list = parent.getElementsByTagName( thing );
   if ( list.length ) return list[ 0 ]
 
 	return null
