@@ -12,14 +12,79 @@ var visu = {
 	},
 
 	dependencies : {
-		list : [],
+		list : [
+			{ 
+				name : 'categories',
+				type : 'json', 
+				path : 'data/categories.json'
+			},
+			{
+				name : 'states',
+				type : 'json', 
+				path : 'data/states.json'
+			}
+		],
 		load : function() {
-			script = function() {}
-			json = function() {}
-			this.callback();
+
+			var dependencies, requests, counter, script, json;
+
+			dependecies = this.list;
+			counter = dependecies.length;
+
+			script = function( path ) {
+
+				var script;
+
+				script = document.createElement( 'script' );
+				script.type = 'text/javascript';
+				script.src = path;
+				document.body.appendChild( script );
+			}
+
+			json = function( path, callback ) {   
+
+				var request;
+
+				request = new XMLHttpRequest();
+				request.overrideMimeType( 'application/json' );
+				request.open( 'GET', path, true );
+
+				request.onreadystatechange = function () {
+					if ( request.readyState == 4 && request.status == 200 ) {
+						callback( request.responseText );
+					}
+				}
+
+				request.send();
+
+			}
+
+			each( dependecies, function( dependency ) {
+
+				if ( dependency.type == 'json' ) {
+
+					json( dependency.path, function( response ) {
+
+						visu.data[ dependency.name ] = JSON.parse( response );
+
+						--counter;
+
+						if ( counter <= 0 ) {
+							visu.dependencies.callback()
+						}
+
+					});
+
+				} else if ( dependency.type == 'script' ) {
+
+				}
+
+			});
 		},
 		callback : function() {
+
 			visu.interaction.initialize();
+			
 		}
 	},
 
@@ -69,13 +134,7 @@ var visu = {
 		}
 	},
 
-	data : {
-		list : [],
-		order : {
-			asc : function() {},
-			desc: function() {}
-		}
-	},
+	data : {},
 
 	components : {
 		about : {
@@ -160,23 +219,6 @@ var visu = {
 
 visu.initialize();
 
-/* temp below
-
-function readFile( filename, enc ){
-  return new Promise( function ( fulfill, reject ) {
-    fs.readFile(filename, enc, function ( err, res ) {
-      if (err) reject(err);
-      else fulfill(res);
-    });
-  });
-}
-
-function readJSON( filename ) {
-  return readFile( filename, 'utf8' ).then( function ( res ) {
-    return JSON.parse( res )
-  })
-}
- */
 /* 
 
 
