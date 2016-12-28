@@ -1,15 +1,17 @@
-each = function( thing, callback ) {
+each = function( thing, callback, parent ) {
 
   var list, isArray, get;
+
+  parent = parent || document;
 
   get = function( thing ) {
 
     if ( typeof thing === 'string' ) {
       
-      list = document.getElementsByClassName( thing );
+      list = parent.getElementsByClassName( thing );
       if ( list.length ) return list
 
-      list = document.getElementsByTagName( thing );
+      list = parent.getElementsByTagName( thing );
       if ( list.length ) return list
 
       return null
@@ -47,9 +49,18 @@ the = function( thing ) {
 	return null
 }
 
+closest = function( className, element ) {
+    while ( ( element = element.parentElement) && !element.classList.contains( className ) );
+    return element
+}
+
+isActive = function( element ) {
+  if ( element.classList.contains( 'active' ) )
+    return true
+  return false
+}
 
 /*
-// each – test cases
 
 each( 'class-name', function( index ) {
   console.log( this, index );
@@ -80,9 +91,8 @@ each( people, function( person ) {
   console.log( person.name + ' is ' + person.age );
 });
 
-// the – test cases
-
 console.log( the( 'unique-id' ) );
 console.log( the( 'class-name' ) );
 console.log( the( 'div' ) );
+
 */

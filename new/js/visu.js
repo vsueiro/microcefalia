@@ -96,6 +96,27 @@ var visu = {
 				locationFilter.dataset.search = 'false';
 			}, true );
 
+
+			each( 'button-item' , function() {
+				this.addEventListener( 'click', function() {
+
+					if ( isActive( this ) ) {
+
+						this.classList.remove( 'active' );
+
+					} else {
+
+						group = closest( 'button-group', this );
+
+						each( 'button', function() {
+							this.classList.remove( 'active' );
+						}, group );
+
+						this.classList.add( 'active' );
+
+					}
+				});
+			});
 		}
 	},
 
