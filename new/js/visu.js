@@ -1,3 +1,37 @@
+each = function( thing, callback ) {
+	if ( typeof thing === 'string' ) {
+		thing = document.getElementsByClassName( thing );
+	}
+	for ( var i = 0, len = thing.length; i < len; i++ ) {
+		callback.call( thing[ i ], i )
+	}
+}
+
+the = function( thing ) {
+	if ( typeof thing === 'string' ) {
+		thing = document.getElementsByClassName( thing );
+	}
+	return thing[ 0 ]
+}
+
+/*
+
+How to use:
+
+each( 'filter', function() { 		// parameter can be class names or node list
+	console.log( this ); 			// multiple nodes
+});
+
+each( 'filter', function( index ) {
+	console.log( this, index ); 	// multiple nodes and numbers
+});
+
+the( 'filter', function() {
+	console.log( this ); 			// only first node
+});
+
+*/
+
 var visu = {
 
 	options : {
@@ -84,7 +118,18 @@ var visu = {
 
 	interaction : {
 		initialize : function() {
-			console.log( 'add interaction' );
+
+			search = the( 'search' );
+			locationFilter = the( 'location filter' );
+
+			search.addEventListener( 'focus', function() {
+				locationFilter.dataset.search = 'true';
+			}, true );
+
+			search.addEventListener( 'blur', function() {
+				locationFilter.dataset.search = 'false';
+			}, true );
+
 		}
 	},
 

@@ -28,13 +28,13 @@
 
             <nav>
               <ul>
-                <li class="category">
+                <li class="category filter">
                   <ul>
                     <li><button class="active"><span>Casos</span></button></li>
                     <li><button><span>Óbitos</span></button></li>
                   </ul>
                 </li>
-                <li class="location" data-search="false">
+                <li class="location filter" data-search="false">
                   <div class="button-group">
                     <ol>
                       <li><button data-UF="todos" class="active"><span>Brasil</span></button></li>
@@ -70,7 +70,7 @@
                   <form>
                     <div class="input">
                       <button><i data-icon="search" data-color="medium"></i><span class="sr-only">Pesquisar</span></button>
-                      <input type="text" name="municipio" placeholder="Buscar município" id="search">
+                      <input class="search" type="text" name="municipio" placeholder="Buscar município">
                       <button><i data-icon="wrong" data-color="medium"></i><span class="sr-only">Limpar</span></button>
                     </div>
                     <div class="results">
@@ -95,7 +95,7 @@
                     </div>
                   </form>
                 </li>
-                <li class="date">
+                <li class="date filter">
                   <header><h2><time datetime="2016-02-13">13 fevereiro 2016</time> <time datetime="2016-W6">Semana 31</time></h2></header>
                   <button><div class="handle"></div></button>
                 </li>
@@ -306,7 +306,7 @@
     
     </main>
 
-    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="js/visu.js"></script>
 
   </body>
