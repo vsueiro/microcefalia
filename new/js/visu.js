@@ -13,6 +13,11 @@ var visu = {
 
 	dependencies : {
 		list : [
+			{
+				name : 'Google Maps',
+				type : 'script',      
+				path : '//maps.googleapis.com/maps/api/js?key=AIzaSyBoqFIX7oEYftU-MW9H49ivEpYtU6BZJRs'
+			},
 			{ 
 				name : 'categories',
 				type : 'json', 
@@ -22,16 +27,16 @@ var visu = {
 				name : 'states',
 				type : 'json', 
 				path : 'data/states.json'
-			}
+			},
 		],
 		load : function() {
 
-			var dependencies, requests, counter, script, json;
+			var dependencies, requests, pending, script, json;
 
 			dependecies = this.list;
-			counter = dependecies.length;
+			pending = dependecies.length;
 
-			script = function( path ) {
+			script = function( path, callback ) {
 
 				var script;
 
@@ -39,6 +44,10 @@ var visu = {
 				script.type = 'text/javascript';
 				script.src = path;
 				document.body.appendChild( script );
+
+				script.onload = function() {
+					callback()
+				}
 			}
 
 			json = function( path, callback ) {   
@@ -49,14 +58,12 @@ var visu = {
 				request.overrideMimeType( 'application/json' );
 				request.open( 'GET', path, true );
 
-				request.onreadystatechange = function () {
-					if ( request.readyState == 4 && request.status == 200 ) {
-						callback( request.responseText );
-					}
+				request.onload = function () {
+					if ( request.readyState == 4 && request.status == 200 )
+						callback( request.responseText )
 				}
 
 				request.send();
-
 			}
 
 			each( dependecies, function( dependency ) {
@@ -64,27 +71,24 @@ var visu = {
 				if ( dependency.type == 'json' ) {
 
 					json( dependency.path, function( response ) {
-
 						visu.data[ dependency.name ] = JSON.parse( response );
-
-						--counter;
-
-						if ( counter <= 0 ) {
-							visu.dependencies.callback()
-						}
-
+						--pending;
+						if ( pending <= 0 ) visu.dependencies.callback()
 					});
 
 				} else if ( dependency.type == 'script' ) {
 
-				}
+					script( dependency.path, function() {
+						--pending;
+						if ( pending <= 0 ) visu.dependencies.callback()
+					});
 
+				}
 			});
 		},
 		callback : function() {
-
+			alert( 'requests done' );
 			visu.interaction.initialize();
-			
 		}
 	},
 
@@ -199,8 +203,6 @@ var visu = {
 						this.classList.add( 'active' );
 						visu.set[ this.name ]( this.value );
 
-						console.log( visu.options );
-
 					}
 				});
 			});
@@ -218,50 +220,3 @@ var visu = {
 };
 
 visu.initialize();
-
-/* 
-
-
-$.ajax
-$.when.apply( a, b, ).then( c );
-
-carregar : {
-script : function( dependencia ) {
-  script = document.createElement( 'script' );
-  script.type = 'text/javascript';
-  script.src = dependencia.url;
-  document.body.appendChild( script );
-},
-json : function( dependencia ) {
-  vis.dados.requisicoes.push(
-    $.ajax({
-      dataType : dependencia.tipo,
-      url : dependencia.url,
-      success: function() {
-      }
-    })
-  );
-}
-},
-
-
-vis.dados.requisicoes = [];
-for ( var i = 0; i < vis.dependencias.length; i++ ) {
-  dependencia = vis.dependencias[ i ];
-  tipo = dependencia.tipo;
-  this.carregar[ tipo ]( dependencia );
-}
-$.when.apply( undefined, vis.dados.requisicoes ).then( function() {
-  for ( var i = 0, j = 0; i < vis.dependencias.length; i++ ) {
-    dependencia = vis.dependencias[ i ];
-    if ( dependencia.tipo != 'script' ) {
-      requisicao  = vis.dados.requisicoes[ j ];
-      variavel    = dependencia.nome;
-      json        = requisicao.responseJSON;
-      vis.dados[ variavel ] = json;
-      j++
-    }
-  }
-  delete vis.dados.requisicoes;
-
-  */
