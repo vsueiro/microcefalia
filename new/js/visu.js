@@ -3,9 +3,13 @@ var visu = {
 	options : {
 		element : 'visu',
 		status : 'loading',
-		category : undefined,
-		location : undefined,
-		time : undefined
+		category : 'c',
+		subcategory : 'c',
+		location : 'all',
+		date : '2016-W6',
+
+		locationMode : 'region',
+		dateMode : 'month'
 	},
 
 	dependencies : {
@@ -23,13 +27,15 @@ var visu = {
 	get : {
 		status : function() {},
 		category : function() {},
+		subcategory : function() {},
 		location : function() {},
-		time : function() {},
+		date : function() {},
 		totals : function() {},
  		current : {
  			category : function() {},
+ 			subcategory : function() {},
 			location : function() {},
-			time : function() {},
+			date : function() {},
 			totals : function() {}
 		},
 		file : {
@@ -41,10 +47,27 @@ var visu = {
 	},
 
 	set : {
-		status : function() {},
-		category : function() {},
-		location : function() {},
-		time : function() {},
+		status : function( value ) {
+			visu.options.status = value;
+		},
+		category : function( value ) {
+			visu.options.category = value;
+		},
+		subcategory : function( value ) {
+			visu.options.subcategory = value;
+		},
+		location : function( value ) {
+			visu.options.location = value;
+		},
+		date : function( value ) {
+			visu.options.date = value;
+		},
+		locationMode : function( value ) {
+			visu.options.locationMode = value;
+		},
+		dateMode : function( value ) {
+			visu.options.dateMode = value;
+		}
 	},
 
 	data : {
@@ -103,6 +126,8 @@ var visu = {
 					if ( isActive( this ) ) {
 
 						this.classList.remove( 'active' );
+						visu.set[ this.name ]( this.value );
+						console.log( visu.options );
 
 					} else {
 
@@ -113,6 +138,8 @@ var visu = {
 						}, group );
 
 						this.classList.add( 'active' );
+						visu.set[ this.name ]( this.value );
+						console.log( visu.options );
 
 					}
 				});
