@@ -11,6 +11,10 @@
     $color = $arr[ 1 ];
     $scss .= 'i[data-icon="' . $icon . '"][data-color="' . $color . '"]:before { background-image: svg-url(\'' . $svg . '\') }' . "\n";
 
+    if ( $color == 'light' ) {
+      $scss .= '.active > i[data-icon="' . $icon . '"][data-color="medium"]:before { background-image: svg-url(\'' . $svg . '\') }' . "\n";      
+    }
+
   }
   echo $scss;
   file_put_contents( '../../scss/_icons.scss', $scss );
