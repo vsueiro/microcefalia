@@ -586,6 +586,7 @@ a[role="button"] {
     .visu .filters .input {
       background: #4e5267; }
       .visu .filters .input button {
+        flex-shrink: 0;
         background: transparent !important; }
     .visu .filters [data-search="true"] .input {
       background: #676f89; }
@@ -837,15 +838,18 @@ a[role="button"] {
           align-items: center;
           width: 50%; }
           .visu .content .primary .ranking .caption li {
+            display: flex;
+            justify-content: flex-end;
             width: 100%; }
           .visu .content .primary .ranking .caption button {
             justify-content: flex-end;
+            width: 4.8rem;
             background: transparent; }
     .visu .content .secondary {
-      display: flex;
-      flex-direction: column;
+      display: inline-block;
       height: 76.8rem;
-      width: 100%; }
+      width: 100%;
+      background: #cacdd8; }
       .visu .content .secondary .related {
         margin: 4.8rem 0; }
         .visu .content .secondary .related ul {
@@ -878,7 +882,7 @@ a[role="button"] {
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 14.4rem; }
+        height: 14.4rem; }
         .visu .content .secondary footer p {
           width: 480px;
           text-align: center; }

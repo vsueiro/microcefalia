@@ -234,6 +234,7 @@ a[role="button"] {
 			background: $neutral-1;
 
 			button {
+				flex-shrink: 0;
 				background: transparent !important;
 			}
 		}
@@ -641,11 +642,14 @@ a[role="button"] {
 				    width: 50%;
 
 					li {
+						display: flex;
+						justify-content: flex-end;
 					    width: 100%;
 					}
 
 					button {
 					    justify-content: flex-end;
+					    width: blocks( 1 );
 					    background: transparent;
 					}
 				}
@@ -653,10 +657,10 @@ a[role="button"] {
 		}
 
 		.secondary {
-			display: flex;
-	    	flex-direction: column;
+			display: inline-block;
 	    	height: blocks( 16 );
 	    	width: 100%;
+	    	background: $neutral-5;
 
 	    	.related {
 	    		margin: blocks( 1 ) 0;
@@ -712,7 +716,7 @@ a[role="button"] {
 	    		display: flex;
 	    		justify-content: center;
 	    		align-items: center;
-	    		min-height: blocks( 3 );
+	    		height: blocks( 3 );
 
 	    		p {
 		    		width: 480px;
