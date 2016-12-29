@@ -87,7 +87,7 @@ var visu = {
 			});
 		},
 		callback : function() {
-			alert( 'requests done' );
+			console.log( 'requests done' );
 			visu.interaction.initialize();
 		}
 	},
