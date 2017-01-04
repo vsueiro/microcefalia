@@ -703,13 +703,16 @@ a[role="button"] {
     .visu .filters button {
       width: 4.8rem; }
   .visu .content {
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
+    position: relative;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*flex-shrink: 0;*/
     width: 96rem;
     height: 76.8rem;
     /*overflow-y: scroll;*/
-    /*-webkit-overflow-scrolling: touch;*/ }
+    overflow-x: hidden;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; }
     .visu .content .primary {
       display: flex;
       flex-direction: column;

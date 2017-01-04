@@ -424,13 +424,16 @@ a[role="button"] {
 	}
 
 	.content {
-	    display: flex;
-	    flex-direction: column;
-	    flex-shrink: 0;
+		position: relative;
+	    /*display: flex;*/
+	    /*flex-direction: column;*/
+	    /*flex-shrink: 0;*/
 	    width: blocks( 20 );
 	    height: blocks( 16 );
 	    /*overflow-y: scroll;*/
-		/*-webkit-overflow-scrolling: touch;*/
+	    overflow-x: hidden;
+	    overflow-y: hidden;
+		-webkit-overflow-scrolling: touch;
 
 	    .primary {
 	    	display: flex;
@@ -723,3 +726,4 @@ a[role="button"] {
 
 @import '_dividers';
 @import '_slider';
+@import '_animations';

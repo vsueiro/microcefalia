@@ -266,3 +266,6 @@ var visu = {
 };
 
 visu.initialize();
+
+var container = document.getElementById( 'scrollable' );
+Ps.initialize( container );

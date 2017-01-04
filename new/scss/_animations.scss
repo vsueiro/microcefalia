@@ -1,0 +1,11 @@
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba( $highlight, 1 );
+  }
+  70% {
+      box-shadow: 0 0 0 1.6rem rgba( $highlight, 0 );
+  }
+  100% {
+      box-shadow: 0 0 0 0 rgba( $highlight, 0 );
+  }
+}
