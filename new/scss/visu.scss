@@ -403,10 +403,9 @@ a[role="button"] {
 				width: 100%;
 			}
 			.slider {
-				background: lightblue;
 				height: blocks( 1 );
 				width: 100%;
-				padding: 1.6rem;
+				padding: 2.2rem 1.6rem;
 			}
 		}
 
@@ -773,4 +772,97 @@ a[role="button"] {
     bottom: 0;
     border-right: .1rem solid $neutral-5;
     pointer-events: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.rangeSlider,
+.rangeSlider__fill {
+    background: $neutral-0;
+    display: block;
+    height: .4rem;
+    width: 100%;
+    border-radius: .2rem;
+}
+
+.rangeSlider {
+    position: relative;
+}
+
+.rangeSlider--disabled {
+    opacity: 0.25;
+}
+
+.rangeSlider__fill {
+    background: $highlight;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    border-radius: .2rem;
+}
+
+.rangeSlider__handle {
+    background: $highlight;
+    cursor: pointer;
+    display: inline-block;
+    width: 1.6rem;
+    height: 1.6rem;
+    position: absolute;
+    top: -.6rem;
+    z-index: 3;
+    border-radius: 50%;
+}
+
+.rangeSlider__handle:after {
+    content: "";
+    display: block;
+    width: 4.8rem;
+    height: 4.8rem;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: -1.6rem;
+    border-radius: 50%;
+}
+
+.rangeSlider__handle:active:after {
+    background: rgba( $highlight, .25 );
+}
+
+.rangeSlider__handle {
+  box-shadow: 0 0 0 rgba($highlight, 0.4);
+  animation: pulse 2s infinite;
+}
+
+.rangeSlider__handle:active {
+    animation: none;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba( $highlight, 1 );
+  }
+  70% {
+      box-shadow: 0 0 0 1.6rem rgba( $highlight, 0 );
+  }
+  100% {
+      box-shadow: 0 0 0 0 rgba( $highlight, 0 );
+  }
 }
