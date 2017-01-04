@@ -312,38 +312,5 @@
     <script src="js/functions.js"></script>
     <script src="js/visu.js"></script>
 
-    <script src="lib/rangeslider/js/script.js"></script>
-    <script>
-        (function () {
-
-            var selector = '[data-rangeSlider]',
-                elements = document.querySelectorAll(selector);
-
-            // Basic rangeSlider initialization
-            rangeSlider.create(elements, {
-
-                // Callback function
-                onInit: function () {
-                },
-
-                // Callback function
-                onSlideStart: function (value, percent, position) {
-                    console.info('onSlideStart', 'value: ' + value, 'percent: ' + percent, 'position: ' + position);
-                },
-
-                // Callback function
-                onSlide: function (value, percent, position) {
-                    console.log('onSlide', 'value: ' + value, 'percent: ' + percent, 'position: ' + position);
-                },
-
-                // Callback function
-                onSlideEnd: function (value, percent, position) {
-                    console.warn('onSlideEnd', 'value: ' + value, 'percent: ' + percent, 'position: ' + position);
-                }
-            });
-
-        })();
-    </script>
-
   </body>
 </html>

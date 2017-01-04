@@ -48,6 +48,9 @@ the = function( thing, parent ) {
   list = parent.getElementsByTagName( thing );
   if ( list.length ) return list[ 0 ]
 
+  list = document.querySelector( thing );
+  if ( list.length ) return list[ 0 ]
+
 	return null
 }
 

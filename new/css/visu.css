@@ -891,7 +891,6 @@ a[role="button"] {
           width: 480px;
           text-align: center; }
 
-/* dividers */
 .visu .content .primary .description::after,
 .visu .content .primary > .totals::after,
 .visu .content .primary .cases .core::after,
@@ -932,6 +931,9 @@ a[role="button"] {
   border-right: 0.1rem solid #cacdd8;
   pointer-events: none; }
 
+.range-slider {
+  position: relative; }
+
 .range-slider,
 .range-slider-fill {
   background: #353844;
@@ -939,9 +941,6 @@ a[role="button"] {
   height: .4rem;
   width: 100%;
   border-radius: .2rem; }
-
-.range-slider {
-  position: relative; }
 
 .range-slider-fill {
   background: #569bfc;
@@ -972,7 +971,9 @@ a[role="button"] {
   right: 0;
   bottom: 0;
   left: -1.6rem;
-  border-radius: 50%; }
+  border-radius: 50%;
+  background: rgba(86, 155, 252, 0);
+  transition: background .3s; }
 
 .range-slider-handle:active:after {
   background: rgba(86, 155, 252, 0.25); }

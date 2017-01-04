@@ -18,6 +18,11 @@ var visu = {
 				type : 'script',      
 				path : '//maps.googleapis.com/maps/api/js?key=AIzaSyBoqFIX7oEYftU-MW9H49ivEpYtU6BZJRs'
 			},
+			{
+				name : 'Range Slider',
+				type : 'script',      
+				path : 'lib/rangeslider/js/script.js'
+			},
 			{ 
 				name : 'categories',
 				type : 'json', 
@@ -168,44 +173,85 @@ var visu = {
 	},
 
 	interaction : {
+
+		buttons : {
+			initialize : function() {
+
+				each( 'button-item' , function() {
+					this.addEventListener( 'click', function() {
+
+						if ( isActive( this ) ) {
+
+							this.classList.remove( 'active' );
+							visu.set[ this.name ]( this.value );
+
+							console.log( visu.options );
+
+						} else {
+
+							group = closest( 'button-group', this );
+
+							each( 'button', function() {
+								this.classList.remove( 'active' );
+							}, group );
+
+							this.classList.add( 'active' );
+							visu.set[ this.name ]( this.value );
+
+						}
+					});
+				});
+			}
+		},
+
+		search : {
+			initialize : function() {
+
+				search = the( 'search' );
+				locationFilter = the( 'location filter' );
+
+				search.addEventListener( 'focus', function() {
+					locationFilter.dataset.search = 'true';
+				}, true );
+
+				search.addEventListener( 'blur', function() {
+					locationFilter.dataset.search = 'false';
+				}, true );
+
+			}
+		},
+
+		slider : {
+			initialize : function() {
+
+				var elements = document.querySelectorAll('[data-rangeSlider]');
+
+		        rangeSlider.create( elements, {
+
+		            onInit: function () {
+		            },
+
+		            onSlideStart: function ( value, percent, position ) {
+		                console.info( 'onSlideStart', 'value: ' + value, 'percent: ' + percent, 'position: ' + position );
+		            },
+
+		            onSlide: function ( value, percent, position ) {
+		                console.log( 'onSlide', 'value: ' + value, 'percent: ' + percent, 'position: ' + position );
+		            },
+
+		            onSlideEnd: function ( value, percent, position ) {
+		                console.warn( 'onSlideEnd', 'value: ' + value, 'percent: ' + percent, 'position: ' + position );
+		            }
+		        });
+			}
+		},
+
 		initialize : function() {
 
-			search = the( 'search' );
-			locationFilter = the( 'location filter' );
+			this.buttons.initialize();
+			this.search.initialize();
+			this.slider.initialize();
 
-			search.addEventListener( 'focus', function() {
-				locationFilter.dataset.search = 'true';
-			}, true );
-
-			search.addEventListener( 'blur', function() {
-				locationFilter.dataset.search = 'false';
-			}, true );
-
-
-			each( 'button-item' , function() {
-				this.addEventListener( 'click', function() {
-
-					if ( isActive( this ) ) {
-
-						this.classList.remove( 'active' );
-						visu.set[ this.name ]( this.value );
-
-						console.log( visu.options );
-
-					} else {
-
-						group = closest( 'button-group', this );
-
-						each( 'button', function() {
-							this.classList.remove( 'active' );
-						}, group );
-
-						this.classList.add( 'active' );
-						visu.set[ this.name ]( this.value );
-
-					}
-				});
-			});
 		}
 	},
 
