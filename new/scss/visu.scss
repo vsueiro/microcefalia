@@ -11,8 +11,8 @@ $neutral-6 : #ecedf1;
 
 $block: 4.8rem;
 
-@function blocks( $dates ) {
-  @return $block * $dates
+@function blocks( $times ) {
+  @return $block * $times
 }
 
 @import '_reset';
@@ -401,6 +401,12 @@ a[role="button"] {
 			}
 			button {
 				width: 100%;
+			}
+			.slider {
+				background: lightblue;
+				height: blocks( 1 );
+				width: 100%;
+				padding: 1.6rem;
 			}
 		}
 

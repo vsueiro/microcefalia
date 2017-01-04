@@ -684,6 +684,11 @@ a[role="button"] {
             color: #a8adbd; }
       .visu .filters .date button {
         width: 100%; }
+      .visu .filters .date .slider {
+        background: lightblue;
+        height: 4.8rem;
+        width: 100%;
+        padding: 1.6rem; }
     .visu .filters .autoplay {
       width: 100%;
       margin-top: 4.8rem; }

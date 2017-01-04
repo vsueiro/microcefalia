@@ -11,6 +11,7 @@
 
     <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" /> -->
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,700,800">
+    <link rel="stylesheet" href="lib/rangeslider/css/style.css">
     <link rel="stylesheet" href="css/visu.css">
 
   </head>
@@ -97,7 +98,10 @@
                 </li>
                 <li class="date filter">
                   <header><h2><time datetime="2016-02-13">13 fevereiro 2016</time> <time datetime="2016-W6">Semana 31</time></h2></header>
-                  <button><div class="handle"></div></button>
+                  <div class="slider">
+                    <input type="range" min="6" max="47" data-rangeSlider>
+                     <output></output>
+                  </div>
                 </li>
                 <li class="autoplay">
                   <button><i data-icon="play" data-color="medium"></i><span class="sr-only">Reproduzir</span></button>
@@ -308,6 +312,56 @@
 
     <script src="js/functions.js"></script>
     <script src="js/visu.js"></script>
+
+    <script src="lib/rangeslider/js/script.js"></script>
+    <script>
+        (function () {
+
+            var selector = '[data-rangeSlider]',
+                elements = document.querySelectorAll(selector);
+
+            // Example functionality to demonstrate a value feedback
+            function valueOutput(element) {
+                var value = element.value,
+                        output = element.parentNode.getElementsByTagName('output')[0];
+                output.innerHTML = value;
+            }
+
+            for (var i = elements.length - 1; i >= 0; i--) {
+                valueOutput(elements[i]);
+            }
+
+            Array.prototype.slice.call(document.querySelectorAll('input[type="range"]')).forEach(function (el) {
+                el.addEventListener('input', function (e) {
+                    valueOutput(e.target);
+                }, false);
+            });
+
+            // Basic rangeSlider initialization
+            rangeSlider.create(elements, {
+
+                // Callback function
+                onInit: function () {
+                },
+
+                // Callback function
+                onSlideStart: function (value, percent, position) {
+                    console.info('onSlideStart', 'value: ' + value, 'percent: ' + percent, 'position: ' + position);
+                },
+
+                // Callback function
+                onSlide: function (value, percent, position) {
+                    console.log('onSlide', 'value: ' + value, 'percent: ' + percent, 'position: ' + position);
+                },
+
+                // Callback function
+                onSlideEnd: function (value, percent, position) {
+                    console.warn('onSlideEnd', 'value: ' + value, 'percent: ' + percent, 'position: ' + position);
+                }
+            });
+
+        })();
+    </script>
 
   </body>
 </html>
