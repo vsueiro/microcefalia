@@ -711,7 +711,7 @@ a[role="button"] {
     height: 76.8rem;
     /*overflow-y: scroll;*/
     overflow-x: hidden;
-    overflow-y: hidden;
+    overflow-y: scroll;
     -webkit-overflow-scrolling: touch; }
     .visu .content .primary {
       display: flex;
@@ -987,6 +987,48 @@ a[role="button"] {
 
 .range-slider-handle:active {
   animation: none; }
+
+/* perfect-scrollbar v0.6.15 */
+.ps-container {
+  -ms-touch-action: auto;
+  touch-action: auto;
+  overflow: hidden !important;
+  -ms-overflow-style: none; }
+
+@supports (-ms-overflow-style: none) {
+  .ps-container {
+    overflow: auto !important; } }
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .ps-container {
+    overflow: auto !important; } }
+.ps-container > .ps-scrollbar-y-rail {
+  display: none;
+  position: absolute;
+  padding: 4px 0;
+  opacity: 0;
+  transition: background-color .2s linear, opacity .2s linear;
+  right: 0;
+  width: 16px; }
+
+.ps-container.ps-active-y > .ps-scrollbar-y-rail {
+  display: block;
+  background-color: transparent; }
+
+.ps-container.ps-active-y:hover > .ps-scrollbar-y-rail,
+.ps-container.ps-active-y.ps-in-scrolling > .ps-scrollbar-y-rail {
+  opacity: 1; }
+
+.ps-container > .ps-scrollbar-y-rail > .ps-scrollbar-y {
+  position: absolute;
+  background-color: rgba(78, 82, 103, 0.5);
+  border-radius: 4px;
+  transition: background-color .2s linear, height .2s linear, width .2s ease-in-out;
+  right: 4px;
+  width: 8px; }
+
+.ps-container.ps-in-scrolling.ps-y > .ps-scrollbar-y-rail > .ps-scrollbar-y {
+  background-color: #4e5267;
+  width: 8px; }
 
 @keyframes pulse {
   0% {
