@@ -27,7 +27,8 @@ main {
 	margin: blocks( 1 ) auto;
 	max-width: 124.8rem;
 	max-height: 76.8rem;
-	background: $neutral-5;
+	overflow: hidden;
+	border-radius: blocks( 1 / 6 );
 }
 
 i {

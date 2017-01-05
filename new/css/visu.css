@@ -419,7 +419,8 @@ main {
   margin: 4.8rem auto;
   max-width: 124.8rem;
   max-height: 76.8rem;
-  background: #cacdd8; }
+  overflow: hidden;
+  border-radius: 0.8rem; }
 
 i {
   font-style: normal; }
