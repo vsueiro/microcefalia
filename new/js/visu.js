@@ -254,7 +254,7 @@ var visu = {
 		scroll : {
 			initialize : function() {
 
-				if ( !touch ) {
+				if ( !touch() ) {
 					Ps.initialize( the( 'scrollable' ), {
 						suppressScrollX : true
 					})
