@@ -14,6 +14,9 @@ each = function( thing, callback, parent ) {
       list = parent.getElementsByTagName( thing );
       if ( list.length ) return list
 
+      list = parent.querySelectorAll( thing );
+      if ( list.length ) return list
+
       return null
     }
 
