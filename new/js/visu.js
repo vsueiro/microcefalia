@@ -23,6 +23,11 @@ var visu = {
 				type : 'script',      
 				path : 'lib/rangeslider/js/script.js'
 			},
+			{
+				name : 'Perfect Scroll',
+				type : 'script',      
+				path : 'lib/perfect-scroll/js/script.js'
+			},
 			{ 
 				name : 'categories',
 				type : 'json', 
@@ -246,11 +251,23 @@ var visu = {
 			}
 		},
 
+		scroll : {
+			initialize : function() {
+
+				if ( !touch ) {
+					Ps.initialize( the( 'scrollable' ), {
+						suppressScrollX : true
+					})
+				}
+			}
+		}
+
 		initialize : function() {
 
 			this.buttons.initialize();
 			this.search.initialize();
 			this.slider.initialize();
+			this.scroll.initialize();
 
 		}
 	},
@@ -266,9 +283,3 @@ var visu = {
 };
 
 visu.initialize();
-
-var container = document.getElementById( 'scrollable' );
-
-Ps.initialize( container, {
-	suppressScrollX : true
-});
