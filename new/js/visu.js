@@ -24,9 +24,9 @@ var visu = {
 				path : 'lib/rangeslider/js/script.js'
 			},
 			{
-				name : 'Perfect Scroll',
+				name : 'Perfect Scrollbar',
 				type : 'script',      
-				path : 'lib/perfect-scroll/js/script.js'
+				path : 'lib/perfect-scrollbar/js/script.js'
 			},
 			{ 
 				name : 'categories',
@@ -260,7 +260,7 @@ var visu = {
 					})
 				}
 			}
-		}
+		},
 
 		initialize : function() {
 
