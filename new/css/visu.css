@@ -794,7 +794,8 @@ a[role="button"] {
           bottom: 0;
           margin: 1.6rem;
           width: 2.4rem;
-          height: 4.8rem; }
+          height: 4.8rem;
+          z-index: 1; }
         .visu .content .primary .map .graphic {
           height: 48rem;
           background: #ecedf1; }
@@ -1047,5 +1048,14 @@ a[role="button"] {
     box-shadow: 0 0 0 1.6rem rgba(86, 155, 252, 0); }
   100% {
     box-shadow: 0 0 0 0 rgba(86, 155, 252, 0); } }
+/* temporarily remove map brand */
+a[href^="http://maps.google.com/maps"] {
+  display: none !important; }
+
+a[href^="https://maps.google.com/maps"] {
+  display: none !important; }
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc, .gmnoprint div {
+  display: none; }
 
 /*# sourceMappingURL=visu.css.map */

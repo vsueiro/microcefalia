@@ -1,0 +1,8 @@
+/* temporarily remove map brand */
+
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc, .gmnoprint div {
+    display:none;
+}
