@@ -10,7 +10,15 @@ visu = {
 		location : 'all',
 		date : '2016-W6',
 		level : 'region',
-		periodicity : 'month'
+		periodicity : 'weekly'
+	},
+
+	defaults : {
+		category : 'c',
+		subcategory : 'c',
+		location : 'all',
+		level : 'region',
+		periodicity : 'weekly'
 	},
 
 	dependencies : {
@@ -205,12 +213,23 @@ visu = {
 			initialize : function() {
 
 				each( 'button-item' , function() {
+
+					var group;
+
 					this.addEventListener( 'click', function() {
 
 						if ( isActive( this ) ) {
 
-							this.classList.remove( 'active' );
-							visu.set[ this.name ]( this.value );
+							group = closest( 'button-group', this );
+
+							each( 'button', function() {
+								if ( this.value == visu.defaults[ this.name ] ) {
+									this.classList.add( 'active' );
+									visu.set[ this.name ]( this.value );
+								} else {
+									this.classList.remove( 'active' );
+								}
+							}, group );
 
 							console.log( visu.options );
 
@@ -224,6 +243,8 @@ visu = {
 
 							this.classList.add( 'active' );
 							visu.set[ this.name ]( this.value );
+
+							console.log( visu.options );
 
 						}
 					});

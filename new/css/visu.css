@@ -515,7 +515,8 @@ a[role="button"] {
   button.active,
   a[role="button"].active {
     background-color: #569bfc;
-    color: #ffffff; }
+    color: #ffffff;
+    cursor: default; }
   button span,
   a[role="button"] span {
     display: flex;

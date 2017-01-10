@@ -134,6 +134,7 @@ a[role="button"] {
     &.active {
     	background-color: $highlight;
     	color: $paper;
+    	cursor: default;
     }
 
     span {
