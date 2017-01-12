@@ -493,6 +493,14 @@ a[role="button"] {
 					}
 				}
 
+				.graphic {
+					position: absolute;
+					left: blocks( 1 );
+					width: blocks( 8 );
+					height: blocks( 4 );
+					background-color: rgba( $neutral-5, 0.25 );
+				}
+
 				.amount {
 
 					li {

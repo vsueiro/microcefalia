@@ -753,6 +753,12 @@ a[role="button"] {
           .visu .content .primary .cases header li {
             display: flex;
             margin-left: .8rem; }
+        .visu .content .primary .cases .graphic {
+          position: absolute;
+          left: 4.8rem;
+          width: 38.4rem;
+          height: 19.2rem;
+          background-color: rgba(202, 205, 216, 0.25); }
         .visu .content .primary .cases .amount li {
           display: flex;
           height: 4.8rem;
