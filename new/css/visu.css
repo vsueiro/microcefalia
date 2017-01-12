@@ -847,8 +847,8 @@ a[role="button"] {
           width: 50%; }
           .visu .content .primary .ranking .amount p {
             padding: 0 0 0 1.6rem; }
-          .visu .content .primary .ranking .amount output {
-            font-weight: 600; }
+          .visu .content .primary .ranking .amount span {
+            color: #a8adbd; }
         .visu .content .primary .ranking .caption {
           display: flex;
           justify-content: flex-start;
