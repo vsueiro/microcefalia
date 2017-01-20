@@ -627,7 +627,7 @@ a[role="button"] {
           transition: opacity .3s; }
       .visu .filters .location[data-search="false"] form {
         height: 4.8rem;
-        top: 240px; }
+        top: 24rem; }
       .visu .filters .location[data-search="true"] form {
         height: 28.8rem;
         top: 0; }
@@ -766,7 +766,7 @@ a[role="button"] {
           display: flex;
           height: 4.8rem;
           width: 100%;
-          border-top: 1px solid #ecedf1; }
+          border-top: 0.1rem solid #ecedf1; }
           .visu .content .primary .cases .amount li span {
             display: flex;
             justify-content: center;
