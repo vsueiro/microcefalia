@@ -143,6 +143,38 @@ curl.request( url, function ( error, response ) {
 		console.log( 'Saved states-totals.json!' );
 	}); 
 
+	// calculate country totals
+	country = {
+		n : 'Brasil',
+		c : {}
+	};
+
+	for ( var i = 0; i < states.length; i++ ) {
+
+		state = states[ i ];
+
+		for ( var j = 0; j < categories.length; j++ ) {
+
+			category = categories[ j ];
+			initials = category.initials;
+
+			if ( !( initials in country.c ) ) {
+				country.c[ initials ] = 0;
+			}
+
+			country.c[ initials ] += ( state.c[ initials ] || 0 );
+
+		}
+
+	}
+
+	// save file
+	json = JSON.stringify( country, null, 4 );
+	fs.writeFile( '../data/country-totals.json', json, function( error ) {
+		if ( error ) return console.log( error );
+		console.log( 'Saved country-totals.json!' )
+	}); 
+
 	// next steps (to avoid heavy browser processing):
 
 	// • calculate state totals
