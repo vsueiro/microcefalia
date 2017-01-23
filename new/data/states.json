@@ -1,137 +1,164 @@
 [
   {
     "id" : 12,
-    "nome" : "Acre",
-    "sigla" : "AC"
+    "name" : "Acre",
+    "initials" : "AC",
+    "region" : "N"
   },
   {
     "id" : 27,
-    "nome" : "Alagoas",
-    "sigla" : "AL"
+    "name" : "Alagoas",
+    "initials" : "AL",
+    "region" : "NE"
   },
   {
     "id" : 13,
-    "nome" : "Amazonas",
-    "sigla" : "AM"
+    "name" : "Amazonas",
+    "initials" : "AM",
+    "region" : "N"
   },
   {
     "id" : 16,
-    "nome" : "Amapá",
-    "sigla" : "AP"
+    "name" : "Amapá",
+    "initials" : "AP",
+    "region" : "N"
   },
   {
     "id" : 29,
-    "nome" : "Bahia",
-    "sigla" : "BA"
+    "name" : "Bahia",
+    "initials" : "BA",
+    "region" : "NE"
   },
   {
     "id" : 23,
-    "nome" : "Ceará",
-    "sigla" : "CE"
+    "name" : "Ceará",
+    "initials" : "CE",
+    "region" : "NE"
   },
   {
     "id" : 53,
-    "nome" : "Distrito Federal",
-    "sigla" : "DF"
+    "name" : "Distrito Federal",
+    "initials" : "DF",
+    "region" : "C"
   },
   {
     "id" : 32,
-    "nome" : "Espírito Santo",
-    "sigla" : "ES"
+    "name" : "Espírito Santo",
+    "initials" : "ES",
+    "region" : "SE"
   },
   {
     "id" : 52,
-    "nome" : "Goiás",
-    "sigla" : "GO"
+    "name" : "Goiás",
+    "initials" : "GO",
+    "region" : "CO"
   },
   {
     "id" : 21,
-    "nome" : "Maranhão",
-    "sigla" : "MA"
+    "name" : "Maranhão",
+    "initials" : "MA",
+    "region" : "NE"
   },
   {
     "id" : 31,
-    "nome" : "Minas Gerais",
-    "sigla" : "MG"
+    "name" : "Minas Gerais",
+    "initials" : "MG",
+    "region" : "SE"
   },
   {
     "id" : 50,
-    "nome" : "Mato Grosso do Sul",
-    "sigla" : "MS"
+    "name" : "Mato Grosso do Sul",
+    "initials" : "MS",
+    "region" : "CO"
   },
   {
     "id" : 51,
-    "nome" : "Mato Grosso",
-    "sigla" : "MT"
+    "name" : "Mato Grosso",
+    "initials" : "MT",
+    "region" : "CO"
   },
   {
     "id" : 15,
-    "nome" : "Pará",
-    "sigla" : "PA"
+    "name" : "Pará",
+    "initials" : "PA",
+    "region" : "N"
   },
   {
     "id" : 25,
-    "nome" : "Paraíba",
-    "sigla" : "PB"
+    "name" : "Paraíba",
+    "initials" : "PB",
+    "region" : "NE"
   },
   {
     "id" : 26,
-    "nome" : "Pernambuco",
-    "sigla" : "PE"
+    "name" : "Pernambuco",
+    "initials" : "PE",
+    "region" : "NE"
   },
   {
     "id" : 22,
-    "nome" : "Piauí",
-    "sigla" : "PI"
+    "name" : "Piauí",
+    "initials" : "PI",
+    "region" : "NE"
   },
   {
     "id" : 41,
-    "nome" : "Paraná",
-    "sigla" : "PR"
+    "name" : "Paraná",
+    "initials" : "PR",
+    "region" : "S"
   },
   {
     "id" : 33,
-    "nome" : "Rio de Janeiro",
-    "sigla" : "RJ"
+    "name" : "Rio de Janeiro",
+    "initials" : "RJ",
+    "region" : "SE"
   },
   {
     "id" : 24,
-    "nome" : "Rio Grande do Norte",
-    "sigla" : "RN"
+    "name" : "Rio Grande do Norte",
+    "initials" : "RN",
+    "region" : "NE"
   },
   {
     "id" : 11,
-    "nome" : "Rondônia",
-    "sigla" : "RO"
+    "name" : "Rondônia",
+    "initials" : "RO",
+    "region" : "N"
   },
   {
     "id" : 14,
-    "nome" : "Roraima",
-    "sigla" : "RR"
+    "name" : "Roraima",
+    "initials" : "RR",
+    "region" : "N"
   },
   {
     "id" : 43,
-    "nome" : "Rio Grande do Sul",
-    "sigla" : "RS"
+    "name" : "Rio Grande do Sul",
+    "initials" : "RS",
+    "region" : "S"
   },
   {
     "id" : 42,
-    "nome" : "Santa Catarina",
-    "sigla" : "SC"
+    "name" : "Santa Catarina",
+    "initials" : "SC",
+    "region" : "S"
   },
   {
     "id" : 28,
-    "nome" : "Sergipe",
-    "sigla" : "SE"
+    "name" : "Sergipe",
+    "initials" : "SE",
+    "region" : "NE"
   },
   {
     "id" : 35,
-    "nome" : "São Paulo",
-    "sigla" : "SP"
+    "name" : "São Paulo",
+    "initials" : "SP",
+    "region" : "SE"
   },
   {
     "id" : 17,
-    "nome" : "Tocantins",
-    "sigla" : "TO"
+    "name" : "Tocantins",
+    "initials" : "TO",
+    "region" : "N"
   }
 ]

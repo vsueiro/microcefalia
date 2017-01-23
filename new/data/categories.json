@@ -1,66 +1,26 @@
 [ 
   {
-    "sigla" : "n",
-    "apelido" : "Notificados",
-    "nome" : "Total notificado",
-    "total" : 0,
-    "atual" : false,
-    "visivel" : false
+    "initials" : "ci",
+    "name" : "Casos em análise"
   },
   {
-    "sigla" : "i",
-    "apelido" : "Investigados",
-    "nome" : "Total investigado",
-    "total" : 0,
-    "atual" : false,
-    "visivel" : true
+    "initials" : "cc",
+    "name" : "Casos confirmados"
   },
   {
-    "sigla" : "c",
-    "apelido" : "casos",
-    "nome" : "Casos confirmados",
-    "total" : 0,
-    "atual" : true,
-    "visivel" : true
+    "initials" : "cd",
+    "name" : "Casos descartados"
   },
   {
-    "sigla" : "d",
-    "apelido" : "Descartados",
-    "nome" : "Total descartado", 
-    "total" : 0,
-    "atual" : false,
-    "visivel" : true
+    "initials" : "di",
+    "name" : "Óbitos em análise"
   },
   {
-    "sigla" : "on",
-    "apelido" : "Óbitos notificados",
-    "nome" : "Total de óbitos notificados",
-    "total" : 0,
-    "atual" : false,
-    "visivel" : true
+    "initials" : "dc",
+    "name" : "Óbitos confirmados"
   },
   {
-    "sigla" : "oi",
-    "apelido" : "Óbitos investigados",
-    "nome" : "Total de óbitos investigados",
-    "total" : 0,
-    "atual" : false,
-    "visivel" : true
-  },
-  {
-    "sigla" : "oc",
-    "apelido" : "óbitos",
-    "nome" : "Óbitos confirmados",
-    "total" : 0,
-    "atual" : false,
-    "visivel" : true
-  },
-  {
-    "sigla" : "od",
-    "apelido" : "Óbitos descartados",
-    "nome" : "Total de óbitos descartados",
-    "total" : 0,
-    "atual" : false,
-    "visivel" : true
+    "initials" : "dd",
+    "name" : "Óbitos descartados"
   }
 ]
