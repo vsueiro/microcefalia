@@ -1,4 +1,6 @@
-url         = 'http://sage.saude.gov.br/paineis/microcefalia/listaMicrocefalia.php?output=json&ufs=&ibges=&cg=&tc=&re_giao=&rm=&qs=&ufcidade=Brasil&qt=5570%20munic%C3%ADpios&pop=204482459&cor=005984&nonono=html&title=&codPainel=176';
+// run this file on terminal using Node
+
+url         = 'http://sage.saude.gov.br/paineis/microcefalia/listaMicrocefalia.php?output=json&ufs=&ibges=&cg=&tc=&re_giao=&rm=&qs=&ufcidade=Brasil&qt=5570%20munic%C3%ADpios&pop=206114067&cor=005984&nonono=html&title=&codPainel=176';
 curl        = require( 'curlrequest' );
 fs          = require( 'fs' );
 coordinates = require( '../data/coordinates.json' );
@@ -8,6 +10,10 @@ cities      = {
 	ids     : [],
 	data    : [],
 	counter : 0
+};
+mostRecent = {
+	w : 50,
+	y : 0 // 2016
 };
 
 curl.request( url, function ( error, response ) {
@@ -115,22 +121,27 @@ curl.request( url, function ( error, response ) {
 
 				last = city.c[ city.c.length - 1 ];
 
-				if ( !( 'c' in state ) ) {
-					state.c = {};
-				}
+				if ( last.y == mostRecent.y && last.w == mostRecent.w ) { // city has data for the most recent week
 
-				for ( var k = 0; k < categories.length; k++ ) {
-
-					category = categories[ k ];
-					initials = category.initials;
-
-					if ( !( initials in state.c ) ) {
-						state.c[ initials ] = 0;
+					if ( !( 'c' in state ) ) {
+						state.c = {};
 					}
 
-					// NEED TO FIX: these calculations return totals that differ slightly from the official source
-					state.c[ initials ] += ( last[ initials ] || 0 );
+					for ( var k = 0; k < categories.length; k++ ) {
 
+						category = categories[ k ];
+						initials = category.initials;
+
+						if ( !( initials in state.c ) ) {
+							state.c[ initials ] = 0;
+						}
+
+						state.c[ initials ] += ( last[ initials ] || 0 );
+
+					}
+
+				} else {
+					console.log( 'city’s last reported week (' + last.w + ') is not the most recent: ' + city.n + ', ' + city.s );
 				}
 			} 
 		}

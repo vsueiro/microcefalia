@@ -48,6 +48,11 @@ visu = {
 				type : 'json', 
 				path : 'data/states.json'
 			},
+			{
+				name : 'cities',
+				type : 'json', 
+				path : 'data/cities.json'
+			}
 		],
 		load : function() {
 
