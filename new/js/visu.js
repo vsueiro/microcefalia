@@ -203,13 +203,114 @@ visu = {
 			}
 		},
 		ranking : {
+			element : the( '.ranking' ),
+			sort : function( category ) {
 
+				var category = category || visu.defaults.category + visu.defaults.subcategory;
+
+				function compare( a, b ) {
+					var a = a.c[ a.c.length - 1 ];
+					var b = b.c[ b.c.length - 1 ];
+
+					a = a.hasOwnProperty( category ) ? a[ category ] : 0;
+					b = b.hasOwnProperty( category ) ? b[ category ] : 0;
+					return b - a;
+				}
+
+				visu.data.cities.sort( compare );
+
+			},
+			total : function() {
+
+				var total = 0;
+				var text = 'tem casos confirmados';
+
+				each( visu.data.cities, function() {
+					var week = this.c[ this.c.length - 1 ];
+					total += week.hasOwnProperty( 'cc' ) ? week.cc : 0;
+				} );
+
+				if ( total > 1 )
+					text = 'têm casos confirmados';
+
+				if ( total === visu.data.cities.length )
+					total = 'Todos';
+				else if ( total === 0 )
+					total = 'Nenhum';
+				else
+					total = thousands( total );
+
+				text = '&nbsp' + text;
+
+				var output = document.createElement( 'output' );
+				output.innerHTML = total;
+
+				var caption = document.createElement( 'span' );
+				caption.innerHTML = text;
+
+				the( '.amount p', this.element ).appendChild( output );
+				the( '.amount p', this.element ).appendChild( caption );
+
+			},
+			initialize : function() {
+
+				var table = the( '.table', this.element );
+
+				this.sort();
+
+				this.total();
+
+				var cities = visu.data.cities;
+
+				for ( var i = 0; i < 5; i++ ) {
+
+					city = cities[ i ];
+
+					var item = document.createElement( 'li' );
+					var position = document.createElement( 'span' );
+					var location = document.createElement( 'span' );
+					var totals = document.createElement( 'div' );
+					var initials = document.createElement( 'span' );
+
+					position.classList.add( 'position' );
+					position.innerHTML = i + 1;
+
+					location.classList.add( 'location' );
+					location.innerHTML = city.n;
+
+					initials.classList.add( 'initials' );
+					initials.innerHTML = '&nbsp;' + city.s;
+
+					totals.classList.add( 'totals' );
+
+					for ( var j = 0; j < 3; j++ ) {
+
+						var subcategories = [ 'c', 'd', 'i' ];
+						var category = visu.defaults.category + subcategories[ j ];
+
+						var output = document.createElement( 'output' );
+						var cases = city.c[ city.c.length- 1 ][ category ] || 0;
+						output.innerHTML = thousands( cases );
+
+						totals.appendChild( output );
+
+					}
+
+					location.appendChild( initials );
+					item.appendChild( position );
+					item.appendChild( location );
+					item.appendChild( totals );
+					table.appendChild( item );
+
+				}
+			}
 		},
 		related : {
 
 		},
 		initialize : function() {
 			this.graphics.map.initialize();
+			this.ranking.initialize();
 		}
 	},
 
