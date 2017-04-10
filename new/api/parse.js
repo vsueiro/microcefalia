@@ -65,7 +65,65 @@ curl.request( url, function ( error, response ) {
 		}
 	}
 
+	// calculate each week start and end dates
 	weeks.sort();
+
+	Date.prototype.offset = function( days ) {
+		var offset = new Date( this.valueOf() );
+		offset.setDate( offset.getDate() + days );
+		return offset;
+	}
+
+	function weekDates( year, week ) {
+
+	  function firstWeek( year ) {
+	  
+	    var firstDay = new Date( year, 0, 1, 0, 0, 0 ); // january first
+	    var weekDay = firstDay.getDay(); // get week day from 0 (sunday) to 6 (saturday)
+	    var start, end;
+
+	    if ( weekDay <= 3 ) { // is first epidemiological week of current year
+	      start = firstDay.offset( - weekDay );
+	      end = firstDay.offset( 6 - weekDay );
+	    } else { // is last epidemiological week of last year
+	      start = firstDay.offset( 6 - weekDay + 1);
+	      end = start.offset( 6 );
+	    }
+
+	    return {
+	    	start : start,
+	    	end: end
+	    }
+	  }
+	  
+	  var first = firstWeek( year );
+	  var offset = 7 * ( week - 1 );
+	  
+	  return {
+	    start : first.start.offset( offset ),
+	    end : first.end.offset( offset )
+	  }
+	}
+
+	function onlyDate( date ) {
+		var iso = date.toISOString();
+		var n = iso.indexOf( 'T' );
+		return iso.substring( 0, n != -1 ? n : iso.length );
+	}
+
+	for ( var i = 0; i < weeks.length; i++ ) {
+		var parts = weeks[ i ].split( '-W' );
+		var y = parseInt( parts[ 0 ] ) + 2016;
+		var w = parseInt( parts[ 1 ] );
+		var date = weekDates( y, w );
+		var object = {
+			y : y,
+			w : w,
+			start : onlyDate( date.start ), 
+			end : onlyDate( date.end ) 
+		};
+		weeks[ i ] = object;
+	}
 
 	// save file
 	json = JSON.stringify( weeks );
