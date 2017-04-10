@@ -15,6 +15,7 @@ mostRecent = {
 	w : 50,
 	y : 0 // 2016
 };
+weeks = [];
 
 curl.request( url, function ( error, response ) {
 
@@ -42,6 +43,13 @@ curl.request( url, function ( error, response ) {
 			dd : parseInt( entry[ 12 ] )         // deaths discarded
 		};
 
+		// stores unique weeks
+		function leadingZero( n ) { return n < 10 ? '0' + n : n }
+		week = occurrence.y + '-W' + leadingZero( occurrence.w ); // iso format
+		if ( weeks.indexOf( week ) === -1 ) {
+			weeks.push( week );
+		}
+		
 		if ( cities.ids.indexOf( city.id ) >= 0 ) { // exists
 
 			cities.data[ cities.counter - 1 ].c.push( occurrence );
@@ -56,7 +64,16 @@ curl.request( url, function ( error, response ) {
 
 		}
 	}
-	
+
+	weeks.sort();
+
+	// save file
+	json = JSON.stringify( weeks );
+	fs.writeFile( '../data/weeks.json', json, function( error ) {
+		if ( error ) return console.log( error );
+		console.log( 'Saved weeks.json' );
+	}); 
+
 	// match cities with their coordinates
 	for ( var i = 0; i < cities.data.length; i++ ) {
 		city = cities.data[ i ];

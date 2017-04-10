@@ -1,164 +1,164 @@
 [
-  {
-    "id" : 12,
-    "name" : "Acre",
-    "initials" : "AC",
-    "region" : "N"
-  },
-  {
-    "id" : 27,
-    "name" : "Alagoas",
-    "initials" : "AL",
-    "region" : "NE"
-  },
-  {
-    "id" : 13,
-    "name" : "Amazonas",
-    "initials" : "AM",
-    "region" : "N"
-  },
-  {
-    "id" : 16,
-    "name" : "Amapá",
-    "initials" : "AP",
-    "region" : "N"
-  },
-  {
-    "id" : 29,
-    "name" : "Bahia",
-    "initials" : "BA",
-    "region" : "NE"
-  },
-  {
-    "id" : 23,
-    "name" : "Ceará",
-    "initials" : "CE",
-    "region" : "NE"
-  },
-  {
-    "id" : 53,
-    "name" : "Distrito Federal",
-    "initials" : "DF",
-    "region" : "C"
-  },
-  {
-    "id" : 32,
-    "name" : "Espírito Santo",
-    "initials" : "ES",
-    "region" : "SE"
-  },
-  {
-    "id" : 52,
-    "name" : "Goiás",
-    "initials" : "GO",
-    "region" : "CO"
-  },
-  {
-    "id" : 21,
-    "name" : "Maranhão",
-    "initials" : "MA",
-    "region" : "NE"
-  },
-  {
-    "id" : 31,
-    "name" : "Minas Gerais",
-    "initials" : "MG",
-    "region" : "SE"
-  },
-  {
-    "id" : 50,
-    "name" : "Mato Grosso do Sul",
-    "initials" : "MS",
-    "region" : "CO"
-  },
-  {
-    "id" : 51,
-    "name" : "Mato Grosso",
-    "initials" : "MT",
-    "region" : "CO"
-  },
-  {
-    "id" : 15,
-    "name" : "Pará",
-    "initials" : "PA",
-    "region" : "N"
-  },
-  {
-    "id" : 25,
-    "name" : "Paraíba",
-    "initials" : "PB",
-    "region" : "NE"
-  },
-  {
-    "id" : 26,
-    "name" : "Pernambuco",
-    "initials" : "PE",
-    "region" : "NE"
-  },
-  {
-    "id" : 22,
-    "name" : "Piauí",
-    "initials" : "PI",
-    "region" : "NE"
-  },
-  {
-    "id" : 41,
-    "name" : "Paraná",
-    "initials" : "PR",
-    "region" : "S"
-  },
-  {
-    "id" : 33,
-    "name" : "Rio de Janeiro",
-    "initials" : "RJ",
-    "region" : "SE"
-  },
-  {
-    "id" : 24,
-    "name" : "Rio Grande do Norte",
-    "initials" : "RN",
-    "region" : "NE"
-  },
-  {
-    "id" : 11,
-    "name" : "Rondônia",
-    "initials" : "RO",
-    "region" : "N"
-  },
-  {
-    "id" : 14,
-    "name" : "Roraima",
-    "initials" : "RR",
-    "region" : "N"
-  },
-  {
-    "id" : 43,
-    "name" : "Rio Grande do Sul",
-    "initials" : "RS",
-    "region" : "S"
-  },
-  {
-    "id" : 42,
-    "name" : "Santa Catarina",
-    "initials" : "SC",
-    "region" : "S"
-  },
-  {
-    "id" : 28,
-    "name" : "Sergipe",
-    "initials" : "SE",
-    "region" : "NE"
-  },
-  {
-    "id" : 35,
-    "name" : "São Paulo",
-    "initials" : "SP",
-    "region" : "SE"
-  },
-  {
-    "id" : 17,
-    "name" : "Tocantins",
-    "initials" : "TO",
-    "region" : "N"
-  }
+    {
+        "id": 12,
+        "name": "Acre",
+        "initials": "AC",
+        "region": "N"
+    },
+    {
+        "id": 27,
+        "name": "Alagoas",
+        "initials": "AL",
+        "region": "NE"
+    },
+    {
+        "id": 13,
+        "name": "Amazonas",
+        "initials": "AM",
+        "region": "N"
+    },
+    {
+        "id": 16,
+        "name": "Amapá",
+        "initials": "AP",
+        "region": "N"
+    },
+    {
+        "id": 29,
+        "name": "Bahia",
+        "initials": "BA",
+        "region": "NE"
+    },
+    {
+        "id": 23,
+        "name": "Ceará",
+        "initials": "CE",
+        "region": "NE"
+    },
+    {
+        "id": 53,
+        "name": "Distrito Federal",
+        "initials": "DF",
+        "region": "C"
+    },
+    {
+        "id": 32,
+        "name": "Espírito Santo",
+        "initials": "ES",
+        "region": "SE"
+    },
+    {
+        "id": 52,
+        "name": "Goiás",
+        "initials": "GO",
+        "region": "CO"
+    },
+    {
+        "id": 21,
+        "name": "Maranhão",
+        "initials": "MA",
+        "region": "NE"
+    },
+    {
+        "id": 31,
+        "name": "Minas Gerais",
+        "initials": "MG",
+        "region": "SE"
+    },
+    {
+        "id": 50,
+        "name": "Mato Grosso do Sul",
+        "initials": "MS",
+        "region": "CO"
+    },
+    {
+        "id": 51,
+        "name": "Mato Grosso",
+        "initials": "MT",
+        "region": "CO"
+    },
+    {
+        "id": 15,
+        "name": "Pará",
+        "initials": "PA",
+        "region": "N"
+    },
+    {
+        "id": 25,
+        "name": "Paraíba",
+        "initials": "PB",
+        "region": "NE"
+    },
+    {
+        "id": 26,
+        "name": "Pernambuco",
+        "initials": "PE",
+        "region": "NE"
+    },
+    {
+        "id": 22,
+        "name": "Piauí",
+        "initials": "PI",
+        "region": "NE"
+    },
+    {
+        "id": 41,
+        "name": "Paraná",
+        "initials": "PR",
+        "region": "S"
+    },
+    {
+        "id": 33,
+        "name": "Rio de Janeiro",
+        "initials": "RJ",
+        "region": "SE"
+    },
+    {
+        "id": 24,
+        "name": "Rio Grande do Norte",
+        "initials": "RN",
+        "region": "NE"
+    },
+    {
+        "id": 11,
+        "name": "Rondônia",
+        "initials": "RO",
+        "region": "N"
+    },
+    {
+        "id": 14,
+        "name": "Roraima",
+        "initials": "RR",
+        "region": "N"
+    },
+    {
+        "id": 43,
+        "name": "Rio Grande do Sul",
+        "initials": "RS",
+        "region": "S"
+    },
+    {
+        "id": 42,
+        "name": "Santa Catarina",
+        "initials": "SC",
+        "region": "S"
+    },
+    {
+        "id": 28,
+        "name": "Sergipe",
+        "initials": "SE",
+        "region": "NE"
+    },
+    {
+        "id": 35,
+        "name": "São Paulo",
+        "initials": "SP",
+        "region": "SE"
+    },
+    {
+        "id": 17,
+        "name": "Tocantins",
+        "initials": "TO",
+        "region": "N"
+    }
 ]
