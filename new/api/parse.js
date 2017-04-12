@@ -3,19 +3,16 @@
 url         = 'http://sage.saude.gov.br/paineis/microcefalia/listaMicrocefalia.php?output=json&ufs=&ibges=&cg=&tc=&re_giao=&rm=&qs=&ufcidade=Brasil&qt=5570%20munic%C3%ADpios&pop=206114067&cor=005984&nonono=html&title=&codPainel=176';
 curl        = require( 'curlrequest' );
 fs          = require( 'fs' );
-coordinates = require( '../data/coordinates.json' );
-states 		= require( '../data/states.json' );
-categories  = require( '../data/categories.json' );
+coordinates = require( '../data/raw/coordinates.json' );
+categories  = require( '../data/raw/categories.json' );
+country		= require( '../data/raw/country.json' );
+states 		= require( '../data/raw/states.json' );
+weeks       = [];
 cities      = {
 	ids     : [],
 	data    : [],
 	counter : 0
 };
-mostRecent = {
-	w : 50,
-	y : 0 // 2016
-};
-weeks = [];
 
 curl.request( url, function ( error, response ) {
 
@@ -228,17 +225,12 @@ curl.request( url, function ( error, response ) {
 
 	// save file
 	json = JSON.stringify( states, null, 4 );
-	fs.writeFile( '../data/states-totals.json', json, function( error ) {
+	fs.writeFile( '../data/states.json', json, function( error ) {
 		if ( error ) return console.log( error );
 		console.log( 'Saved states-totals.json!' );
 	}); 
 
 	// calculate state cumulative cases by week
-	country = {
-		n : 'Brasil',
-		c : []
-	};
-
 	for ( var k = 0; k < weeks.length; k++ ) {
 
 		week = weeks[ k ];
@@ -268,9 +260,9 @@ curl.request( url, function ( error, response ) {
 
 	// save file
 	json = JSON.stringify( country, null, 4 );
-	fs.writeFile( '../data/country-totals.json', json, function( error ) {
+	fs.writeFile( '../data/country.json', json, function( error ) {
 		if ( error ) return console.log( error );
-		console.log( 'Saved country-totals.json!' )
+		console.log( 'Saved country.json!' )
 	}); 
 
 	// next steps (to avoid heavy browser processing):
