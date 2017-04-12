@@ -117,7 +117,7 @@ curl.request( url, function ( error, response ) {
 		var w = parseInt( parts[ 1 ] );
 		var date = weekDates( y, w );
 		var object = {
-			y : y,
+			y : y - 2016,
 			w : w,
 			start : onlyDate( date.start ), 
 			end : onlyDate( date.end ) 
@@ -183,40 +183,44 @@ curl.request( url, function ( error, response ) {
 		console.log( 'Saved cities.json' );
 	}); 
 
-	// calculate state totals
+	// calculate state cumulative cases by week
 	for ( var i = 0; i < states.length; i++ ) {
 
 		state = states[ i ];
+		state.c = [];
 
-		for ( var j = 0; j < cities.data.length; j++ ) {
+		for ( var k = 0; k < weeks.length; k++ ) {
 
-			city = cities.data[ j ];
+			week = weeks[ k ];
+			state.c[ k ] = {
+				y : week.y,
+				w : week.w
+			};
 
-			if ( city.s === state.initials ) { // if city matches current state
+			for ( var j = 0; j < cities.data.length; j++ ) {
 
-				last = city.c[ city.c.length - 1 ];
+				city = cities.data[ j ];
 
-				if ( last.y == mostRecent.y && last.w == mostRecent.w ) { // city has data for the most recent week
+				if ( city.s === state.initials ) { // if city matches current state
 
-					if ( !( 'c' in state ) ) {
-						state.c = {};
-					}
+					for ( var l = 0; l < city.c.length; l++ ) {
 
-					for ( var k = 0; k < categories.length; k++ ) {
+						if ( city.c[ l ].y == week.y && city.c[ l ].w == week.w ) {
 
-						category = categories[ k ];
-						initials = category.initials;
+							for ( var m = 0; m < categories.length; m++ ) {
 
-						if ( !( initials in state.c ) ) {
-							state.c[ initials ] = 0;
+								category = categories[ m ];
+								initials = category.initials;
+
+								if ( !( initials in state.c[ k ] ) ) {
+									state.c[ k ][ initials ] = 0;
+								}
+
+								state.c[ k ][ initials ] += ( city.c[ l ][ initials ] || 0 );
+
+							}
 						}
-
-						state.c[ initials ] += ( last[ initials ] || 0 );
-
 					}
-
-				} else {
-					console.log( 'city’s last reported week (' + last.w + ') is not the most recent: ' + city.n + ', ' + city.s );
 				}
 			} 
 		}
