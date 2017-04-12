@@ -8,6 +8,7 @@ categories  = require( '../data/raw/categories.json' );
 country		= require( '../data/raw/country.json' );
 states 		= require( '../data/raw/states.json' );
 weeks       = [];
+year        = 2016;
 cities      = {
 	ids     : [],
 	data    : [],
@@ -30,7 +31,7 @@ curl.request( url, function ( error, response ) {
 		};
 
 		occurrence = {
-			y  : parseInt( entry[ 4 ]  ) - 2016, // year
+			y  : parseInt( entry[ 4 ]  ) - year, // year
 			w  : parseInt( entry[ 3 ]  ),        // week
 			ci : parseInt( entry[ 6 ]  ),        // cases investigation
 			cc : parseInt( entry[ 7 ]  ),        // cases confirmed
@@ -110,11 +111,11 @@ curl.request( url, function ( error, response ) {
 
 	for ( var i = 0; i < weeks.length; i++ ) {
 		var parts = weeks[ i ].split( '-W' );
-		var y = parseInt( parts[ 0 ] ) + 2016;
+		var y = parseInt( parts[ 0 ] ) + year;
 		var w = parseInt( parts[ 1 ] );
 		var date = weekDates( y, w );
 		var object = {
-			y : y - 2016,
+			y : y - year,
 			w : w,
 			start : onlyDate( date.start ), 
 			end : onlyDate( date.end ) 
