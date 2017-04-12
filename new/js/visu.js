@@ -41,7 +41,17 @@ visu = {
 			{ 
 				name : 'categories',
 				type : 'json', 
-				path : 'data/categories.json'
+				path : 'data/raw/categories.json'
+			},
+			{ 
+				name : 'weeks',
+				type : 'json', 
+				path : 'data/weeks.json'
+			},
+			{
+				name : 'country',
+				type : 'json', 
+				path : 'data/country.json'
 			},
 			{
 				name : 'states',
