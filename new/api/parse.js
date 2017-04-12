@@ -233,29 +233,37 @@ curl.request( url, function ( error, response ) {
 		console.log( 'Saved states-totals.json!' );
 	}); 
 
-	// calculate country totals
+	// calculate state cumulative cases by week
 	country = {
 		n : 'Brasil',
-		c : {}
+		c : []
 	};
 
-	for ( var i = 0; i < states.length; i++ ) {
+	for ( var k = 0; k < weeks.length; k++ ) {
 
-		state = states[ i ];
+		week = weeks[ k ];
+		country.c[ k ] = {
+			y : week.y,
+			w : week.w
+		};
 
-		for ( var j = 0; j < categories.length; j++ ) {
+		for ( var i = 0; i < states.length; i++ ) {
 
-			category = categories[ j ];
-			initials = category.initials;
+			state = states[ i ];
 
-			if ( !( initials in country.c ) ) {
-				country.c[ initials ] = 0;
+			for ( var j = 0; j < categories.length; j++ ) {
+
+				category = categories[ j ];
+				initials = category.initials;
+
+				if ( !( initials in country.c[ k ] ) ) {
+					country.c[ k ][ initials ] = 0;
+				}
+
+				country.c[ k ][ initials ] += ( state.c[ k ][ initials ] || 0 );
+
 			}
-
-			country.c[ initials ] += ( state.c[ initials ] || 0 );
-
 		}
-
 	}
 
 	// save file
