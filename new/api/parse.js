@@ -237,8 +237,11 @@ curl.request( url, function ( error, response ) {
 		week = weeks[ k ];
 		country.c[ k ] = {
 			y : week.y,
-			w : week.w
+			w : week.w,
+			u : {}
 		};
+
+		unique = country.c[ k ].u;
 
 		for ( var i = 0; i < states.length; i++ ) {
 
@@ -255,6 +258,11 @@ curl.request( url, function ( error, response ) {
 
 				country.c[ k ][ initials ] += ( state.c[ k ][ initials ] || 0 );
 
+				if ( k > 0 ) {
+					unique[ initials ] = country.c[ k ][ initials ] - country.c[ k - 1 ][ initials ];	
+				} else {
+					unique[ initials ] = country.c[ k ][ initials ];	
+				}
 			}
 		}
 	}

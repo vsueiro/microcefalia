@@ -197,15 +197,19 @@ visu = {
 					element : the( '.cases.new .graphic' ),
 					initialize : function() {
 						var peak = 0;
-						each( visu.data.country.c, function() {
-							peak = this.cc > peak ? this.cc : peak;
+						each( visu.data.country.c, function( object, index ) {
+							if ( index > 0 )
+								peak = this.u.cc > peak ? this.u.cc : peak;
 						} );
-						peak = Math.ceil( peak / 200 ) * 200;
-						each( visu.data.country.c, function() {
-							var bar = document.createElement( 'div' );
-							bar.classList.add( 'bar' );
-							bar.style.height = this.cc * 100 / peak + '%';
-							visu.components.graphics.unique.bars.element.appendChild( bar );
+						peak = Math.ceil( peak / 40 ) * 40;
+						each( visu.data.country.c, function( object, index ) {
+							console.log( index );
+							if ( index > 0 ) {
+								var bar = document.createElement( 'div' );
+								bar.classList.add( 'bar' );
+								bar.style.height = this.u.cc * 100 / peak + '%';
+								visu.components.graphics.unique.bars.element.appendChild( bar );
+							}
 						} );
 					}
 				},
@@ -214,10 +218,11 @@ visu = {
 						element : the( '.cases.new .scale.amount' ),
 						initialize : function() {
 							var peak = 0;
-							each( visu.data.country.c, function() {
-								peak = this.cc > peak ? this.cc : peak;
+							each( visu.data.country.c, function( object, index ) {
+								if ( index > 0 )
+									peak = this.u.cc > peak ? this.u.cc : peak;
 							} );
-							peak = Math.ceil( peak / 200 ) * 200;
+							peak = Math.ceil( peak / 40 ) * 40;
 							var increment = peak / 4;
 							each( 'span', function( index ) {
 								this.innerHTML = increment * ( index + 1 );
