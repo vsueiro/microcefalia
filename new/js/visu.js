@@ -203,13 +203,13 @@ visu = {
 						} );
 						peak = Math.ceil( peak / 40 ) * 40;
 						each( visu.data.country.c, function( object, index ) {
-							console.log( index );
-							if ( index > 0 ) {
-								var bar = document.createElement( 'div' );
-								bar.classList.add( 'bar' );
-								bar.style.height = this.u.cc * 100 / peak + '%';
-								visu.components.graphics.unique.bars.element.appendChild( bar );
-							}
+							var bar = document.createElement( 'div' );
+							bar.classList.add( 'bar' );
+							bar.style.height = this.u.cc * 100 / peak + '%';
+							if ( index === 0 ) {
+								bar.style.height = '0%';
+							}	
+							visu.components.graphics.unique.bars.element.appendChild( bar );
 						} );
 					}
 				},
