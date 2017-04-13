@@ -191,7 +191,48 @@ visu = {
 			time : {}
 		},
 		graphics : {
-			unique : {},
+			unique : {
+				element : the( '.cases.new' ),
+				bars : {
+					element : the( '.cases.new .graphic' ),
+					initialize : function() {
+						var peak = 0;
+						each( visu.data.country.c, function() {
+							peak = this.cc > peak ? this.cc : peak;
+						} );
+						peak = Math.ceil( peak / 200 ) * 200;
+						each( visu.data.country.c, function() {
+							var bar = document.createElement( 'div' );
+							bar.classList.add( 'bar' );
+							bar.style.height = this.cc * 100 / peak + '%';
+							visu.components.graphics.unique.bars.element.appendChild( bar );
+						} );
+					}
+				},
+				scale : {
+					amount : {
+						element : the( '.cases.new .scale.amount' ),
+						initialize : function() {
+							var peak = 0;
+							each( visu.data.country.c, function() {
+								peak = this.cc > peak ? this.cc : peak;
+							} );
+							peak = Math.ceil( peak / 200 ) * 200;
+							var increment = peak / 4;
+							each( 'span', function( index ) {
+								this.innerHTML = increment * ( index + 1 );
+							}, this.element );
+						}
+					},
+					initialize : function() {
+						this.amount.initialize();
+					}
+				},
+				initialize : function() {
+					this.bars.initialize();
+					this.scale.initialize();
+				}
+			},
 			cumulative : {},
 			map : {
 				initialize : function() {
@@ -320,6 +361,7 @@ visu = {
 		},
 		initialize : function() {
 			this.graphics.map.initialize();
+			this.graphics.unique.initialize();
 			this.ranking.initialize();
 		}
 	},

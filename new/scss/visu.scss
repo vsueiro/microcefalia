@@ -502,7 +502,7 @@ a[role="button"] {
 					left: blocks( 1 );
 					width: blocks( 8 );
 					height: blocks( 4 );
-					background-color: rgba( $neutral-5, 0.25 );
+					/*background-color: rgba( $neutral-5, 0.25 );*/
 				}
 
 				.amount {
@@ -736,6 +736,27 @@ a[role="button"] {
 		}
 	}
 }
+
+/* cases new graphic */
+
+.visu .content .primary .cases.new .graphic {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.visu .content .primary .cases.new .graphic .bar {
+    width: 100%;
+    max-width: .4rem;
+    background: rgba( $neutral-1, 1 );
+}
+
+.scale.amount ol {
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+/* /cases new graphic */
 
 @import '_dividers';
 @import '_slider';
