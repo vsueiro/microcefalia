@@ -18,7 +18,8 @@ visu = {
 		subcategory : 'c',
 		location : 'all',
 		level : 'region',
-		periodicity : 'weekly'
+		periodicity : 'weekly',
+		year : 2016
 	},
 
 	dependencies : {
@@ -203,13 +204,40 @@ visu = {
 						} );
 						peak = Math.ceil( peak / 40 ) * 40;
 						each( visu.data.country.c, function( object, index ) {
+
 							var bar = document.createElement( 'div' );
-							bar.classList.add( 'bar' );
-							bar.style.height = this.u.cc * 100 / peak + '%';
+							bar.classList.add( 'tooltip-container', 'bar' );
 							if ( index === 0 ) {
 								bar.style.height = '0%';
-							}	
+							}
+							var fill = document.createElement( 'div' );
+							fill.classList.add( 'fill' );
+							fill.style.height = this.u.cc * 100 / peak + '%';
+
+							var info = document.createElement( 'div' );
+							info.classList.add( 'tooltip' );
+
+							var time = document.createElement( 'time' );
+							time.setAttribute( 'datetime', ( this.y + visu.defaults.year ) + '-W' + this.w );
+							time.innerHTML = 'Semana ' + this.w;
+
+							var amount = document.createElement( 'div' );
+
+							var output = document.createElement( 'output' );
+							output.innerHTML = this.u.cc;
+
+							var label = document.createElement( 'span' );
+							label.innerHTML = ' casos';
+
+							amount.appendChild( output );
+							amount.appendChild( label );
+							info.appendChild( time );
+							info.appendChild( amount );
+							fill.appendChild( info );
+							bar.appendChild( fill );
+
 							visu.components.graphics.unique.bars.element.appendChild( bar );
+
 						} );
 					}
 				},
