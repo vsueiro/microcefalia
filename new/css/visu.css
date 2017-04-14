@@ -917,12 +917,7 @@ a[role="button"] {
 
 .visu .content .primary .cases.new .graphic .bar {
   width: 100%;
-  height: 100%;
-  /*max-width: .5rem;*/
-  /*border-left: .1rem solid rgba( $paper, 1 );*/
-  /*border-right: .1rem solid rgba( $paper, 1 );*/
-  background: transparent;
-  /*transition: background .3s;*/ }
+  height: 100%; }
   .visu .content .primary .cases.new .graphic .bar .fill {
     position: absolute;
     display: flex;
