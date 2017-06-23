@@ -228,7 +228,7 @@ curl.request( url, function ( error, response ) {
 	json = JSON.stringify( states, null, 4 );
 	fs.writeFile( '../data/states.json', json, function( error ) {
 		if ( error ) return console.log( error );
-		console.log( 'Saved states-totals.json!' );
+		console.log( 'Saved states.json!' );
 	}); 
 
 	// calculate state cumulative cases by week
