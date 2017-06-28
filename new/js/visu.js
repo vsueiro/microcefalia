@@ -191,6 +191,41 @@ visu = {
 			location : {},
 			time : {}
 		},
+		description : {
+			element : the( '.description' ),
+			initialize : function() {
+				// Você está vendo casos confirmados de microcefalia por zika em crianças nascidas até 20 de agosto de 2016
+				// Você está vendo casos descartados de microcefalia por zika em crianças nascidas até 20 de agosto de 2016
+				// Você está vendo casos em análise de microcefalia por zika em crianças nascidas até 20 de agosto de 2016
+
+				// Você está vendo óbitos que tem relação confirmada com microcefalia por zika em crianças “nascidas” até 20 de agosto de 2016
+				// Você está vendo óbitos que tem relação descartada com microcefalia por zika em crianças “nascidas” até 20 de agosto de 2016
+				// Você está vendo óbitos que tem relação em análise com microcefalia por zika em crianças “nascidas” até 20 de agosto de 2016
+
+				var paragraph = document.createElement( 'p' );
+				this.element.appendChild( paragraph );
+				this.update();
+			},
+			update : function() {
+				var text = 'Você está vendo ';
+				if ( visu.options.category === 'c' ) {
+					text += 'casos ';
+					if ( visu.options.subcategory === 'c' ) text += 'confirmados ';
+					if ( visu.options.subcategory === 'd' ) text += 'descartados ';
+					if ( visu.options.subcategory === 'i' ) text += 'em análise ';
+					text += 'de microcefalia <strong>por zika</strong> em crianças nascidas até ';
+				}
+				if ( visu.options.category === 'o' ) {
+					text += 'óbitos que tem relação ';
+					if ( visu.options.subcategory === 'c' ) text += 'confirmada ';
+					if ( visu.options.subcategory === 'd' ) text += 'descartada ';
+					if ( visu.options.subcategory === 'i' ) text += 'em análise ';
+					text += 'com microcefalia <strong>por zika</strong> em crianças “nascidas” até ';
+				}
+				text += 'data';
+				the( 'p', this.element ).innerHTML = text;
+			}
+		},
 		graphics : {
 			unique : {
 				element : the( '.cases.new' ),
@@ -393,9 +428,13 @@ visu = {
 
 		},
 		initialize : function() {
+			this.description.initialize();
 			this.graphics.map.initialize();
 			this.graphics.unique.initialize();
 			this.ranking.initialize();
+		},
+		update : function() {
+			this.description.update();
 		}
 	},
 
@@ -423,8 +462,6 @@ visu = {
 								}
 							}, group );
 
-							console.log( visu.options );
-
 						} else {
 
 							group = closest( 'button-group', this );
@@ -436,9 +473,11 @@ visu = {
 							this.classList.add( 'active' );
 							visu.set[ this.name ]( this.value );
 
-							console.log( visu.options );
-
 						}
+
+						visu.update();
+						console.log( visu.options );
+
 					});
 				});
 			}
@@ -527,7 +566,7 @@ visu = {
 	},
 
 	update : function() {
-
+		this.components.update();
 	}
 
 };
