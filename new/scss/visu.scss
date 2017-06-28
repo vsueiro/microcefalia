@@ -767,11 +767,11 @@ a[role="button"] {
 	    margin: 0 auto;
 	    max-width: .4rem;
 	    background: $neutral-1;
+	    transition: background .3s;
     }
 
     &:hover .fill {
     	background: $neutral-0;
-    	transition: background .3s;
     }
 
     &.disabled {
@@ -779,6 +779,7 @@ a[role="button"] {
     	
     	.fill {
     		background: $neutral-6;
+    		transition: none;
     	}
     }
 }

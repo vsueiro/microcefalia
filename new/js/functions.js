@@ -120,7 +120,7 @@ thousands = function( x ) {
   return parts.join( ',' );
 }
 
-format = {
+pretty = {
 
   date : function( string ) {
     var months = [ 'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro' ];
@@ -142,6 +142,14 @@ decode = {
       w : Number( parts[ 1 ].replace( 'W', '' ) )
     };
     return object;
+  }
+
+}
+
+encode = {
+
+  week : function( y, w ) {
+    return ( y + visu.defaults.year ) + '-W' + w;
   }
 
 }

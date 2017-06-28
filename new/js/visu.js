@@ -203,7 +203,7 @@ visu = {
 				initialize : function() {
 					var week = visu.data.weeks[ 0 ];
 					visu.set.date( week.start );
-					visu.set.week( week.y + visu.defaults.year + '-W' + week.w );
+					visu.set.week( encode.week( week.y, week.w ) );
 				},
 				update : function() {
 					var elements = {
@@ -214,7 +214,7 @@ visu = {
 						var date = visu.get.date();
 						if ( week.start === date ) {
 							elements.full.setAttribute( 'datetime', date );
-							elements.full.innerHTML = format.date( date );
+							elements.full.innerHTML = pretty.date( date );
 							elements.week.setAttribute( 'datetime', visu.get.week() );
 							elements.week.innerHTML = 'Semana ' + week.w;
 						}
@@ -258,7 +258,7 @@ visu = {
 					if ( visu.options.subcategory === 'i' ) text += 'em análise ';
 					text += 'com microcefalia <strong>por zika</strong> em crianças “nascidas” até ';
 				}
-				text += format.date( visu.get.date() );
+				text += pretty.date( visu.get.date() );
 				the( 'p', this.element ).innerHTML = text;
 			}
 		},
@@ -278,7 +278,7 @@ visu = {
 
 							var bar = document.createElement( 'div' );
 							bar.classList.add( 'tooltip-container', 'bar' );
-							bar.dataset.week = object.y + visu.defaults.year + '-W' + object.w;
+							bar.dataset.week = encode.week( object.y, object.w );
 							if ( index === 0 ) {
 								bar.style.height = '0%';
 							}
@@ -290,7 +290,7 @@ visu = {
 							info.classList.add( 'tooltip' );
 
 							var time = document.createElement( 'time' );
-							time.setAttribute( 'datetime', ( this.y + visu.defaults.year ) + '-W' + this.w );
+							time.setAttribute( 'datetime', encode.week( this.y, this.w ) );
 							time.innerHTML = 'Semana ' + this.w;
 
 							var amount = document.createElement( 'div' );
@@ -590,7 +590,7 @@ visu = {
 			update : function( index ) {
 				var object = visu.data.weeks[ index ];
 				var date = object.start;
-				var week = visu.defaults.year + object.y + '-W' + object.w;
+				var week = encode.week( object.y, object.w );
 				if ( visu.get.date() !== date ) {
 					visu.set.date( date );
 					visu.set.week( week );
