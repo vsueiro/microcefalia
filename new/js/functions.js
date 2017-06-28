@@ -56,6 +56,24 @@ the = function( thing, parent ) {
 	return null
 }
 
+them = function( thing, parent ) {
+
+  var list;
+
+  parent = parent || document;
+
+  list = parent.getElementsByClassName( thing );
+  if ( list.length ) return list
+
+  list = parent.getElementsByTagName( thing );
+  if ( list.length ) return list
+
+  list = document.querySelectorAll( thing );
+  if ( list.length ) return list
+
+  return null
+}
+
 closest = function( className, element ) {
     while ( ( element = element.parentElement) && !element.classList.contains( className ) );
     return element
@@ -101,3 +119,17 @@ thousands = function( x ) {
   parts[ 0 ] = parts[ 0 ].replace( /\B(?=(\d{3})+(?!\d))/g , '.' );
   return parts.join( ',' );
 }
+
+format = {
+
+  date : function( string ) {
+    var months = [ 'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro' ];
+    var parts = string.split( '-' );
+    var y = Number( parts[ 0 ] );
+    var m = Number( parts[ 1 ] );
+    var d = Number( parts[ 2 ] );
+    return d + ' ' + months[ m - 1 ] + ' ' + y;
+  }
+
+};
+

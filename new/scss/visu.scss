@@ -383,7 +383,7 @@ a[role="button"] {
 					padding: 0 1.6rem;
 					color: $paper;
 
-					&[datetime*="W"] {
+					&:last-child {
 						font-size: 1.4rem;
 						color: $neutral-4;
 					}

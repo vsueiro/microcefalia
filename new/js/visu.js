@@ -1,4 +1,4 @@
-var map, visu
+var map, visu;
 
 visu = {
 
@@ -189,7 +189,35 @@ visu = {
 		filters : {
 			category : {},
 			location : {},
-			time : {}
+			time : {
+				element : the( '.date.filter' ),
+				initialize : function() {
+					this.update();
+				},
+				update : function() {
+					var elements = {
+						full : the( 'full' ),
+						week : the( 'week' )
+					};
+					each( visu.data.weeks, function( week ) {
+						var parts = visu.options.date.split( '-' );
+						var y = parts[ 0 ] - visu.defaults.year;
+						var w = parts[ 1 ].replace( 'W','' ) * 1;
+						if ( week.y === y && week.w === w ) {
+							elements.full.setAttribute( 'datetime', week.start );
+							elements.full.innerHTML = format.date( week.start );
+							elements.week.setAttribute( 'datetime', visu.options.date );
+							elements.week.innerHTML = 'Semana ' + week.w;
+						}
+					} )
+				}
+			},
+			initialize : function() {
+				this.update();
+			},
+			update : function() {
+				this.time.update();
+			}
 		},
 		description : {
 			element : the( '.description' ),
@@ -429,12 +457,14 @@ visu = {
 		},
 		initialize : function() {
 			this.description.initialize();
+			this.filters.initialize();
 			this.graphics.map.initialize();
 			this.graphics.unique.initialize();
 			this.ranking.initialize();
 		},
 		update : function() {
 			this.description.update();
+			this.filters.update();
 		}
 	},
 
@@ -501,28 +531,44 @@ visu = {
 		},
 
 		slider : {
+			element : the( '[data-rangeSlider]' ),
+			min : 0,
+			max : undefined,
 			initialize : function() {
 
-				var elements = document.querySelectorAll('[data-rangeSlider]');
+				this.max = visu.data.weeks.length - 1;
 
-		        rangeSlider.create( elements, {
+				this.element.setAttribute( 'min', this.min );
+				this.element.setAttribute( 'max', this.max );
+				this.element.setAttribute( 'value', 0 );
+
+		        rangeSlider.create( this.element, {
 
 		            onInit: function () {
 		            },
 
 		            onSlideStart: function ( value, percent, position ) {
-		                console.info( 'onSlideStart', 'value: ' + value, 'percent: ' + percent, 'position: ' + position );
+		            	visu.interaction.slider.update( value );
 		            },
 
 		            onSlide: function ( value, percent, position ) {
-		                console.log( 'onSlide', 'value: ' + value, 'percent: ' + percent, 'position: ' + position );
+		            	visu.interaction.slider.update( value );
 		            },
 
 		            onSlideEnd: function ( value, percent, position ) {
-		                console.warn( 'onSlideEnd', 'value: ' + value, 'percent: ' + percent, 'position: ' + position );
+		            	visu.interaction.slider.update( value );
 		            }
 		        });
+			},
+			update : function( index ) {
+				var object = visu.data.weeks[ index ];
+				var date = visu.defaults.year + object.y + '-W' + object.w;
+				if ( visu.options.date !== date ) {
+					visu.options.date = date;
+					visu.update();
+				}
 			}
+
 		},
 
 		scroll : {

@@ -684,7 +684,7 @@ a[role="button"] {
         .visu .filters .date header time {
           padding: 0 1.6rem;
           color: #ffffff; }
-          .visu .filters .date header time[datetime*="W"] {
+          .visu .filters .date header time:last-child {
             font-size: 1.4rem;
             color: #a8adbd; }
       .visu .filters .date button {
