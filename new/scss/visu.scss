@@ -767,11 +767,19 @@ a[role="button"] {
 	    margin: 0 auto;
 	    max-width: .4rem;
 	    background: $neutral-1;
-	    transition: background .3s;
     }
 
     &:hover .fill {
     	background: $neutral-0;
+    	transition: background .3s;
+    }
+
+    &.disabled {
+    	pointer-events: none;
+    	
+    	.fill {
+    		background: $neutral-6;
+    	}
     }
 }
 

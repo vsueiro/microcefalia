@@ -124,9 +124,9 @@ visu = {
 			});
 		},
 		callback : function() {
-			console.log( 'requests done' );
 			visu.components.initialize();
 			visu.interaction.initialize();
+			visu.update();
 		}
 	},
 
@@ -204,7 +204,6 @@ visu = {
 					var week = visu.data.weeks[ 0 ];
 					visu.set.date( week.start );
 					visu.set.week( week.y + visu.defaults.year + '-W' + week.w );
-					this.update();
 				},
 				update : function() {
 					var elements = {
@@ -224,7 +223,6 @@ visu = {
 			},
 			initialize : function() {
 				this.time.initialize();
-				this.update();
 			},
 			update : function() {
 				this.time.update();
@@ -243,7 +241,6 @@ visu = {
 
 				var paragraph = document.createElement( 'p' );
 				this.element.appendChild( paragraph );
-				this.update();
 			},
 			update : function() {
 				var text = 'Você está vendo ';
@@ -281,6 +278,7 @@ visu = {
 
 							var bar = document.createElement( 'div' );
 							bar.classList.add( 'tooltip-container', 'bar' );
+							bar.dataset.week = object.y + visu.defaults.year + '-W' + object.w;
 							if ( index === 0 ) {
 								bar.style.height = '0%';
 							}
@@ -313,6 +311,17 @@ visu = {
 							visu.components.graphics.unique.bars.element.appendChild( bar );
 
 						} );
+					},
+					update : function() {
+						each( '.bar', function() {
+							var current = decode.week( this.dataset.week );
+							var target = decode.week( visu.get.week() );
+							if ( current.y <= target.y && current.w <= target.w ) {
+								this.classList.remove( 'disabled' );
+							} else {
+								this.classList.add( 'disabled' );
+							}
+						}, this.element );
 					}
 				},
 				scale : {
@@ -338,6 +347,9 @@ visu = {
 				initialize : function() {
 					this.bars.initialize();
 					this.scale.initialize();
+				},
+				update : function() {
+					this.bars.update();
 				}
 			},
 			cumulative : {},
@@ -461,6 +473,9 @@ visu = {
 					table.appendChild( item );
 
 				}
+			},
+			update : function() {
+
 			}
 		},
 		related : {
@@ -476,6 +491,7 @@ visu = {
 		update : function() {
 			this.filters.update();
 			this.description.update();
+			this.graphics.unique.update();
 		}
 	},
 

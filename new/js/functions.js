@@ -133,3 +133,16 @@ format = {
 
 };
 
+decode = {
+
+  week : function( string ) {
+    var parts = string.split( '-' );
+    var object = {
+      y : Number( parts[ 0 ] ),
+      w : Number( parts[ 1 ].replace( 'W', '' ) )
+    };
+    return object;
+  }
+
+}
+

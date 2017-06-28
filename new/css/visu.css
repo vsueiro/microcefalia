@@ -929,10 +929,14 @@ a[role="button"] {
     left: 0;
     margin: 0 auto;
     max-width: .4rem;
-    background: #4e5267;
-    transition: background .3s; }
+    background: #4e5267; }
   .visu .content .primary .cases.new .graphic .bar:hover .fill {
-    background: #353844; }
+    background: #353844;
+    transition: background .3s; }
+  .visu .content .primary .cases.new .graphic .bar.disabled {
+    pointer-events: none; }
+    .visu .content .primary .cases.new .graphic .bar.disabled .fill {
+      background: #ecedf1; }
 
 .scale.amount ol {
   display: flex;
