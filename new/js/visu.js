@@ -8,7 +8,8 @@ visu = {
 		category : 'c',
 		subcategory : 'c',
 		location : 'all',
-		date : '2016-W6',
+		date : undefined,
+		week : undefined,
 		level : 'region',
 		periodicity : 'weekly'
 	},
@@ -134,7 +135,12 @@ visu = {
 		category : function() {},
 		subcategory : function() {},
 		location : function() {},
-		date : function() {},
+		date : function() {
+			return visu.options.date;
+		},
+		week : function() {
+			return visu.options.week;
+		},
 		totals : function() {},
  		current : {
  			category : function() {},
@@ -167,6 +173,9 @@ visu = {
 		date : function( value ) {
 			visu.options.date = value;
 		},
+		week : function( value ) {
+			visu.options.week = value;
+		},
 		level : function( value ) {
 			visu.options.level = value;
 		},
@@ -192,6 +201,9 @@ visu = {
 			time : {
 				element : the( '.date.filter' ),
 				initialize : function() {
+					var week = visu.data.weeks[ 0 ];
+					visu.set.date( week.start );
+					visu.set.week( week.y + visu.defaults.year + '-W' + week.w );
 					this.update();
 				},
 				update : function() {
@@ -200,19 +212,18 @@ visu = {
 						week : the( 'week' )
 					};
 					each( visu.data.weeks, function( week ) {
-						var parts = visu.options.date.split( '-' );
-						var y = parts[ 0 ] - visu.defaults.year;
-						var w = parts[ 1 ].replace( 'W','' ) * 1;
-						if ( week.y === y && week.w === w ) {
-							elements.full.setAttribute( 'datetime', week.start );
-							elements.full.innerHTML = format.date( week.start );
-							elements.week.setAttribute( 'datetime', visu.options.date );
+						var date = visu.get.date();
+						if ( week.start === date ) {
+							elements.full.setAttribute( 'datetime', date );
+							elements.full.innerHTML = format.date( date );
+							elements.week.setAttribute( 'datetime', visu.get.week() );
 							elements.week.innerHTML = 'Semana ' + week.w;
 						}
 					} )
 				}
 			},
 			initialize : function() {
+				this.time.initialize();
 				this.update();
 			},
 			update : function() {
@@ -250,7 +261,7 @@ visu = {
 					if ( visu.options.subcategory === 'i' ) text += 'em análise ';
 					text += 'com microcefalia <strong>por zika</strong> em crianças “nascidas” até ';
 				}
-				text += 'data';
+				text += format.date( visu.get.date() );
 				the( 'p', this.element ).innerHTML = text;
 			}
 		},
@@ -456,15 +467,15 @@ visu = {
 
 		},
 		initialize : function() {
-			this.description.initialize();
 			this.filters.initialize();
+			this.description.initialize();
 			this.graphics.map.initialize();
 			this.graphics.unique.initialize();
 			this.ranking.initialize();
 		},
 		update : function() {
-			this.description.update();
 			this.filters.update();
+			this.description.update();
 		}
 	},
 
@@ -562,9 +573,11 @@ visu = {
 			},
 			update : function( index ) {
 				var object = visu.data.weeks[ index ];
-				var date = visu.defaults.year + object.y + '-W' + object.w;
-				if ( visu.options.date !== date ) {
-					visu.options.date = date;
+				var date = object.start;
+				var week = visu.defaults.year + object.y + '-W' + object.w;
+				if ( visu.get.date() !== date ) {
+					visu.set.date( date );
+					visu.set.week( week );
 					visu.update();
 				}
 			}
