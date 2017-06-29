@@ -131,9 +131,16 @@ visu = {
 	},
 
 	get : {
+		cat : function() {
+			return visu.options.category + visu.options.subcategory;
+		},
 		status : function() {},
-		category : function() {},
-		subcategory : function() {},
+		category : function() {
+			return visu.options.category;
+		},
+		subcategory : function() {
+			return visu.options.subcategory;
+		},
 		location : function() {},
 		date : function() {
 			return visu.options.date;
@@ -269,9 +276,10 @@ visu = {
 					element : the( '.cases.new .graphic' ),
 					initialize : function() {
 						var peak = 0;
+						var cat = visu.get.cat();
 						each( visu.data.country.c, function( object, index ) {
 							if ( index > 0 )
-								peak = this.u.cc > peak ? this.u.cc : peak;
+								peak = this.u[ cat ] > peak ? this.u[ cat ] : peak;
 						} );
 						peak = Math.ceil( peak / 40 ) * 40;
 						each( visu.data.country.c, function( object, index ) {
@@ -284,7 +292,7 @@ visu = {
 							}
 							var fill = document.createElement( 'div' );
 							fill.classList.add( 'fill' );
-							fill.style.height = this.u.cc * 100 / peak + '%';
+							fill.style.height = this.u[ cat ] * 100 / peak + '%';
 
 							var info = document.createElement( 'div' );
 							info.classList.add( 'tooltip' );
@@ -296,7 +304,7 @@ visu = {
 							var amount = document.createElement( 'div' );
 
 							var output = document.createElement( 'output' );
-							output.innerHTML = this.u.cc;
+							output.innerHTML = this.u[ cat ];
 
 							var label = document.createElement( 'span' );
 							label.innerHTML = ' casos';
@@ -312,7 +320,14 @@ visu = {
 
 						} );
 					},
+					clear : function() {
+						while ( this.element.firstChild ) {
+						    this.element.removeChild( this.element.firstChild );
+						}
+					},
 					update : function() {
+						this.clear();
+						this.initialize();
 						each( '.bar', function() {
 							var current = decode.week( this.dataset.week );
 							var target = decode.week( visu.get.week() );
