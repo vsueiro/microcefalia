@@ -240,14 +240,6 @@ visu = {
 		description : {
 			element : the( '.description' ),
 			initialize : function() {
-				// Você está vendo casos confirmados de microcefalia por zika em crianças nascidas até 20 de agosto de 2016
-				// Você está vendo casos descartados de microcefalia por zika em crianças nascidas até 20 de agosto de 2016
-				// Você está vendo casos em análise de microcefalia por zika em crianças nascidas até 20 de agosto de 2016
-
-				// Você está vendo óbitos que tem relação confirmada com microcefalia por zika em crianças “nascidas” até 20 de agosto de 2016
-				// Você está vendo óbitos que tem relação descartada com microcefalia por zika em crianças “nascidas” até 20 de agosto de 2016
-				// Você está vendo óbitos que tem relação em análise com microcefalia por zika em crianças “nascidas” até 20 de agosto de 2016
-
 				var paragraph = document.createElement( 'p' );
 				this.element.appendChild( paragraph );
 			},
@@ -260,7 +252,7 @@ visu = {
 					if ( visu.options.subcategory === 'i' ) text += 'em análise ';
 					text += 'de microcefalia <strong>por zika</strong> em crianças nascidas até ';
 				}
-				if ( visu.options.category === 'o' ) {
+				if ( visu.options.category === 'd' ) {
 					text += 'óbitos que tem relação ';
 					if ( visu.options.subcategory === 'c' ) text += 'confirmada ';
 					if ( visu.options.subcategory === 'd' ) text += 'descartada ';
@@ -281,7 +273,10 @@ visu = {
 							if ( index > 0 )
 								peak = this.u[ cat ] > peak ? this.u[ cat ] : peak;
 						} );
-						peak = Math.ceil( peak / 40 ) * 40;
+						if ( peak > 20 )
+							peak = Math.ceil( peak / 40 ) * 40;
+						else 
+							peak = Math.ceil( peak / 4 ) * 4;
 						return peak;
 					}
 				},
