@@ -263,6 +263,25 @@ visu = {
 				the( 'p', this.element ).innerHTML = text;
 			}
 		},
+		totals : {
+			element : the( '.totals' ),
+			initialize : function() {
+				this.update();
+			},
+			update : function() {
+				each( '[name="subcategory"]', function() {
+					var total = 0;
+					var week = decode.week( visu.get.week() );
+					var cat = visu.get.category() + this.value;
+					each( visu.data.country.c, function() {
+						if ( this.y === week.y - visu.defaults.year && this.w === week.w && cat in this) {
+							total = this[ cat ];
+						}
+					} );
+					the( 'output', this ).innerHTML = thousands( total ); 
+				}, this.element );
+			}
+		},
 		graphics : {
 			unique : {
 				element : the( '.cases.new' ),
@@ -502,6 +521,7 @@ visu = {
 		initialize : function() {
 			this.filters.initialize();
 			this.description.initialize();
+			this.totals.initialize();
 			this.graphics.map.initialize();
 			this.graphics.unique.initialize();
 			this.ranking.initialize();
@@ -509,6 +529,7 @@ visu = {
 		update : function() {
 			this.filters.update();
 			this.description.update();
+			this.totals.update();
 			this.graphics.unique.update();
 		}
 	},
