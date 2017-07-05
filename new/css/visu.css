@@ -832,7 +832,8 @@ a[role="button"] {
           height: 4.8rem;
           width: 24rem; }
           .visu .content .primary .ranking .totals output {
-            font-size: 1.4rem; }
+            font-size: 1.4rem;
+            opacity: .25; }
         .visu .content .primary .ranking .location {
           display: flex;
           justify-content: flex-start;
@@ -860,7 +861,8 @@ a[role="button"] {
           .visu .content .primary .ranking .caption li {
             display: flex;
             justify-content: flex-end;
-            width: 100%; }
+            width: 100%;
+            opacity: .25; }
           .visu .content .primary .ranking .caption button {
             justify-content: flex-end;
             width: 4.8rem;
@@ -906,6 +908,18 @@ a[role="button"] {
         .visu .content .secondary footer p {
           width: 480px;
           text-align: center; }
+  .visu[data-subcategory="c"] .ranking .totals output:nth-child(1) {
+    opacity: 1; }
+  .visu[data-subcategory="c"] .ranking .caption li:nth-child(1) {
+    opacity: 1; }
+  .visu[data-subcategory="d"] .ranking .totals output:nth-child(2) {
+    opacity: 1; }
+  .visu[data-subcategory="d"] .ranking .caption li:nth-child(2) {
+    opacity: 1; }
+  .visu[data-subcategory="i"] .ranking .totals output:nth-child(3) {
+    opacity: 1; }
+  .visu[data-subcategory="i"] .ranking .caption li:nth-child(3) {
+    opacity: 1; }
 
 /* cases new graphic */
 .visu .content .primary .cases.new .graphic {

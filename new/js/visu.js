@@ -3,7 +3,7 @@ var map, visu;
 visu = {
 
 	options : {
-		element : 'visu',
+		element : the( '.visu' ),
 		status : 'loading',
 		category : 'c',
 		subcategory : 'c',
@@ -150,13 +150,14 @@ visu = {
 		week : function() {
 			return visu.options.week;
 		},
-		totals : function() {},
- 		current : {
- 			category : function() {},
- 			subcategory : function() {},
-			location : function() {},
-			date : function() {},
-			totals : function() {}
+		total : function( year, week, cat ) {
+			var total = 0;
+			each( visu.data.country.c, function() {
+				if ( this.y === year - visu.defaults.year && this.w === week && cat in this) {
+					total = this[ cat ];
+				}
+			} );
+			return thousands( total ); 
 		},
 		file : {
 			json : {},
@@ -270,15 +271,11 @@ visu = {
 			},
 			update : function() {
 				each( '[name="subcategory"]', function() {
-					var total = 0;
-					var week = decode.week( visu.get.week() );
+					var when = decode.week( visu.get.week() );
+					var year = when.y;
+					var week = when.w;
 					var cat = visu.get.category() + this.value;
-					each( visu.data.country.c, function() {
-						if ( this.y === week.y - visu.defaults.year && this.w === week.w && cat in this) {
-							total = this[ cat ];
-						}
-					} );
-					the( 'output', this ).innerHTML = thousands( total ); 
+					the( 'output', this ).innerHTML = visu.get.total( year, week, cat );
 				}, this.element );
 			}
 		},
@@ -413,7 +410,7 @@ visu = {
 			element : the( '.ranking' ),
 			sort : function( category ) {
 
-				var category = category || visu.defaults.category + visu.defaults.subcategory;
+				var category = category || visu.get.cat();
 
 				function compare( a, b ) {
 					var a = a.c[ a.c.length - 1 ];
@@ -429,12 +426,20 @@ visu = {
 			},
 			total : function() {
 
-				var total = 0;
 				var text = 'tem casos confirmados';
 
+				var when = decode.week( visu.get.week() );
+				var year = when.y - visu.defaults.year;
+				var week = when.w;
+				var cat = visu.get.cat();
+				var total = 0;
+
 				each( visu.data.cities, function() {
-					var week = this.c[ this.c.length - 1 ];
-					total += week.hasOwnProperty( 'cc' ) ? week.cc : 0;
+					each( this.c, function() {
+						if ( this.y === year && this.w === week && cat in this ) {
+							total += 1;
+						}
+					} )
 				} );
 
 				if ( total > 1 )
@@ -449,15 +454,9 @@ visu = {
 
 				text = '&nbsp' + text;
 
-				var output = document.createElement( 'output' );
-				output.innerHTML = total;
-
-				var caption = document.createElement( 'span' );
-				caption.innerHTML = text;
-
-				the( '.amount p', this.element ).appendChild( output );
-				the( '.amount p', this.element ).appendChild( caption );
-
+				the( '.amount p output', this.element ).innerHTML = total;
+				the( '.amount p span', this.element ).innerHTML = text;
+				
 			},
 			initialize : function() {
 
@@ -493,7 +492,7 @@ visu = {
 					for ( var j = 0; j < 3; j++ ) {
 
 						var subcategories = [ 'c', 'd', 'i' ];
-						var category = visu.defaults.category + subcategories[ j ];
+						var category = visu.get.category() + subcategories[ j ];
 
 						var output = document.createElement( 'output' );
 						var cases = city.c[ city.c.length- 1 ][ category ] || 0;
@@ -511,8 +510,15 @@ visu = {
 
 				}
 			},
+			clear : function() {
+				var el = the( '.table', this.element );
+				while ( el.firstChild ) {
+				    el.removeChild( el.firstChild );
+				}
+			},
 			update : function() {
-
+				this.clear();
+				this.initialize();
 			}
 		},
 		related : {
@@ -531,6 +537,7 @@ visu = {
 			this.description.update();
 			this.totals.update();
 			this.graphics.unique.update();
+			this.ranking.update();
 		}
 	},
 
@@ -681,6 +688,10 @@ visu = {
 
 	update : function() {
 		this.components.update();
+
+		visu.options.element.dataset.category = visu.get.category();
+		visu.options.element.dataset.subcategory = visu.get.subcategory();
+
 	}
 
 };
