@@ -141,7 +141,9 @@ visu = {
 		subcategory : function() {
 			return visu.options.subcategory;
 		},
-		location : function() {},
+		location : function() {
+			return visu.options.location;
+		},
 		date : function() {
 			return visu.options.date;
 		},
@@ -272,16 +274,22 @@ visu = {
 		graphics : {
 			unique : {
 				element : the( '.cases.new' ),
-				bars : {
-					element : the( '.cases.new .graphic' ),
-					initialize : function() {
+				get : {
+					peak : function( cat ) {
 						var peak = 0;
-						var cat = visu.get.cat();
 						each( visu.data.country.c, function( object, index ) {
 							if ( index > 0 )
 								peak = this.u[ cat ] > peak ? this.u[ cat ] : peak;
 						} );
 						peak = Math.ceil( peak / 40 ) * 40;
+						return peak;
+					}
+				},
+				bars : {
+					element : the( '.cases.new .graphic' ),
+					initialize : function() {
+						var cat = visu.get.cat();
+						var peak = visu.components.graphics.unique.get.peak( cat );
 						each( visu.data.country.c, function( object, index ) {
 
 							var bar = document.createElement( 'div' );
@@ -343,12 +351,8 @@ visu = {
 					amount : {
 						element : the( '.cases.new .scale.amount' ),
 						initialize : function() {
-							var peak = 0;
-							each( visu.data.country.c, function( object, index ) {
-								if ( index > 0 )
-									peak = this.u.cc > peak ? this.u.cc : peak;
-							} );
-							peak = Math.ceil( peak / 40 ) * 40;
+							var cat = visu.get.cat();
+							var peak = visu.components.graphics.unique.get.peak( cat );
 							var increment = peak / 4;
 							each( 'span', function( index ) {
 								this.innerHTML = increment * ( index + 1 );
@@ -356,6 +360,9 @@ visu = {
 						}
 					},
 					initialize : function() {
+						this.amount.initialize();
+					},
+					update : function() {
 						this.amount.initialize();
 					}
 				},
@@ -365,6 +372,7 @@ visu = {
 				},
 				update : function() {
 					this.bars.update();
+					this.scale.update();
 				}
 			},
 			cumulative : {},
