@@ -408,17 +408,32 @@ visu = {
 		},
 		ranking : {
 			element : the( '.ranking' ),
-			sort : function( category ) {
+			sort : function( cat ) {
 
-				var category = category || visu.get.cat();
+				var cat = cat || visu.get.cat();
 
 				function compare( a, b ) {
-					var a = a.c[ a.c.length - 1 ];
-					var b = b.c[ b.c.length - 1 ];
 
-					a = a.hasOwnProperty( category ) ? a[ category ] : 0;
-					b = b.hasOwnProperty( category ) ? b[ category ] : 0;
-					return b - a;
+					var amount = { a : 0, b : 0 };
+
+					var when = decode.week( visu.get.week() );
+					var year = when.y - visu.defaults.year;
+					var week = when.w;
+
+					each( a.c, function() {
+						if ( this.y === year && this.w === week && cat in this ) {
+							amount.a = this[ cat ];
+						}
+					} );
+
+					each( b.c, function() {
+						if ( this.y === year && this.w === week && cat in this ) {
+							amount.b = this[ cat ];
+						}
+					} );
+
+					return amount.b - amount.a;
+
 				}
 
 				visu.data.cities.sort( compare );
@@ -456,11 +471,15 @@ visu = {
 
 				the( '.amount p output', this.element ).innerHTML = total;
 				the( '.amount p span', this.element ).innerHTML = text;
-				
+
 			},
 			initialize : function() {
 
 				var table = the( '.table', this.element );
+
+				var when = decode.week( visu.get.week() );
+				var year = when.y - visu.defaults.year;
+				var week = when.w;
 
 				this.sort();
 
@@ -492,10 +511,17 @@ visu = {
 					for ( var j = 0; j < 3; j++ ) {
 
 						var subcategories = [ 'c', 'd', 'i' ];
-						var category = visu.get.category() + subcategories[ j ];
+						var cat = visu.get.category() + subcategories[ j ];
 
 						var output = document.createElement( 'output' );
-						var cases = city.c[ city.c.length- 1 ][ category ] || 0;
+
+						var cases = 0;
+						each( city.c, function() {
+							if ( this.y === year && this.w === week && cat in this )
+								cases = this[ cat ];
+						} );
+
+						// var cases = city.c[ city.c.length- 1 ][ category ] || 0;
 						output.innerHTML = thousands( cases );
 
 						totals.appendChild( output );
