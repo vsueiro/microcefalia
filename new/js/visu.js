@@ -20,7 +20,8 @@ visu = {
 		location : 'all',
 		level : 'region',
 		periodicity : 'weekly',
-		year : 2016
+		year : 2016,
+		autoplay: 200
 	},
 
 	dependencies : {
@@ -697,6 +698,33 @@ visu = {
 			}
 		},
 
+		autoplay : {
+			timer : undefined,
+			pause : function() {
+				clearInterval( this.timer )
+			},
+			update : function() {
+				var slider = visu.interaction.slider.element.rangeSlider;
+				var value = slider.value + slider.step;
+				
+				if ( value > slider.max ) {
+					value = 0;
+				}
+
+				slider.update( {
+					value : value
+				} )
+				
+				visu.interaction.slider.update( value )
+
+			},
+			initialize : function() {
+				if ( visu.defaults.autoplay ) {
+					this.timer = setInterval( this.update, visu.defaults.autoplay );
+				}
+			}
+		},
+
 		initialize : function() {
 
 			this.buttons.initialize();
@@ -704,6 +732,7 @@ visu = {
 			this.slider.initialize();
 			this.scroll.initialize();
 			this.map.initialize();
+			this.autoplay.initialize();
 
 		}
 	},
