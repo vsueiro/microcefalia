@@ -699,28 +699,51 @@ visu = {
 		},
 
 		autoplay : {
+			button : the( '.autoplay button' ),
 			timer : undefined,
+			playing : true,
+			virginity : true,
+			play : function() {
+				this.timer = setInterval( this.update, visu.defaults.autoplay );
+			},
 			pause : function() {
 				clearInterval( this.timer )
 			},
 			update : function() {
-				var slider = visu.interaction.slider.element.rangeSlider;
-				var value = slider.value + slider.step;
-				
-				if ( value > slider.max ) {
-					value = 0;
-				}
 
-				slider.update( {
-					value : value
-				} )
-				
-				visu.interaction.slider.update( value )
+				if ( visu.interaction.autoplay.virginity ) {
+
+					var slider = visu.interaction.slider.element.rangeSlider;
+					var value = slider.value + slider.step;
+					if ( value > slider.max ) value = 0;
+					slider.update( { value : value } )
+					visu.interaction.slider.update( value )
+
+				} else {
+
+					visu.interaction.autoplay.pause();
+
+				}
 
 			},
 			initialize : function() {
+
+				this.button.addEventListener( 'click', function() {
+					
+					if ( visu.interaction.autoplay.playing ) {
+						visu.interaction.autoplay.pause();
+						visu.interaction.autoplay.button.dataset.playing = 'false';
+						visu.interaction.autoplay.playing = false;
+					} else {
+						visu.interaction.autoplay.play();
+						visu.interaction.autoplay.button.dataset.playing = 'true';
+						visu.interaction.autoplay.playing = true;
+					}
+
+				} );
+
 				if ( visu.defaults.autoplay ) {
-					this.timer = setInterval( this.update, visu.defaults.autoplay );
+					this.play();
 				}
 			}
 		},
