@@ -21,7 +21,7 @@ visu = {
 		level : 'region',
 		periodicity : 'weekly',
 		year : 2016,
-		autoplay: 200
+		autoplay: 100
 	},
 
 	dependencies : {
@@ -579,6 +579,8 @@ visu = {
 
 					this.addEventListener( 'click', function() {
 
+						visu.interaction.autoplay.virginity = false;
+
 						if ( isActive( this ) ) {
 
 							group = closest( 'button-group', this );
@@ -620,6 +622,7 @@ visu = {
 				locationFilter = the( 'location filter' );
 
 				search.addEventListener( 'focus', function() {
+					visu.interaction.autoplay.virginity = false;
 					locationFilter.dataset.search = 'true';
 				}, true );
 
@@ -649,6 +652,7 @@ visu = {
 
 		            onSlideStart: function ( value, percent, position ) {
 		            	visu.interaction.slider.update( value );
+		            	visu.interaction.autoplay.virginity = false;
 		            },
 
 		            onSlide: function ( value, percent, position ) {
@@ -702,6 +706,7 @@ visu = {
 			button : the( '.autoplay button' ),
 			timer : undefined,
 			playing : true,
+			loop : false,
 			virginity : true,
 			play : function() {
 				this.timer = setInterval( this.update, visu.defaults.autoplay );
@@ -715,7 +720,12 @@ visu = {
 
 					var slider = visu.interaction.slider.element.rangeSlider;
 					var value = slider.value + slider.step;
-					if ( value > slider.max ) value = 0;
+					if ( value > slider.max ) {
+						if ( visu.interaction.autoplay.loop )
+							value = 0;
+						else
+							visu.interaction.autoplay.pause();							
+					}
 					slider.update( { value : value } )
 					visu.interaction.slider.update( value )
 
