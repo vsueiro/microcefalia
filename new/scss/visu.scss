@@ -407,6 +407,36 @@ a[role="button"] {
 
 			button {
 				width: 100%;
+				i {
+					opacity: .5;
+					transition: opacity .3s;
+				}
+				span {
+					opacity: 0;
+					transform: translateX( -.8rem );
+					transition: opacity .3s, transform .3s;
+				}
+				&:hover {
+					i {
+						opacity: 1;
+					}
+					span {
+						opacity: 1;
+						transform: translateX( 0 );
+					}
+				}
+				&[data-playing="true"] {
+					i[data-icon="play"],
+					i[data-icon="play"] + span {
+						display: none;
+					}
+				}
+				&[data-playing="false"] {
+					i[data-icon="pause"],
+					i[data-icon="pause"] + span {
+						display: none;
+					}
+				}
 			}
 		}
 

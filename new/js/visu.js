@@ -745,6 +745,7 @@ visu = {
 					if ( visu.interaction.autoplay.playing ) {
 						visu.interaction.autoplay.pause();
 					} else {
+						visu.interaction.autoplay.loop = true;
 						visu.interaction.autoplay.play();
 					}
 
