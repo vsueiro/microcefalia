@@ -268,7 +268,6 @@ visu = {
 		totals : {
 			element : the( '.totals' ),
 			initialize : function() {
-				this.update();
 			},
 			update : function() {
 				each( '[name="subcategory"]', function() {
@@ -710,17 +709,21 @@ visu = {
 			virginity : true,
 			play : function() {
 				this.timer = setInterval( this.update, visu.defaults.autoplay );
+				visu.interaction.autoplay.button.dataset.playing = 'true';
+				visu.interaction.autoplay.playing = true;
+				visu.interaction.autoplay.virginity = true;
 			},
 			pause : function() {
-				clearInterval( this.timer )
+				clearInterval( this.timer );
+				visu.interaction.autoplay.button.dataset.playing = 'false';
+				visu.interaction.autoplay.playing = false;
 			},
 			update : function() {
-
 				if ( visu.interaction.autoplay.virginity ) {
 
 					var slider = visu.interaction.slider.element.rangeSlider;
 					var value = slider.value + slider.step;
-					if ( value > slider.max ) {
+					if ( value >= slider.max ) {
 						if ( visu.interaction.autoplay.loop )
 							value = 0;
 						else
@@ -739,15 +742,10 @@ visu = {
 			initialize : function() {
 
 				this.button.addEventListener( 'click', function() {
-					
 					if ( visu.interaction.autoplay.playing ) {
 						visu.interaction.autoplay.pause();
-						visu.interaction.autoplay.button.dataset.playing = 'false';
-						visu.interaction.autoplay.playing = false;
 					} else {
 						visu.interaction.autoplay.play();
-						visu.interaction.autoplay.button.dataset.playing = 'true';
-						visu.interaction.autoplay.playing = true;
 					}
 
 				} );
