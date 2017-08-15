@@ -859,6 +859,7 @@ a[role="button"] {
           flex: 1 0;
           padding: 0 1.2rem;
           width: 100%;
+          max-width: 19.2rem;
           height: 4.8rem; }
         .visu .content .primary .ranking figcaption {
           display: flex; }

@@ -7,7 +7,7 @@ each = function( thing, callback, parent ) {
   get = function( thing ) {
 
     if ( typeof thing === 'string' ) {
-      
+
       list = parent.getElementsByClassName( thing );
       if ( list.length ) return list
 
@@ -24,7 +24,7 @@ each = function( thing, callback, parent ) {
   }
 
   list = get( thing );
-	
+
 	isArray = list.constructor === Array ? true : false;
 
 	for ( var i = 0 ; i < list.length ; i++ ) {
@@ -120,6 +120,14 @@ thousands = function( x ) {
   return parts.join( ',' );
 }
 
+truncate = function( string, length, ending ) {
+  length = length || 20
+  ending = ending || '…'
+  if ( string.length > length )
+    return string.substring( 0, length - ending.length ) + ending
+  return string
+}
+
 pretty = {
 
   date : function( string ) {
@@ -153,4 +161,3 @@ encode = {
   }
 
 }
-

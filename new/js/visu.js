@@ -28,42 +28,42 @@ visu = {
 		list : [
 			{
 				name : 'Google Maps',
-				type : 'script',      
+				type : 'script',
 				path : '//maps.googleapis.com/maps/api/js?key=AIzaSyBoqFIX7oEYftU-MW9H49ivEpYtU6BZJRs'
 			},
 			{
 				name : 'Range Slider',
-				type : 'script',      
+				type : 'script',
 				path : 'lib/rangeslider/js/script.js'
 			},
 			{
 				name : 'Perfect Scrollbar',
-				type : 'script',      
+				type : 'script',
 				path : 'lib/perfect-scrollbar/js/script.js'
 			},
-			{ 
+			{
 				name : 'categories',
-				type : 'json', 
+				type : 'json',
 				path : 'data/raw/categories.json'
 			},
-			{ 
+			{
 				name : 'weeks',
-				type : 'json', 
+				type : 'json',
 				path : 'data/weeks.json'
 			},
 			{
 				name : 'country',
-				type : 'json', 
+				type : 'json',
 				path : 'data/country.json'
 			},
 			{
 				name : 'states',
-				type : 'json', 
+				type : 'json',
 				path : 'data/states.json'
 			},
 			{
 				name : 'cities',
-				type : 'json', 
+				type : 'json',
 				path : 'data/cities.json'
 			}
 		],
@@ -88,7 +88,7 @@ visu = {
 				}
 			}
 
-			json = function( path, callback ) {   
+			json = function( path, callback ) {
 
 				var request;
 
@@ -158,7 +158,7 @@ visu = {
 					total = this[ cat ];
 				}
 			} );
-			return thousands( total ); 
+			return thousands( total );
 		},
 		file : {
 			json : {},
@@ -204,7 +204,7 @@ visu = {
 			footer : {},
 		},
 		navigation : {
-			
+
 		},
 		filters : {
 			category : {},
@@ -291,7 +291,7 @@ visu = {
 						} );
 						if ( peak > 20 )
 							peak = Math.ceil( peak / 40 ) * 40;
-						else 
+						else
 							peak = Math.ceil( peak / 4 ) * 4;
 						return peak;
 					}
@@ -501,7 +501,7 @@ visu = {
 					position.innerHTML = i + 1;
 
 					location.classList.add( 'location' );
-					location.innerHTML = city.n;
+					location.innerHTML = truncate( city.n );
 
 					initials.classList.add( 'initials' );
 					initials.innerHTML = '&nbsp;' + city.s;
@@ -696,7 +696,7 @@ visu = {
 
 				google.maps.event.addDomListener( the( 'zoomOutButton' ), 'click', function() {
 					map.setZoom( map.getZoom() - 1 );
-				});  
+				});
 
 			}
 		},
@@ -727,7 +727,7 @@ visu = {
 						if ( visu.interaction.autoplay.loop )
 							value = 0;
 						else
-							visu.interaction.autoplay.pause();							
+							visu.interaction.autoplay.pause();
 					}
 					slider.update( { value : value } )
 					visu.interaction.slider.update( value )
